@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.jm233333.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="前置知识 在阅读本文档前，请先阅读 C 语言的整体介绍文档，详见 C 语言的 00 - Introduction 文档。  C 00 - Introduction    前言 指针是 C 语言中最重要的核心概念，这门语言的重难点几乎无一不是和指针有着千丝万缕的联系。只有当你理解了指针以后， C 语言的大门才会向你敞开，你才算是一只脚踏入了这个经典的编程语言的殿堂。 当然，指针也是 C 语言初学者">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C 02 - Pointer">
+<meta property="og:url" content="https://blog.jm233333.com/Programming%20Languages/C/C%2002%20-%20Pointer/index.html">
+<meta property="og:site_name" content="JM233333&#39;s Blog">
+<meta property="og:description" content="前置知识 在阅读本文档前，请先阅读 C 语言的整体介绍文档，详见 C 语言的 00 - Introduction 文档。  C 00 - Introduction    前言 指针是 C 语言中最重要的核心概念，这门语言的重难点几乎无一不是和指针有着千丝万缕的联系。只有当你理解了指针以后， C 语言的大门才会向你敞开，你才算是一只脚踏入了这个经典的编程语言的殿堂。 当然，指针也是 C 语言初学者">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://blog.jm233333.com/images/Programming-Languages/C/C-0200-i01.png">
+<meta property="og:image" content="https://blog.jm233333.com/images/Programming-Languages/C/C-0200-i02.png">
+<meta property="og:image" content="https://blog.jm233333.com/images/Programming-Languages/C/C-0200-i03.png">
+<meta property="og:image" content="https://blog.jm233333.com/images/Programming-Languages/C/C-0200-i04.png">
+<meta property="og:image" content="https://blog.jm233333.com/images/Programming-Languages/C/C-0200-i05.png">
+<meta property="og:image" content="https://blog.jm233333.com/images/Programming-Languages/C/C-0200-i06.png">
+<meta property="og:image" content="https://blog.jm233333.com/images/Programming-Languages/C/C-0200-i07.png">
+<meta property="og:image" content="https://blog.jm233333.com/images/Programming-Languages/C/C-0200-i08.png">
+<meta property="article:published_time" content="2019-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-03-22T09:32:11.634Z">
+<meta property="article:author" content="JM233333">
+<meta property="article:tag" content="基础教程">
+<meta property="article:tag" content="编程语言">
+<meta property="article:tag" content="C">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.jm233333.com/images/Programming-Languages/C/C-0200-i01.png">
+
+<link rel="canonical" href="https://blog.jm233333.com/Programming%20Languages/C/C%2002%20-%20Pointer/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>C 02 - Pointer | JM233333's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">JM233333's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Contact Me: 26466398@163.com</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">80</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories<span class="badge">16</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.jm233333.com/Programming%20Languages/C/C%2002%20-%20Pointer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="JM233333">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JM233333's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          C 02 - Pointer
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2020-01-01T00:00:00+08:00">2020-01-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming-Languages/" itemprop="url" rel="index"><span itemprop="name">Programming Languages</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming-Languages/C/" itemprop="url" rel="index"><span itemprop="name">C</span></a>
+                </span>
+            </span>
+
+          
+
+          <div class="post-authorization">
+            <p>本文为 JM233333 原创所著，遵循 BY-NC-SA 4.0 许可协议，转载请注明出处。如果您认为文中有谬误或对文中内容有疑问，欢迎理性指出，大家共同探讨和进步。</p>
+          </div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="前置知识"><a class="markdownIt-Anchor" href="#前置知识"></a> 前置知识</h3>
+<p>在阅读本文档前，请先阅读 C 语言的整体介绍文档，详见 <em>C</em> 语言的 <em>00 - Introduction</em> 文档。</p>
+<ul>
+<li><a href="/Programming%20Languages/C/C%2000%20-%20Introduction/">C 00 - Introduction</a></li>
+</ul>
+<hr />
+<h3 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h3>
+<p>指针是 C 语言中最重要的核心概念，这门语言的重难点几乎无一不是和指针有着千丝万缕的联系。只有当你理解了指针以后， C 语言的大门才会向你敞开，你才算是一只脚踏入了这个经典的编程语言的殿堂。</p>
+<p>当然，指针也是 C 语言初学者最大的噩梦。一方面，指针的概念相对较难理解，且深入理解需要对内存和地址的概念有一个最基本的了解；另一方面，指针的语法也相对复杂且容易出错，一旦出错也较难 DEBUG 。基于上述原因，初学者需要投入足够的精力才能较好地掌握指针相关的知识。</p>
+<p>本文假设读者已经基本掌握除了指针以外的大部分基础语法，包括逻辑控制结构、循环结构、函数等，但假设对指针一无所知。如果是对指针略知一二、但是感觉难以理解，或是感觉自己对指针的理解不够透彻的读者，这篇文章也同样能够帮到你。</p>
+<p>为便于描述，除非特别声明，本文中假设在程序的运行环境中 int 类型的长度为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>32</mn></mrow><annotation encoding="application/x-tex">32</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span><span class="mord">2</span></span></span></span> 位，且程序运行在 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>32</mn></mrow><annotation encoding="application/x-tex">32</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span><span class="mord">2</span></span></span></span> 位环境。对于在 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>32</mn></mrow><annotation encoding="application/x-tex">32</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span><span class="mord">2</span></span></span></span> 位和 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>64</mn></mrow><annotation encoding="application/x-tex">64</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">6</span><span class="mord">4</span></span></span></span> 位环境中存在差异的情况，文中会给出说明。</p>
+<hr />
+<h3 id="内存和地址"><a class="markdownIt-Anchor" href="#内存和地址"></a> 内存和地址</h3>
+<p>在介绍指针之前，我们先介绍数据在计算机中究竟是如何存储的，也就是内存和地址的相关概念。虽然绕了一点点弯子，但我认为，先理解内存和地址非常有利于深入理解指针。</p>
+<p>事实上这些概念没有本节中所描述的这么简单，在高年级课程中你会接触到，或者是读者自己有兴趣的话可以自学计算机组成原理的相关知识。在这里，我仅以初学者能接受的程度去介绍这些知识，省略了所有可以省略的细节。</p>
+<p>在计算机软件的最底层实现中，一切数据都是以二进制的形式存储的，即长度不同、语义不同的 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn><mi mathvariant="normal">/</mi><mn>1</mn></mrow><annotation encoding="application/x-tex">0/1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">0</span><span class="mord">/</span><span class="mord">1</span></span></span></span> 串。我们称一个 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span> 或 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> 为一个 <strong>比特 (bit)</strong> ，也称为 <strong>位</strong> 或 <strong>比特位</strong> ，这是计算机数据的最小单位。</p>
+<p>由于一个比特位能容纳的信息太有限，单独一位的用处并不大，再加上一些其他的原因，大多数现代计算机都不是一位一位地看待数据，而是将 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>8</mn></mrow><annotation encoding="application/x-tex">8</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">8</span></span></span></span> 位合成一组来看待。这样的一个长为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>8</mn></mrow><annotation encoding="application/x-tex">8</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">8</span></span></span></span> bit 的基本单位称为一个 <strong>字节 (byte)</strong> 。字节是计算机中最小的数据存储单位。</p>
+<p>为了存储更大的值，计算机还会把两个或更多的字节合成一组，称为一个 <strong>字 (word)</strong> 。字的相关概念与本文无关，因此不再赘述。</p>
+<p>大多数现代计算机都是按字节编址的，也就是将字节作为内存地址的最小单位，内存中的第 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo separator="true">,</mo><mn>2</mn><mo separator="true">,</mo><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mo separator="true">,</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">1, 2, ..., n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">.</span><span class="mord">.</span><span class="mord">.</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">n</span></span></span></span> 个字节的地址编号为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn><mo separator="true">,</mo><mn>1</mn><mo separator="true">,</mo><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mo separator="true">,</mo><mi>n</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">0, 1, ..., n-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">.</span><span class="mord">.</span><span class="mord">.</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> ，如下图所示。</p>
+<p><img src="/images/Programming-Languages/C/C-0200-i01.png" alt="" /></p>
+<p>而计算机程序会在内存中存储一些值，可能是 char 类型的数值，那么它将占用 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> 个字节的内存；也可能是 short 或 int 类型，那么它将占用 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn></mrow><annotation encoding="application/x-tex">2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span> 或 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>4</mn></mrow><annotation encoding="application/x-tex">4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">4</span></span></span></span> 个字节的内存。（我们假设 int 类型的长度是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>32</mn></mrow><annotation encoding="application/x-tex">32</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span><span class="mord">2</span></span></span></span> 位，下同）</p>
+<p>下面给出了一个省略细节的示例。对于下面这段代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> ch = <span class="string">&#x27;A&#x27;</span>;</span><br><span class="line"><span class="keyword">int</span> a = <span class="number">127800</span>;</span><br><span class="line"><span class="keyword">short</span> b = <span class="number">65535</span>;</span><br></pre></td></tr></table></figure>
+<p>假设它们在内存中按照声明的顺序连续存储（当然，这个假设事实上并不成立），那么它们在内存中可能如下图所示：</p>
+<p><img src="/images/Programming-Languages/C/C-0200-i02.png" alt="" /></p>
+<p>当然，数据在内存中事实上是以二进制形式存储的，且我们一般习惯用十六进制来表示地址编号，而上文中的示例图均使用十进制数，仅是为了让初学者看起来易懂。地址的起始位置事实上也是不确定的。</p>
+<p>要记住具体的地址编号实在是太笨拙了，因此所有的高级语言都提供了按名访问的特性，也就是说，程序只需要通过变量名而不是具体地址值来访问内存中的数值：</p>
+<p><img src="/images/Programming-Languages/C/C-0200-i03.png" alt="" /></p>
+<p>当然，按名访问是由编译器为我们实现的。当程序被转换到最底层的语言时，变量名都会被转换为对应的具体地址值，事实上硬件机器还是通过地址值来访问内存的。</p>
+<p><strong>一言以蔽之：每一个变量都对应着一个地址，及其占用的内存大小。</strong></p>
+<p>一定要分清变量的内容和地址，例如在上例中变量 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>c</mi><mi>h</mi></mrow><annotation encoding="application/x-tex">ch</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">h</span></span></span></span> 的值是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>65</mn></mrow><annotation encoding="application/x-tex">65</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">6</span><span class="mord">5</span></span></span></span> ，而其地址是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>290</mn></mrow><annotation encoding="application/x-tex">290</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mord">9</span><span class="mord">0</span></span></span></span> ；变量 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span></span></span></span> 的值和地址则分别是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>65535</mn></mrow><annotation encoding="application/x-tex">65535</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">6</span><span class="mord">5</span><span class="mord">5</span><span class="mord">3</span><span class="mord">5</span></span></span></span> 和 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>295</mn></mrow><annotation encoding="application/x-tex">295</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mord">9</span><span class="mord">5</span></span></span></span> 。</p>
+<p>另外，内存的大小是有限的，地址空间的大小也是有限的，在 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07847em;">X</span></span></span></span> 位环境中通常用 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>X</mi></mrow><annotation encoding="application/x-tex">X</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07847em;">X</span></span></span></span> 位长度来记录地址值，也就是说 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>32</mn></mrow><annotation encoding="application/x-tex">32</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span><span class="mord">2</span></span></span></span> 位环境的地址值的取值范围为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo stretchy="false">[</mo><mn>0</mn><mo separator="true">,</mo><mtext> </mtext><msup><mn>2</mn><mn>32</mn></msup><mo>−</mo><mn>1</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[0,\ 2^{32} - 1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">3</span><span class="mord mtight">2</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span></span></span></span> ，可以用 unsigned int 类型表示。</p>
+<p><em>注：大多数现代计算机都以 8 位为一个字节，也都按字节编址，但是并非总是如此，实际上存在以其他位数为一个字节的情况，也存在按字编址的情况。为便于读者理解那些重要的内容，上文将这些内容省略，并在此处进行解释，以免发生误会。事实上初学者无需关心这些，因为你实际上几乎遇不到这样的机器。</em></p>
+<p><em>注：数据实际存储时还涉及编译器优化、大小端存储方式、内存对齐等问题，上文将这些细节省略，因为只是学习指针的话，不需要知道这些对初学者而言有些过于复杂的知识。</em></p>
+<hr />
+<h3 id="基本概念"><a class="markdownIt-Anchor" href="#基本概念"></a> 基本概念</h3>
+<p>现在你对内存和地址有了一个最简单的认知，这已经足够了。接下来我们将尽可能细致地介绍指针的概念。</p>
+<p>如前文中的例子所示，对于普通的变量而言，变量的内容会直接存储在其对应的内存地址处，由高级语言编写的程序可以通过变量名直接访问。</p>
+<p>所谓的 <strong>指针 (pointer)</strong> 是一种语义特殊的变量，在指针变量中存储的内容是 <strong>其他变量的内存地址值</strong> 。</p>
+<p>以下面这段代码为例，其中声明并定义了 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mo separator="true">,</mo><mtext> </mtext><mi>b</mi><mo separator="true">,</mo><mtext> </mtext><mi>c</mi></mrow><annotation encoding="application/x-tex">a,\ b,\ c</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">a</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord mathdefault">b</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord mathdefault">c</span></span></span></span> 三个 int 类型的变量，和 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi><mo separator="true">,</mo><mtext> </mtext><mi>q</mi></mrow><annotation encoding="application/x-tex">p,\ q</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord mathdefault" style="margin-right:0.03588em;">q</span></span></span></span> 两个指向 int 类型的指针，其中 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> 指向 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span> ，而 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>q</mi></mrow><annotation encoding="application/x-tex">q</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">q</span></span></span></span> 指向 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>c</mi></mrow><annotation encoding="application/x-tex">c</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">c</span></span></span></span> ：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">112</span>;</span><br><span class="line"><span class="keyword">int</span> b = <span class="number">-1</span>;</span><br><span class="line"><span class="keyword">int</span> c = <span class="number">102400</span>;</span><br><span class="line"><span class="keyword">int</span> * p = &amp;a;</span><br><span class="line"><span class="keyword">int</span> * q = &amp;c;</span><br></pre></td></tr></table></figure>
+<p>我们用 <code>T *</code> 来声明指向一个类型为 <code>T</code> 的变量的指针，用 <code>&amp;a</code> 表示变量 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span> 的具体地址值。更加具体的关于指针的语法详见下文，此处请读者先注重理解指针的概念。</p>
+<p><em>注：为了让读者可以自行尝试验证，我特地选取了满足假设“在内存中按照声明的顺序连续存储”的例子，前提是程序需要在 32 位的环境运行。</em></p>
+<p>这些变量在内存中可能如下图所示：</p>
+<p><img src="/images/Programming-Languages/C/C-0200-i04.png" alt="" /></p>
+<p>可以看到，变量 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> 中的值为 <code>&amp;a</code> ，也就是变量 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span> 的地址。</p>
+<p><strong>每一个变量都对应着一个地址。指针变量中的内容就是一个变量（地址）的地址，但是指针变量本身也是对应着一个地址。</strong></p>
+<p>因为编译器屏蔽了高级语言对具体地址值的控制，程序运行时变量的具体地址是难以确定的，所以我们习惯于用箭头等方式来形象地表示指针的指向。假设程序运行时 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span> 的地址是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>100</mn></mrow><annotation encoding="application/x-tex">100</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">0</span></span></span></span> ，那么变量 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi><mo separator="true">,</mo><mtext> </mtext><mi>q</mi></mrow><annotation encoding="application/x-tex">p,\ q</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord mathdefault" style="margin-right:0.03588em;">q</span></span></span></span> 中的内容可能如下：</p>
+<p><img src="/images/Programming-Languages/C/C-0200-i05.png" alt="" /></p>
+<p>注意，由于 int 类型的长度是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>32</mn></mrow><annotation encoding="application/x-tex">32</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span><span class="mord">2</span></span></span></span> 位且程序是在 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>32</mn></mrow><annotation encoding="application/x-tex">32</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span><span class="mord">2</span></span></span></span> 位的环境运行，所以这些变量的地址值依次是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>100</mn><mo separator="true">,</mo><mtext> </mtext><mn>104</mn><mo separator="true">,</mo><mtext> </mtext><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mo separator="true">,</mo><mtext> </mtext><mn>116</mn></mrow><annotation encoding="application/x-tex">100,\ 104,\ ...,\ 116</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord">1</span><span class="mord">0</span><span class="mord">4</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord">.</span><span class="mord">.</span><span class="mord">.</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord">1</span><span class="mord">1</span><span class="mord">6</span></span></span></span> 而不是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>100</mn><mo separator="true">,</mo><mtext> </mtext><mn>101</mn><mo separator="true">,</mo><mtext> </mtext><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mo separator="true">,</mo><mtext> </mtext><mn>104</mn></mrow><annotation encoding="application/x-tex">100,\ 101,\ ...,\ 104</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord">1</span><span class="mord">0</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord">.</span><span class="mord">.</span><span class="mord">.</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord">1</span><span class="mord">0</span><span class="mord">4</span></span></span></span> 。</p>
+<p>你可以通过一个指针变量来间接地访问另外一个变量，例如上例中，如果我们有办法以变量 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> 中的值作为地址去访问内存，那么我们就间接地访问到了变量 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span> 中的内容。事实上存在这样的方法，通过一个指针访问它所指向的地址的过程称为对指针的 <strong>解引用 (dereference)</strong> 。</p>
+<p>我们用 <code>*p</code> 表示对指针变量 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> 的解引用。很多初学者会把指针的解引用和声明混淆，下文会对此给出详细解释。</p>
+<p>在高级语言的层面，对指针解引用的过程可以粗略地分为两个步骤：</p>
+<ul>
+<li>
+<p>按变量名访问指针变量 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> ，获取 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> 的内容，记为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>v</mi><mi>p</mi></msub></mrow><annotation encoding="application/x-tex">v_p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">p</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span> ；</p>
+</li>
+<li>
+<p>按具体地址 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>v</mi><mi>p</mi></msub></mrow><annotation encoding="application/x-tex">v_p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">p</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span> 访问到某个变量（地址），获取该地址处存储的内容。</p>
+</li>
+</ul>
+<p>而在访问一个普通的变量时，我们只有第一个步骤：</p>
+<ul>
+<li>按变量名访问变量 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span> ，获取 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span> 的内容。</li>
+</ul>
+<p>事实上，取出指针变量中存储的这个地址值的过程，和访问一个普通的变量的过程是没有任何区别的，区别只是我们取出这个值后，将其视为地址，并再次进行内存访问。</p>
+<hr />
+<h3 id="基本语法"><a class="markdownIt-Anchor" href="#基本语法"></a> 基本语法</h3>
+<h4 id="声明"><a class="markdownIt-Anchor" href="#声明"></a> 声明</h4>
+<p>我们用 <code>T *</code> 来声明一个指向类型为 <code>T</code> 的变量的指针。</p>
+<p>例如，声明并定义一个指向 int 类型的指针 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> 的代码如下所示：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> * p;</span><br></pre></td></tr></table></figure>
+<p>运算符 <code>*</code> 与 int 和 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> 之间的空格不影响语法，也就是说下面两种写法和上面是等价的：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>* p;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> *p;</span><br></pre></td></tr></table></figure>
+<p>也存在关于哪种写法更好的争论，也各有各的理由。我认为这并不重要，使用你喜欢的写法就好，但建议你在你的程序中使用统一的某种写法，否则会显得很混乱。</p>
+<p>需要注意的是，下面的代码声明并定义了一个指针 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> 和一个普通变量 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>q</mi></mrow><annotation encoding="application/x-tex">q</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">q</span></span></span></span> ，而不是你想象中的两个指针；</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> * p, q;</span><br></pre></td></tr></table></figure>
+<p>C 语言的语法就是这么规定的，所以也不要问为什么是这样，没有为什么。</p>
+<p>基于这个理由，我个人习惯于使用第一种或第三种写法，因为第二种写法可能会导致上述的误导：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> * p, * q;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> *p, *q;</span><br></pre></td></tr></table></figure>
+<p>如果你喜欢第二种写法，则建议你在声明多个指针时分成多句声明，以免粗心产生错误：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>* p;</span><br><span class="line"><span class="keyword">int</span>* q;</span><br></pre></td></tr></table></figure>
+<h4 id="取地址"><a class="markdownIt-Anchor" href="#取地址"></a> 取地址</h4>
+<p>设 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span> 是一个变量，我们用 <code>&amp;a</code> 表示变量 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span> 的具体地址值，其中 <code>&amp;</code> 在此处作为 <strong>取地址运算符 (address operator)</strong> 。</p>
+<p>例如，声明并定义一个指向 int 类型的指针 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> ，并将其初始化指向变量 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span> 的代码如下所示：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">int</span> * p = &amp;a;</span><br></pre></td></tr></table></figure>
+<p>变量 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span> 和变量 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> 的类型必须是匹配的，也就是说，设变量 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span> 的类型为 <code>T</code> ，则变量 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> 的类型就应当是 <code>T *</code> 。如果指针和被指向的变量的类型不匹配，那么多半是不合法的，存在极大的隐患，具体详见下文。</p>
+<p>另外，如果我们把 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> 定义的赋值分开，其语法与你想象中的并不相同，是 <code>p = &amp;a</code> 而非 <code>*p = &amp;a</code> ：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">int</span> * p;</span><br><span class="line">p = &amp;a;</span><br></pre></td></tr></table></figure>
+<p>因为在声明语句中，运算符 <code>*</code> 的含义是“告诉编译器，这个变量是一个指针”。下文会对此给出更详细的解释。</p>
+<p>当然，通过取地址运算符所得到的不是一个变量（更专业地讲，得到的是一个右值而非左值），因此下列代码是不合法的：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">int</span> b = <span class="number">2</span>;</span><br><span class="line">&amp;a = &amp;b;</span><br></pre></td></tr></table></figure>
+<p>这很好理解，编译器当然不会允许你去修改一个变量的地址。</p>
+<h4 id="解引用"><a class="markdownIt-Anchor" href="#解引用"></a> 解引用</h4>
+<p>设 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> 是一个指针变量，我们用 <code>*p</code> 表示对指针变量 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> 的解引用，其中 <code>*</code> 在此处作为 <strong>解引用运算符 (dereferencing operator)</strong> 。</p>
+<p>例如，对指针 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> 解引用，并将其值赋给其他变量的代码如下所示：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">int</span> * p = &amp;a;</span><br><span class="line"><span class="keyword">int</span> b = <span class="number">2</span>;</span><br><span class="line">b = *p;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, b);</span><br></pre></td></tr></table></figure>
+<p>对指针 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> 解引用，并修改 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> 所指向变量的内容的代码如下所示：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">int</span> * p = &amp;a;</span><br><span class="line">*p = <span class="number">2</span>;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, a);</span><br></pre></td></tr></table></figure>
+<p>当然，我们也可以直接对一个地址解引用：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">1</span>;</span><br><span class="line">*&amp;a = <span class="number">2</span>;</span><br></pre></td></tr></table></figure>
+<p>事实上，单从结果上而言第 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn></mrow><annotation encoding="application/x-tex">2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span> 行代码和直接的 <code>a = 2</code> 毫无区别，但是它涉及更多的操作，经历了取地址和解引用的额外过程。这样的代码运行效率低下且可读性差，因此没有人会在实际中使用这种表达式，这毫无意义，你只需要能够理解它就可以了。</p>
+<h4 id="区分声明和解引用"><a class="markdownIt-Anchor" href="#区分声明和解引用"></a> 区分声明和解引用</h4>
+<p>很多初学者会把指针的解引用和声明弄混淆。如你所见，运算符 <code>*</code> 在声明语句和其它表达式语句中的含义是不同的：</p>
+<ul>
+<li>
+<p>在声明语句中，运算符 <code>*</code> 的含义是“告诉编译器，这个变量是一个指针”，例如 <code>int *</code> 事实上是一体的；</p>
+</li>
+<li>
+<p>否则，运算符 <code>*</code> 的含义是解引用运算符。</p>
+</li>
+</ul>
+<p>请读者一定要对此加以区分。下面给出一段代码示例帮助读者加深印象：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">int</span> b = <span class="number">2</span>;</span><br><span class="line"><span class="keyword">int</span> * p = &amp;a; <span class="comment">// 声明并定义一个指针变量 p ，且将其初始化指向变量 a</span></span><br><span class="line"><span class="keyword">int</span> * q;      <span class="comment">// 声明并定义一个指针变量 q</span></span><br><span class="line">q = &amp;a;       <span class="comment">// 将 q 初始化指向变量 a</span></span><br><span class="line">*q = <span class="number">3</span>;       <span class="comment">// 对指针 q 解引用，并修改 q 所指向变量的内容为 3</span></span><br><span class="line">*p = b;       <span class="comment">// 对指针 p 解引用，并修改 p 所指向变量的内容为变量 b 的内容</span></span><br><span class="line">p = &amp;b;       <span class="comment">// 令指针 p 指向变量 b</span></span><br><span class="line">p = q;        <span class="comment">// 令指针 p 指向和指针 q 相同的目标</span></span><br></pre></td></tr></table></figure>
+<p>同时附上代码运行到第 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>4</mn><mo separator="true">,</mo><mtext> </mtext><mn>5</mn><mo separator="true">,</mo><mtext> </mtext><mn>6</mn><mo separator="true">,</mo><mtext> </mtext><mn>7</mn><mo separator="true">,</mo><mtext> </mtext><mn>8</mn><mo separator="true">,</mo><mtext> </mtext><mn>9</mn></mrow><annotation encoding="application/x-tex">4,\ 5,\ 6,\ 7,\ 8,\ 9</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="mord">4</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord">5</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord">6</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord">7</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord">8</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord">9</span></span></span></span> 行时，程序内存的可能的图示：</p>
+<p><img src="/images/Programming-Languages/C/C-0200-i06.png" alt="" /></p>
+<hr />
+<h3 id="空指针"><a class="markdownIt-Anchor" href="#空指针"></a> 空指针</h3>
+<p>C 语言标准明确定义了 <strong>空指针 (NULL pointer)</strong> 的概念，它作为一个特殊的指针变量，表示不指向任何东西。要将一个指针变量设为空指针，你可以将其值设为 C 标准库中的宏定义 <code>NULL</code> ：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> * p = <span class="literal">NULL</span>;</span><br></pre></td></tr></table></figure>
+<p>在不同的编译环境中，对 <code>NULL</code> 的定义可能不同，它可以被定义为 <code>((void*)0)</code> , <code>0</code> 或 <code>0L</code> ，但是可以看到只是最后被转换的类型不同，其数值均为零值。</p>
+<p>对空指针的解引用是不合法的：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> * p = <span class="literal">NULL</span>;</span><br><span class="line"><span class="keyword">int</span> a = *p;</span><br></pre></td></tr></table></figure>
+<p>空指针是非常有用的，例如你想实现一个函数，其功能是查找数组内是否存在某个数 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> ，若存在则返回其首次出现的位置的地址。思考当查找失败时你应该返回一个什么值？你需要这样的一个值：其类型为指针，且可以用于表示“什么也没有”——那就是空指针：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> * <span class="title">find_first</span><span class="params">(<span class="keyword">int</span> arr[], <span class="keyword">int</span> n, <span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i;</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i ++) &#123;</span><br><span class="line">		<span class="keyword">if</span> (arr[i] == x) &#123;</span><br><span class="line">			<span class="keyword">return</span> &amp;arr[i];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意，由于空指针的数值是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span> ，下列代码是可以正常运行的：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> * p = find_first(a, n, x);</span><br><span class="line"><span class="keyword">if</span> (p == <span class="number">0</span>) &#123;</span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但是我们并不推荐这样做。在复杂的代码中，这样的表达式会引起误解，使阅读者无法准确理解 if 条件的语义。建议在判断空指针时严格使用宏定义 <code>NULL</code> 而不是字面值 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span> 。</p>
+<hr />
+<h3 id="野指针和悬挂指针"><a class="markdownIt-Anchor" href="#野指针和悬挂指针"></a> 野指针和悬挂指针</h3>
+<p>未被初始化的指针被称为 <strong>野指针 (wild pointer)</strong> 。就如同普通的变量一般，访问未被初始化的指针变量会触发未定义行为。之所以特别存在野指针的概念，只是因为对野指针解引用也会触发未定义行为，而这是未被初始化的普通变量所不具备的特点。</p>
+<p>以下面的代码为例，当运行到 printf 语句时，指针 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> 是野指针，而 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>q</mi></mrow><annotation encoding="application/x-tex">q</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">q</span></span></span></span> 和 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>p</mi></mrow><annotation encoding="application/x-tex">sp</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">p</span></span></span></span> 不是：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">int</span> * p;</span><br><span class="line">	<span class="keyword">int</span> * q = &amp;a;</span><br><span class="line">	<span class="keyword">static</span> <span class="keyword">int</span> * sp;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;666&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果一个指针所指向的内存地址被释放，那么这个指针将会成为 <strong>悬挂指针 (dangling pointer)</strong> ，也称为 <strong>悬垂指针</strong> 。访问悬挂指针是“合法的”（例如为悬垂指针重新设置其所指的内存地址），但是对悬挂指针解引用会触发未定义行为。</p>
+<p>悬挂指针的问题一般是由动态内存分配导致的，如果在释放动态分配的内存时，没有妥善处理那些指向这块内存的指针，就会产生悬挂指针。以下面的代码为例，对指针 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> 的第二次解引用就是不合法的：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> * p = (<span class="keyword">int</span> *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">int</span>));</span><br><span class="line">*p = <span class="number">1</span>;</span><br><span class="line"><span class="built_in">free</span>(p);</span><br><span class="line">*p = <span class="number">2</span>;</span><br></pre></td></tr></table></figure>
+<p>如果释放了动态内存，则应当将所有指向这块内存的指针重新赋值。如果这些指针暂无其它用途，则通常将其设为空指针：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> * p = (<span class="keyword">int</span> *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">int</span>));</span><br><span class="line"><span class="keyword">int</span> * q = p;</span><br><span class="line"><span class="built_in">free</span>(p);</span><br><span class="line">p = <span class="literal">NULL</span>;</span><br><span class="line">q = <span class="literal">NULL</span>;</span><br></pre></td></tr></table></figure>
+<p>同样地，我们也不应当容忍任何野指针的存在，应当将所有暂无初值的指针都初始化为空指针。</p>
+<p>这么做理由是显而易见的。其一，因为你可以判断一个指针是否为空指针，却没有办法判断一个指针是否为野指针或悬挂指针：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (p != <span class="literal">NULL</span>) &#123;</span><br><span class="line">	*p = <span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// if (p is a wild/dangling pointer ?)</span></span><br><span class="line"><span class="comment">// no way to check this !</span></span><br></pre></td></tr></table></figure>
+<p>其二，相比空指针而言，野指针和悬挂指针是十分危险的，因为你没有任何办法判断一个指针是否为野指针或悬挂指针，访问它们的行为也无法在编译期或运行期被判别，这可能导致不可预料的后果。而访问空指针的行为在编译期或运行期都很容易判别，即便你在程序中不慎对空指针解引用，大部分运行环境也能将其检测出来，并及时终止程序——程序崩溃虽然也不是什么好事，但总比程序产生随机不确定的错误要好得多。</p>
+<hr />
+<h3 id="指针的本质"><a class="markdownIt-Anchor" href="#指针的本质"></a> 指针的本质</h3>
+<p>请记住： <strong>指针变量只是一种被赋予了特殊语义的变量，它的内容本质上就是一个无符号整数。</strong> 只不过这个整数代表了一个内存地址，所以你可以通过这个地址间接地访问另外一个变量。</p>
+<p>基于你之前所学的内容，下面的代码可能看起来很奇怪，但是事实上是正确的：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">int</span> addr_a = &amp;a;</span><br><span class="line"><span class="keyword">int</span> b = *((<span class="keyword">int</span> *)addr_a);</span><br></pre></td></tr></table></figure>
+<p>当然，这基于本文开头所述的条件：假设在程序的运行环境中 int 类型的长度为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>32</mn></mrow><annotation encoding="application/x-tex">32</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span><span class="mord">2</span></span></span></span> 位，且程序运行在 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>32</mn></mrow><annotation encoding="application/x-tex">32</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span><span class="mord">2</span></span></span></span> 位环境。在这样的条件下，指针的长度和 int 类型的长度只是恰好相同而已，若是在 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>64</mn></mrow><annotation encoding="application/x-tex">64</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">6</span><span class="mord">4</span></span></span></span> 位环境，程序的第 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn></mrow><annotation encoding="application/x-tex">2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span> 行会发生溢出导致丢失信息，那么程序的第 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span></span></span></span> 行将触发未定义行为。所以要避免在需要支持可移植性的程序中写出上述代码。</p>
+<p>不过下面的代码将会报告编译错误，因为编译器不允许对不是地址的变量进行解引用操作：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">int</span> addr_a = &amp;a;</span><br><span class="line"><span class="keyword">int</span> b = *addr_a;</span><br></pre></td></tr></table></figure>
+<p>我们需要进行强制类型转换，这样编译器就会认为程序员知道自己在做什么，而不会认为你写下了错误的代码。</p>
+<p>我们知道，变量类型的意义是为了告诉编译器如何操作数据。因此，所谓的指针类型，就是告诉编译器可以通过这个变量间接操作数据。</p>
+<p>基于上述原因，如果我们能预先确定某个变量的内存地址，我们可以完全不通过取地址运算符来初始化指针：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">1</span>; <span class="comment">// 假设我们预先知道变量 a 的地址是 1020 ，当然，你不可能知道</span></span><br><span class="line"><span class="keyword">int</span> * p = (<span class="keyword">int</span> *)<span class="number">1020</span>;</span><br></pre></td></tr></table></figure>
+<p>指针的内容只是具有特殊含义的整数值而已，取地址符只是用来获取那个特殊的整数值的，不要在心中把这些东西太过于“神化”。</p>
+<p>在上述代码示例中，我们显然不能在编译期确定一个局部变量 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span> 的地址，代码并不合法，但是下列代码就是合法的了（只要用户的输入合法）：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">1</span>, b = <span class="number">2</span>, c = <span class="number">3</span>;</span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">int</span> addr;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;The address of a, b, c is : %u, %u, %u\n&quot;</span>, &amp;a, &amp;b, &amp;c);</span><br><span class="line"><span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;Input the address that you want to read from (zero to exit) : &quot;</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%u&quot;</span>, &amp;addr);</span><br><span class="line">	<span class="keyword">if</span> (addr == <span class="number">0</span>) &#123;</span><br><span class="line">		<span class="keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;The value in [%u] is %d\n&quot;</span>, addr, *((<span class="keyword">int</span> *)addr));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在我本机的某次运行结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">The address of a, b, c is : 6422256, 6422260, 6422264</span><br><span class="line">Input the address that you want to read from (zero to exit) : 6422260</span><br><span class="line">The value in [6422260] is 2</span><br><span class="line">Input the address that you want to read from (zero to exit) : 6422256</span><br><span class="line">The value in [6422256] is 1</span><br><span class="line">Input the address that you want to read from (zero to exit) : 6422264</span><br><span class="line">The value in [6422264] is 3</span><br><span class="line">Input the address that you want to read from (zero to exit) : 0</span><br></pre></td></tr></table></figure>
+<p>虽然这有些蠢，不过这只是为了向读者展示这种操作的可行性，如果实际中真的要使用类似这样的操作，代码肯定比这复杂，至少得能够处理用户的错误输入，否则程序会很容易崩溃。</p>
+<hr />
+<h3 id="指针作为函数参数"><a class="markdownIt-Anchor" href="#指针作为函数参数"></a> 指针作为函数参数</h3>
+<p>我们知道，在 C 语言中函数传参是以值传递的方式进行的，因此我们无法在被调用的函数中修改调用者所在作用域中的变量：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> t = a;</span><br><span class="line">	a = b;</span><br><span class="line">	b = t;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a = <span class="number">1</span>, b = <span class="number">2</span>;</span><br><span class="line">	swap(a, b);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;a = %d, b = %d\n&quot;</span>, a, b);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上述代码的输出结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1 2</span><br></pre></td></tr></table></figure>
+<p>但是我们借助指针就可以彻底解决这个问题：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span> * a, <span class="keyword">int</span> * b)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> t = *a;</span><br><span class="line">	*a = *b;</span><br><span class="line">	*b = t;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a = <span class="number">1</span>, b = <span class="number">2</span>;</span><br><span class="line">	swap(&amp;a, &amp;b);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;a = %d, b = %d\n&quot;</span>, a, b);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上述代码的输出结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2 1</span><br></pre></td></tr></table></figure>
+<p>我把这部分内容的更多细节放在函数的文章中具体介绍，详见 <em>C</em> 语言的 <em>03 - Function</em> 文档。</p>
+<ul>
+<li><a href="/Programming%20Languages/C/C%2003%20-%20Function/">C 03 - Function</a></li>
+</ul>
+<hr />
+<h3 id="指针和数组"><a class="markdownIt-Anchor" href="#指针和数组"></a> 指针和数组</h3>
+<p>在 C 语言中，指针和数组之间的关系十分密切，通过数组下标所能完成的任何操作都可以通过指针来完成。</p>
+<p>存在这样的一种说法：使用指针比使用数组下标的程序运行效率更高，但代码会看起来更复杂。事实上，这个说法是不太准确的，还是要看实际情况。</p>
+<p>在本节中，我们均以这个长为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>7</mn></mrow><annotation encoding="application/x-tex">7</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">7</span></span></span></span> 的数组 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span> 为例。为便于描述，假设在以下所有代码示例均包含 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span> 和 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> 的声明。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a[] = &#123;<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>&#125;;</span><br><span class="line"><span class="keyword">int</span> n = <span class="number">7</span>;</span><br></pre></td></tr></table></figure>
+<h4 id="数组的连续性"><a class="markdownIt-Anchor" href="#数组的连续性"></a> 数组的连续性</h4>
+<p>下面的代码声明并定义了一个指向 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">a_0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 的指针 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> ，并通过 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> 来间接访问 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">a_0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> ：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> * p = &amp;a[<span class="number">0</span>];</span><br><span class="line"><span class="keyword">int</span> x = *p;</span><br></pre></td></tr></table></figure>
+<p>这看起来和之前没什么不同，我们只需要和往常一样获取数组元素的地址并将其赋给指针变量即可。它的特殊之处在于，如果我们有一个指向某个数组元素的指针，那么我们就可以对这个指针进行一些特殊的运算。</p>
+<p>我们知道，数组中的元素在内存中一定是连续存储的，这就创造了机会——编译器对普通变量的存放位置是不可控的，即便你连续声明几个变量，它们在内存中也不一定是挨在一起的。但是数组中的元素一定是按顺序连续存储的，例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i;</span><br><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i ++) &#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%u%c&quot;</span>, &amp;a[i], (i == n - <span class="number">1</span> ? <span class="string">&#x27;\n&#x27;</span> : <span class="string">&#x27; &#x27;</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上述代码在我本机上的某次运行结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">6356708 6356712 6356716 6356720 6356724 6356728 6356732</span><br></pre></td></tr></table></figure>
+<p>在不同的地方运行 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">a_0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 会具有不同的地址值，但是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mi>i</mi></msub><mtext> </mtext><mo stretchy="false">(</mo><mi>i</mi><mo>&gt;</mo><mn>0</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">a_i\ (i &gt; 0)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace"> </span><span class="mopen">(</span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">0</span><span class="mclose">)</span></span></span></span> 的地址值将会被 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">a_0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 的地址所确定。</p>
+<p>基于上述原因，除了解引用以外，指针还具备如下合法的运算：</p>
+<ul>
+<li>
+<p>指针和整数之间的加减法；</p>
+</li>
+<li>
+<p>指针的自增自减；</p>
+</li>
+<li>
+<p>指针和指针之间的减法；</p>
+</li>
+<li>
+<p>指针和指针之间的比较关系。</p>
+</li>
+</ul>
+<p>注意，参与上述运算的指针必须是指向数组中的元素的，否则将会触发未定义行为。</p>
+<h4 id="指针和整数之间的加减法"><a class="markdownIt-Anchor" href="#指针和整数之间的加减法"></a> 指针和整数之间的加减法</h4>
+<p>如果一个指针 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> 指向数组元素 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">a_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> ，那么指针 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi><mo>+</mo><mi>x</mi></mrow><annotation encoding="application/x-tex">p + x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7777700000000001em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 将指向数组元素 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mrow><mi>i</mi><mo>+</mo><mi>x</mi></mrow></msub></mrow><annotation encoding="application/x-tex">a_{i+x}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.638891em;vertical-align:-0.208331em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mbin mtight">+</span><span class="mord mathdefault mtight">x</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span></span></span></span> ，其中 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 为整数且假定 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mo>+</mo><mi>x</mi></mrow><annotation encoding="application/x-tex">i + x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.74285em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 没有发生越界。例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> * p = &amp;a[<span class="number">1</span>];</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;p(%u) + %d = (%u)\n&quot;</span>, p, <span class="number">1</span>, p + <span class="number">1</span>);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;p(%u) + %d = (%u)\n&quot;</span>, p, <span class="number">3</span>, p + <span class="number">3</span>);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;p(%u) - %d = (%u)\n&quot;</span>, p, <span class="number">1</span>, p - <span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+<p>上述代码在我本机上的某次运行结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">p(6356712) + 1 &#x3D; (6356716)</span><br><span class="line">p(6356712) + 3 &#x3D; (6356724)</span><br><span class="line">p(6356712) - 1 &#x3D; (6356708)</span><br></pre></td></tr></table></figure>
+<p>由此可见，当指针加上或减去一个整数 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 时，指针的值事实上是加上或减去了 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mo>∗</mo><mi>x</mi></mrow><annotation encoding="application/x-tex">s * x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.46528em;vertical-align:0em;"></span><span class="mord mathdefault">s</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> ，其中 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi></mrow><annotation encoding="application/x-tex">s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">s</span></span></span></span> 为指针指向的类型的长度（字节个数）。因为 int 类型在此处的长度为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>4</mn></mrow><annotation encoding="application/x-tex">4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">4</span></span></span></span> 字节，所以 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">p + 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7777700000000001em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> 会使 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> 中的实际地址值 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>+</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">+4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">+</span><span class="mord">4</span></span></span></span> 。</p>
+<p>也就是说，如果 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span> 是 short 类型的， <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> 是 <code>short *</code> 类型的，那么运行结果可能会是这样的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">p(6356724) + 1 &#x3D; (6356726)</span><br><span class="line">p(6356724) + 3 &#x3D; (6356730)</span><br><span class="line">p(6356724) - 1 &#x3D; (6356722)</span><br></pre></td></tr></table></figure>
+<p>这样的特性对程序员来说非常有益，这使得我们在对指针加上或减去一个整数时，不需要关心指针的具体类型，而只需要考虑我们希望指针向前或向后移动多少位。语言会自动地帮我们将其转换为具体的数值。</p>
+<p>我们也可以直接对 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi><mo>+</mo><mi>x</mi></mrow><annotation encoding="application/x-tex">p + x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7777700000000001em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 解引用，例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> * p = &amp;a[<span class="number">4</span>];</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;*p = %d\n&quot;</span>, *p);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;*(p + %d) = %d\n&quot;</span>, <span class="number">1</span>, *(p + <span class="number">1</span>));</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;*(p - %d) = %d\n&quot;</span>, <span class="number">2</span>, *(p - <span class="number">2</span>));</span><br></pre></td></tr></table></figure>
+<p>上述代码的运行结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">*p &#x3D; 4</span><br><span class="line">*(p + 1) &#x3D; 5</span><br><span class="line">*(p - 2) &#x3D; 2</span><br></pre></td></tr></table></figure>
+<p>另外需要注意的是，如果 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi><mo>+</mo><mi>x</mi></mrow><annotation encoding="application/x-tex">p + x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7777700000000001em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 超出了数组的合法地址范围，那么对 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi><mo>+</mo><mi>x</mi></mrow><annotation encoding="application/x-tex">p + x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7777700000000001em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 解引用等同于数组越界，将会触发未定义行为。</p>
+<h4 id="指针的自增自减"><a class="markdownIt-Anchor" href="#指针的自增自减"></a> 指针的自增自减</h4>
+<p>指针也可以进行自增或自减，等同于 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">+</span><span class="mord">1</span></span></span></span> 或 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">−</span><span class="mord">1</span></span></span></span> ，前缀或后缀均可，例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> * p = &amp;a[<span class="number">0</span>];</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%u\n&quot;</span>, p);</span><br><span class="line">p ++;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%u\n&quot;</span>, p);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%u\n&quot;</span>, --p);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%u\n&quot;</span>, p++);</span><br></pre></td></tr></table></figure>
+<p>上述代码在我本机上的某次运行结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">6356708</span><br><span class="line">6356712</span><br><span class="line">6356708</span><br><span class="line">6356708</span><br></pre></td></tr></table></figure>
+<p>注意有一个新手容易弄错的地方。考虑下面的代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> * p = &amp;a[<span class="number">0</span>];</span><br><span class="line"><span class="keyword">int</span> x = *p++;</span><br></pre></td></tr></table></figure>
+<p>根据运算符优先级，上述代码事实上等同于：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> * p = &amp;a[<span class="number">0</span>];</span><br><span class="line"><span class="keyword">int</span> x = *(p++);</span><br></pre></td></tr></table></figure>
+<p>这会令 <code>x = *p</code> 然后令 <code>p ++</code> 。如果你希望做的事情是令 <code>x = *p</code> 然后令 <code>a[0] ++</code> ，那么代码应该写成：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> * p = &amp;a[<span class="number">0</span>];</span><br><span class="line"><span class="keyword">int</span> x = (*p)++;</span><br></pre></td></tr></table></figure>
+<h4 id="指针和指针之间的减法"><a class="markdownIt-Anchor" href="#指针和指针之间的减法"></a> 指针和指针之间的减法</h4>
+<p>基于指针和整数之间的加减法，我们可以定义指针和指针之间的减法，将得到二者之间相差的距离，例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> * p = &amp;a[<span class="number">1</span>];</span><br><span class="line"><span class="keyword">int</span> * q = &amp;a[<span class="number">4</span>];</span><br><span class="line"><span class="keyword">int</span> delta = q - p;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;q - p = %d\n&quot;</span>, delta);</span><br></pre></td></tr></table></figure>
+<p>上述代码的运行结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">q - p &#x3D; 3</span><br></pre></td></tr></table></figure>
+<p>这很好理解，毕竟根据之前的定义有 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>q</mi><mo>=</mo><mi>p</mi><mo>+</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">q = p + 3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">q</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.7777700000000001em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span></span></span></span> ，因此 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi><mo separator="true">,</mo><mtext> </mtext><mi>q</mi></mrow><annotation encoding="application/x-tex">p,\ q</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord mathdefault" style="margin-right:0.03588em;">q</span></span></span></span> 相减即可得到 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span></span></span></span> 。</p>
+<p>再给出一个示例：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, &amp;a[<span class="number">5</span>] - (&amp;a[<span class="number">0</span>] + <span class="number">3</span>));</span><br></pre></td></tr></table></figure>
+<p>上述代码的运行结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2</span><br></pre></td></tr></table></figure>
+<p>需要注意的是，参与运算的两个指针必须指向同一个数组中的元素，否则是不合法的。此外，指针之间的加法也是不合法的。</p>
+<h4 id="指针和指针之间的比较关系"><a class="markdownIt-Anchor" href="#指针和指针之间的比较关系"></a> 指针和指针之间的比较关系</h4>
+<p>用 <code>&gt;, &lt;, &gt;=, &lt;=</code> 对两个指针进行比较也是可能的，比较的结果取决于二者指向的数组元素在数组中的前后关系，例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> * p = &amp;a[<span class="number">1</span>];</span><br><span class="line"><span class="keyword">int</span> i;</span><br><span class="line"><span class="keyword">for</span> (i = <span class="number">2</span>; (p + i) &lt; &amp;a[<span class="number">5</span>]; i ++) &#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, *(p + i));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上述代码的运行结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">3</span><br><span class="line">4</span><br></pre></td></tr></table></figure>
+<p>和指针之间的减法一样，参与运算的两个指针必须指向同一个数组中的元素。</p>
+<h4 id="对指针使用数组的语法"><a class="markdownIt-Anchor" href="#对指针使用数组的语法"></a> 对指针使用数组的语法</h4>
+<p>如果指针指向数组中的元素，我们就可以对指针使用数组下标以实现解引用，例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> arr[<span class="number">5</span>] = &#123;<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>&#125;;</span><br><span class="line"><span class="keyword">int</span> * p = &amp;arr[<span class="number">3</span>];</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, p[<span class="number">1</span>]);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, p[<span class="number">-2</span>]);</span><br></pre></td></tr></table></figure>
+<p>上述代码的运行结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">4</span><br><span class="line">1</span><br></pre></td></tr></table></figure>
+<p>如你所见， <code>p[i]</code> 和 <code>*(p + i)</code> 这两种语法的运行结果是相同的，而且我们甚至可以使用负数，这并不违法，只要最终算出的地址没有越界。</p>
+<h4 id="对数组使用指针的语法"><a class="markdownIt-Anchor" href="#对数组使用指针的语法"></a> 对数组使用指针的语法</h4>
+<p>和指针类似， <code>a[i]</code> 和 <code>*(a + i)</code> 这两种语法的运行结果是相同的。例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a[<span class="number">5</span>];</span><br><span class="line"><span class="keyword">int</span> t = *(a + <span class="number">3</span>);</span><br></pre></td></tr></table></figure>
+<p>当然，对二者分别取地址后得到的 <code>&amp;a[i]</code> 和 <code>a + i</code> 也是等价的：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a[<span class="number">5</span>];</span><br><span class="line"><span class="keyword">int</span> * p = &amp;a[<span class="number">2</span>];</span><br><span class="line"><span class="keyword">int</span> * q = a + <span class="number">2</span>;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;p(%u), q(%u)\n&quot;</span>, p, q);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;(p == q) = %d\n&quot;</span>, (p == q));</span><br></pre></td></tr></table></figure>
+<p>上述代码在我本机上的某次运行结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">p(6356716), q(6356716)</span><br><span class="line">(p &#x3D;&#x3D; q) &#x3D; 1</span><br></pre></td></tr></table></figure>
+<p>可见二者指向的是同一块地址。</p>
+<p>如你所见，指针和数组的语法几乎可以互换，我们似乎总是可以将指针和数组名进行互换而不改变程序运行的结果。然而事实上并非如此，这里面并没有你想象中的那么简单。</p>
+<h4 id="数组名和指针"><a class="markdownIt-Anchor" href="#数组名和指针"></a> 数组名和指针</h4>
+<p>我们知道，下面的代码会把 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mn>0</mn></msub></mrow><annotation encoding="application/x-tex">a_0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 的地址赋给指针 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> ：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> * p = &amp;a[<span class="number">0</span>];</span><br></pre></td></tr></table></figure>
+<p>上述代码也可以写成如下的形式，且二者是等价的：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> * p = a;</span><br></pre></td></tr></table></figure>
+<p>如果你在其它地方学习过指针的知识，你可能会有一个错误的认知：数组名就是数组首元素的地址。它的理由也很简单：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a[<span class="number">5</span>];</span><br><span class="line"><span class="keyword">int</span> * p = &amp;a[<span class="number">0</span>];</span><br><span class="line"><span class="keyword">int</span> * q = a;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;p(%u), q(%u)\n&quot;</span>, p, q);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;(p == q) = %d\n&quot;</span>, (p == q));</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;(&amp;a[0] == a) = %d\n&quot;</span>, (&amp;a[<span class="number">0</span>] == a));</span><br></pre></td></tr></table></figure>
+<p>上述代码在我本机上的某次运行结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">p(6356708), q(6356708)</span><br><span class="line">(p &#x3D;&#x3D; q) &#x3D; 1</span><br><span class="line">(&amp;a[0] &#x3D;&#x3D; a) &#x3D; 1</span><br></pre></td></tr></table></figure>
+<p>这个实例和前文介绍的数组和指针之间语法的可互换性似乎足以佐证这个观点，然而事实并非如此。在上述代码中存在一个类似于隐式类型转换的过程，数组名在上述赋值和比较语句中都是先被转换成了指针类型，再参与表达式的计算的。</p>
+<p>记住： <strong>数组名和指针是不同的。</strong> 没人会认为数组等同于指针，但是有很多人认为数组名等同于指针，这是错误的。要想证明这一点很简单，例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="keyword">sizeof</span>(&amp;a[<span class="number">0</span>]));</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="keyword">sizeof</span>(a));</span><br></pre></td></tr></table></figure>
+<p>上述代码的运行结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">4</span><br><span class="line">28</span><br></pre></td></tr></table></figure>
+<p>可见数组名至少包含了数组的长度信息，二者是不同的。事实上，二者之间的区别还远不止如此。</p>
+<p>但是对于初学者而言，理解指针和数组的各种知识本就已经较为吃力，因此我不会在本文中对二者的区别进行详细介绍。你现在只需要知道：在进行各种运算时，数组名会被转换为等价于数组首地址的一个指针，但是数组名本身不是指针。知道它们不同就行了，具体是什么不同，可以等以后水平上去了再去了解。当然，如果你有兴趣，也可以直接去学。</p>
+<p>关于数组名和指针的区别，详见 <em>C</em> 语言的 <em>05 - Array Name is NOT a Pointer</em> 文档。</p>
+<ul>
+<li><a href="/Programming%20Languages/C/C%2005%20-%20Array%20Name%20is%20NOT%20a%20Pointer/">C 05 - Array Name is NOT a Pointer</a></li>
+</ul>
+<h4 id="指针数组"><a class="markdownIt-Anchor" href="#指针数组"></a> 指针数组</h4>
+<p>顾名思义，指针数组就是由指针变量构成的数组，数组中的每个元素都是一个指针变量。例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> * arr_p[<span class="number">5</span>];</span><br><span class="line"><span class="keyword">int</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">int</span> b = <span class="number">2</span>;</span><br><span class="line">arr_p[<span class="number">0</span>] = &amp;a;</span><br><span class="line">arr_p[<span class="number">1</span>] = <span class="literal">NULL</span>;</span><br><span class="line">arr_p[<span class="number">2</span>] = &amp;b;</span><br><span class="line">arr_p[<span class="number">3</span>] = arr_p[<span class="number">0</span>];</span><br><span class="line">*arr_p[<span class="number">3</span>] = <span class="number">3</span>;</span><br></pre></td></tr></table></figure>
+<p>这和普通变量的数组本质上没什么区别，很好理解，但是要注意将指针数组和接下来要介绍的数组指针区分开来。</p>
+<h4 id="数组指针"><a class="markdownIt-Anchor" href="#数组指针"></a> 数组指针</h4>
+<p>数组指针指的是指向数组的指针。例如下面的代码中，指针 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> 可以指向一个长度为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>5</mn></mrow><annotation encoding="application/x-tex">5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">5</span></span></span></span> 的 int 数组：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> (*p)[<span class="number">5</span>];</span><br></pre></td></tr></table></figure>
+<p>这个语法看起来有些奇怪，你可以姑且这样理解：用括号表示先将 <code>*</code> 与 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> 结合，表示 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> 是一个指针。事实上 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> 的类型说明符是 <code>int (*)[5]</code> 。</p>
+<p>注意一定要弄清楚，数组指针指向的是一块大小为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>L</mi><mo>∗</mo><mi>s</mi></mrow><annotation encoding="application/x-tex">L * s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">L</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">s</span></span></span></span> 的空间，其中 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>L</mi><mo separator="true">,</mo><mtext> </mtext><mi>s</mi></mrow><annotation encoding="application/x-tex">L,\ s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">L</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord mathdefault">s</span></span></span></span> 分别为数组长度和数组的基本类型，例如 <code>int (*)[5]</code> 类型的指针指向的是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>5</mn><mo>∗</mo><mn>4</mn><mo>=</mo><mn>20</mn></mrow><annotation encoding="application/x-tex">5 * 4 = 20</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">5</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">4</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mord">0</span></span></span></span> 字节大小的空间。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> arr[<span class="number">5</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line"><span class="keyword">int</span> (*p_arr)[<span class="number">5</span>];</span><br><span class="line">p_arr = &amp;arr;</span><br></pre></td></tr></table></figure>
+<p>下图展示了指针数组和数组指针之间的不同，其中指针数组对应于上一节中的代码示例，数组指针对应于本节中上文最邻近的代码示例：</p>
+<p><img src="/images/Programming-Languages/C/C-0200-i07.png" alt="" /></p>
+<p>下面的代码演示了数组指针的解引用的相关语法：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> arr[<span class="number">5</span>] = &#123;<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>&#125;;</span><br><span class="line"><span class="keyword">int</span> (*p_arr)[<span class="number">5</span>] = &amp;arr;</span><br><span class="line"><span class="keyword">int</span> a = (*p_arr)[<span class="number">1</span>];</span><br><span class="line"><span class="keyword">int</span> b = *(*p_arr + <span class="number">3</span>);</span><br><span class="line"><span class="keyword">int</span> * p = *p_arr;</span><br><span class="line"><span class="keyword">int</span> c = *(p + <span class="number">2</span>);</span><br><span class="line"><span class="keyword">int</span> i;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d %d %d\n&quot;</span>, a, b, c);</span><br><span class="line">*(*p_arr + <span class="number">2</span>) = <span class="number">5</span>;</span><br><span class="line">**p_arr = <span class="number">6</span>;</span><br><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i ++) &#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d%c&quot;</span>, arr[i], (i == <span class="number">4</span> ? <span class="string">&#x27;\n&#x27;</span> : <span class="string">&#x27; &#x27;</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意 <code>*p_arr</code> 对 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi><mi mathvariant="normal">_</mi><mi>a</mi><mi>r</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">p\_arr</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.74056em;vertical-align:-0.31em;"></span><span class="mord mathdefault">p</span><span class="mord" style="margin-right:0.02778em;">_</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span> 解引用将会得到 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mi>r</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">arr</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span> 本身，由此你就能理解对 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mo separator="true">,</mo><mtext> </mtext><mi>b</mi><mo separator="true">,</mo><mtext> </mtext><mi>p</mi><mo separator="true">,</mo><mtext> </mtext><mi>c</mi></mrow><annotation encoding="application/x-tex">a,\ b,\ p,\ c</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">a</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord mathdefault">b</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord mathdefault">p</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord mathdefault">c</span></span></span></span> 赋值的代码了，只是先通过解引用数组指针来得到数组，再像往常一样对数组进行操作。</p>
+<p>上述代码的运行结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1 3 2</span><br><span class="line">6 1 5 3 4</span><br></pre></td></tr></table></figure>
+<p>另外，下面的代码是不合法的：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> (*p_arr)[<span class="number">5</span>] = &amp;arr1;</span><br><span class="line">*p_arr = arr2; <span class="comment">// compile error</span></span><br></pre></td></tr></table></figure>
+<p>因为 C 语言禁止直接把一个数组赋值给变量，和下面的代码不合法是一个道理：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a[<span class="number">5</span>] = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;, b[<span class="number">5</span>] = &#123;<span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">0</span>&#125;;</span><br><span class="line">a = b; <span class="comment">// compile error</span></span><br></pre></td></tr></table></figure>
+<p>实际上我们很少会用到数组指针，除了将多维数组作为函数参数使用的时候。关于数组指针在函数传参中的使用，详见 <em>C</em> 语言的 <em>03 - Function</em> 文档。</p>
+<ul>
+<li><a href="/Programming%20Languages/C/C%2003%20-%20Function/">C 03 - Function</a></li>
+</ul>
+<hr />
+<h3 id="字符指针和字符数组"><a class="markdownIt-Anchor" href="#字符指针和字符数组"></a> 字符指针和字符数组</h3>
+<p>字符指针和字符数组是初学者容易混淆的概念。下面两种声明语句并不相同，虽然它们看起来很相似：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> * p = <span class="string">&quot;abcde&quot;</span>;</span><br><span class="line"><span class="keyword">char</span> a[] = <span class="string">&quot;abcde&quot;</span>;</span><br></pre></td></tr></table></figure>
+<p>作为一名初学者，你无需深究其中的原因，我在此只介绍表层的你需要知道的知识。</p>
+<p>当你用一段字符串来初始化一个字符指针时，并不是给这个指针动态分配了内存，而是在程序内存的一块特殊地段预先存储了字符串 <code>&quot;abcde&quot;</code> ，然后将指针 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> 指向这个字符串的首地址。</p>
+<p>当你用一段字符串来初始化一个字符数组时，就像普通数组一样，静态地开辟了字符串长度 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">+</span><span class="mord">1</span></span></span></span> （为 <code>\0</code> 自动留出）的空间。</p>
+<p>字符数组是可以修改的，就像普通数组一样，但是用上述方法初始化的字符指针是不能修改其所指内容的。例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> * p = <span class="string">&quot;abcde&quot;</span>;</span><br><span class="line">*(p + <span class="number">1</span>) = <span class="string">&#x27;f&#x27;</span>;</span><br></pre></td></tr></table></figure>
+<p>上述代码是非法的，这将会导致未定义行为，程序可能会崩溃，也可能什么都不会发生。</p>
+<p>当然，你可以修改这样的指针的指向，这不会引起任何问题：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> * p = <span class="string">&quot;abcde&quot;</span>;</span><br><span class="line"><span class="keyword">char</span> a[] = <span class="string">&quot;uvwxyz&quot;</span>;</span><br><span class="line"><span class="keyword">char</span> ch = <span class="string">&#x27;f&#x27;</span>;</span><br><span class="line">p = a;</span><br><span class="line">p = &amp;ch;</span><br></pre></td></tr></table></figure>
+<p>你也可以像其他类型一样，用字符指针去间接访问一个字符数组：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> a[] = <span class="string">&quot;abcde&quot;</span>;</span><br><span class="line"><span class="keyword">char</span> * p = &amp;a[<span class="number">2</span>];</span><br><span class="line">*p = <span class="string">&#x27;f&#x27;</span>;</span><br><span class="line">*(p + <span class="number">1</span>) = <span class="string">&#x27;g&#x27;</span>;</span><br><span class="line">a[<span class="number">0</span>] = *(p + <span class="number">2</span>);</span><br></pre></td></tr></table></figure>
+<p>总体来说，只有当你直接用一个字符串去初始化一个字符指针时，情况是特殊的，该指针会指向一个不可被修改的字符串常量的首地址。在其他情况下，字符指针并没有什么特殊之处。</p>
+<hr />
+<h3 id="指针和-const-修饰符"><a class="markdownIt-Anchor" href="#指针和-const-修饰符"></a> 指针和 const 修饰符</h3>
+<p>我们可以用 const 来修饰指针变量。根据修饰方式的不同，会产生下列三类不同的指针：</p>
+<ul>
+<li>
+<p>指向常量的指针，又称为常量指针；</p>
+</li>
+<li>
+<p>常指针，又称为指针常量；</p>
+</li>
+<li>
+<p>指向常量的常指针。</p>
+</li>
+</ul>
+<h4 id="指向常量的指针"><a class="markdownIt-Anchor" href="#指向常量的指针"></a> 指向常量的指针</h4>
+<p><strong>指向常量的指针 (pointer to constant value)</strong> 指的是无法通过解引用修改被指向的变量的指针，又称为 <strong>常量指针</strong> 。下面的代码声明并定义了一个指向常量的指针 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> ：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">int</span> b = <span class="number">2</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> * p = &amp;a;</span><br></pre></td></tr></table></figure>
+<p>另外一种声明的语法和上面是等价的：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> <span class="keyword">const</span> * p = &amp;a;</span><br></pre></td></tr></table></figure>
+<p>你可以对 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> 解引用并获取其值，但不能对其进行修改，否则你会得到一个编译错误：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">b = *p;</span><br><span class="line">*p = <span class="number">3</span>; <span class="comment">// compile error</span></span><br></pre></td></tr></table></figure>
+<p>你可以修改 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> 所指向的地址：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">p = &amp;b;</span><br></pre></td></tr></table></figure>
+<p>如你所见，被指向的变量本身并不一定被 const 修饰，不要被名字误导了。</p>
+<h4 id="常指针"><a class="markdownIt-Anchor" href="#常指针"></a> 常指针</h4>
+<p><strong>常指针 (constant pointer)</strong> 指的是无法修改指向的指针，又称为 <strong>指针常量</strong> 。这就像你无法修改一个常量的值一样，指针所指向的地址就是指针变量的值。下面的代码声明并定义了一个常指针 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> ：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">int</span> b = <span class="number">2</span>;</span><br><span class="line"><span class="keyword">int</span> * <span class="keyword">const</span> p = &amp;a;</span><br></pre></td></tr></table></figure>
+<p>你可以对 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> 解引用并对其进行任意操作：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">b = *p;</span><br><span class="line">*p = <span class="number">3</span>;</span><br></pre></td></tr></table></figure>
+<p>你不能修改 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> 所指向的地址：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">p = &amp;b; <span class="comment">// compile error</span></span><br></pre></td></tr></table></figure>
+<p>常指针本质上就是一种常量，除了声明的语法比较奇怪以外，它并没有什么特别的地方。</p>
+<h4 id="区分的技巧"><a class="markdownIt-Anchor" href="#区分的技巧"></a> 区分的技巧</h4>
+<p>如你所见，单独看待指向常量的指针和常指针时，它们并不是很难理解，但是它们的语法却很容易混淆：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> * p;</span><br><span class="line"><span class="keyword">int</span> <span class="keyword">const</span> * p;</span><br><span class="line"><span class="keyword">int</span> * <span class="keyword">const</span> p;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> * <span class="keyword">const</span> p;</span><br><span class="line"><span class="keyword">int</span> <span class="keyword">const</span> * <span class="keyword">const</span> p;</span><br></pre></td></tr></table></figure>
+<p>我这么放在一起，你真的分得清吗？</p>
+<p>有一种区分的小技巧，就是用英语倒着阅读这些声明语句。我们把 <code>*</code> 看作是 “points to” ，即指向，那么：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> * p;       <span class="comment">// a [pointer] points to [const int]</span></span><br><span class="line"><span class="keyword">int</span> <span class="keyword">const</span> * p;       <span class="comment">// a [pointer] points to [int const]</span></span><br><span class="line"><span class="keyword">int</span> * <span class="keyword">const</span> p;       <span class="comment">// a [const pointer] points to [int]</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> * <span class="keyword">const</span> p; <span class="comment">// a [const pointer] points to [const int]</span></span><br><span class="line"><span class="keyword">int</span> <span class="keyword">const</span> * <span class="keyword">const</span> p; <span class="comment">// a [const pointer] points to [int const]</span></span><br></pre></td></tr></table></figure>
+<p>由此可见，第 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo separator="true">,</mo><mtext> </mtext><mn>2</mn></mrow><annotation encoding="application/x-tex">1,\ 2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord">2</span></span></span></span> 行是指向常量的指针，第 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span></span></span></span> 行是常指针，第 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>4</mn><mo separator="true">,</mo><mtext> </mtext><mn>5</mn></mrow><annotation encoding="application/x-tex">4,\ 5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="mord">4</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord">5</span></span></span></span> 行是指向常量的常指针。希望这个技巧能够帮助你记忆和区分这些令人头大的语法。</p>
+<p>另外，指向常量的指针经常被称为常量指针，而常指针经常被称为指针常量，你同样要区分常量指针和指针常量这两个名字。</p>
+<p>这个其实并不难区分，与其它常见的称呼对比即可：</p>
+<ul>
+<li>
+<p>对于 <code>int *</code> 类型，也就是指向整型的指针，我们通常称之为整型指针，因此我们将指向常量的指针称为常量指针；</p>
+</li>
+<li>
+<p>对于 <code>const int</code> 类型，也就是常整型，我们通常称之为整型常量，因此我们将常指针称为指针常量。</p>
+</li>
+</ul>
+<hr />
+<h3 id="指向自定义类型的指针"><a class="markdownIt-Anchor" href="#指向自定义类型的指针"></a> 指向自定义类型的指针</h3>
+<p>如果使用指向结构体或联合体这样的自定义类型的指针，其本质和指向基本类型的指针没什么区别。指针变量中仍然存储的是被指向变量的地址。在进行间接访问时，也是先对指针解引用，然后进行各种操作的。</p>
+<p>不过，下面这份看起来正常的代码的语法是有一些问题的：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Block</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> a;</span><br><span class="line">	<span class="keyword">short</span> b;</span><br><span class="line">	<span class="keyword">char</span> c;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Block</span> <span class="title">block</span>;</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Block</span> * <span class="title">p</span> =</span> &amp;block;</span><br><span class="line">*p.a = <span class="number">1</span>; <span class="comment">// compile error</span></span><br></pre></td></tr></table></figure>
+<p>由于 <code>*</code> 和 <code>.</code> 的运算符优先级问题，上述代码的第 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>8</mn></mrow><annotation encoding="application/x-tex">8</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">8</span></span></span></span> 行等同于 <code>*(p.a) = 1</code> ，显然这不符合我们的预期，我们是打算先对 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> 解引用，再访问其成员 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span> 的。为了解决这个问题，我们必须这样做：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(*p).a = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<p>这样就正确了，但是这也带来了一些麻烦：如果每次解引用结构体指针都要打上括号，那既麻烦也不美观。因此 C 语言为我们提供了一种等价的语法：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">p-&gt;a = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<p>使用 <code>-&gt;</code> 运算符可以使代码更加简洁，因此在使用结构体指针时，通常推荐使用这种语法代替普通的指针语法。</p>
+<p>对于指向联合体的指针也是一样的，就不再赘述了。</p>
+<hr />
+<h3 id="多级指针嵌套"><a class="markdownIt-Anchor" href="#多级指针嵌套"></a> 多级指针嵌套</h3>
+<p>考虑这样一个问题，我们可以利用指针来间接修改一个普通变量的值，但是如果我们希望间接修改一个指针的指向呢？此时我们需要使用“指向指针的指针”：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">1</span>, b = <span class="number">2</span>;</span><br><span class="line"><span class="keyword">int</span> * p;</span><br><span class="line"><span class="keyword">int</span> ** pp = &amp;p;</span><br><span class="line">*pp = &amp;a;</span><br><span class="line">**pp = <span class="number">3</span>; <span class="comment">// *(*pp) = 3;</span></span><br><span class="line">p = &amp;b;</span><br><span class="line">*p = <span class="number">4</span>;</span><br></pre></td></tr></table></figure>
+<p>上述代码的示意图如下所示：</p>
+<p><img src="/images/Programming-Languages/C/C-0200-i08.png" alt="" /></p>
+<p>将 <code>int *</code> 视为一个整体，那么 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi><mi>p</mi></mrow><annotation encoding="application/x-tex">pp</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span><span class="mord mathdefault">p</span></span></span></span> 的类型就是 <code>(int *) *</code> 。当我们通过 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi><mi>p</mi></mrow><annotation encoding="application/x-tex">pp</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span><span class="mord mathdefault">p</span></span></span></span> 修改 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> 的指向时，相当于一次间接访问；当我们通过 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi><mi>p</mi></mrow><annotation encoding="application/x-tex">pp</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span><span class="mord mathdefault">p</span></span></span></span> 修改 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span> 的值时，相当于二次间接访问。只要你理解了指针，就应该能轻松地理解多级指针嵌套。</p>
+<p>无论指针类型“嵌套”多少层，本质上都是一样的。</p>
+<p>我们通常也只会用到“指向指针的指针”，因为有时我们需要在函数中修改指针参数的指向，更多级的嵌套极少需要使用。</p>
+<hr />
+<h3 id="动态内存分配"><a class="markdownIt-Anchor" href="#动态内存分配"></a> 动态内存分配</h3>
+<p>我把这部分内容放在专门的一篇文章中进行介绍，详见 <em>C</em> 语言的 <em>04 - Dynamic Memory Allocation</em> 文档。</p>
+<ul>
+<li><a href="/Programming%20Languages/C/C%2004%20-%20Dynamic%20Memory%20Allocation/">C 04 - Dynamic Memory Allocation</a></li>
+</ul>
+<hr />
+<h3 id="函数指针"><a class="markdownIt-Anchor" href="#函数指针"></a> 函数指针</h3>
+<p>我把这部分内容放在函数的文章中具体介绍，详见 <em>C</em> 语言的 <em>03 - Function</em> 文档。</p>
+<ul>
+<li><a href="/Programming%20Languages/C/C%2003%20-%20Function/">C 03 - Function</a></li>
+</ul>
+<hr />
+<h3 id="指针的意义"><a class="markdownIt-Anchor" href="#指针的意义"></a> 指针的意义</h3>
+<p>一些初学者，以及另一些从其他高级语言转到 C/C++ 语言的程序员，对 C/C++ 语言的指针特性大肆贬低。诚然 C/C++ 语言有其缺点和劣势，但指针绝不是其中之一。恰恰相反，指针是 C/C++ 语言在其擅长的领域表现优秀的最重要的原因之一。</p>
+<p>的确，指针对于刚刚入门编程的人而言难度很大，而且裸指针写出的代码极易出错，其安全性缺乏保证，但这并不能抹除指针的优点。</p>
+<p>其一， C/C++ 语言的许多语法都是基于指针的。例如，数组的变量名就包含 了数组首地址和数组长度两条信息，等等。</p>
+<p>其二，指针提供了间接访问内存的手段。随着你对计算机专业知识的深入学习，你会逐渐意识到间接访问有多么重要。例如，我们可以避免在函数传参时发生大量无用拷贝，还可以在不同的函数中间接修改数据，等等。</p>
+<p>其三，指针提供了动态分配内存的手段。</p>
+<p>如果你还学过其他高级语言，请继续阅读：</p>
+<p>然而，虽然 C/C++ 的指针提供了间接访问内存的手段，但是几乎每一门编程语言都提供了间接访问内存的手段，所以严格来说，这并不算是指针的优点。相比之下更为重要的是，指针这一手段几乎没有受到任何封装和保护，就是赤裸裸地直接访问目标内存。</p>
+<p>许多高级语言都将指针的概念封装和保护起来，使得程序员完全不需要理解指针的概念就能编写程序，并且提供了安全性保障，绝大多数非法内存访问会被挡在底层之外。但是提供这些封装和保护是不需要代价的吗？当然需要，而且代价可不小。受保护的每次间接访问，都要被一层层逐渐转换为最底层的内存访问操作，还要进行安全性检查，这都是巨大的时间开销。因此越高级的语言，其平均运行效率往往越慢。</p>
+<p>所以反过来想，虽然 C/C++ 语言的指针不安全，但是其运行效率是所有高级语言中最快的，因为指针本身就是赤裸裸的一次间接内存访问，没有多层的包装。指针的优点事实上就是指针的缺点。</p>
+<p>在我其他的文章中你可以看到，为了程序运行效率而牺牲大量对程序员友好的东西，本就是 C/C++ 语言的一大特色，这也就是指针存在的理由。</p>
+<p>学习指针的概念是很有意义的，因为这可以帮助你理解经过任何包装的间接内存访问方法。</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>JM233333
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="https://blog.jm233333.com/Programming%20Languages/C/C%2002%20-%20Pointer/" title="C 02 - Pointer">https://blog.jm233333.com/Programming Languages/C/C 02 - Pointer/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B/" rel="tag"># 基础教程</a>
+              <a href="/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" rel="tag"># 编程语言</a>
+              <a href="/tags/C/" rel="tag"># C</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Programming%20Languages/C/C%2003%20-%20Function/" rel="prev" title="C 03 - Function">
+      <i class="fa fa-chevron-left"></i> C 03 - Function
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Programming%20Languages/C/C%2001%20-%20Develop%20Good%20Coding%20Style%20and%20Programming%20Habits/" rel="next" title="C 01 - Develop Good Coding Style and Programming Habits">
+      C 01 - Develop Good Coding Style and Programming Habits <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="nav-number">1.</span> <span class="nav-text"> 前置知识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">2.</span> <span class="nav-text"> 前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E5%92%8C%E5%9C%B0%E5%9D%80"><span class="nav-number">3.</span> <span class="nav-text"> 内存和地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">4.</span> <span class="nav-text"> 基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95"><span class="nav-number">5.</span> <span class="nav-text"> 基本语法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A3%B0%E6%98%8E"><span class="nav-number">5.1.</span> <span class="nav-text"> 声明</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%96%E5%9C%B0%E5%9D%80"><span class="nav-number">5.2.</span> <span class="nav-text"> 取地址</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%A3%E5%BC%95%E7%94%A8"><span class="nav-number">5.3.</span> <span class="nav-text"> 解引用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8C%BA%E5%88%86%E5%A3%B0%E6%98%8E%E5%92%8C%E8%A7%A3%E5%BC%95%E7%94%A8"><span class="nav-number">5.4.</span> <span class="nav-text"> 区分声明和解引用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A9%BA%E6%8C%87%E9%92%88"><span class="nav-number">6.</span> <span class="nav-text"> 空指针</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8E%E6%8C%87%E9%92%88%E5%92%8C%E6%82%AC%E6%8C%82%E6%8C%87%E9%92%88"><span class="nav-number">7.</span> <span class="nav-text"> 野指针和悬挂指针</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E9%92%88%E7%9A%84%E6%9C%AC%E8%B4%A8"><span class="nav-number">8.</span> <span class="nav-text"> 指针的本质</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E9%92%88%E4%BD%9C%E4%B8%BA%E5%87%BD%E6%95%B0%E5%8F%82%E6%95%B0"><span class="nav-number">9.</span> <span class="nav-text"> 指针作为函数参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E9%92%88%E5%92%8C%E6%95%B0%E7%BB%84"><span class="nav-number">10.</span> <span class="nav-text"> 指针和数组</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E7%BB%84%E7%9A%84%E8%BF%9E%E7%BB%AD%E6%80%A7"><span class="nav-number">10.1.</span> <span class="nav-text"> 数组的连续性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8C%87%E9%92%88%E5%92%8C%E6%95%B4%E6%95%B0%E4%B9%8B%E9%97%B4%E7%9A%84%E5%8A%A0%E5%87%8F%E6%B3%95"><span class="nav-number">10.2.</span> <span class="nav-text"> 指针和整数之间的加减法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8C%87%E9%92%88%E7%9A%84%E8%87%AA%E5%A2%9E%E8%87%AA%E5%87%8F"><span class="nav-number">10.3.</span> <span class="nav-text"> 指针的自增自减</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8C%87%E9%92%88%E5%92%8C%E6%8C%87%E9%92%88%E4%B9%8B%E9%97%B4%E7%9A%84%E5%87%8F%E6%B3%95"><span class="nav-number">10.4.</span> <span class="nav-text"> 指针和指针之间的减法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8C%87%E9%92%88%E5%92%8C%E6%8C%87%E9%92%88%E4%B9%8B%E9%97%B4%E7%9A%84%E6%AF%94%E8%BE%83%E5%85%B3%E7%B3%BB"><span class="nav-number">10.5.</span> <span class="nav-text"> 指针和指针之间的比较关系</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%B9%E6%8C%87%E9%92%88%E4%BD%BF%E7%94%A8%E6%95%B0%E7%BB%84%E7%9A%84%E8%AF%AD%E6%B3%95"><span class="nav-number">10.6.</span> <span class="nav-text"> 对指针使用数组的语法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%B9%E6%95%B0%E7%BB%84%E4%BD%BF%E7%94%A8%E6%8C%87%E9%92%88%E7%9A%84%E8%AF%AD%E6%B3%95"><span class="nav-number">10.7.</span> <span class="nav-text"> 对数组使用指针的语法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E7%BB%84%E5%90%8D%E5%92%8C%E6%8C%87%E9%92%88"><span class="nav-number">10.8.</span> <span class="nav-text"> 数组名和指针</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8C%87%E9%92%88%E6%95%B0%E7%BB%84"><span class="nav-number">10.9.</span> <span class="nav-text"> 指针数组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E7%BB%84%E6%8C%87%E9%92%88"><span class="nav-number">10.10.</span> <span class="nav-text"> 数组指针</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E6%8C%87%E9%92%88%E5%92%8C%E5%AD%97%E7%AC%A6%E6%95%B0%E7%BB%84"><span class="nav-number">11.</span> <span class="nav-text"> 字符指针和字符数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E9%92%88%E5%92%8C-const-%E4%BF%AE%E9%A5%B0%E7%AC%A6"><span class="nav-number">12.</span> <span class="nav-text"> 指针和 const 修饰符</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8C%87%E5%90%91%E5%B8%B8%E9%87%8F%E7%9A%84%E6%8C%87%E9%92%88"><span class="nav-number">12.1.</span> <span class="nav-text"> 指向常量的指针</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%B8%E6%8C%87%E9%92%88"><span class="nav-number">12.2.</span> <span class="nav-text"> 常指针</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8C%BA%E5%88%86%E7%9A%84%E6%8A%80%E5%B7%A7"><span class="nav-number">12.3.</span> <span class="nav-text"> 区分的技巧</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E5%90%91%E8%87%AA%E5%AE%9A%E4%B9%89%E7%B1%BB%E5%9E%8B%E7%9A%84%E6%8C%87%E9%92%88"><span class="nav-number">13.</span> <span class="nav-text"> 指向自定义类型的指针</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E7%BA%A7%E6%8C%87%E9%92%88%E5%B5%8C%E5%A5%97"><span class="nav-number">14.</span> <span class="nav-text"> 多级指针嵌套</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D"><span class="nav-number">15.</span> <span class="nav-text"> 动态内存分配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88"><span class="nav-number">16.</span> <span class="nav-text"> 函数指针</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E9%92%88%E7%9A%84%E6%84%8F%E4%B9%89"><span class="nav-number">17.</span> <span class="nav-text"> 指针的意义</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="JM233333"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">JM233333</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">238</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">80</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/JM233333" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;JM233333" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/26466398@163.com" title="E-Mail → 26466398@163.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://github.com/JM233333" title="https:&#x2F;&#x2F;github.com&#x2F;JM233333" rel="noopener" target="_blank">Title</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JM233333</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

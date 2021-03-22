@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.jm233333.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="前置知识 在阅读本文档前，请确保你已经掌握指针的基础知识，详见 C 语言的 02 - Pointer 文档。  C 02 - Pointer    前言 本文将对 C 语言的类型系统进行详细的介绍。这似乎是人尽皆知的事情，但是我仍然决定单独用一篇文章来介绍。一方面，确实有些初学者对一些有意义的细节问题的认识有误，例如有些人可能并不知道 char 类型也属于整数类型；另一方面，初学者很难了解到类型">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C 03 - Types">
+<meta property="og:url" content="https://blog.jm233333.com/Programming%20Languages/C/C%2003%20-%20Types/index.html">
+<meta property="og:site_name" content="JM233333&#39;s Blog">
+<meta property="og:description" content="前置知识 在阅读本文档前，请确保你已经掌握指针的基础知识，详见 C 语言的 02 - Pointer 文档。  C 02 - Pointer    前言 本文将对 C 语言的类型系统进行详细的介绍。这似乎是人尽皆知的事情，但是我仍然决定单独用一篇文章来介绍。一方面，确实有些初学者对一些有意义的细节问题的认识有误，例如有些人可能并不知道 char 类型也属于整数类型；另一方面，初学者很难了解到类型">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-03-22T09:32:11.634Z">
+<meta property="article:author" content="JM233333">
+<meta property="article:tag" content="基础教程">
+<meta property="article:tag" content="编程语言">
+<meta property="article:tag" content="C">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://blog.jm233333.com/Programming%20Languages/C/C%2003%20-%20Types/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>C 03 - Types | JM233333's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">JM233333's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Contact Me: 26466398@163.com</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">80</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories<span class="badge">16</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.jm233333.com/Programming%20Languages/C/C%2003%20-%20Types/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="JM233333">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JM233333's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          C 03 - Types
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2020-01-01T00:00:00+08:00">2020-01-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming-Languages/" itemprop="url" rel="index"><span itemprop="name">Programming Languages</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming-Languages/C/" itemprop="url" rel="index"><span itemprop="name">C</span></a>
+                </span>
+            </span>
+
+          
+
+          <div class="post-authorization">
+            <p>本文为 JM233333 原创所著，遵循 BY-NC-SA 4.0 许可协议，转载请注明出处。如果您认为文中有谬误或对文中内容有疑问，欢迎理性指出，大家共同探讨和进步。</p>
+          </div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="前置知识"><a class="markdownIt-Anchor" href="#前置知识"></a> 前置知识</h3>
+<p>在阅读本文档前，请确保你已经掌握指针的基础知识，详见 <em>C</em> 语言的 <em>02 - Pointer</em> 文档。</p>
+<ul>
+<li><a href="/Programming%20Languages/C/C%2002%20-%20Pointer/">C 02 - Pointer</a></li>
+</ul>
+<hr />
+<h3 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h3>
+<p>本文将对 C 语言的类型系统进行详细的介绍。这似乎是人尽皆知的事情，但是我仍然决定单独用一篇文章来介绍。一方面，确实有些初学者对一些有意义的细节问题的认识有误，例如有些人可能并不知道 char 类型也属于整数类型；另一方面，初学者很难了解到类型系统中较为复杂深入的一面，本文也将对此进行介绍，但不会介绍对于初学者而言没有必要去了解的部分。</p>
+<p>C 语言的 <strong>类型 (types)</strong> 总体上可以分为：</p>
+<ul>
+<li>
+<p>对象类型；</p>
+</li>
+<li>
+<p>函数类型；</p>
+</li>
+<li>
+<p>不完全类型。</p>
+</li>
+</ul>
+<p>对于初学者而言，对象类型是需要被重点关注的，但函数类型和不完全类型也是 C 语言的必备知识。本文会对上述三种类型依次进行介绍，其中对象类型的介绍最为详细。</p>
+<p>本文中的部分内容涉及到一些条条框框的定义，对初学者而言可能有些晦涩，读者可以选择直接跳过，挑选其中你认为现阶段需要的部分来阅读。但是这些条条框框的定义仍然是重要的，虽然它们看起来似乎缺乏实用价值，但是很多英文资料中会使用这些定义，如果你对这些定义不了解，将会在阅读时受到阻碍。</p>
+<hr />
+<h3 id="对象类型"><a class="markdownIt-Anchor" href="#对象类型"></a> 对象类型</h3>
+<p><strong>对象类型 (object types)</strong> 指的是完整描述对象的类型。</p>
+<p>对象类型和不完全类型是相对的，在学习了不完全类型的概念以后，你才能理解对象类型的概念性描述的含义。因而我不会在此处对上面的概念性描述进行解释。</p>
+<p>事实上，初学者平时见到的类型声明多数属于对象类型，例如 <code>int x</code> , <code>char ch</code> , <code>int * p</code> 中的类型说明符都属于对象类型。除了函数类型和不完全类型以外的所有类型都是对象类型。</p>
+<hr />
+<h3 id="深入理解类型"><a class="markdownIt-Anchor" href="#深入理解类型"></a> 深入理解类型</h3>
+<h4 id="引言"><a class="markdownIt-Anchor" href="#引言"></a> 引言</h4>
+<p>不知道读者是否曾经思考过这一问题：类型存在的意义是什么？为什么 C 语言（以及其它很多语言）都规定了各种各样的基本数据类型，并对其运算规则加以限制？这经常会带来一些麻烦，例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> x = <span class="number">1</span> / <span class="number">2</span>;</span><br></pre></td></tr></table></figure>
+<p>上述代码中 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 的值是 <code>0</code> 而不是 <code>0.5</code> 即便 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 是 double 类型，因为参与运算的 <code>1</code> 和 <code>2</code> 都是整型，整型的除法运算结果会被向下取整，然后这个结果才被赋值给 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 。我们必须使用浮点类型参与运算，或是其中一个操作数的类型为浮点类型以便于触发隐式类型转换，或是使用强制类型转换：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> x = <span class="number">1.0</span> / <span class="number">2.0</span>;</span><br><span class="line"><span class="keyword">double</span> y = <span class="number">1.0</span> / <span class="number">2</span>;</span><br><span class="line"><span class="keyword">double</span> z = (<span class="keyword">double</span>)<span class="number">1</span> / <span class="number">2</span>;</span><br></pre></td></tr></table></figure>
+<p>为什么我们不能用一个统一的 number 类型来囊括所有的实数运算？这样写起程序来岂不是非常方便？</p>
+<h4 id="类型的意义"><a class="markdownIt-Anchor" href="#类型的意义"></a> 类型的意义</h4>
+<p>正如 C 语言标准原文所述：存储在对象中的值的含义取决于用于访问它的表达式的类型。</p>
+<blockquote>
+<p>6.2.5 Types<br />
+1<br />
+The meaning of a value stored in an object or returned by a function is determined by the type of the expression used to access it. …</p>
+</blockquote>
+<p>类型存在的意义一方面是让计算机明白应该如何处理内存中的数据，另一方面是为计算机合理地节约空间消耗。</p>
+<p>我们知道，计算机中的数据都是以二进制位 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn><mi mathvariant="normal">/</mi><mn>1</mn></mrow><annotation encoding="application/x-tex">0/1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">0</span><span class="mord">/</span><span class="mord">1</span></span></span></span> 串的形式存储的，将若干个位组合在一起视为一个二进制数，就可以用来表示一个整数值。越多的二进制位就可以表示越大的数据范围，例如一个字节 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>8</mn></mrow><annotation encoding="application/x-tex">8</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">8</span></span></span></span> 位至多能表示不超过 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mn>2</mn><mn>8</mn></msup><mo>=</mo><mn>256</mn></mrow><annotation encoding="application/x-tex">2^8 = 256</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">8</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mord">5</span><span class="mord">6</span></span></span></span> 种不同的值，一般是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo stretchy="false">[</mo><mo>−</mo><msup><mn>2</mn><mn>7</mn></msup><mo separator="true">,</mo><mtext> </mtext><msup><mn>2</mn><mn>7</mn></msup><mo>−</mo><mn>1</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[-2^7,\ 2^7 - 1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">−</span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">7</span></span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">7</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span></span></span></span> 或 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo stretchy="false">[</mo><mn>0</mn><mo separator="true">,</mo><mtext> </mtext><msup><mn>2</mn><mn>8</mn></msup><mo>−</mo><mn>1</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[0,\ 2^8 - 1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">8</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span></span></span></span> 。</p>
+<p>一方面，浮点数值的表示并没有整数值这么简单。如果没有学习过计算机组成原理的相关知识，你很可能完全无法想象出人们是如何用二进制位来处理浮点类型的，要知道 double 类型的长度仅为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>8</mn></mrow><annotation encoding="application/x-tex">8</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">8</span></span></span></span> 个字节 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>64</mn></mrow><annotation encoding="application/x-tex">64</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">6</span><span class="mord">4</span></span></span></span> 位，却能表示高达 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><msup><mn>0</mn><mn>308</mn></msup></mrow><annotation encoding="application/x-tex">10^{308}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">3</span><span class="mord mtight">0</span><span class="mord mtight">8</span></span></span></span></span></span></span></span></span></span></span></span> 这个数量级的数值，远远超过了 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mn>2</mn><mn>64</mn></msup></mrow><annotation encoding="application/x-tex">2^{64}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">6</span><span class="mord mtight">4</span></span></span></span></span></span></span></span></span></span></span></span> ——虽然事实上数值越大其表示精度就越低，它仍然只能表示不超过 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mn>2</mn><mn>64</mn></msup></mrow><annotation encoding="application/x-tex">2^{64}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">6</span><span class="mord mtight">4</span></span></span></span></span></span></span></span></span></span></span></span> 种不同的浮点数值，中间有许多数值是无法被 double 类型所精确表示的。</p>
+<p>本文不会对浮点数的表示原理进行介绍，但是读者肯定已经明白，计算机对整数值和浮点数值的解析方法肯定有很大的不同，即便它们都是用二进制位来表示的。这也就是数据类型的作用——告诉计算机应该如何解析并处理数据。同样是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> 位二进制数，将其当作整型或是浮点类型看待，亦或是当作某种结构体类型看待，其结果都是截然不同的。</p>
+<p>另一方面，越多的二进制位就可以表示越大的数据范围，例如对于整型而言，一个字节 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>8</mn></mrow><annotation encoding="application/x-tex">8</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">8</span></span></span></span> 位至多能表示不超过 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mn>2</mn><mn>8</mn></msup><mo>=</mo><mn>256</mn></mrow><annotation encoding="application/x-tex">2^8 = 256</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">8</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mord">5</span><span class="mord">6</span></span></span></span> 种不同的值，而 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>16</mn></mrow><annotation encoding="application/x-tex">16</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">6</span></span></span></span> 位就能表示 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mn>2</mn><mn>16</mn></msup><mo>=</mo><mn>65536</mn></mrow><annotation encoding="application/x-tex">2^{16} = 65536</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mord mtight">6</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">6</span><span class="mord">5</span><span class="mord">5</span><span class="mord">3</span><span class="mord">6</span></span></span></span> 种不同的值，数据范围足足翻了 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>256</mn></mrow><annotation encoding="application/x-tex">256</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mord">5</span><span class="mord">6</span></span></span></span> 倍，但相应地，空间消耗也翻了一倍。</p>
+<p>那么问题来了：如果我们要用一个统一的 number 类型来囊括所有的实数运算，那么我们应该为每个 number 类型的对象分配多少内存呢？</p>
+<p>如果出手阔绰（例如，一个 number 类型占据 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>128</mn></mrow><annotation encoding="application/x-tex">128</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">2</span><span class="mord">8</span></span></span></span> 位），在进行小数据的运算时显然是对空间的极大浪费，我们根本不需要占用那么多的空间。即便是在计算机硬盘空间动辄几千 G 甚至几百 T 的今天，在存放海量数据的大型程序或数据库中，这种浪费根本是无法容忍的。不止于此，这还会影响到程序的运行速度，处理 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>32</mn></mrow><annotation encoding="application/x-tex">32</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span><span class="mord">2</span></span></span></span> 个二进制位显然比处理 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>128</mn></mrow><annotation encoding="application/x-tex">128</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">2</span><span class="mord">8</span></span></span></span> 个要快得多。</p>
+<p>这也就是为什么 C 语言把整型划分成了 char , short int , int , long int 等多个类型的原因——在上个世纪，计算机的容量远远没有如今这么大，甚至一块硬盘可能只有 16M 的空间，因此节约空间就显得更加重要。显而易见，用不同长度的数据类型来处理不同的计算需求，可以在很大程度上减少空间消耗。即便是如今，在确定只需要进行小数值的运算时，使用 short int 代替 int 也可以略微提高程序的运行速度。</p>
+<hr />
+<h3 id="标准类型与非标准类型"><a class="markdownIt-Anchor" href="#标准类型与非标准类型"></a> 标准类型与非标准类型</h3>
+<p>C 语言标准所规定的基本类型被称为 <strong>标准类型 (standard types)</strong> 。但是在各个编译环境中往往存在一些实现定义的基本类型，它们被称为 <strong>扩展类型 (extended types)</strong> 。</p>
+<p>在本文中我们只会讨论标准类型。为便于描述，下文中将省略“标准”描述。例如标准整数类型会被简写为整数类型。而事实上，整数类型包括标准整数类型和扩展整数类型，其它类型类同。</p>
+<hr />
+<h3 id="基础类型"><a class="markdownIt-Anchor" href="#基础类型"></a> 基础类型</h3>
+<h4 id="基本类型"><a class="markdownIt-Anchor" href="#基本类型"></a> 基本类型</h4>
+<p><strong>基本类型 (basic types)</strong> 包括且仅包括：</p>
+<ul>
+<li>
+<p>有符号整数类型；</p>
+</li>
+<li>
+<p>无符号整数类型；</p>
+</li>
+<li>
+<p><code>char</code> 类型；</p>
+</li>
+<li>
+<p>浮点类型。</p>
+</li>
+</ul>
+<h4 id="整数类型"><a class="markdownIt-Anchor" href="#整数类型"></a> 整数类型</h4>
+<p><strong>整数类型 (integer types)</strong> 包括且仅包括：</p>
+<ul>
+<li>
+<p>有符号整数类型；</p>
+</li>
+<li>
+<p>无符号整数类型；</p>
+</li>
+<li>
+<p><code>char</code> 类型；</p>
+</li>
+<li>
+<p>枚举类型。</p>
+</li>
+</ul>
+<p><strong>有符号整数类型 (signed integer types)</strong> 包括且仅包括 <code>signed char</code> 类型、 <code>short int</code> 类型、 <code>int</code> 类型、 <code>long int</code> 类型和 <code>long long int</code> 类型，其中：</p>
+<ul>
+<li>
+<p><code>int</code> 类型的长度在不同编译环境中可能不同，要想了解你所在编译环境的情况，可以查看头文件 <code>&lt;limits.h&gt;</code> 中的宏定义 <code>INT_MIN</code> 和 <code>INT_MAX</code> ；</p>
+</li>
+<li>
+<p><code>long long int</code> 类型在 C99 标准中首次引入。</p>
+</li>
+</ul>
+<p>对于每一种有符号整数类型，都有一种对应的 <strong>无符号整数类型 (unsigned integer types)</strong> ，占用相同的长度，并用 <code>unsigned</code> 关键字来标识。</p>
+<p>除此以外，在 C99 标准中首次引入的 <code>_Bool</code> 类型也属于无符号整数类型，人们将其俗称为 <strong>布尔类型 (boolean type)</strong> 。 <code>_Bool</code> 类型的长度在不同编译环境中可能不同（大多数情况下是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> 个字节），且 <code>_Bool</code> 类型的表达式的值只能是 <code>0</code> 或 <code>1</code> 。</p>
+<p>关于 <code>char</code> 类型的细节详见后文。</p>
+<p><strong>枚举类型 (enumerated type)</strong> 指的是由关键字 <code>enum</code> 定义的类型，注意枚举类型属于整数类型，但是不属于基本类型。</p>
+<h4 id="字符类型"><a class="markdownIt-Anchor" href="#字符类型"></a> 字符类型</h4>
+<p><strong>字符类型 (character types)</strong> 包括且仅包括 <code>char</code> 类型、 <code>signed char</code> 类型和 <code>unsigned char</code> 类型，其中后两者同时也分别属于有符号整数类型和无符号整数类型，而 <code>char</code> 类型则有些特殊。</p>
+<p><code>char</code> 类型的定义在不同编译环境中可能不同，但是标准规定 <code>char</code> 类型的特征（包括数据范围、表示形式、行为等）必须和 <code>signed char</code> 类型与 <code>unsigned char</code> 类型的其中之一等价。但是即便如此， <code>char</code> 类型都是一个不同的、独立的类型。</p>
+<p>标准规定三种字符类型的长度相同。</p>
+<p>字符类型和整数类型的定义是重叠的，而非互相独立的。所有的字符类型都是某种整数类型，很多初学者对此并不清楚。</p>
+<p>节选 C99 标准对 <code>char</code> 类型的定义的部分原文如下：</p>
+<blockquote>
+<p>6.2.5 Types<br />
+3<br />
+An object declared as type <strong>char</strong> is large enough to store any member of the basic execution character set. If a member of the basic execution character set is stored in a <strong>char</strong> object, its value is guaranteed to be nonnegative. If any other character is stored in a <strong>char</strong> object, the resulting value is implementation-defined but shall be within the range of values that can be represented in that type.<br />
+…<br />
+16<br />
+The three types <strong>char</strong> , <strong>signed char</strong> , and <strong>unsigned char</strong> are collectively called the character types. The implementation shall define <strong>char</strong> to have the same range, representation, and behavior as either <strong>signed char</strong> or <strong>unsigned char</strong> .</p>
+</blockquote>
+<h4 id="浮点类型"><a class="markdownIt-Anchor" href="#浮点类型"></a> 浮点类型</h4>
+<p><strong>浮点类型 (floating types)</strong> 包括且仅包括：</p>
+<ul>
+<li>
+<p>实浮点类型；</p>
+</li>
+<li>
+<p>复数类型。</p>
+</li>
+</ul>
+<p><strong>实浮点类型 (real floating types)</strong> 包括且仅包括 <code>float</code> 类型、 <code>double</code> 类型和 <code>long double</code> 类型，其中 <code>long double</code> 类型在 C99 标准中首次引入。</p>
+<p>标准规定三种实浮点类型的表示范围是依次为子集的，即 <code>float</code> 类型的表示范围是 <code>double</code> 类型的子集，且 <code>double</code> 类型的表示范围是 <code>long double</code> 类型的子集。</p>
+<p><strong>复数类型 (complex types)</strong> 包括且仅包括 <code>float _Complex</code> 类型、 <code>double _Complex</code> 类型和 <code>long double _Complex</code> 类型。</p>
+<h4 id="实数类型"><a class="markdownIt-Anchor" href="#实数类型"></a> 实数类型</h4>
+<p><strong>实数类型 (real types)</strong> 包括且仅包括：</p>
+<ul>
+<li>
+<p>整数类型；</p>
+</li>
+<li>
+<p>实浮点类型。</p>
+</li>
+</ul>
+<h4 id="算术类型和类型域"><a class="markdownIt-Anchor" href="#算术类型和类型域"></a> 算术类型和类型域</h4>
+<p><strong>算术类型 (arithmetic types)</strong> 包括且仅包括：</p>
+<ul>
+<li>
+<p>整数类型；</p>
+</li>
+<li>
+<p>浮点类型。</p>
+</li>
+</ul>
+<p>每个算术类型都属于一个 <strong>类型域 (type domain)</strong> ：<strong>实型域 (real type domain)</strong> 包含实数类型， <strong>复型域 (complex type domain)</strong> 包含复数类型。</p>
+<hr />
+<h3 id="函数类型"><a class="markdownIt-Anchor" href="#函数类型"></a> 函数类型</h3>
+<p><strong>函数类型 (function types)</strong> 指的是专门用于描述函数的类型。</p>
+<p>我把这部分内容放在函数的文章中具体介绍，详见 <em>C</em> 语言的 <em>03 - Function</em> 文档。</p>
+<ul>
+<li><a href="/Programming%20Languages/C/C%2003%20-%20Function/">C 03 - Function</a></li>
+</ul>
+<hr />
+<h3 id="不完全类型"><a class="markdownIt-Anchor" href="#不完全类型"></a> 不完全类型</h3>
+<p><strong>不完全类型 (incomplete types)</strong> 指的是描述对象但缺乏足以确定其占用空间大小的信息的类型，包括且仅包括：</p>
+<ul>
+<li>
+<p><code>void</code> 类型；</p>
+</li>
+<li>
+<p>大小未知的数组类型；</p>
+</li>
+<li>
+<p>内容未知的结构体或联合体类型。</p>
+</li>
+</ul>
+<p><code>void</code> 类型用于表示空值，它是永远无法被完成的不完全类型。除 <code>void</code> 类型以外的不完全类型都可以在程序的其它翻译单元中被完成。</p>
+<p>大小未知的数组类型常见于 <code>extern</code> 声明，例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extern</span> <span class="keyword">int</span> a[]; <span class="comment">// 不完全</span></span><br><span class="line"><span class="keyword">int</span> a[<span class="number">10</span>];      <span class="comment">// 完全</span></span><br></pre></td></tr></table></figure>
+<p>不能使用不完全类型来声明或定义普通变量、数组、结构体等等，但可以用来声明或定义指针，因为指针的大小只和编译环境的地址空间规则有关，和被指向类型的大小无关。例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Test1</span> &#123;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">Test1</span> <span class="title">t</span>;</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Test2</span> &#123;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">Test2</span> * <span class="title">t</span>;</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>对 <code>Test1</code> 的定义是不合法的，因为在第 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span></span></span></span> 行之前的 <code>Test1</code> 的内容还未完全已知，所以 <code>Test1</code> 暂为不完全类型，第 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn></mrow><annotation encoding="application/x-tex">2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span> 行的成员定义是不合法的。而对 <code>Test2</code> 的定义就是合法的，因为我们只是定义了一个指向不完全类型的指针。</p>
+<hr />
+<h3 id="派生类型"><a class="markdownIt-Anchor" href="#派生类型"></a> 派生类型</h3>
+<p>可以根据对象类型、函数类型和不完全类型构造任意数量的 <strong>派生类型 (derived types)</strong> ，包括且仅包括：</p>
+<ul>
+<li>
+<p><strong>数组类型 (array type)</strong> ；</p>
+</li>
+<li>
+<p><strong>结构体类型 (structure type)</strong> ；</p>
+</li>
+<li>
+<p><strong>共用体类型 (union type)</strong> ；</p>
+</li>
+<li>
+<p><strong>函数类型 (function type)</strong> ；</p>
+</li>
+<li>
+<p><strong>指针类型 (pointer type)</strong> 。</p>
+</li>
+</ul>
+<p>数组类型和结构体类型统称为 <strong>聚合类型 (aggregate types)</strong> ，算术类型和指针类型统称为 <strong>标量类型 (scalar types)</strong> 。</p>
+<hr />
+<h3 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h3>
+<p>C99 标准中规定的 C 语言标准类型可以汇总为：</p>
+<ul>
+<li>
+<p>基本类型</p>
+<ul>
+<li>
+<p>有符号整数类型</p>
+<ul>
+<li><code>signed char</code> 类型， <code>short int</code> 类型， <code>int</code> 类型， <code>long int</code> 类型， <code>long long int</code> 类型</li>
+</ul>
+</li>
+<li>
+<p>无符号整数类型</p>
+<ul>
+<li>
+<p><code>unsigned char</code> 类型， <code>unsigned short int</code> 类型， <code>unsigned int</code> 类型， <code>unsigned long int</code> 类型， <code>unsigned long long int</code> 类型</p>
+</li>
+<li>
+<p>布尔类型，即 <code>_Bool</code> 类型</p>
+</li>
+</ul>
+</li>
+<li>
+<p><code>char</code> 类型</p>
+</li>
+<li>
+<p>浮点类型</p>
+<ul>
+<li>
+<p>实浮点类型</p>
+<ul>
+<li><code>float</code> 类型， <code>double</code> 类型， <code>long double</code> 类型</li>
+</ul>
+</li>
+<li>
+<p>复数类型</p>
+<ul>
+<li><code>float _Complex</code> 类型， <code>double _Complex</code> 类型， <code>long double _Complex</code> 类型</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>枚举类型</p>
+</li>
+<li>
+<p><code>void</code> 类型</p>
+</li>
+<li>
+<p>派生类型</p>
+<ul>
+<li>
+<p>数组类型</p>
+</li>
+<li>
+<p>结构体类型</p>
+</li>
+<li>
+<p>共用体类型</p>
+</li>
+<li>
+<p>函数类型</p>
+</li>
+<li>
+<p>指针类型</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>其它存在重叠的类型分类可以汇总为：</p>
+<ul>
+<li>
+<p>对象类型</p>
+<ul>
+<li>除了函数类型和不完全类型以外的所有类型</li>
+</ul>
+</li>
+<li>
+<p>整数类型</p>
+<ul>
+<li>有符号整数类型，无符号整数类型， <code>char</code> 类型，枚举类型</li>
+</ul>
+</li>
+<li>
+<p>字符类型</p>
+<ul>
+<li><code>char</code> 类型， <code>signed char</code> 类型， <code>unsigned char</code> 类型</li>
+</ul>
+</li>
+<li>
+<p>实数类型</p>
+<ul>
+<li>整数类型，实浮点类型</li>
+</ul>
+</li>
+<li>
+<p>算术类型</p>
+<ul>
+<li>整数类型，浮点类型</li>
+</ul>
+</li>
+<li>
+<p>标量类型</p>
+<ul>
+<li>算术类型，指针类型</li>
+</ul>
+</li>
+<li>
+<p>聚合类型</p>
+<ul>
+<li>数组类型，结构体类型</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>JM233333
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="https://blog.jm233333.com/Programming%20Languages/C/C%2003%20-%20Types/" title="C 03 - Types">https://blog.jm233333.com/Programming Languages/C/C 03 - Types/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B/" rel="tag"># 基础教程</a>
+              <a href="/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" rel="tag"># 编程语言</a>
+              <a href="/tags/C/" rel="tag"># C</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Programming%20Languages/C/C%2005%20-%20Array%20Name%20is%20NOT%20a%20Pointer/" rel="prev" title="C 05 - Array Name is NOT a Pointer">
+      <i class="fa fa-chevron-left"></i> C 05 - Array Name is NOT a Pointer
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Programming%20Languages/C/C%2001%20-%20The%20Right%20Way%20to%20Ask%20Others%20for%20Help/" rel="next" title="C 01 - The Right Way to Ask Others for Help">
+      C 01 - The Right Way to Ask Others for Help <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="nav-number">1.</span> <span class="nav-text"> 前置知识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">2.</span> <span class="nav-text"> 前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text"> 对象类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E7%B1%BB%E5%9E%8B"><span class="nav-number">4.</span> <span class="nav-text"> 深入理解类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%95%E8%A8%80"><span class="nav-number">4.1.</span> <span class="nav-text"> 引言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B%E7%9A%84%E6%84%8F%E4%B9%89"><span class="nav-number">4.2.</span> <span class="nav-text"> 类型的意义</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%87%E5%87%86%E7%B1%BB%E5%9E%8B%E4%B8%8E%E9%9D%9E%E6%A0%87%E5%87%86%E7%B1%BB%E5%9E%8B"><span class="nav-number">5.</span> <span class="nav-text"> 标准类型与非标准类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E7%B1%BB%E5%9E%8B"><span class="nav-number">6.</span> <span class="nav-text"> 基础类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B"><span class="nav-number">6.1.</span> <span class="nav-text"> 基本类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B4%E6%95%B0%E7%B1%BB%E5%9E%8B"><span class="nav-number">6.2.</span> <span class="nav-text"> 整数类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E7%B1%BB%E5%9E%8B"><span class="nav-number">6.3.</span> <span class="nav-text"> 字符类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%AE%E7%82%B9%E7%B1%BB%E5%9E%8B"><span class="nav-number">6.4.</span> <span class="nav-text"> 浮点类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9E%E6%95%B0%E7%B1%BB%E5%9E%8B"><span class="nav-number">6.5.</span> <span class="nav-text"> 实数类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%97%E6%9C%AF%E7%B1%BB%E5%9E%8B%E5%92%8C%E7%B1%BB%E5%9E%8B%E5%9F%9F"><span class="nav-number">6.6.</span> <span class="nav-text"> 算术类型和类型域</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E7%B1%BB%E5%9E%8B"><span class="nav-number">7.</span> <span class="nav-text"> 函数类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8D%E5%AE%8C%E5%85%A8%E7%B1%BB%E5%9E%8B"><span class="nav-number">8.</span> <span class="nav-text"> 不完全类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B4%BE%E7%94%9F%E7%B1%BB%E5%9E%8B"><span class="nav-number">9.</span> <span class="nav-text"> 派生类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">10.</span> <span class="nav-text"> 总结</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="JM233333"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">JM233333</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">238</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">80</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/JM233333" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;JM233333" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/26466398@163.com" title="E-Mail → 26466398@163.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://github.com/JM233333" title="https:&#x2F;&#x2F;github.com&#x2F;JM233333" rel="noopener" target="_blank">Title</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JM233333</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

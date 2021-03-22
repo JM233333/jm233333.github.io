@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.jm233333.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="前置知识 在阅读本文档前，请先阅读 C 语言的整体介绍文档，详见 C 语言的 00 - Introduction 文档。  C 00 - Introduction    前言 这是一个很有趣的话题。 很多初学者，甚至是一些有经验者，遇到无法解决的问题时向他人求助的方式都有些问题。如果求助的方式不当，那么你可能会给对方留下不好的印象，甚至是直接忽略掉你的后续的求助。 本文的目的是帮助那些对此毫无意">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C 01 - The Right Way to Ask Others for Help">
+<meta property="og:url" content="https://blog.jm233333.com/Programming%20Languages/C/C%2001%20-%20The%20Right%20Way%20to%20Ask%20Others%20for%20Help/index.html">
+<meta property="og:site_name" content="JM233333&#39;s Blog">
+<meta property="og:description" content="前置知识 在阅读本文档前，请先阅读 C 语言的整体介绍文档，详见 C 语言的 00 - Introduction 文档。  C 00 - Introduction    前言 这是一个很有趣的话题。 很多初学者，甚至是一些有经验者，遇到无法解决的问题时向他人求助的方式都有些问题。如果求助的方式不当，那么你可能会给对方留下不好的印象，甚至是直接忽略掉你的后续的求助。 本文的目的是帮助那些对此毫无意">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://blog.jm233333.com/images/Programming-Languages/C/C-0104-i01.png">
+<meta property="article:published_time" content="2019-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-03-22T09:32:11.634Z">
+<meta property="article:author" content="JM233333">
+<meta property="article:tag" content="基础教程">
+<meta property="article:tag" content="编程语言">
+<meta property="article:tag" content="C">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.jm233333.com/images/Programming-Languages/C/C-0104-i01.png">
+
+<link rel="canonical" href="https://blog.jm233333.com/Programming%20Languages/C/C%2001%20-%20The%20Right%20Way%20to%20Ask%20Others%20for%20Help/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>C 01 - The Right Way to Ask Others for Help | JM233333's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">JM233333's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Contact Me: 26466398@163.com</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">80</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories<span class="badge">16</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.jm233333.com/Programming%20Languages/C/C%2001%20-%20The%20Right%20Way%20to%20Ask%20Others%20for%20Help/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="JM233333">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JM233333's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          C 01 - The Right Way to Ask Others for Help
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2020-01-01T00:00:00+08:00">2020-01-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming-Languages/" itemprop="url" rel="index"><span itemprop="name">Programming Languages</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming-Languages/C/" itemprop="url" rel="index"><span itemprop="name">C</span></a>
+                </span>
+            </span>
+
+          
+
+          <div class="post-authorization">
+            <p>本文为 JM233333 原创所著，遵循 BY-NC-SA 4.0 许可协议，转载请注明出处。如果您认为文中有谬误或对文中内容有疑问，欢迎理性指出，大家共同探讨和进步。</p>
+          </div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="前置知识"><a class="markdownIt-Anchor" href="#前置知识"></a> 前置知识</h3>
+<p>在阅读本文档前，请先阅读 C 语言的整体介绍文档，详见 <em>C</em> 语言的 <em>00 - Introduction</em> 文档。</p>
+<ul>
+<li><a href="/Programming%20Languages/C/C%2000%20-%20Introduction/">C 00 - Introduction</a></li>
+</ul>
+<hr />
+<h3 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h3>
+<p>这是一个很有趣的话题。</p>
+<p>很多初学者，甚至是一些有经验者，遇到无法解决的问题时向他人求助的方式都有些问题。如果求助的方式不当，那么你可能会给对方留下不好的印象，甚至是直接忽略掉你的后续的求助。</p>
+<p>本文的目的是帮助那些对此毫无意识的读者了解应该用怎样的方式去求助会比较合适，多多少少能让你少走一些弯路。下文会简要介绍一些注意事项，并给出反面教材及其可能的改善方式。</p>
+<p>其实本文不应当归类到 <em>C</em> 语言栏目下，但是考虑到国内绝大多数高校的计算机系都以 C 语言作为入门语言，我还是把这篇文章放在了这里，即便它跟 C 语言事实上毫无关联。</p>
+<hr />
+<h3 id="使用合适的表达方式"><a class="markdownIt-Anchor" href="#使用合适的表达方式"></a> 使用合适的表达方式</h3>
+<h4 id="概述"><a class="markdownIt-Anchor" href="#概述"></a> 概述</h4>
+<p>这就是个常识性的问题了，在向他人求助时，注意自己的表达方式是很重要的。这是所有问题中最为严重的，一个没有礼貌、毫不客气的提问者，会给人留下最坏的印象。这么说可能有些抽象，看看下面几个例子就清楚了。</p>
+<p>当然，若是熟人之间，根据熟悉程度会降低对礼貌客气表达的要求，正所谓熟人好说话嘛，这个还请读者自行把握，下面的例子都是基于双方互相完全不熟悉的前提的。</p>
+<p>注意，本节中的改善仅限于表达方式，其他方面的问题并未改善，具体详见下文。</p>
+<h4 id="反例及改善-1"><a class="markdownIt-Anchor" href="#反例及改善-1"></a> 反例及改善 1</h4>
+<p>反例：“帮我看下这段程序问题在哪好吗，谢谢。”</p>
+<p>改善：“ xxx （学长/老师/…） 你好/您好，我在编程时遇到了无法解决的困难，下面是我的代码，可否请您帮我看看问题出在哪？谢谢！”</p>
+<p>错点：一点礼貌都没有，不用解释了吧？就我个人而言，但凡我今天心情稍微差一点点，这种消息我根本不会回复。</p>
+<h4 id="反例及改善-2"><a class="markdownIt-Anchor" href="#反例及改善-2"></a> 反例及改善 2</h4>
+<p>反例：“学长你好，我这段程序一运行就会崩溃，实在是找不到原因了，您有空时一定要帮我看一下，谢谢！”</p>
+<p>改善：“学长你好，我这段程序一运行就会崩溃，实在是找不到原因了，可否请你在有空时帮我看一看问题出在哪？谢谢！”</p>
+<p>错点：一定要帮你看一下？您哪位，您是我爸还是怎么的？这种消息我也多半不会回复。</p>
+<h4 id="反例及改善-3"><a class="markdownIt-Anchor" href="#反例及改善-3"></a> 反例及改善 3</h4>
+<p>反例：“学长你好，我这个作业题的代码跑出来答案总是不对，我试了很久都没能解决，可否请你有空时赶紧帮我看看，我很急，谢谢！”</p>
+<p>改善：“学长你好，我这个作业题的代码跑出来答案总是不对，我试了很久都没能解决，可否请你在有空时帮我看看？明天就是作业的截止日期了，我实在是赶不及了，拜托你了，谢谢！”</p>
+<p>错点：既然我与你互不熟悉，那你急不急和我有什么关系？这其实也是礼貌的问题，若是真的很急，你也只能旁敲侧击暗示对方。其实只要表达得体，对方也多半会体谅你，尽量稍早些帮你解决问题。</p>
+<hr />
+<h3 id="学会详细描述你的问题"><a class="markdownIt-Anchor" href="#学会详细描述你的问题"></a> 学会详细描述你的问题</h3>
+<h4 id="概述-2"><a class="markdownIt-Anchor" href="#概述-2"></a> 概述</h4>
+<p>最令被求助者反感的事情之一就是在求助时不把自己的问题描述清楚。虽然对于初学者来说，有很多问题都不知道怎么表达合适，但是说得清不清楚是一回事、说不说是另一回事。</p>
+<p>在求助时，一定要尽可能详细清晰地描述自己的问题是什么，尤其是你和被求助者之间没有那么熟悉的时候。若是熟人之间倒是问题不大，来来回回交流几句也就弄明白了，但若并非熟人，你又凭什么要求对方愿意为你付出额外的精力去搞清楚你到底想问什么呢？</p>
+<p>举例来说，对于小规模的编程题，一般需要向被求助者提供如下信息，视情况提供其中的若干条：</p>
+<ul>
+<li>
+<p>你写程序想要解决的问题是什么；</p>
+</li>
+<li>
+<p>你实现的具体代码的概括；（这看起来和第一条重复，事实上对于复杂的编程题来说这一步是必要的，只是初学者前期写的题目一般太过简单，所以这一条看起来才会缺乏意义）</p>
+</li>
+<li>
+<p>程序的输入和你所期望的输出；</p>
+</li>
+<li>
+<p>你实际的输入和输出；</p>
+</li>
+<li>
+<p>你对 BUG 的排查情况（如果不会排查可以忽略这一条）；</p>
+</li>
+</ul>
+<p>举个例子：</p>
+<ul>
+<li>
+<p>程序要求的是学生的平均成绩；</p>
+</li>
+<li>
+<p>先输入每个学生的成绩，然后去掉最大值和最小值，之后计算剩余值的平均数，最后输出；</p>
+</li>
+<li>
+<p>输入 <code>61,77,78,79,93</code> ，输出 <code>78</code> ；</p>
+</li>
+<li>
+<p>给一个黑框截图，这非常有必要，因为有可能是你输入的格式和你写的 <code>scanf</code> 不匹配，而被求助者只有看到你的实际输入才能知道这一点；</p>
+</li>
+<li>
+<p>例如，排查过求最大值最小值的函数，确定没有错误；</p>
+</li>
+</ul>
+<h4 id="反例及改善"><a class="markdownIt-Anchor" href="#反例及改善"></a> 反例及改善</h4>
+<p>反例：“学长你好，可以请你有空时帮我看下这段程序吗？我自己实在是解决不了，谢谢！”</p>
+<p>可能的改善 1 ：“学长你好，可以请你有空时帮我看下这段程序吗？我自己实在是解决不了。这个程序是输入五个数然后求最大值，但是我刚输入完五个数程序就崩溃了。谢谢！”</p>
+<p>可能的改善 2 ：“学长你好，可以请你有空时帮我看下这段程序吗？我自己实在是解决不了。这个程序是输入一个数组然后给数组升序排序，但是排序后的数组的顺序还是不对，而且会多出一个莫名其妙的数，比如输入的数组是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo stretchy="false">[</mo><mn>1</mn><mo separator="true">,</mo><mn>4</mn><mo separator="true">,</mo><mn>7</mn><mo separator="true">,</mo><mn>6</mn><mo separator="true">,</mo><mn>4</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[1, 4, 7, 6, 4]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">4</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">7</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">6</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">4</span><span class="mclose">]</span></span></span></span> ，但是排序结果却是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo stretchy="false">[</mo><mn>1</mn><mo separator="true">,</mo><mn>4</mn><mo separator="true">,</mo><mn>4</mn><mo separator="true">,</mo><mn>1516970</mn><mo separator="true">,</mo><mn>6</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[1, 4, 4, 1516970, 6]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">4</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">4</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mord">5</span><span class="mord">1</span><span class="mord">6</span><span class="mord">9</span><span class="mord">7</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">6</span><span class="mclose">]</span></span></span></span> 。谢谢！”</p>
+<p>可能的改善 3 ：“学长你好，可以请你有空时帮我看下这段程序吗？我自己实在是解决不了。这个是我们的结课大作业，模拟实现一个学生信息管理系统，我这个删除学生的功能可能有问题，删完之后输出所有学生，这个输出的结果就会很诡异，这个截图里就是其中一个结果不对的例子。谢谢！”</p>
+<p>另外，如果是某个OJ上的在线编程题，最好在详细描述你的问题的同时，附上原题的链接或是题干的截图，这样方便别人帮你解答。</p>
+<hr />
+<h3 id="不要复制粘贴大段代码"><a class="markdownIt-Anchor" href="#不要复制粘贴大段代码"></a> 不要复制粘贴大段代码</h3>
+<h4 id="问题描述"><a class="markdownIt-Anchor" href="#问题描述"></a> 问题描述</h4>
+<p>很多人在求助时喜欢直接把自己的代码复制粘贴发送一气呵成，如果代码很短倒还好，否则你这一坨代码发出去，立刻就会极大地降低对方帮助你的欲望，甚至若是代码风格还差，对方可能就要假装没空了。</p>
+<p>这真的没什么好说的，我给你两张图你自己体会，分别是我在手机端和电脑端 QQ 上收到这种消息的截图：</p>
+<p><img src="/images/Programming-Languages/C/C-0104-i01.png" alt="" /></p>
+<p>你给我一个帮他看代码的理由？？</p>
+<p>另外，如果你需要对方帮你 DEBUG ，千万不要发送代码的截图或照片，这简直比发纯文本还要糟糕。你发张图片让人怎么帮你 DEBUG ？如果肉眼找不到错，让人家一个字一个字地把你的代码再敲一遍吗？那显然是不可能的，所以如果对方肉眼查不出来，多半就不会再理会你了。</p>
+<h4 id="改善措施"><a class="markdownIt-Anchor" href="#改善措施"></a> 改善措施</h4>
+<p>如果代码不是很短（大于 20 行），请不要直接发送纯文本信息。建议使用以下方式之一发送代码：</p>
+<ol>
+<li>发送源文件。</li>
+</ol>
+<p>无论是 QQ 还是邮箱都可以发送附件，不会刷屏，对方也能自由选择接收的时机，还省去了复制的麻烦。</p>
+<p>但是注意，如果是多个源文件的程序，记得打好压缩包再发送，一次性向对方分别发送十几个源文件可能会导致你被拉黑。另外如果是一个工程，也要告知对方如何启动，不要让对方耗费额外的精力去寻找入口程序。</p>
+<ol start="2">
+<li>借助 Ubuntu Pastebin 网站的帮助。</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="http://paste.ubuntu.com/">Ubuntu Pastebin</a></p>
+<p>这是一个用来帮助人们互相传递代码文本的网站，把你的代码上传后会生成一个链接，你只需要给别人发送一个链接即可，而且网站还提供了代码高亮，简单方便，非常好用。发送源文件基本上只能在电脑上接收，但是这个就不受此限制了。</p>
+<p>它的一个缺点是贴上去的代码有时间限制，不过最长可以维持一年，应该足够应对所有情况了。它的另一个缺点是贴上去的代码是完全公开的，不能设置查阅密码之类的东西，不过只要你的程序不涉及什么保密事项，这也不会成为问题。</p>
+<p>另外就是它不支持贴一个工程或是同时贴多个文件，只适合用于单文件程序。</p>
+<hr />
+<h3 id="不要用手机对电脑屏幕拍照"><a class="markdownIt-Anchor" href="#不要用手机对电脑屏幕拍照"></a> 不要用手机对电脑屏幕拍照</h3>
+<p>关于不要发送代码的截图或照片，前文已经提过了。但是有时你可能会需要给对方提供一些报错信息的截图、运行结果的截图、你电脑运行环境信息的截图之类的东西。</p>
+<p>在这种情况下，请你按照字面意思，用电脑自带的或是 QQ 的截图工具，或是其它任何截图工具，截取窗口快照发给对方，如果需要录像就用录屏工具，千万不要用你的手机对着电脑屏幕拍照或录像然后发给对方！</p>
+<p>除非确实有特殊原因无法截图，最好跟对方说明情况表达歉意，请尽全力避免使用拍照的方式。</p>
+<p>我听过各种拍照而不截图的理由，包括但不限于电脑 QQ 没登录、电脑上没装 QQ 、懒得截图、等等，但这些并不重要，重要的是，你已经给对方留下了一个不太好的印象，降低了对方帮助你的欲望。因为根据常识，对着电子屏幕拍照，照片的清晰度通常都会很糟糕（更别说有的人还是俯视着/斜着拍的照片，我简直无语了），你不应该因为这些无聊的理由而给被求助者制造麻烦，除非因为某种原因你真的截不了图。</p>
+<hr />
+<h3 id="求助前先自己尝试解决问题"><a class="markdownIt-Anchor" href="#求助前先自己尝试解决问题"></a> 求助前先自己尝试解决问题</h3>
+<p>一言以蔽之，不要问能在一分钟以内百度到的问题，不要连做十几分钟的 debug 的尝试都没做就直接把出错的程序丢给别人，这会显得你非常懒惰，和你菜不菜是两回事。</p>
+<p>如果百度了看不懂，可以在提问时附上你所查到的博客链接，并详细描述你是什么地方不懂。这可以表现出你的态度，避免使对方认为你非常懒惰，也可以让对方能够准确地为你解惑。</p>
+<hr />
+<h3 id="不要做伸手党"><a class="markdownIt-Anchor" href="#不要做伸手党"></a> 不要做伸手党</h3>
+<p>有时，当你向人求助后，对方可能只帮你解决了部分问题，但指明了解决剩余问题的道路。此时你应当先自己尝试一段时间，搞不定再说；如果你自己还没有经过任何努力就反复向对方追问、寻求更多帮助，只会令人感到反感。</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>JM233333
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="https://blog.jm233333.com/Programming%20Languages/C/C%2001%20-%20The%20Right%20Way%20to%20Ask%20Others%20for%20Help/" title="C 01 - The Right Way to Ask Others for Help">https://blog.jm233333.com/Programming Languages/C/C 01 - The Right Way to Ask Others for Help/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B/" rel="tag"># 基础教程</a>
+              <a href="/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" rel="tag"># 编程语言</a>
+              <a href="/tags/C/" rel="tag"># C</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Programming%20Languages/C/C%2003%20-%20Types/" rel="prev" title="C 03 - Types">
+      <i class="fa fa-chevron-left"></i> C 03 - Types
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Programming%20Languages/C/C%2001%20-%20Summary%20of%20Basic%20Debugging%20Skills/" rel="next" title="C 01 - Summary of Basic Debugging Skills">
+      C 01 - Summary of Basic Debugging Skills <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="nav-number">1.</span> <span class="nav-text"> 前置知识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">2.</span> <span class="nav-text"> 前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%90%88%E9%80%82%E7%9A%84%E8%A1%A8%E8%BE%BE%E6%96%B9%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text"> 使用合适的表达方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">3.1.</span> <span class="nav-text"> 概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%8D%E4%BE%8B%E5%8F%8A%E6%94%B9%E5%96%84-1"><span class="nav-number">3.2.</span> <span class="nav-text"> 反例及改善 1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%8D%E4%BE%8B%E5%8F%8A%E6%94%B9%E5%96%84-2"><span class="nav-number">3.3.</span> <span class="nav-text"> 反例及改善 2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%8D%E4%BE%8B%E5%8F%8A%E6%94%B9%E5%96%84-3"><span class="nav-number">3.4.</span> <span class="nav-text"> 反例及改善 3</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%A6%E4%BC%9A%E8%AF%A6%E7%BB%86%E6%8F%8F%E8%BF%B0%E4%BD%A0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">4.</span> <span class="nav-text"> 学会详细描述你的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0-2"><span class="nav-number">4.1.</span> <span class="nav-text"> 概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%8D%E4%BE%8B%E5%8F%8A%E6%94%B9%E5%96%84"><span class="nav-number">4.2.</span> <span class="nav-text"> 反例及改善</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8D%E8%A6%81%E5%A4%8D%E5%88%B6%E7%B2%98%E8%B4%B4%E5%A4%A7%E6%AE%B5%E4%BB%A3%E7%A0%81"><span class="nav-number">5.</span> <span class="nav-text"> 不要复制粘贴大段代码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E6%8F%8F%E8%BF%B0"><span class="nav-number">5.1.</span> <span class="nav-text"> 问题描述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%94%B9%E5%96%84%E6%8E%AA%E6%96%BD"><span class="nav-number">5.2.</span> <span class="nav-text"> 改善措施</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8D%E8%A6%81%E7%94%A8%E6%89%8B%E6%9C%BA%E5%AF%B9%E7%94%B5%E8%84%91%E5%B1%8F%E5%B9%95%E6%8B%8D%E7%85%A7"><span class="nav-number">6.</span> <span class="nav-text"> 不要用手机对电脑屏幕拍照</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B1%82%E5%8A%A9%E5%89%8D%E5%85%88%E8%87%AA%E5%B7%B1%E5%B0%9D%E8%AF%95%E8%A7%A3%E5%86%B3%E9%97%AE%E9%A2%98"><span class="nav-number">7.</span> <span class="nav-text"> 求助前先自己尝试解决问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8D%E8%A6%81%E5%81%9A%E4%BC%B8%E6%89%8B%E5%85%9A"><span class="nav-number">8.</span> <span class="nav-text"> 不要做伸手党</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="JM233333"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">JM233333</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">238</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">80</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/JM233333" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;JM233333" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/26466398@163.com" title="E-Mail → 26466398@163.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://github.com/JM233333" title="https:&#x2F;&#x2F;github.com&#x2F;JM233333" rel="noopener" target="_blank">Title</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JM233333</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

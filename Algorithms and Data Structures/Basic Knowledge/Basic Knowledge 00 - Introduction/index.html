@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.jm233333.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="前言 这里是关于我的文档内容的一些规范和解释。 我的所有文档均使用C++语言。 我的文档被划分为若干个大的知识板块，在每个知识板块内，每篇文档会有一个标号，这个标号表示了该文档大致的在当前知识板块内的相对级别，建议按标号从小到大阅读，标号相同的则无所谓。 有些文档会具有相同的标号，这是按层划分的，可能会让您感到有些困惑，您可以参阅本文底部的阅读指引图来获得确切的阅读顺序。 一些文档的开头会给出前">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Basic Knowledge 00 - Introduction">
+<meta property="og:url" content="https://blog.jm233333.com/Algorithms%20and%20Data%20Structures/Basic%20Knowledge/Basic%20Knowledge%2000%20-%20Introduction/index.html">
+<meta property="og:site_name" content="JM233333&#39;s Blog">
+<meta property="og:description" content="前言 这里是关于我的文档内容的一些规范和解释。 我的所有文档均使用C++语言。 我的文档被划分为若干个大的知识板块，在每个知识板块内，每篇文档会有一个标号，这个标号表示了该文档大致的在当前知识板块内的相对级别，建议按标号从小到大阅读，标号相同的则无所谓。 有些文档会具有相同的标号，这是按层划分的，可能会让您感到有些困惑，您可以参阅本文底部的阅读指引图来获得确切的阅读顺序。 一些文档的开头会给出前">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://g.gravizo.com/svg?">
+<meta property="og:image" content="https://blog.jm233333.com/images/Algorithms-and-Data-Structures/Guideline/Guideline-Basic-Knowledge.png">
+<meta property="og:image" content="https://blog.jm233333.com/images/Algorithms-and-Data-Structures/Guideline/Guideline-Data-Structure.png">
+<meta property="og:image" content="https://blog.jm233333.com/images/Algorithms-and-Data-Structures/Guideline/Guideline-Fundamental-Algorithms.png">
+<meta property="og:image" content="https://blog.jm233333.com/images/Algorithms-and-Data-Structures/Guideline/Guideline-Graph-Theory.png">
+<meta property="og:image" content="https://blog.jm233333.com/images/Algorithms-and-Data-Structures/Guideline/Guideline-String-Theory.png">
+<meta property="article:published_time" content="2019-08-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-03-22T09:30:57.116Z">
+<meta property="article:author" content="JM233333">
+<meta property="article:tag" content="基础教程">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://g.gravizo.com/svg?">
+
+<link rel="canonical" href="https://blog.jm233333.com/Algorithms%20and%20Data%20Structures/Basic%20Knowledge/Basic%20Knowledge%2000%20-%20Introduction/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Basic Knowledge 00 - Introduction | JM233333's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">JM233333's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Contact Me: 26466398@163.com</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">80</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories<span class="badge">16</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.jm233333.com/Algorithms%20and%20Data%20Structures/Basic%20Knowledge/Basic%20Knowledge%2000%20-%20Introduction/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="JM233333">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JM233333's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Basic Knowledge 00 - Introduction
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-09-01 00:00:00" itemprop="dateCreated datePublished" datetime="2019-09-01T00:00:00+08:00">2019-09-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Algorithms-and-Data-Structures/" itemprop="url" rel="index"><span itemprop="name">Algorithms and Data Structures</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Algorithms-and-Data-Structures/Basic-Knowledge/" itemprop="url" rel="index"><span itemprop="name">Basic Knowledge</span></a>
+                </span>
+            </span>
+
+          
+
+          <div class="post-authorization">
+            <p>本文为 JM233333 原创所著，遵循 BY-NC-SA 4.0 许可协议，转载请注明出处。如果您认为文中有谬误或对文中内容有疑问，欢迎理性指出，大家共同探讨和进步。</p>
+          </div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h3>
+<p>这里是关于我的文档内容的一些规范和解释。</p>
+<p>我的所有文档均使用C++语言。</p>
+<p>我的文档被划分为若干个大的知识板块，在每个知识板块内，每篇文档会有一个标号，这个标号表示了该文档大致的在当前知识板块内的相对级别，建议按标号从小到大阅读，标号相同的则无所谓。</p>
+<p>有些文档会具有相同的标号，这是按层划分的，可能会让您感到有些困惑，您可以参阅本文底部的阅读指引图来获得确切的阅读顺序。</p>
+<p>一些文档的开头会给出前置知识声明，如果你没有掌握这些知识，建议进行递归学习。这些前置声明和阅读指引图提供的顺序是相同的。</p>
+<p>每篇文档的开头均包含版权声明和对本文适用人群的声明，分为“面向初学者”和“面向进阶读者”两大类。</p>
+<p>面向初学者：</p>
+<ol>
+<li>
+<p>适合对当前的大的知识板块掌握尚浅的读者。注意，是相对于当前知识板块，而不是相对于所有知识。</p>
+</li>
+<li>
+<p>默认读者没有接触过任何相关知识，会对所有涉及到的、读者可能不知道的知识进行解释。</p>
+</li>
+<li>
+<p>通常会以大量的篇幅对简单的基础知识进行解释，用语言引导读者举一反三深入思考。</p>
+</li>
+<li>
+<p>会使用精简代码并分段提取出来讲解，用大量的简单示例图来帮助学习，完整的代码实现也会附于文末。</p>
+</li>
+<li>
+<p>因为是面向初学者的，哪怕是非常简单的内容，文中也会花费大量篇幅进行解释，因而通常不适合基础较好的读者，请自行避雷。</p>
+</li>
+</ol>
+<p>面向进阶读者：</p>
+<ol>
+<li>
+<p>适合对当前的大的知识板块已经有所了解，希望学习该板块中更高级的内容的读者。</p>
+</li>
+<li>
+<p>默认读者的基础较为良好，不会花费大量篇幅解释一些我认为过于简单的内容。</p>
+</li>
+<li>
+<p>通常会深入解释知识的内在原理，甚至给出正确性证明等，帮助读者完全掌握知识，而非浮于表面。</p>
+</li>
+<li>
+<p>会提供更多课本上没有的扩展知识，并且通常只给出完整的代码实现，除非是一些重要或较难的关键代码会分段提取出来讲解。</p>
+</li>
+<li>
+<p>有些是专门针对ACM选手的文章，知识难度大且实用价值没有那么高，此类情况会特别标注在文章的开头，不打算参加算法竞赛的同学可以自行避过。</p>
+</li>
+</ol>
+<p>特别声明，我的文章并不能帮助你通过学校的书面考试，但能帮助你真正地掌握这些知识，能让你学会如何用代码实现这些基础算法与数据结构。如果只是为了应付考试，那么我的文章并不适合你。</p>
+<hr />
+<h3 id="推荐网站"><a class="markdownIt-Anchor" href="#推荐网站"></a> 推荐网站</h3>
+<p>这两个网站提供了一些算法和数据结构的动态可视化预览界面，读者能够非常方便地观看算法和数据结构的整个动态的运行过程，初学者可以借助这些可视化界面进行更加全面的理解和学习。</p>
+<ul>
+<li>
+<p><a target="_blank" rel="noopener" href="https://visualgo.net/en">https://visualgo.net/en</a></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="https://www.cs.usfca.edu/~galles/visualization/Algorithms.html">https://www.cs.usfca.edu/~galles/visualization/Algorithms.html</a></p>
+</li>
+</ul>
+<hr />
+<h3 id="阅读指引图"><a class="markdownIt-Anchor" href="#阅读指引图"></a> 阅读指引图</h3>
+<p>下面将分别给出每个知识板块对应的阅读指引图，其中：</p>
+<ul>
+<li>
+<p>淡黄色方块表示面向初学者的文章。</p>
+</li>
+<li>
+<p>小麦色方块表示面向进阶读者的文章。</p>
+</li>
+<li>
+<p>箭头表示一组前置知识的关系。在阅读一篇文章前，推荐您先阅读其所有前置文章。</p>
+</li>
+<li>
+<p>空心大箭头表示你将进入到进阶区域。</p>
+</li>
+<li>
+<p>淡粉色方块表示来自其他知识板块的文章，因为它们是本板块内某些文章的前置知识，所以被专门标示出来。此时会用虚线箭头表示前置关系。</p>
+</li>
+</ul>
+<img src='https://g.gravizo.com/svg?'/>
+<h4 id="basic-knowledge"><a class="markdownIt-Anchor" href="#basic-knowledge"></a> Basic Knowledge</h4>
+<p><img src="/images/Algorithms-and-Data-Structures/Guideline/Guideline-Basic-Knowledge.png" alt="" /></p>
+<p>@startuml<br />
+hide members<br />
+hide circle</p>
+<p>class &quot; Introduction &quot; as BC0000 &lt;<Basic Knowledge>&gt;<br />
+class &quot; Common Sense of Coding &quot; as BC0100 &lt;<Basic Knowledge>&gt;<br />
+class &quot; Common Sense of Training &quot; as BC0101 &lt;<Basic Knowledge>&gt;</p>
+<p>&quot; start &quot; --&gt; BC0000</p>
+<p>BC0000 --&gt; BC0100<br />
+BC0000 --&gt; BC0101</p>
+<p>@enduml</p>
+<h4 id="data-structure"><a class="markdownIt-Anchor" href="#data-structure"></a> Data Structure</h4>
+<p><img src="/images/Algorithms-and-Data-Structures/Guideline/Guideline-Data-Structure.png" alt="" /></p>
+<p>@startuml<br />
+hide members<br />
+hide circle</p>
+<p>class &quot; Basic Concept &quot; as DS0000 &lt;<Data Structure>&gt;<br />
+class &quot; Linear List &quot; as DS0100 &lt;<Data Structure>&gt;<br />
+class &quot; Restricted Linear List &quot; as DS0200 &lt;<Data Structure>&gt;<br />
+class &quot; Tree &quot; as DS0300 &lt;<Data Structure>&gt;<br />
+class &quot; Binary Tree &quot; as DS0400 &lt;<Data Structure>&gt;<br />
+class &quot; Binary Search Tree &quot; as DS0500 &lt;<Data Structure>&gt;<br />
+class &quot; Heap &quot; as DS0501 &lt;<Data Structure>&gt;<br />
+class &quot; Self-Balancing \n Binary Search Tree &quot; as DS0600 &lt;<Data Structure>&gt;<br />
+class &quot; Binary Heap &quot; as DS0601 &lt;<Data Structure>&gt;<br />
+class &quot; AVL Tree &quot; as DS0700 &lt;<Data Structure>&gt;<br />
+class &quot; Disjoint-Set Union &quot; as DS0701 &lt;<Data Structure>&gt;</p>
+<p>class &quot; Summation Sequence and Difference Sequence &quot; as DS1000 &lt;<Data Structure>&gt; #wheat<br />
+class &quot; Binomial Heap &quot; as DS1100 &lt;<Data Structure>&gt; #wheat</p>
+<p>DS0000 --&gt; DS0100<br />
+DS0100 --&gt; DS0200<br />
+DS0200 --&gt; DS0300<br />
+DS0300 --&gt; DS0400<br />
+DS0400 --&gt; DS0500<br />
+DS0400 --&gt; DS0501<br />
+DS0500 --&gt; DS0600<br />
+DS0501 --&gt; DS0601<br />
+DS0600 --&gt; DS0700<br />
+DS0600 --&gt; DS0701</p>
+<p>DS0100 -right-|&gt; DS1000<br />
+DS0501 -right-|&gt; DS1100<br />
+DS1100 -right-|&gt; DS1200</p>
+<p>DS0500 -right[hidden]-&gt; DS0501</p>
+<p>class &quot; Introduction &quot; as BC0000 &lt;<Basic Knowledge>&gt; #FFEEFF</p>
+<p>BC0000 …&gt; DS0000</p>
+<p>@enduml</p>
+<h4 id="fundamental-algorithms"><a class="markdownIt-Anchor" href="#fundamental-algorithms"></a> Fundamental Algorithms</h4>
+<p><img src="/images/Algorithms-and-Data-Structures/Guideline/Guideline-Fundamental-Algorithms.png" alt="" /></p>
+<p>@startuml<br />
+hide members<br />
+hide circle<br />
+hide _BLOCK_01</p>
+<p>class &quot; Introduction &quot; as FA0000 &lt;<Fundamental Algorithms>&gt;<br />
+class &quot; Greedy Strategy &quot; as FA0100 &lt;<Fundamental Algorithms>&gt;<br />
+class &quot; Dynamic Programming &quot; as FA0101 &lt;<Fundamental Algorithms>&gt;<br />
+class &quot; Divide and Conquer &quot; as FA0102 &lt;<Fundamental Algorithms>&gt;<br />
+class &quot; Searching &quot; as FA0103 &lt;<Fundamental Algorithms>&gt;<br />
+class &quot; Binary Search &quot; as FA0104 &lt;<Fundamental Algorithms>&gt;<br />
+class &quot; Two Pointers &quot; as FA0105 &lt;<Fundamental Algorithms>&gt;<br />
+class &quot; Counting with Bucket &quot; as FA0106 &lt;<Fundamental Algorithms>&gt;</p>
+<p>class &quot; Difference between \n Basic Algorithm Strategies &quot; as FA0200 &lt;<Fundamental Algorithms>&gt;<br />
+class &quot; Fast Power &quot; as FA0201 &lt;<Fundamental Algorithms>&gt;<br />
+class &quot; Huffman Code &quot; as FA0202 &lt;<Fundamental Algorithms>&gt;<br />
+class &quot; Closest Pair of Points Problem &quot; as FA0203 &lt;<Fundamental Algorithms>&gt;<br />
+class &quot; Discretization &quot; as FA0204 &lt;<Fundamental Algorithms>&gt;<br />
+class &quot; Bitmask State Compression &quot; as FA0205 &lt;<Fundamental Algorithms>&gt;</p>
+<p>class &quot; Fast Power of Matrix &quot; as FA0300 &lt;<Fundamental Algorithms>&gt; #wheat<br />
+class &quot; Meet in the Middle &quot; as FA0301 &lt;<Fundamental Algorithms>&gt; #wheat<br />
+class &quot; Maximization of Minimum Value &quot; as FA0302 &lt;<Fundamental Algorithms>&gt; #wheat<br />
+class &quot; Ternary Search &quot; as FA0303 &lt;<Fundamental Algorithms>&gt; #wheat</p>
+<p>FA0000 -left-&gt; FA0100<br />
+FA0100 -left-&gt; FA0101<br />
+FA0000 —&gt; FA0102<br />
+FA0000 -right-&gt; FA0103<br />
+FA0000 —&gt; FA0104<br />
+FA0000 —&gt; FA0105<br />
+FA0000 —&gt; FA0106</p>
+<p>FA0100 --&gt; FA0200<br />
+FA0101 --&gt; FA0200<br />
+FA0102 -left-&gt; FA0200<br />
+FA0102 --&gt; FA0201<br />
+FA0100 --&gt; FA0202<br />
+FA0102 --&gt; FA0203<br />
+FA0106 --&gt; FA0204<br />
+FA0000 —&gt; FA0205</p>
+<p>FA0201 --|&gt; FA0300<br />
+FA0103 -right-|&gt; FA0301<br />
+FA0104 —|&gt; FA0302<br />
+FA0104 —|&gt; FA0303</p>
+<p>FA0202 -down[hidden]-&gt; FA0102</p>
+<p>class &quot; Introduction &quot; as BC0000 &lt;<Basic Knowledge>&gt; #FFEEFF<br />
+class &quot; Graph Searching &quot; as GT0100 &lt;<Graph Theory>&gt; #FFEEFF</p>
+<p>BC0000 …&gt; FA0000<br />
+GT0100 …&gt; FA0103</p>
+<p>@enduml</p>
+<h4 id="graph-theory"><a class="markdownIt-Anchor" href="#graph-theory"></a> Graph Theory</h4>
+<p><img src="/images/Algorithms-and-Data-Structures/Guideline/Guideline-Graph-Theory.png" alt="" /></p>
+<p>@startuml<br />
+hide members<br />
+hide circle<br />
+hide _BLOCK_01<br />
+hide _BLOCK_02</p>
+<p>class &quot; Basic Concept &quot; as GT0000 &lt;<Graph Theory>&gt;<br />
+class &quot; Graph Searching &quot; as GT0100 &lt;<Graph Theory>&gt;<br />
+class &quot; Dijkstra Algorithm &quot; as GT0200 &lt;<Graph Theory>&gt;<br />
+class &quot; Floyd Algorithm &quot; as GT0201 &lt;<Graph Theory>&gt;<br />
+class &quot; Kruskal Algorithm &quot; as GT0202 &lt;<Graph Theory>&gt;<br />
+class &quot; Prim Algorithm &quot; as GT0203 &lt;<Graph Theory>&gt;<br />
+class &quot; Topological Sort &quot; as GT0204 &lt;<Graph Theory>&gt;<br />
+class &quot; Bellman-Ford Algorithm &quot; as GT0300 &lt;<Graph Theory>&gt;<br />
+class &quot; Shortest Path Faster Algorithm &quot; as GT0400 &lt;<Graph Theory>&gt;</p>
+<p>class &quot; System of Difference Constraints &quot; as GT0500 &lt;<Graph Theory>&gt; #wheat<br />
+class &quot; Hungarian Algorithm &quot; as GT0501 &lt;<Graph Theory>&gt; #wheat<br />
+class &quot; Kuhn-Munkres Algorithm &quot; as GT0601 &lt;<Graph Theory>&gt; #wheat<br />
+class &quot; Tarjan Algorithm &quot; as GT0502 &lt;<Graph Theory>&gt; #wheat<br />
+class &quot; Network Flow &quot; as GT0503 &lt;<Graph Theory>&gt; #wheat</p>
+<p>GT0000 --&gt; GT0100<br />
+GT0000 --&gt; GT0200<br />
+GT0000 --&gt; GT0201<br />
+GT0000 --&gt; GT0202<br />
+GT0000 --&gt; GT0203<br />
+GT0100 --&gt; GT0204<br />
+GT0100 —|&gt; GT0501<br />
+GT0100 —|&gt; GT0502<br />
+GT0100 —|&gt; GT0503<br />
+GT0200 --&gt; GT0300<br />
+GT0300 --&gt; GT0400<br />
+GT0400 --|&gt; GT0500<br />
+GT0501 --|&gt; GT0601</p>
+<p>GT0000 -down[hidden]-&gt; _BLOCK_01<br />
+GT0201 -right[hidden]-&gt; _BLOCK_01<br />
+GT0100 -left[hidden]-&gt; GT0200<br />
+GT0200 -left[hidden]-&gt; GT0203<br />
+GT0203 -left[hidden]-&gt; GT0202<br />
+GT0100 -right[hidden]-&gt; GT0201</p>
+<p>GT0204 -down[hidden]-&gt; _BLOCK_02<br />
+GT0501 -left[hidden]-&gt; _BLOCK_02<br />
+GT0400 -right[hidden]-&gt; _BLOCK_02<br />
+GT0204 -right[hidden]-&gt; GT0501<br />
+GT0501 -right[hidden]-&gt; GT0502<br />
+GT0502 -right[hidden]-&gt; GT0503</p>
+<p>class &quot; Introduction &quot; as BC0000 &lt;<Basic Knowledge>&gt; #FFEEFF<br />
+class &quot; Heap &quot; as DS0501 &lt;<Data Structure>&gt; #FFEEFF<br />
+class &quot; Disjoint-Set Union &quot; as DS0701 &lt;<Data Structure>&gt; #FFEEFF<br />
+class &quot; Greedy Strategy &quot; as FA0100 &lt;<Fundamental Algorithms>&gt; #FFEEFF<br />
+class &quot; Dynamic Programming &quot; as FA0777 &lt;<Fundamental Algorithms>&gt; #FFEEFF<br />
+class &quot; Dynamic Programming &quot; as FA0777_2 &lt;<Fundamental Algorithms>&gt; #FFEEFF</p>
+<p>BC0000 …&gt; GT0000<br />
+DS0501 …&gt; GT0200<br />
+DS0701 …&gt; GT0202<br />
+FA0100 …&gt; GT0200<br />
+FA0100 …&gt; GT0202<br />
+FA0100 …&gt; GT0203<br />
+FA0777 …&gt; GT0201<br />
+FA0777_2 .right.&gt; GT0300</p>
+<p>@enduml</p>
+<h4 id="string-theory"><a class="markdownIt-Anchor" href="#string-theory"></a> String Theory</h4>
+<p><img src="/images/Algorithms-and-Data-Structures/Guideline/Guideline-String-Theory.png" alt="" /></p>
+<p>@startuml<br />
+hide members<br />
+hide circle</p>
+<p>class &quot; Basic Concept &quot; as ST0000 &lt;<String Theory>&gt;<br />
+class &quot; Knuth-Morris-Pratt Algorithm &quot; as ST0100 &lt;<String Theory>&gt;<br />
+class &quot; Trie &quot; as ST0101 &lt;<String Theory>&gt;<br />
+class &quot; Manacher Algorithm &quot; as ST0102 &lt;<String Theory>&gt;<br />
+class &quot; Aho-Corasick Automaton &quot; as ST0200 &lt;<String Theory>&gt;</p>
+<p>ST0000 --&gt; ST0100<br />
+ST0000 --&gt; ST0101<br />
+ST0000 --&gt; ST0102<br />
+ST0100 --&gt; ST0200<br />
+ST0101 --&gt; ST0200</p>
+<p>class &quot; Introduction &quot; as BC0000 &lt;<Basic Knowledge>&gt; #FFEEFF<br />
+class &quot; Tree &quot; as DS0300 &lt;<Data Structure>&gt; #FFEEFF</p>
+<p>BC0000 …&gt; ST0000<br />
+DS0300 …&gt; ST0101</p>
+<p>@enduml</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>JM233333
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="https://blog.jm233333.com/Algorithms%20and%20Data%20Structures/Basic%20Knowledge/Basic%20Knowledge%2000%20-%20Introduction/" title="Basic Knowledge 00 - Introduction">https://blog.jm233333.com/Algorithms and Data Structures/Basic Knowledge/Basic Knowledge 00 - Introduction/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B/" rel="tag"># 基础教程</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Algorithms%20and%20Data%20Structures/Basic%20Knowledge/Basic%20Knowledge%2001%20-%20Common%20Sense%20of%20Training/" rel="prev" title="Basic Knowledge 01 - Common Sense of Training">
+      <i class="fa fa-chevron-left"></i> Basic Knowledge 01 - Common Sense of Training
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/LeetCode/LeetCode%200001%20-%20Two%20Sum/" rel="next" title="LeetCode 0001 - Two Sum">
+      LeetCode 0001 - Two Sum <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text"> 前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A8%E8%8D%90%E7%BD%91%E7%AB%99"><span class="nav-number">2.</span> <span class="nav-text"> 推荐网站</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%98%85%E8%AF%BB%E6%8C%87%E5%BC%95%E5%9B%BE"><span class="nav-number">3.</span> <span class="nav-text"> 阅读指引图</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#basic-knowledge"><span class="nav-number">3.1.</span> <span class="nav-text"> Basic Knowledge</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#data-structure"><span class="nav-number">3.2.</span> <span class="nav-text"> Data Structure</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#fundamental-algorithms"><span class="nav-number">3.3.</span> <span class="nav-text"> Fundamental Algorithms</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#graph-theory"><span class="nav-number">3.4.</span> <span class="nav-text"> Graph Theory</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#string-theory"><span class="nav-number">3.5.</span> <span class="nav-text"> String Theory</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="JM233333"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">JM233333</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">238</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">80</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/JM233333" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;JM233333" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/26466398@163.com" title="E-Mail → 26466398@163.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://github.com/JM233333" title="https:&#x2F;&#x2F;github.com&#x2F;JM233333" rel="noopener" target="_blank">Title</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JM233333</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

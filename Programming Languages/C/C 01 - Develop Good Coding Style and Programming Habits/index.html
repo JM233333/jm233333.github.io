@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.jm233333.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="前置知识 在阅读本文档前，请先阅读 C 语言的整体介绍文档，详见 C 语言的 00 - Introduction 文档。  C 00 - Introduction    前言 作为一名初学者，在努力学习编程相关知识的同时，你还需要注重让自己写出来的程序具有良好的代码风格，也需要注意养成良好的编程习惯，让自己写出来的程序。好的代码风格和编程习惯都是极其重要的，不幸的是，一些人很快就注意到了这一点，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C 01 - Develop Good Coding Style and Programming Habits">
+<meta property="og:url" content="https://blog.jm233333.com/Programming%20Languages/C/C%2001%20-%20Develop%20Good%20Coding%20Style%20and%20Programming%20Habits/index.html">
+<meta property="og:site_name" content="JM233333&#39;s Blog">
+<meta property="og:description" content="前置知识 在阅读本文档前，请先阅读 C 语言的整体介绍文档，详见 C 语言的 00 - Introduction 文档。  C 00 - Introduction    前言 作为一名初学者，在努力学习编程相关知识的同时，你还需要注重让自己写出来的程序具有良好的代码风格，也需要注意养成良好的编程习惯，让自己写出来的程序。好的代码风格和编程习惯都是极其重要的，不幸的是，一些人很快就注意到了这一点，">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-03-22T09:32:11.634Z">
+<meta property="article:author" content="JM233333">
+<meta property="article:tag" content="基础教程">
+<meta property="article:tag" content="编程语言">
+<meta property="article:tag" content="C">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://blog.jm233333.com/Programming%20Languages/C/C%2001%20-%20Develop%20Good%20Coding%20Style%20and%20Programming%20Habits/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>C 01 - Develop Good Coding Style and Programming Habits | JM233333's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">JM233333's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Contact Me: 26466398@163.com</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">80</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories<span class="badge">16</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.jm233333.com/Programming%20Languages/C/C%2001%20-%20Develop%20Good%20Coding%20Style%20and%20Programming%20Habits/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="JM233333">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JM233333's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          C 01 - Develop Good Coding Style and Programming Habits
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2020-01-01T00:00:00+08:00">2020-01-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming-Languages/" itemprop="url" rel="index"><span itemprop="name">Programming Languages</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming-Languages/C/" itemprop="url" rel="index"><span itemprop="name">C</span></a>
+                </span>
+            </span>
+
+          
+
+          <div class="post-authorization">
+            <p>本文为 JM233333 原创所著，遵循 BY-NC-SA 4.0 许可协议，转载请注明出处。如果您认为文中有谬误或对文中内容有疑问，欢迎理性指出，大家共同探讨和进步。</p>
+          </div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="前置知识"><a class="markdownIt-Anchor" href="#前置知识"></a> 前置知识</h3>
+<p>在阅读本文档前，请先阅读 C 语言的整体介绍文档，详见 <em>C</em> 语言的 <em>00 - Introduction</em> 文档。</p>
+<ul>
+<li><a href="/Programming%20Languages/C/C%2000%20-%20Introduction/">C 00 - Introduction</a></li>
+</ul>
+<hr />
+<h3 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h3>
+<p>作为一名初学者，在努力学习编程相关知识的同时，你还需要注重让自己写出来的程序具有良好的代码风格，也需要注意养成良好的编程习惯，让自己写出来的程序。好的代码风格和编程习惯都是极其重要的，不幸的是，一些人很快就注意到了这一点，而更多的人却直到很久以后才会幡然醒悟。</p>
+<p>如果你是一位学生，那么只要你的老师神智正常，就一定会时不时地向你强调这些问题，但却很可能未曾把问题说清楚。</p>
+<p>究竟什么样的代码风格是好的？什么样的编程习惯是好的？它们重要，但是究竟为什么重要？其实这些问题，即便你不专门去了解也迟早会领悟到，但如果你在初学阶段未曾知晓，那你将来很有可能因为糟糕的编程习惯和代码风格而大量吃亏，方才醒悟过来。本文正是为那些对此一无所知、或是一知半解的读者准备的。</p>
+<p>本文中的内容更多的是我个人的经验和体会，并非是硬性的知识，你应当保持自己的主观判断，不可生搬硬套，吸收其中适合自己的内容即可。</p>
+<p>因为我本人在最初入门编程的时候，缺乏老师或前辈的指点，也缺乏参考资料和书籍，所以我曾经吃了不少编程习惯和代码风格的亏（虽然我那时的习惯并不太糟糕，但也不怎么好，即便如此尚且吃了很多亏），因此我可能对此的理解也较为透彻，本文应该能对读者提供不小的帮助。</p>
+<hr />
+<h3 id="养成良好的代码风格"><a class="markdownIt-Anchor" href="#养成良好的代码风格"></a> 养成良好的代码风格</h3>
+<h4 id="代码风格的重要性"><a class="markdownIt-Anchor" href="#代码风格的重要性"></a> 代码风格的重要性</h4>
+<p>良好的代码风格是十分重要的，概括地讲，它可以使你的程序：</p>
+<ol>
+<li>
+<p>具有良好的可读性；</p>
+</li>
+<li>
+<p>具有较好的容错性；</p>
+</li>
+<li>
+<p>易于修改和扩展。</p>
+</li>
+</ol>
+<p>我们先对上述内容进行一个概括性的描述，下文中会给出大量的实例来向读者展示糟糕和良好的代码风格之间的区别，并借此让读者深刻理解代码风格的重要性。</p>
+<p><strong>良好的可读性</strong></p>
+<p>对于初学者而言，最容易接触到的就是可读性的问题。</p>
+<p>一份风格良好的代码是结构清晰的、一目了然的，尤其是对于简单的玩具级代码而言。即便是复杂的程序，代码的阅读者也能花费较小的代价理清整个程序的逻辑结构，并且程序中的各个子模块的内容都较为清晰易懂。相反，一份风格糟糕的代码可能会让人一眼扫过去就失去继续阅读的欲望。</p>
+<p>可读性是非常重要的，尤其是对于初学者而言更为重要，不仅仅是代码看起来美观这种肤浅的理由。比如，当你的代码出现了问题而你费尽心思也解决不了时，你可能会向他人求助，可读性强的代码可以帮助别人迅速地读懂你的代码，极大提高解决问题的效率。相反，如果你的代码可读性太差，别人很可能会失去阅读的欲望，进而对你敷衍了事或是直接拒绝提供帮助，尤其是在线上进行求助时。比如对于用 QQ 找我帮忙 DEBUG 的，如果直接复制粘贴一大坨没有缩进的代码给我，且与我关系不熟，我有很大的概率会直接忽略，因为我认为他这是在浪费我的时间。</p>
+<p>写出可读性强的代码不仅是为了让别人看，也是为了让自己看。如果你的代码可读性很差，你自己现在看着是没问题，等过几个月，或者仅仅几个星期，再把这段代码翻出来给你，可能你自己都看不懂，这就可能给你自己带来很大的麻烦。</p>
+<p>另一方面，当你将来进行团队合作开发时，在需要多人共同维护同一段代码时，如果你的代码风格很糟糕，那么你在你的共事者心目中的印象一定会变得很差。哪怕是由你自己独立控制的代码，如果以后改由他人接手，那你肯定会被人在背后骂得不停地打喷嚏。</p>
+<p><strong>较好的容错性</strong></p>
+<p>容错性也是一个十分重要的原因。我所说的容错性包含两个方面。</p>
+<p>其一，可以降低因为你在写代码时笔误而导致程序出错的可能性。</p>
+<p>比如说，风格良好的代码总是能避免对同一数据存放多个无关的副本。这听起来有些抽象，我们举一个最简单的例子，当你需要多个长度相同的数组时，下面的代码的风格就有些不太好：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> data[<span class="number">1000000</span>], id[<span class="number">1000000</span>], sum[<span class="number">1000000</span>], son[<span class="number">2</span>][<span class="number">1000000</span>];</span><br><span class="line"><span class="keyword">double</span> value[<span class="number">1000000</span>];</span><br></pre></td></tr></table></figure>
+<p>如果你不幸笔误，并因此导致后面访问数组时发生内存溢出，你可能很难查出问题所在：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> data[<span class="number">1000000</span>], id[<span class="number">1000000</span>], sum[<span class="number">100000</span>], son[<span class="number">2</span>][<span class="number">1000000</span>];</span><br><span class="line"><span class="keyword">double</span> value[<span class="number">1000000</span>];</span><br></pre></td></tr></table></figure>
+<p>其二，可以提高与用户交互时的容错性。</p>
+<p>如果你只是写一些玩具级的代码，那么第二点对你来说可能并不重要，但在任何实际程序中这都是至关重要的。</p>
+<p>无论是你现在写的简单的编程作业题，还是你以后会遇到的各种机试或程序竞赛中的编程题，“用户”（即评测机）输入的内容都是被规定好的，说是数字就是数字，说传入的指针非空就是非空，但在实际开发中，这些限制条件其实很少能被满足。</p>
+<p>风格良好的代码，应当能够处理来自用户的错误输入，能够处理接口中接收到的各种错误参数，等等，至少要能够处理常见的大部分问题。而风格糟糕的代码总是忽略这些问题，结果被调皮的用户炸出各种轻重不一的 BUG ，或是被接口中传来的错误参数直接把整个程序搞崩溃。</p>
+<p><strong>易于修改和扩展</strong></p>
+<p>其一是易于修改。</p>
+<p>其实这一点和容错性问题的第一点有很大部分的重叠。还是用那个数组的例子，当你需要修改这些数组的长度时，你不得不修改五个地方，对于这个例子而言可能还好，如果更多的话，一旦你改漏了一个地方，你可能很难查出问题所在，因为在你的意识中你已经修改过数组的长度了。下文中会给出更详细的例子。</p>
+<p>其二是易于扩展。</p>
+<p>风格良好的代码总是会考虑到将来可能会对程序进行的功能扩展，并为此做出一定的准备，当你需要扩展这样的程序时就会感到较为舒适。这对初学者而言可能较难理解，你只需要先知晓此事即可。</p>
+<h4 id="做好代码缩进"><a class="markdownIt-Anchor" href="#做好代码缩进"></a> 做好代码缩进</h4>
+<p>单就代码可读性而言，做好代码缩进是最为重要的。本节我们使用简单的选择排序作为示例程序。</p>
+<p>我们先考虑一个最极端的例子：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line"><span class="keyword">int</span> a[<span class="number">100</span>];</span><br><span class="line"><span class="keyword">int</span> n, i, j, m, t;</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;n);</span><br><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i ++)</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;a[i]);</span><br><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i ++) &#123;</span><br><span class="line">m = i;</span><br><span class="line"><span class="keyword">for</span> (j = i + <span class="number">1</span>; j &lt; n; j ++)</span><br><span class="line"><span class="keyword">if</span> (a[m] &gt; a[j])</span><br><span class="line">m = j;</span><br><span class="line">&#125;</span><br><span class="line">t = a[i];</span><br><span class="line">a[i] = a[m];</span><br><span class="line">a[m] = t;</span><br><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i ++) &#123;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>, a[i]);</span><br><span class="line"><span class="built_in">printf</span>(i == n - <span class="number">1</span> ? <span class="string">&quot;\n&quot;</span> : <span class="string">&quot; &quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果你面对这样的代码，你是否愿意仔细阅读？如果你不得不阅读，那么你需要耗费多少精力去搞清楚这段代码功能，又要耗费多少精力去找到其中的错误？</p>
+<p>现在我们做好代码缩进，现在一些低级错误就显得一目了然了，甚至如果你一开始写的时候就做好缩进，很多低级错误根本就不会犯下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a[<span class="number">100</span>];</span><br><span class="line">	<span class="keyword">int</span> n, i, j, m, t;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;n);</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i ++)</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;a[i]);</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i ++) &#123;</span><br><span class="line">		m = i;</span><br><span class="line">		<span class="keyword">for</span> (j = i + <span class="number">1</span>; j &lt; n; j ++)</span><br><span class="line">			<span class="keyword">if</span> (a[m] &gt; a[j])</span><br><span class="line">				m = j;</span><br><span class="line">	&#125;</span><br><span class="line">	t = a[i];</span><br><span class="line">	a[i] = a[m];</span><br><span class="line">	a[m] = t;</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i ++) &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>, a[i]);</span><br><span class="line">		<span class="built_in">printf</span>(i == n - <span class="number">1</span> ? <span class="string">&quot;\n&quot;</span> : <span class="string">&quot; &quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>读者可以自行感受一下其中的差距，阅读或是 DEBUG 这两份内容一样但缩进不同的代码的效率显然是不同的。</p>
+<p>实际上，多数不注意代码缩进的人也不会搞得这么极端，情况最糟糕的代码可能会像下面这样：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a[<span class="number">100</span>];</span><br><span class="line">	<span class="keyword">int</span> n, i, j, m, t;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;n);</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i ++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;a[i]); &#125;</span><br><span class="line">		<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i ++) &#123;</span><br><span class="line">			m = i;</span><br><span class="line">		<span class="keyword">for</span> (j = i + <span class="number">1</span>; j &lt; n; j ++)</span><br><span class="line">			<span class="keyword">if</span> (a[m] &gt; a[j]) &#123;</span><br><span class="line">			m = j;</span><br><span class="line">		&#125;</span><br><span class="line">			t = a[i];</span><br><span class="line">				a[i] = a[m];</span><br><span class="line">				a[m] = t;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i ++) &#123;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>, a[i]);</span><br><span class="line">	<span class="built_in">printf</span>(i == n - <span class="number">1</span> ? <span class="string">&quot;\n&quot;</span> : <span class="string">&quot; &quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>事实上，有时这比极端情况还要令人头疼，代码简直看起来是被人施加了障眼法一样。</p>
+<p>现在我们做好代码缩进，读者仍然可以自行感受一下其中的差距：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a[<span class="number">100</span>];</span><br><span class="line">	<span class="keyword">int</span> n, i, j, m, t;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;n);</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i ++) &#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;a[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i ++) &#123;</span><br><span class="line">		m = i;</span><br><span class="line">		<span class="keyword">for</span> (j = i + <span class="number">1</span>; j &lt; n; j ++)</span><br><span class="line">			<span class="keyword">if</span> (a[m] &gt; a[j]) &#123;</span><br><span class="line">				m = j;</span><br><span class="line">			&#125;</span><br><span class="line">		t = a[i];</span><br><span class="line">		a[i] = a[m];</span><br><span class="line">		a[m] = t;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i ++) &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>, a[i]);</span><br><span class="line">		<span class="built_in">printf</span>(i == n - <span class="number">1</span> ? <span class="string">&quot;\n&quot;</span> : <span class="string">&quot; &quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因此，请你养成做好代码缩进的习惯，不仅是为了给别人看，这对你自己写代码和 DEBUG 的效率也是有很大提升的。</p>
+<h4 id="不要滥用临时变量"><a class="markdownIt-Anchor" href="#不要滥用临时变量"></a> 不要滥用临时变量</h4>
+<p>少数初学者会写出令人感到匪夷所思的代码，我们仍然以选择排序为例：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a[<span class="number">100</span>];</span><br><span class="line">	<span class="keyword">int</span> n;</span><br><span class="line">	<span class="keyword">int</span> i, j, k, l;</span><br><span class="line">	<span class="keyword">int</span> m, t;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;n);</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i ++) &#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;a[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; n; j ++) &#123;</span><br><span class="line">		m = j;</span><br><span class="line">		<span class="keyword">for</span> (k = j + <span class="number">1</span>; k &lt; n; k ++) &#123;</span><br><span class="line">			<span class="keyword">if</span> (a[m] &gt; a[k]) &#123;</span><br><span class="line">				m = k;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		t = a[j];</span><br><span class="line">		a[j] = a[m];</span><br><span class="line">		a[m] = t;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (l = <span class="number">0</span>; l &lt; n; l ++) &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>, a[l]);</span><br><span class="line">		<span class="built_in">printf</span>(l == n - <span class="number">1</span> ? <span class="string">&quot;\n&quot;</span> : <span class="string">&quot; &quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我怀疑是不是这些人误以为临时变量不能反复使用才写出这样的代码，非得给每个循环都用不同的临时变量。这样的代码有多恶心就不必我多说了吧，如果有十几个互不嵌套的循环，这临时变量是不是得开一长串？</p>
+<p>一般而言，循环内最多同时使用多少个临时变量、我们就开多少个临时变量。通常不会超过 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span></span></span></span> 个（仅指用作指示下标的那些），也就是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mo separator="true">,</mo><mtext> </mtext><mi>j</mi><mo separator="true">,</mo><mtext> </mtext><mi>k</mi></mrow><annotation encoding="application/x-tex">i,\ j,\ k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span></span></span></span> ，否则我们会考虑将内层循环包装成函数（具体详见下文），嵌套层数过多的循环也会极大地降低代码可读性。</p>
+<h4 id="不要滥用switchcase"><a class="markdownIt-Anchor" href="#不要滥用switchcase"></a> 不要滥用switch/case</h4>
+<p>我们以一个简单程序为例，该程序拥有统计字符串中每种数字字符的出现次数：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> result[<span class="number">10</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">	<span class="keyword">char</span> str[<span class="number">100</span>];</span><br><span class="line">	<span class="keyword">int</span> n;</span><br><span class="line">	<span class="keyword">int</span> i;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>, str);</span><br><span class="line">	n = <span class="built_in">strlen</span>(str);</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i ++) &#123;</span><br><span class="line">		<span class="keyword">switch</span> (str[i]) &#123;</span><br><span class="line">		<span class="keyword">case</span> <span class="string">&#x27;0&#x27;</span>: result[<span class="number">0</span>] ++; <span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="string">&#x27;1&#x27;</span>: result[<span class="number">1</span>] ++; <span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="string">&#x27;2&#x27;</span>: result[<span class="number">2</span>] ++; <span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="string">&#x27;3&#x27;</span>: result[<span class="number">3</span>] ++; <span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="string">&#x27;4&#x27;</span>: result[<span class="number">4</span>] ++; <span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="string">&#x27;5&#x27;</span>: result[<span class="number">5</span>] ++; <span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="string">&#x27;6&#x27;</span>: result[<span class="number">6</span>] ++; <span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="string">&#x27;7&#x27;</span>: result[<span class="number">7</span>] ++; <span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="string">&#x27;8&#x27;</span>: result[<span class="number">8</span>] ++; <span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="string">&#x27;9&#x27;</span>: result[<span class="number">9</span>] ++; <span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt;= <span class="number">9</span>; i ++) &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%d : %d\n&quot;</span>, i, result[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>显然这是一份非常糟糕的代码。如果要统计一个数组里每种一百以内的整数出现的次数，你是不是要复制粘贴一百行 case 语句啊？</p>
+<p>不要因为懒得思考就毫无风度地复制粘贴 case 语句。当你需要使用多个重复性极强的 case 语句时，就应当思考其逻辑关联性，并对代码进行简化。显然数字和数字字符之间有一个 <code>'0'</code> 的差距，那么我们只需要一行代码即可处理所有情况：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i ++) &#123;</span><br><span class="line">	<span class="keyword">if</span> (str[i] &gt;= <span class="string">&#x27;0&#x27;</span> &amp;&amp; str[i] &lt;= <span class="string">&#x27;9&#x27;</span>) &#123;</span><br><span class="line">		result[str[i] - <span class="string">&#x27;0&#x27;</span>] ++;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>再例如根据月份获取当月天数，这可能有些复杂，一些初学者可能想不到。我们可以用空间换时间，用一个数组来记录每个月的天数，形成从月份到天数的映射：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> day_of_month[<span class="number">12</span>] = &#123;<span class="number">31</span>, <span class="number">28</span>, <span class="number">31</span>, <span class="number">30</span>, <span class="number">31</span>, <span class="number">30</span>, <span class="number">31</span>, <span class="number">31</span>, <span class="number">30</span>, <span class="number">31</span>, <span class="number">30</span>, <span class="number">31</span>&#125;;</span><br></pre></td></tr></table></figure>
+<p>这样我们可以避免用 case 或 if 语句穷举，造成大量代码冗余。如果涉及闰年，再另外特殊处理就可以了。</p>
+<p>综上所述，写代码时要注意思考，只能用 case 或 if 大量穷举而没有任何办法精简代码的情形较为苛刻，至少初学者是遇不到的。</p>
+<h4 id="使用语义明确的标识符名称"><a class="markdownIt-Anchor" href="#使用语义明确的标识符名称"></a> 使用语义明确的标识符名称</h4>
+<p>为了说明这个问题，我们用一道简单的编程题作为例子：</p>
+<p>题目大意：</p>
+<p>求 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> 家店铺在 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi></mrow><annotation encoding="application/x-tex">m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">m</span></span></span></span> 个月内的总净收入。会给出每家店在每个月的收入和支出，给出税率，规则是对净收入收税，如果亏本则不收税。</p>
+<p>输入格式：</p>
+<p>首先输入两个正整数 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> 和 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi></mrow><annotation encoding="application/x-tex">m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">m</span></span></span></span> ，分别表示店铺个数和月份数。</p>
+<p>接下来 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> 行，第 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 行输入 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn><mi>m</mi></mrow><annotation encoding="application/x-tex">2m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mord mathdefault">m</span></span></span></span> 个正整数，第 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn><mi>j</mi><mo>−</mo><mn>1</mn><mo separator="true">,</mo><mtext> </mtext><mn>2</mn><mi>j</mi></mrow><annotation encoding="application/x-tex">2j-1,\ 2j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord">2</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord">2</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span></span></span></span> 个数 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mo separator="true">,</mo><mtext> </mtext><msub><mi>b</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub></mrow><annotation encoding="application/x-tex">a_{ij},\ b_{ij}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.980548em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord"><span class="mord mathdefault">b</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span> 分别表示第 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 家店在第 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>j</mi></mrow><annotation encoding="application/x-tex">j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span></span></span></span> 个月的收入和支出。</p>
+<p>最后输入一个小数 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> 表示税率。</p>
+<p>数据范围：</p>
+<ul>
+<li>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo>≤</mo><mi>n</mi><mo separator="true">,</mo><mtext> </mtext><mi>m</mi><mo>≤</mo><mn>20</mn></mrow><annotation encoding="application/x-tex">1 \le n,\ m \le 20</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.78041em;vertical-align:-0.13597em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8304100000000001em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">n</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord mathdefault">m</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mord">0</span></span></span></span></p>
+</li>
+<li>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo>≤</mo><msub><mi>a</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mo separator="true">,</mo><mtext> </mtext><msub><mi>b</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mo>≤</mo><mn>10000</mn></mrow><annotation encoding="application/x-tex">1 \le a_{ij},\ b_{ij} \le 10000</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.78041em;vertical-align:-0.13597em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.980548em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord"><span class="mord mathdefault">b</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span></span></span></span></p>
+</li>
+<li>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn><mo>&lt;</mo><mi>p</mi><mo>&lt;</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">0 &lt; p &lt; 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68354em;vertical-align:-0.0391em;"></span><span class="mord">0</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.7335400000000001em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span></p>
+</li>
+</ul>
+<p>问题很简单，按照题意实现即可。</p>
+<p>现在我们看下面这份代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n, m, i, j, a[<span class="number">20</span>][<span class="number">20</span>], b[<span class="number">20</span>][<span class="number">20</span>];</span><br><span class="line">	<span class="keyword">double</span> p, r, t;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d %d&quot;</span>, &amp;n, &amp;m);</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i ++) &#123;</span><br><span class="line">		<span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; m; j ++) &#123;</span><br><span class="line">			<span class="built_in">scanf</span>(<span class="string">&quot;%d %d&quot;</span>, &amp;a[i][j], &amp;b[i][j]);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%lf&quot;</span>, &amp;p);</span><br><span class="line">	r = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i ++) &#123;</span><br><span class="line">		<span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; m; j ++) &#123;</span><br><span class="line">			t = a[i][j] - b[i][j];</span><br><span class="line">			<span class="keyword">if</span> (t &gt; <span class="number">0</span>) &#123;</span><br><span class="line">				r += t * (<span class="number">1</span> - p);</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				r += t;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%.2f\n&quot;</span>, r);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>毫无疑问，这份代码是正确的。如果是在机试或是竞赛中，这样写代码去解这道编程题也是挑不出毛病的，因为在这样的情况下，以最短的时间完成任务是最重要的。然而，如果这是一个中小型 APP 甚至是大型软件系统中的一个子任务，以这样的风格写代码是绝对不可取的。</p>
+<p>不妨想象一下，三天之后你再打开这份你亲手写下的代码，在不看题目的前提下，你能知道自己在写些什么吗？比如此时需求发生了变更，我要分别求每家店铺在 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi></mrow><annotation encoding="application/x-tex">m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">m</span></span></span></span> 个月内的总净收入，而不是所有店铺之和，那么你就不得不去查询上层调用程序的输入规则，来搞清楚自己这些 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mo separator="true">,</mo><mtext> </mtext><mi>b</mi><mo separator="true">,</mo><mtext> </mtext><mi>c</mi><mo separator="true">,</mo><mtext> </mtext><mi>p</mi></mrow><annotation encoding="application/x-tex">a,\ b,\ c,\ p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">a</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord mathdefault">b</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord mathdefault">c</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord mathdefault">p</span></span></span></span> 都是什么东西。</p>
+<p>你应当养成习惯，在给变量、函数或是自定义符合类型起名时，使用语义明确的名称。对于上例而言，我们可以这样：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n_shop, n_month;</span><br><span class="line">	<span class="keyword">int</span> income[<span class="number">20</span>][<span class="number">20</span>], expenditure[<span class="number">20</span>][<span class="number">20</span>];</span><br><span class="line">	<span class="keyword">double</span> tax_rate;</span><br><span class="line">	<span class="keyword">double</span> sum_net_income;</span><br><span class="line">	<span class="keyword">int</span> i, j, t;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d %d&quot;</span>, &amp;n_shop, &amp;n_month);</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n_shop; i ++) &#123;</span><br><span class="line">		<span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; n_month; j ++) &#123;</span><br><span class="line">			<span class="built_in">scanf</span>(<span class="string">&quot;%d %d&quot;</span>, &amp;income[i][j], &amp;expenditure[i][j]);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%lf&quot;</span>, &amp;tax_rate);</span><br><span class="line">	sum_net_income = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n_shop; i ++) &#123;</span><br><span class="line">		<span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; n_month; j ++) &#123;</span><br><span class="line">			t = income[i][j] - expenditure[i][j];</span><br><span class="line">			<span class="keyword">if</span> (t &gt; <span class="number">0</span>) &#123;</span><br><span class="line">				sum_net_income += t * (<span class="number">1</span> - tax_rate);</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				sum_net_income += t;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%.2f\n&quot;</span>, sum_net_income);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在，无论过去多久，当你打开这份代码，你只需要很短的时间就能看明白自己当初写了什么。</p>
+<p>你也许会觉得这样冗长的变量名会很影响你写代码的速度，而且代码看起来也显得冗余。事实的确如此，但相比之下，代码的可读性和易于维护是更加重要的。我之前也特地强调过，如果当前更重视以最短的时间完成任务，或是你只是写一份一次性使用的代码，那么使用语义明确的名称反而是增添累赘。</p>
+<p>因为这道题很简单，你可能还觉得没什么，那么看看下面这份代码吧。如果你需要使用这个计算某种东西的程序，我想，即便它的作者亲自向你逐行解释，你也不得不拿个小本本把各个变量的作用全部记下来，否则你转头就会忘个精光，等到你想要修改某些参数的时候，事情就麻烦了。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a, b, c, d[<span class="number">20</span>], e[<span class="number">20</span>], f[<span class="number">20</span>], g[<span class="number">20</span>], n, m, p, q, r, i, j;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d %d %d&quot;</span>, &amp;a, &amp;b, &amp;c);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d %d&quot;</span>, &amp;n, &amp;m);</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i ++) &#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d %d&quot;</span>, &amp;d[i], &amp;e[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; m; i ++) &#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;f[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i ++) &#123;</span><br><span class="line">		<span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; m; j ++) &#123;</span><br><span class="line">			g[i] += (a * d[i] + (b - c) / e[i]) * f[j];</span><br><span class="line">		&#125;</span><br><span class="line">		p = <span class="number">0</span>;</span><br><span class="line">		q = <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; m; j ++) &#123;</span><br><span class="line">			p += f[j];</span><br><span class="line">			q *= f[j];</span><br><span class="line">		&#125;</span><br><span class="line">		g[i] *= (p + q);</span><br><span class="line">	&#125;</span><br><span class="line">	r = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i ++) &#123;</span><br><span class="line">		r += g[i] * (d[n - i - <span class="number">1</span>] - e[n - i - <span class="number">1</span>]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, r);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>虽然这只是一个我胡编乱造的例子，但是实际开发中绝对不乏这种计算过程复杂的东西，如果大家都胡乱给变量起名，那可真的堪称是程序员的互相坑害。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">AAA</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> you;</span><br><span class="line">	<span class="keyword">double</span> dont;</span><br><span class="line">	<span class="keyword">int</span> know;</span><br><span class="line">	<span class="keyword">int</span> what;</span><br><span class="line">	<span class="keyword">short</span> <span class="keyword">this</span>;</span><br><span class="line">	<span class="keyword">short</span> is;</span><br><span class="line">	<span class="keyword">char</span> hahaha;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">foo</span><span class="params">(struct AAA aaa)</span> </span>&#123;</span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因此请你谨记：只有当你写的程序非常简单，或是你写的程序是一次性用品（例如机试或竞赛）时，你才可以用 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mo separator="true">,</mo><mtext> </mtext><mi>b</mi><mo separator="true">,</mo><mtext> </mtext><mi>c</mi><mo separator="true">,</mo><mtext> </mtext><mi>p</mi><mo separator="true">,</mo><mtext> </mtext><mi>q</mi><mo separator="true">,</mo><mtext> </mtext><mi>r</mi></mrow><annotation encoding="application/x-tex">a,\ b,\ c,\ p,\ q,\ r</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">a</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord mathdefault">b</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord mathdefault">c</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord mathdefault">p</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord mathdefault" style="margin-right:0.03588em;">q</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span> 这种东西作为变量名，用 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo separator="true">,</mo><mtext> </mtext><mi>g</mi><mo separator="true">,</mo><mtext> </mtext><mi>h</mi><mo separator="true">,</mo><mtext> </mtext><mi>t</mi><mi>e</mi><mi>s</mi><mi>t</mi><mo separator="true">,</mo><mtext> </mtext><mi>f</mi><mi>o</mi><mi>o</mi></mrow><annotation encoding="application/x-tex">f,\ g,\ h,\ test,\ foo</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord mathdefault">h</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord mathdefault">t</span><span class="mord mathdefault">e</span><span class="mord mathdefault">s</span><span class="mord mathdefault">t</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault">o</span><span class="mord mathdefault">o</span></span></span></span> 这种东西作为函数名，用 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>A</mi><mo separator="true">,</mo><mtext> </mtext><mi>B</mi><mo separator="true">,</mo><mtext> </mtext><mi>C</mi></mrow><annotation encoding="application/x-tex">A,\ B,\ C</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">A</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span></span></span></span> 这种东西作为自定义类型的名称，否则一定要使用语义明确的标识符名称。</p>
+<h4 id="使用统一的命名习惯"><a class="markdownIt-Anchor" href="#使用统一的命名习惯"></a> 使用统一的命名习惯</h4>
+<p>为了保障代码的可读性，也为了避免你看起来像是个笨拙的菜鸟，我们一般建议你在一个程序中使用统一的命名习惯。例如：</p>
+<p>下划线命名法：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> n_shop, n_month;</span><br><span class="line"><span class="keyword">int</span> income[<span class="number">20</span>][<span class="number">20</span>], expenditure[<span class="number">20</span>][<span class="number">20</span>];</span><br><span class="line"><span class="keyword">double</span> rate_tax;</span><br><span class="line"><span class="keyword">double</span> sum_net_income;</span><br><span class="line"><span class="keyword">int</span> i, j, t;</span><br></pre></td></tr></table></figure>
+<p>驼峰命名法：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> nShop, nMonth;</span><br><span class="line"><span class="keyword">int</span> income[<span class="number">20</span>][<span class="number">20</span>], expenditure[<span class="number">20</span>][<span class="number">20</span>];</span><br><span class="line"><span class="keyword">double</span> rateTax;</span><br><span class="line"><span class="keyword">double</span> sumNetIncome;</span><br><span class="line"><span class="keyword">int</span> i, j, t;</span><br></pre></td></tr></table></figure>
+<p>不同的编程语言往往有不同的命名习俗，例如 C/C++ 语言通常对变量名和函数名使用下划线命名法、对自定义类型名使用下划线或帕斯卡命名法，而 Java 语言则通常对变量名和函数名使用驼峰命名法、对自定义类型名使用帕斯卡命名法。建议初学者入乡随俗即可，与大环境统一总是百利而无一害的。</p>
+<p>具体关于 C 语言的命名习俗就不在此赘述了，详见 <em>C</em> 语言的 <em>01 - Convention of Naming Identifier</em> 文档。</p>
+<ul>
+<li><a href="/Programming%20Languages/C/C%2001%20-%20Convention%20of%20Naming%20Identifier/">C 01 - Convention of Naming Identifier</a></li>
+</ul>
+<p>当然，如果你需要进行团队合作，那么除了编程语言的习俗，更应当注重与你的团队保持相同的命名习惯。</p>
+<p>可能存在一些关于命名法孰优孰劣的论战，我个人认为，只要命名统一，使用何种命名习惯并不重要。</p>
+<h4 id="使用统一的大括号换行习惯"><a class="markdownIt-Anchor" href="#使用统一的大括号换行习惯"></a> 使用统一的大括号换行习惯</h4>
+<p>关于两种大括号换行习惯孰优孰劣的论战已经持续了几十年：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 习惯 A</span></span><br><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i ++) &#123;</span><br><span class="line">	foo(x, i);</span><br><span class="line">	<span class="keyword">if</span> (i == n / <span class="number">2</span>) &#123;</span><br><span class="line">		y = f(i);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, y);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 习惯 B</span></span><br><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i ++)</span><br><span class="line">&#123;</span><br><span class="line">	foo(x, i);</span><br><span class="line">	<span class="keyword">if</span> (i == n / <span class="number">2</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		y = f(i);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, y);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当然，这种论战没什么意义，你喜欢怎么换行就怎么换行，但是请在你的代码中保持使用一种风格。无论你使用何种习惯，都不会有人对你有意见，但是如果你混着用就显得很蠢了：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i ++) &#123;</span><br><span class="line">	foo(x, i);</span><br><span class="line">	<span class="keyword">if</span> (i == n / <span class="number">2</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		y = f(i);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, y);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>的确，这其实也没什么，但如果你不觉得丑，也不介意时不时被人喷的话……那请自便……这的确只是个小问题，不足为虑，只是单纯地丑而已。</p>
+<h4 id="勤加注释"><a class="markdownIt-Anchor" href="#勤加注释"></a> 勤加注释</h4>
+<p>给自己的程序加上注释是非常重要的，这能极大地提高程序的可读性，有利于别人快速理解你的代码。</p>
+<p>我们仍然使用之前的例子，感受一下加上注释的程序：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="comment">// 变量声明</span></span><br><span class="line">	<span class="keyword">int</span> n_shop, n_month;</span><br><span class="line">	<span class="keyword">int</span> income[<span class="number">20</span>][<span class="number">20</span>], expenditure[<span class="number">20</span>][<span class="number">20</span>];</span><br><span class="line">	<span class="keyword">double</span> tax_rate;</span><br><span class="line">	<span class="keyword">double</span> sum_net_income;</span><br><span class="line">	<span class="keyword">int</span> i, j, t;</span><br><span class="line">	<span class="comment">// 输入</span></span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d %d&quot;</span>, &amp;n_shop, &amp;n_month);</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n_shop; i ++) &#123;</span><br><span class="line">		<span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; n_month; j ++) &#123;</span><br><span class="line">			<span class="built_in">scanf</span>(<span class="string">&quot;%d %d&quot;</span>, &amp;income[i][j], &amp;expenditure[i][j]);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%lf&quot;</span>, &amp;tax_rate);</span><br><span class="line">	<span class="comment">// 求解</span></span><br><span class="line">	sum_net_income = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n_shop; i ++) &#123;</span><br><span class="line">		<span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; n_month; j ++) &#123;</span><br><span class="line">			t = income[i][j] - expenditure[i][j];</span><br><span class="line">			<span class="keyword">if</span> (t &gt; <span class="number">0</span>) &#123;</span><br><span class="line">				sum_net_income += t * (<span class="number">1</span> - tax_rate);</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				sum_net_income += t;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 输出</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%.2f\n&quot;</span>, sum_net_income);</span><br><span class="line">	<span class="comment">// 返回</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在，我们一眼扫过去就知道每段代码是做什么的，阅读时可以快速定位到自己想看的地方。</p>
+<p>当然，我们还可以打上更多的注释：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="comment">// 变量声明</span></span><br><span class="line">	<span class="comment">// n_shop : 店铺总数</span></span><br><span class="line">	<span class="comment">// n_month : 月份总数</span></span><br><span class="line">	<span class="comment">// income : income[i][j] 表示第 i 家店在第 j 个月的收入</span></span><br><span class="line">	<span class="comment">// expenditure : expenditure[i][j] 表示第 i 家店在第 j 个月的支出</span></span><br><span class="line">	<span class="comment">// tax_rate : 税率，对净收入生效</span></span><br><span class="line">	<span class="comment">// sum_net_income : 税后收入的总和</span></span><br><span class="line">	<span class="comment">// i, j, t : 临时变量</span></span><br><span class="line">	<span class="keyword">int</span> n_shop, n_month;</span><br><span class="line">	<span class="keyword">int</span> income[<span class="number">20</span>][<span class="number">20</span>], expenditure[<span class="number">20</span>][<span class="number">20</span>];</span><br><span class="line">	<span class="keyword">double</span> tax_rate;</span><br><span class="line">	<span class="keyword">double</span> sum_net_income;</span><br><span class="line">	<span class="keyword">int</span> i, j, t;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 输入</span></span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d %d&quot;</span>, &amp;n_shop, &amp;n_month);</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n_shop; i ++) &#123;</span><br><span class="line">		<span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; n_month; j ++) &#123;</span><br><span class="line">			<span class="built_in">scanf</span>(<span class="string">&quot;%d %d&quot;</span>, &amp;income[i][j], &amp;expenditure[i][j]);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%lf&quot;</span>, &amp;tax_rate);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 求解</span></span><br><span class="line">	<span class="comment">// 初始化答案值</span></span><br><span class="line">	sum_net_income = <span class="number">0</span>;</span><br><span class="line">	<span class="comment">// 遍历每个店铺</span></span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n_shop; i ++) &#123;</span><br><span class="line">		<span class="comment">// 对每个店铺遍历每个月份</span></span><br><span class="line">		<span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; n_month; j ++) &#123;</span><br><span class="line">			<span class="comment">// 计算净收入</span></span><br><span class="line">			t = income[i][j] - expenditure[i][j];</span><br><span class="line">			<span class="comment">// 对正的净收入计算税收并对答案求和</span></span><br><span class="line">			<span class="keyword">if</span> (t &gt; <span class="number">0</span>) &#123;</span><br><span class="line">				sum_net_income += t * (<span class="number">1</span> - tax_rate);</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				sum_net_income += t;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 输出</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%.2f\n&quot;</span>, sum_net_income);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 返回</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对于这种简单的例子而言，注释的重要性可能还不太突出，但是在大型程序中通常有成千上万行代码，如果没有注释，那简直就是巨大的灾难，几乎不会有人愿意阅读这样的程序。</p>
+<p>作为初学者，你可能还只会写一些玩具级代码，因此也不需要打很多注释，但是请养成这样的习惯，至少应该像第一个例子那样打上一些简单的注释，使自己程序的逻辑结构显得清晰明了。</p>
+<h4 id="善用函数和结构体"><a class="markdownIt-Anchor" href="#善用函数和结构体"></a> 善用函数和结构体</h4>
+<p><strong>善用函数</strong></p>
+<p>当代码量多到一定程度时，把所有的代码都放在 main 函数里显然是不切实际的，因此你需要学会善用函数，尽可能地将功能不同的代码分别包装，不要把大量的代码塞在同一个函数里。</p>
+<p>这样做有两方面的好处。</p>
+<p>其一是可读性的提升。这就像注释一样，阅读者可以很快地找到他想找的部分，尤其是在大型程序中。毕竟，当代码很多时，即便用注释分割也是不足的，而且许多 IDE 都提供了快速定位到指定函数的位置的功能。</p>
+<p>其二是可维护性的提升和代码的精简。考虑一个简单的例子，你实现了选择排序算法，但是你的程序中需要多次对不同的数组进行排序，如果不使用函数，你的代码可能会像下面这样：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="comment">// 变量声明</span></span><br><span class="line">	<span class="keyword">int</span> a[<span class="number">20</span>], size_a;</span><br><span class="line">	<span class="keyword">int</span> b[<span class="number">50</span>], size_b;</span><br><span class="line">	<span class="keyword">int</span> c[<span class="number">15</span>], size_c;</span><br><span class="line">	<span class="keyword">int</span> i, j;</span><br><span class="line">	<span class="keyword">int</span> m, t;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">	<span class="comment">// 一些代码...</span></span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// 排序</span></span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; size_a; i ++) &#123;</span><br><span class="line">		m = i;</span><br><span class="line">		<span class="keyword">for</span> (j = i + <span class="number">1</span>; j &lt; size_a; j ++) &#123;</span><br><span class="line">			<span class="keyword">if</span> (a[m] &gt; a[j]) &#123;</span><br><span class="line">				m = j;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		t = a[i];</span><br><span class="line">		a[i] = a[m];</span><br><span class="line">		a[m] = t;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">	<span class="comment">// 一些代码...</span></span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// 排序</span></span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; size_b; i ++) &#123;</span><br><span class="line">		m = i;</span><br><span class="line">		<span class="keyword">for</span> (j = i + <span class="number">1</span>; j &lt; size_b; j ++) &#123;</span><br><span class="line">			<span class="keyword">if</span> (b[m] &gt; b[j]) &#123;</span><br><span class="line">				m = j;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		t = b[i];</span><br><span class="line">		b[i] = b[m];</span><br><span class="line">		b[m] = t;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">	<span class="comment">// 一些代码...</span></span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// 排序</span></span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; size_c; i ++) &#123;</span><br><span class="line">		m = i;</span><br><span class="line">		<span class="keyword">for</span> (j = i + <span class="number">1</span>; j &lt; size_c; j ++) &#123;</span><br><span class="line">			<span class="keyword">if</span> (c[m] &gt; c[j]) &#123;</span><br><span class="line">				m = j;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		t = c[i];</span><br><span class="line">		c[i] = c[m];</span><br><span class="line">		c[m] = t;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">	<span class="comment">// 一些代码...</span></span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// 返回</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这会带来很多问题。其一，这三段排序代码中，除了数组和数组长度这两个变量不同以外，其他内容完全一样，这显然是一种代码冗余。其二，如果你在复制粘贴排序代码并修改变量名时漏改了哪个变量，将会给自己留下隐患，且较难排查。其三，如果你发现你的排序算法中有一处小错误，你不得不对每一段排序代码纠错，期间一旦遗漏了哪一个，同样会留下难以排查的错误，因为你会认为自己已经修正了这个错误。或者，如果你希望修改或是扩展这个算法，也会面临同样的问题。</p>
+<p>当我们将选择排序包装为函数后，一切都解决了：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">select_sort</span><span class="params">(<span class="keyword">int</span> arr[], <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i, j;</span><br><span class="line">	<span class="keyword">int</span> m, t;</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i ++) &#123;</span><br><span class="line">		m = i;</span><br><span class="line">		<span class="keyword">for</span> (j = i + <span class="number">1</span>; j &lt; n; j ++) &#123;</span><br><span class="line">			<span class="keyword">if</span> (arr[m] &gt; arr[j]) &#123;</span><br><span class="line">				m = j;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		t = arr[i];</span><br><span class="line">		arr[i] = arr[m];</span><br><span class="line">		arr[m] = t;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="comment">// 变量声明</span></span><br><span class="line">	<span class="keyword">int</span> a[<span class="number">20</span>], size_a;</span><br><span class="line">	<span class="keyword">int</span> b[<span class="number">50</span>], size_b;</span><br><span class="line">	<span class="keyword">int</span> c[<span class="number">15</span>], size_c;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">	<span class="comment">// 一些代码...</span></span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// 排序</span></span><br><span class="line">	select_sort(a, size_a);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">	<span class="comment">// 一些代码...</span></span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// 排序</span></span><br><span class="line">	select_sort(b, size_b);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">	<span class="comment">// 一些代码...</span></span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// 排序</span></span><br><span class="line">	select_sort(c, size_c);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">	<span class="comment">// 一些代码...</span></span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// 返回</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在，一旦发现代码中有错误，我们可以轻易地改正，而不用担心这段代码在哪里被使用、被使用了多少次。我们还可以轻易地对函数的功能进行扩展，例如指定对数组中的特定区间进行排序，还能指定是从小到大还是从大到小排序，等等。事实上，标准库中的排序就提供了这些功能。</p>
+<p>这只是一个简单的例子，在实际开发中，学会包装函数是尤为重要的基本功。如果你写出一个代码几百行的超巨大函数，别人不会觉得你很厉害，只会觉得你很蠢——除非真的有那么一个非常单一的功能，实现它就是需要这么复杂的计算，并且这个计算过程完全没办法划分成几个子过程，但我想这种情况是极其稀少的，至少我至今还没遇到过。</p>
+<p><strong>善用结构体</strong></p>
+<p>你可能会做到一些作业题，让你处理什么学生信息或者图书信息之类的，并且会建议你使用结构体，但是有可能并没有告诉你为什么要使用：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用结构体</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Student</span> &#123;</span></span><br><span class="line">	<span class="keyword">char</span> name[<span class="number">20</span>];</span><br><span class="line">	<span class="keyword">int</span> id;</span><br><span class="line">	<span class="keyword">int</span> age;</span><br><span class="line">	<span class="keyword">int</span> grade;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Student</span> <span class="title">students</span>[50];</span></span><br><span class="line"><span class="comment">// 不使用结构体</span></span><br><span class="line"><span class="keyword">char</span> name[<span class="number">50</span>][<span class="number">20</span>];</span><br><span class="line"><span class="keyword">int</span> id[<span class="number">50</span>];</span><br><span class="line"><span class="keyword">int</span> age[<span class="number">50</span>];</span><br><span class="line"><span class="keyword">int</span> grade[<span class="number">50</span>];</span><br></pre></td></tr></table></figure>
+<p>其一，包装成结构体在很多时候会方便得多，例如在传递函数参数的时候：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用结构体</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">(struct Student students[])</span></span>;</span><br><span class="line"><span class="comment">// 不使用结构体</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">(<span class="keyword">char</span> name[][<span class="number">20</span>], <span class="keyword">int</span> id[], <span class="keyword">int</span> age[], <span class="keyword">int</span> grade[])</span></span>;</span><br></pre></td></tr></table></figure>
+<p>其二，包装成结构体可以解决命名冲突问题，例如你同时还要处理教师信息的时候：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用结构体</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Student</span> &#123;</span></span><br><span class="line">	<span class="keyword">char</span> name[<span class="number">20</span>];</span><br><span class="line">	<span class="keyword">int</span> id;</span><br><span class="line">	<span class="keyword">int</span> age;</span><br><span class="line">	<span class="keyword">int</span> grade;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Teacher</span> &#123;</span></span><br><span class="line">	<span class="keyword">char</span> name[<span class="number">20</span>];</span><br><span class="line">	<span class="keyword">int</span> id;</span><br><span class="line">	<span class="keyword">int</span> age;</span><br><span class="line">	<span class="keyword">int</span> subject;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Student</span> <span class="title">students</span>[50];</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Teacher</span> <span class="title">teachers</span>[30];</span></span><br><span class="line"><span class="comment">// 不使用结构体</span></span><br><span class="line"><span class="keyword">char</span> student_name[<span class="number">50</span>][<span class="number">20</span>];</span><br><span class="line"><span class="keyword">int</span> student_id[<span class="number">50</span>];</span><br><span class="line"><span class="keyword">int</span> student_age[<span class="number">50</span>];</span><br><span class="line"><span class="keyword">int</span> student_grade[<span class="number">50</span>];</span><br><span class="line"><span class="keyword">char</span> teacher_name[<span class="number">30</span>][<span class="number">20</span>];</span><br><span class="line"><span class="keyword">int</span> teacher_id[<span class="number">30</span>];</span><br><span class="line"><span class="keyword">int</span> teacher_age[<span class="number">30</span>];</span><br><span class="line"><span class="keyword">int</span> teacher_subject[<span class="number">30</span>];</span><br></pre></td></tr></table></figure>
+<p>其三，和使用函数的一个理由类似，当你打算修改学生信息条目的时候，比如添加性别信息，那么如果你使用结构体，可以减少很多修改工作。</p>
+<p>可见使用结构体对代码精简是很有益的，尤其是程序较为复杂的时候。对于同类型的信息都应该将其包装成结构体。</p>
+<h4 id="在布尔表达式中勤加括号"><a class="markdownIt-Anchor" href="#在布尔表达式中勤加括号"></a> 在布尔表达式中勤加括号</h4>
+<p>虽然 C 语言明确规定了各个运算符的优先级和结合顺序，但是没有人想在这种事情上浪费时间，请看下面的代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (a == <span class="number">0</span> || b == <span class="number">1</span> &amp;&amp; c == <span class="number">2</span> || d == <span class="number">3</span> || e == <span class="number">4</span> &amp;&amp; f == <span class="number">5</span>) &#123;</span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我想，你看到这段代码的第一反应恐怕不是去思考运算符优先级和结合顺序的问题，而是想把写代码的人打一顿，因此请你自己也不要写这种代码。即便优先级都是定好的，只要背诵优先级就能很快理解这段代码，你也应当在上面加好括号：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(a == <span class="number">0</span> || (b == <span class="number">1</span> &amp;&amp; c == <span class="number">2</span>) || d == <span class="number">3</span> || (e == <span class="number">4</span> &amp;&amp; f == <span class="number">5</span>)) &#123;</span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>或许只是 <code>||</code> 和 <code>&amp;&amp;</code> 可能还好，如果是其他一些相对比较少见的运算符，不加括号才是真的恶心人。相信我，没多少人会喜欢背诵运算符优先级表。</p>
+<h4 id="避免对同一数据存放多个无关副本"><a class="markdownIt-Anchor" href="#避免对同一数据存放多个无关副本"></a> 避免对同一数据存放多个无关副本</h4>
+<p>前文已经提到过，风格良好的代码总是能避免对同一数据存放多个无关的副本。这听起来有些抽象，我们举一个最简单的例子，当你需要多个长度相同的数组时，下面的代码的风格就有些不太好：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> data[<span class="number">1000000</span>], id[<span class="number">1000000</span>], sum[<span class="number">1000000</span>], son[<span class="number">2</span>][<span class="number">1000000</span>];</span><br><span class="line"><span class="keyword">double</span> value[<span class="number">1000000</span>];</span><br></pre></td></tr></table></figure>
+<p>如果你不幸笔误，并因此导致后面访问数组时发生内存溢出，你可能很难查出问题所在：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> data[<span class="number">1000000</span>], id[<span class="number">1000000</span>], sum[<span class="number">100000</span>], son[<span class="number">2</span>][<span class="number">1000000</span>];</span><br><span class="line"><span class="keyword">double</span> value[<span class="number">1000000</span>];</span><br></pre></td></tr></table></figure>
+<p>因此，对于同一份数据，我们应当尽量只存放一个副本。例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> N 1000000</span></span><br><span class="line"><span class="keyword">int</span> data[N], id[N], sum[N], son[<span class="number">2</span>][N];</span><br><span class="line"><span class="keyword">double</span> value[N];</span><br></pre></td></tr></table></figure>
+<p>现在，你只需要修改宏定义 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span></span></span></span> 的值，就能同时改变所有数组的大小。</p>
+<p>当然，很多时候我们没法只存放同一个副本，此时就需要让这些副本之间通过程序关联起来，并注意处理及时更新的问题，等等。这不是初学者需要考虑的问题，在玩具级程序中不会遇到这种问题，此处不再赘述。</p>
+<h4 id="处理简单的错误输入"><a class="markdownIt-Anchor" href="#处理简单的错误输入"></a> 处理简单的错误输入</h4>
+<p>前文已经提到过，风格良好的代码，应当能够处理来自用户的错误输入，能够处理接口中接收到的各种错误参数，等等，至少要能够处理常见的大部分问题。</p>
+<p>还是以前文的那道计算收入的题为例，如果你不是在面对机试或是竞赛，而是在编写一个软件系统中的子功能，你就应该考虑用户输入是否正确，并加以处理，例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n_shop; i ++) &#123;</span><br><span class="line">	<span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; n_month; j ++) &#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d %d&quot;</span>, &amp;income[i][j], &amp;expenditure[i][j]);</span><br><span class="line">		<span class="keyword">while</span> (income[i][j] &lt; <span class="number">0</span> || expenditure[i][j] &lt; <span class="number">0</span>) &#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">&quot;Illegal input for income/expenditure of shop %d, month %d! Please input again.\n&quot;</span>, i, j);</span><br><span class="line">			<span class="built_in">scanf</span>(<span class="string">&quot;%d %d&quot;</span>, &amp;income[i][j], &amp;expenditure[i][j]);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>也可以这样：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n_shop; i ++) &#123;</span><br><span class="line">	<span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; n_month; j ++) &#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d %d&quot;</span>, &amp;income[i][j], &amp;expenditure[i][j]);</span><br><span class="line">		<span class="keyword">if</span> (income[i][j] &lt; <span class="number">0</span> || expenditure[i][j] &lt; <span class="number">0</span>) &#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">&quot;Illegal input for income/expenditure of shop %d, month %d!\n&quot;</span>, i, j);</span><br><span class="line">			<span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这只是举个例子，还可以使用 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mi>s</mi><mi>s</mi><mi>e</mi><mi>r</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">assert</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">a</span><span class="mord mathdefault">s</span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">t</span></span></span></span> 等方法，实际究竟怎么处理还是要具体情况具体分析。</p>
+<p>当你在实现一个函数时，如果必要的话，也需要考虑这些问题，例如一个简单的 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>w</mi><mi>a</mi><mi>p</mi></mrow><annotation encoding="application/x-tex">swap</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="mord mathdefault">a</span><span class="mord mathdefault">p</span></span></span></span> 函数：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span> * x, <span class="keyword">int</span> * y)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> t;</span><br><span class="line">	<span class="keyword">if</span> (x == <span class="literal">NULL</span> || y == <span class="literal">NULL</span>) &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;Error swap NULL pointer!\n&quot;</span>);</span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	t = *x;</span><br><span class="line">	*x = *y;</span><br><span class="line">	*y = t;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当然，如你所见，我们只能处理空指针，而无法处理野指针，没有任何办法能判断一个指针是否为野指针，这方面我们只能寄希望于调用这个函数的代码的编写者了。程序员不可能考虑到所有的错误，也不可能处理得了所有的错误，做到尽可能好即可。</p>
+<hr />
+<h3 id="养成良好的编程习惯"><a class="markdownIt-Anchor" href="#养成良好的编程习惯"></a> 养成良好的编程习惯</h3>
+<h4 id="编程习惯的重要性"><a class="markdownIt-Anchor" href="#编程习惯的重要性"></a> 编程习惯的重要性</h4>
+<p>相对于代码风格而言，编程习惯就没有那么地重要了。养成好的编程习惯只是为了自己舒服，提高编程效率、降低出错概率等等。</p>
+<h4 id="关注变量初始化"><a class="markdownIt-Anchor" href="#关注变量初始化"></a> 关注变量初始化</h4>
+<p>养成习惯：对于任何一个新添加的变量，总是关注它是否有被合法地初始化。</p>
+<h4 id="关注问题的边界条件"><a class="markdownIt-Anchor" href="#关注问题的边界条件"></a> 关注问题的边界条件</h4>
+<p>养成习惯：在解决问题、实现接口或函数时，总是关注边界条件。例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">get_max</span><span class="params">(<span class="keyword">int</span> a[], <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> res = a[<span class="number">0</span>];</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; i ++) &#123;</span><br><span class="line">		<span class="keyword">if</span> (res &lt; a[i]) &#123;</span><br><span class="line">			res = a[i];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> a[i];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上述代码就会因为收到一个空指针参数而出现错误。对于本例，我们有两种方法解决此问题。可以在初始化答案时使用可能的最小值：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">get_max</span><span class="params">(<span class="keyword">int</span> a[], <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> res = (<span class="number">1</span> &lt;&lt; <span class="number">31</span>);</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; i ++) &#123;</span><br><span class="line">		<span class="keyword">if</span> (res &lt; a[i]) &#123;</span><br><span class="line">			res = a[i];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> a[i];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>或是特判边界条件：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">get_max</span><span class="params">(<span class="keyword">int</span> a[], <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (n == <span class="number">0</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span> (<span class="number">1</span> &lt;&lt; <span class="number">31</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> res = a[<span class="number">0</span>];</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; i ++) &#123;</span><br><span class="line">		<span class="keyword">if</span> (res &lt; a[i]) &#123;</span><br><span class="line">			res = a[i];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> a[i];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="为任何-ifforwhile-加上大括号"><a class="markdownIt-Anchor" href="#为任何-ifforwhile-加上大括号"></a> 为任何 if/for/while 加上大括号</h4>
+<p>我们知道，如果 if/for/while 不加大括号，就表示只对一行生效，例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (x == <span class="number">1</span>)</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;x = 1\n&quot;</span>);</span><br><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i ++)</span><br><span class="line">	<span class="keyword">if</span> (i != <span class="number">5</span>)</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;i = %d\n&quot;</span>, i);</span><br><span class="line"><span class="keyword">while</span> (x++ &lt; <span class="number">10</span>)</span><br><span class="line">	f(x);</span><br></pre></td></tr></table></figure>
+<p>这样当然没有错误，但是无论是初学者还是有经验者，我都建议你在任何情况下加上大括号。理由很简单，当你想给这种 if/for/while 内部的内容加上一行时，一旦疏忽就会出错，例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i ++)</span><br><span class="line">	<span class="keyword">if</span> (i != <span class="number">5</span>)</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;i = %d\n&quot;</span>, i);</span><br><span class="line">		test(x, i);</span><br></pre></td></tr></table></figure>
+<p>你以为你的代码是怎样的？他其实是这样的：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i ++)</span><br><span class="line">	<span class="keyword">if</span> (i != <span class="number">5</span>)</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;i = %d\n&quot;</span>, i);</span><br><span class="line">test(x, i);</span><br></pre></td></tr></table></figure>
+<p>当然，对于有经验者而言，这种错误并不难排查，但我们没有必要非得给自己挖坑，不是吗？加上大括号，一方面我们可以很清晰地看出程序的逻辑结构，另一方面我们可以很轻松地修改 if/for/while 内部的内容而不用担心忘记加上大括号。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (x == <span class="number">1</span>) &#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;x = 1\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i ++) &#123;</span><br><span class="line">	<span class="keyword">if</span> (i != <span class="number">5</span>) &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;i = %d\n&quot;</span>, i);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">while</span> (x++ &lt; <span class="number">10</span>) &#123;</span><br><span class="line">	f(x);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="写循环时关注下标越界"><a class="markdownIt-Anchor" href="#写循环时关注下标越界"></a> 写循环时关注下标越界</h4>
+<p>养成习惯：当你在循环中使用间接的下标时，总是关注下标越界问题。例如你在一个 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mo>∈</mo><mo stretchy="false">[</mo><mn>0</mn><mo separator="true">,</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">i \in [0, n-1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69862em;vertical-align:-0.0391em;"></span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span></span></span></span> 的循环中会访问数组元素，而当你使用 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mo stretchy="false">[</mo><mi>i</mi><mo>+</mo><mn>1</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">a[i + 1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">a</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span></span></span></span> 或 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mo stretchy="false">[</mo><mi>i</mi><mo>−</mo><mn>1</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">a[i - 1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">a</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span></span></span></span> 时，就应当认识到循环条件需要更改。如果能够养成关注下标越界的习惯，你就不会写出类似下面这样的代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i ++) &#123;</span><br><span class="line">	<span class="keyword">if</span> (a[i] &gt; a[i + <span class="number">1</span>]) &#123;</span><br><span class="line">		t = a[i];</span><br><span class="line">		a[i] = a[i + <span class="number">1</span>];</span><br><span class="line">		a[i + <span class="number">1</span>] = t;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当然，这种错误本身也不难排查，只不过，如果养成习惯，只要使用间接的下标，就去考虑越界：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i ++) &#123;</span><br><span class="line">	<span class="keyword">if</span> (a[i] &gt; <span class="comment">// 当你即将写下 a[i + 1] 时</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>那么你就能在多数时候提前发现问题，很大地减少犯下此类错误的概率：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i + <span class="number">1</span> &lt; n; i ++) &#123; <span class="comment">// 及时对循环条件进行应有的改变</span></span><br><span class="line">	<span class="keyword">if</span> (a[i] &gt; a[i + <span class="number">1</span>]) &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="多进行阶段性测试"><a class="markdownIt-Anchor" href="#多进行阶段性测试"></a> 多进行阶段性测试</h4>
+<p>养成习惯：在写代码量比较大或很大的程序时，每写完一个局部的代码后，都要考虑进行阶段性测试，保证这一部分的正确性。这样，当出现 BUG 时，我们可以认为错误大概率发生在新写的代码中，而错误出现在之前的代码中的概率很低。即便是出现在之前的部分中，你也能根据之前的阶段测试的结果，排除掉一些可能性。这可以提高我们的编程效率。</p>
+<h4 id="多考虑是否应该使用函数"><a class="markdownIt-Anchor" href="#多考虑是否应该使用函数"></a> 多考虑是否应该使用函数</h4>
+<p>养成习惯：在写代码时，总是考虑这段代码是不是一个独立的子功能，是否可以包装成函数。</p>
+<hr />
+<h3 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h3>
+<p>好的代码风格和编程习惯对你自己而言可能并非是“必要的”，对于一些特别聪明的或是编程有天赋的人来说，即便是把代码写得乱七八糟，他也能很快地理清代码的逻辑结构，或是很快地完成 DEBUG 找到错误。但是即便你属于这一类人，好的代码风格可以让你在将来扩展自己代码的时候节省很多精力，也可以让别人能够很好地理解你的代码、与你合作完成任务，好的编程习惯仍然能降低你犯下低级错误的风险。因此，培养好的代码风格和编程习惯是百利而无一害的事情。</p>
+<p>或许现在你觉得这些会增大你的学习负担，但是很快你就会感受到，好的代码风格和编程习惯对你编程效率的提升，以及你一定会在未来的某个时刻意识到它们有多重要。</p>
+<hr />
+<h3 id="文章更新记录"><a class="markdownIt-Anchor" href="#文章更新记录"></a> 文章更新记录</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">更新时间</th>
+<th style="text-align:left">更新内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">2020.7.15</td>
+<td style="text-align:left">追加新的代码风格注意事项</td>
+</tr>
+</tbody>
+</table>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>JM233333
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="https://blog.jm233333.com/Programming%20Languages/C/C%2001%20-%20Develop%20Good%20Coding%20Style%20and%20Programming%20Habits/" title="C 01 - Develop Good Coding Style and Programming Habits">https://blog.jm233333.com/Programming Languages/C/C 01 - Develop Good Coding Style and Programming Habits/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B/" rel="tag"># 基础教程</a>
+              <a href="/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" rel="tag"># 编程语言</a>
+              <a href="/tags/C/" rel="tag"># C</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Programming%20Languages/C/C%2002%20-%20Pointer/" rel="prev" title="C 02 - Pointer">
+      <i class="fa fa-chevron-left"></i> C 02 - Pointer
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Programming%20Languages/C/C%2004%20-%20Type%20Conversion/" rel="next" title="C 04 - Type Conversion">
+      C 04 - Type Conversion <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="nav-number">1.</span> <span class="nav-text"> 前置知识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">2.</span> <span class="nav-text"> 前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%BB%E6%88%90%E8%89%AF%E5%A5%BD%E7%9A%84%E4%BB%A3%E7%A0%81%E9%A3%8E%E6%A0%BC"><span class="nav-number">3.</span> <span class="nav-text"> 养成良好的代码风格</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E9%A3%8E%E6%A0%BC%E7%9A%84%E9%87%8D%E8%A6%81%E6%80%A7"><span class="nav-number">3.1.</span> <span class="nav-text"> 代码风格的重要性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%81%9A%E5%A5%BD%E4%BB%A3%E7%A0%81%E7%BC%A9%E8%BF%9B"><span class="nav-number">3.2.</span> <span class="nav-text"> 做好代码缩进</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8D%E8%A6%81%E6%BB%A5%E7%94%A8%E4%B8%B4%E6%97%B6%E5%8F%98%E9%87%8F"><span class="nav-number">3.3.</span> <span class="nav-text"> 不要滥用临时变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8D%E8%A6%81%E6%BB%A5%E7%94%A8switchcase"><span class="nav-number">3.4.</span> <span class="nav-text"> 不要滥用switch&#x2F;case</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E8%AF%AD%E4%B9%89%E6%98%8E%E7%A1%AE%E7%9A%84%E6%A0%87%E8%AF%86%E7%AC%A6%E5%90%8D%E7%A7%B0"><span class="nav-number">3.5.</span> <span class="nav-text"> 使用语义明确的标识符名称</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E7%BB%9F%E4%B8%80%E7%9A%84%E5%91%BD%E5%90%8D%E4%B9%A0%E6%83%AF"><span class="nav-number">3.6.</span> <span class="nav-text"> 使用统一的命名习惯</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E7%BB%9F%E4%B8%80%E7%9A%84%E5%A4%A7%E6%8B%AC%E5%8F%B7%E6%8D%A2%E8%A1%8C%E4%B9%A0%E6%83%AF"><span class="nav-number">3.7.</span> <span class="nav-text"> 使用统一的大括号换行习惯</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8B%A4%E5%8A%A0%E6%B3%A8%E9%87%8A"><span class="nav-number">3.8.</span> <span class="nav-text"> 勤加注释</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%96%84%E7%94%A8%E5%87%BD%E6%95%B0%E5%92%8C%E7%BB%93%E6%9E%84%E4%BD%93"><span class="nav-number">3.9.</span> <span class="nav-text"> 善用函数和结构体</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9C%A8%E5%B8%83%E5%B0%94%E8%A1%A8%E8%BE%BE%E5%BC%8F%E4%B8%AD%E5%8B%A4%E5%8A%A0%E6%8B%AC%E5%8F%B7"><span class="nav-number">3.10.</span> <span class="nav-text"> 在布尔表达式中勤加括号</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%81%BF%E5%85%8D%E5%AF%B9%E5%90%8C%E4%B8%80%E6%95%B0%E6%8D%AE%E5%AD%98%E6%94%BE%E5%A4%9A%E4%B8%AA%E6%97%A0%E5%85%B3%E5%89%AF%E6%9C%AC"><span class="nav-number">3.11.</span> <span class="nav-text"> 避免对同一数据存放多个无关副本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%84%E7%90%86%E7%AE%80%E5%8D%95%E7%9A%84%E9%94%99%E8%AF%AF%E8%BE%93%E5%85%A5"><span class="nav-number">3.12.</span> <span class="nav-text"> 处理简单的错误输入</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%BB%E6%88%90%E8%89%AF%E5%A5%BD%E7%9A%84%E7%BC%96%E7%A8%8B%E4%B9%A0%E6%83%AF"><span class="nav-number">4.</span> <span class="nav-text"> 养成良好的编程习惯</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%96%E7%A8%8B%E4%B9%A0%E6%83%AF%E7%9A%84%E9%87%8D%E8%A6%81%E6%80%A7"><span class="nav-number">4.1.</span> <span class="nav-text"> 编程习惯的重要性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B3%E6%B3%A8%E5%8F%98%E9%87%8F%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">4.2.</span> <span class="nav-text"> 关注变量初始化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B3%E6%B3%A8%E9%97%AE%E9%A2%98%E7%9A%84%E8%BE%B9%E7%95%8C%E6%9D%A1%E4%BB%B6"><span class="nav-number">4.3.</span> <span class="nav-text"> 关注问题的边界条件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BA%E4%BB%BB%E4%BD%95-ifforwhile-%E5%8A%A0%E4%B8%8A%E5%A4%A7%E6%8B%AC%E5%8F%B7"><span class="nav-number">4.4.</span> <span class="nav-text"> 为任何 if&#x2F;for&#x2F;while 加上大括号</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%99%E5%BE%AA%E7%8E%AF%E6%97%B6%E5%85%B3%E6%B3%A8%E4%B8%8B%E6%A0%87%E8%B6%8A%E7%95%8C"><span class="nav-number">4.5.</span> <span class="nav-text"> 写循环时关注下标越界</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%9A%E8%BF%9B%E8%A1%8C%E9%98%B6%E6%AE%B5%E6%80%A7%E6%B5%8B%E8%AF%95"><span class="nav-number">4.6.</span> <span class="nav-text"> 多进行阶段性测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%9A%E8%80%83%E8%99%91%E6%98%AF%E5%90%A6%E5%BA%94%E8%AF%A5%E4%BD%BF%E7%94%A8%E5%87%BD%E6%95%B0"><span class="nav-number">4.7.</span> <span class="nav-text"> 多考虑是否应该使用函数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">5.</span> <span class="nav-text"> 总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E6%9B%B4%E6%96%B0%E8%AE%B0%E5%BD%95"><span class="nav-number">6.</span> <span class="nav-text"> 文章更新记录</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="JM233333"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">JM233333</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">238</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">80</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/JM233333" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;JM233333" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/26466398@163.com" title="E-Mail → 26466398@163.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://github.com/JM233333" title="https:&#x2F;&#x2F;github.com&#x2F;JM233333" rel="noopener" target="_blank">Title</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JM233333</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

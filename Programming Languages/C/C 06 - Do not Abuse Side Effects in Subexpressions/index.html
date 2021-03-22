@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.jm233333.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="前置知识 在阅读本文档前，请确保你已经知晓未定义行为的基本概念，详见 C 语言的 03 - Undefined Behavior and Unspecified Behavior 文档。只需看过概述部分知道什么是未定义行为即可，无需知晓各种具体的未定义行为。  C 03 - Undefined Behavior and Unspecified Behavior  请注意：本文是面向进阶读者的，在">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C 06 - Do not Abuse Side Effects in Subexpressions">
+<meta property="og:url" content="https://blog.jm233333.com/Programming%20Languages/C/C%2006%20-%20Do%20not%20Abuse%20Side%20Effects%20in%20Subexpressions/index.html">
+<meta property="og:site_name" content="JM233333&#39;s Blog">
+<meta property="og:description" content="前置知识 在阅读本文档前，请确保你已经知晓未定义行为的基本概念，详见 C 语言的 03 - Undefined Behavior and Unspecified Behavior 文档。只需看过概述部分知道什么是未定义行为即可，无需知晓各种具体的未定义行为。  C 03 - Undefined Behavior and Unspecified Behavior  请注意：本文是面向进阶读者的，在">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-03-22T09:31:43.025Z">
+<meta property="article:author" content="JM233333">
+<meta property="article:tag" content="编程语言">
+<meta property="article:tag" content="进阶教程">
+<meta property="article:tag" content="C">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://blog.jm233333.com/Programming%20Languages/C/C%2006%20-%20Do%20not%20Abuse%20Side%20Effects%20in%20Subexpressions/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>C 06 - Do not Abuse Side Effects in Subexpressions | JM233333's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">JM233333's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Contact Me: 26466398@163.com</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">80</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories<span class="badge">16</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.jm233333.com/Programming%20Languages/C/C%2006%20-%20Do%20not%20Abuse%20Side%20Effects%20in%20Subexpressions/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="JM233333">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JM233333's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          C 06 - Do not Abuse Side Effects in Subexpressions
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2020-01-01T00:00:00+08:00">2020-01-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming-Languages/" itemprop="url" rel="index"><span itemprop="name">Programming Languages</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming-Languages/C/" itemprop="url" rel="index"><span itemprop="name">C</span></a>
+                </span>
+            </span>
+
+          
+
+          <div class="post-authorization">
+            <p>本文为 JM233333 原创所著，遵循 BY-NC-SA 4.0 许可协议，转载请注明出处。如果您认为文中有谬误或对文中内容有疑问，欢迎理性指出，大家共同探讨和进步。</p>
+          </div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="前置知识"><a class="markdownIt-Anchor" href="#前置知识"></a> 前置知识</h3>
+<p>在阅读本文档前，请确保你已经知晓未定义行为的基本概念，详见 <em>C</em> 语言的 <em>03 - Undefined Behavior and Unspecified Behavior</em> 文档。只需看过概述部分知道什么是未定义行为即可，无需知晓各种具体的未定义行为。</p>
+<ul>
+<li><a href="/Programming%20Languages/C/C%2003%20-%20Undefined%20Behavior%20and%20Unspecified%20Behavior/">C 03 - Undefined Behavior and Unspecified Behavior</a></li>
+</ul>
+<p><em>请注意：本文是面向进阶读者的，在阅读本文档前，请确保你已经具备了完整的 C 语言基础。</em></p>
+<hr />
+<h3 id="令人刷新三观的真相"><a class="markdownIt-Anchor" href="#令人刷新三观的真相"></a> 令人刷新三观的真相</h3>
+<p>如果你学过 C 语言的基本语法，你可能会觉得类似下面的代码并没有什么问题，只是有些晦涩难懂、并且代码风格糟糕。例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">int</span> x = i++ + i++;</span><br></pre></td></tr></table></figure>
+<p>你或许会认为：既然后缀自增运算符是在主表达式计算之后被计算的，那么结果似乎就应当是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi><mo>=</mo><mn>2</mn><mo separator="true">,</mo><mtext> </mtext><mi>i</mi><mo>=</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">x = 2,\ i = 3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span></span></span></span> 。然而事实却并非如此。例如在我的编译环境中，结果竟然是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi><mo>=</mo><mn>3</mn><mo separator="true">,</mo><mtext> </mtext><mi>i</mi><mo>=</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">x = 3,\ i = 3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord">3</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span></span></span></span> 。</p>
+<p>你可能见过一些垃圾教学者夸夸其谈地分析其运行结果，并且看起来十分有道理。如果是这样的话，那么很不幸，你被坑了。事实上，这段看起来似乎“很正常只是代码风格很糟糕”的代码属于未定义行为。</p>
+<p>我们知道，花费精力去研究未定义行为在不同编译环境下的运行结果是没有意义的。但如果想要深入学习 C/C++ 语言，你有必要去探究此类未定义行为的内在原因。</p>
+<p>在 <em>C</em> 语言的 <em>99 - Undefined Behavior and Unspecified Behavior</em> 文档中，我仅对此类未定义行为作了一个表层的介绍，并且没有涉及其内在原因。本文将对此进行详细的介绍。阅读本文需要具备一定的 C 语言基础，且具备一定的汇编语言基础。</p>
+<hr />
+<h3 id="副作用与序列点"><a class="markdownIt-Anchor" href="#副作用与序列点"></a> 副作用与序列点</h3>
+<p>为了弄清此类未定义行为的内在原因，我们需要先掌握两个语言层面的基本概念，包括副作用和序列点。</p>
+<h4 id="副作用"><a class="markdownIt-Anchor" href="#副作用"></a> 副作用</h4>
+<p>C 语言规定，一个表达式（或是子表达式）被执行时产生的以下结果均属于 <strong>副作用 (side effect)</strong> ：</p>
+<ul>
+<li>
+<p>修改一个对象的值；</p>
+</li>
+<li>
+<p>修改一个文件；</p>
+</li>
+<li>
+<p>访问一个 volatile 对象；</p>
+</li>
+<li>
+<p>调用一个会产生以上结果之一的函数。</p>
+</li>
+</ul>
+<p>也就是说，副作用会改变程序的运行时刻环境。</p>
+<p>下面是 C99 标准中对副作用的原文定义：</p>
+<blockquote>
+<p>5.1.2.3 Program execution<br />
+2<br />
+Accessing a volatile object, modifying an object, modifying a file, or calling a function that does any of those operations are all side effects, which are changes in the state of the execution environment. Evaluation of an expression may produce side effects.</p>
+</blockquote>
+<h4 id="序列点"><a class="markdownIt-Anchor" href="#序列点"></a> 序列点</h4>
+<p>C 语言规定，在执行序列中某些特定的点上，此前触发的所有副作用都应被执行完毕，并且此后的所有副作用都不应被触发，这些特定的点被称为 <strong>序列点 (sequence point)</strong> 。</p>
+<p>常见的序列点包括：</p>
+<ul>
+<li>
+<p>函数调用 <code>()</code> 。也就是说，对于任意一个函数调用，在真正调用这个函数之前，其所有参数必须被执行完毕；</p>
+</li>
+<li>
+<p>逻辑运算符 <code>&amp;&amp;</code> 和 <code>||</code> 、三元运算符 <code>? :</code> 、逗号运算符 <code>,</code> 。也就是说，对于上述运算符，在逻辑运算和第二个操作数被执行之前，第一个操作数必须被执行完毕；</p>
+</li>
+<li>
+<p>一个完整表达式的结束点。完整的表达式也包括初始化语句、逻辑控制结构、循环控制结构、返回语句等。</p>
+</li>
+<li>
+<p>与每个格式化的输入/输出功能转换说明符关联的动作之后。</p>
+</li>
+</ul>
+<p>下面是 C99 标准中对序列点的原文定义：</p>
+<blockquote>
+<p>5.1.2.3 Program execution<br />
+2<br />
+At certain specified points in the execution sequence called sequence points, all side effects of previous evaluations shall be complete and no side effects of subsequent evaluations shall have taken place.<br />
+(A summary of the sequence points is given in annex C.)</p>
+</blockquote>
+<hr />
+<h3 id="序列点的陷阱"><a class="markdownIt-Anchor" href="#序列点的陷阱"></a> 序列点的陷阱</h3>
+<p>我们知道，对于程序执行过程中的各个序列点，此前触发的所有副作用都应被执行完毕，并且此后的所有副作用都不应被触发。这里面就隐藏了一个黑暗的秘密：反过来说，只要没有遇到序列点，副作用的执行顺序就是不确定的。</p>
+<p><strong>在两个序列点之间，如果有多个副作用，则它们的执行顺序事实上是不确定的！</strong></p>
+<p>这意味着 C 标准把这个执行顺序的决定权交给了编译器，也就是说，编译器可以自由地调整编译后得到的汇编指令的顺序，以便得到最优的执行效率。这对 C 语言的执行速度有一个不小的提高，但也因此埋下了一个陷阱。</p>
+<p>到此你可能仍然不明白问题出在哪，因为弄清根源还必须深入到汇编的层次。接下来你将触及到 C 语言的黑暗角落。</p>
+<p>我们先从最简单的自增表达式说起。考虑如下代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">int</span> x = i++;</span><br></pre></td></tr></table></figure>
+<p>其汇编代码可能如下所示（在不同编译环境下可能会有不同的汇编语句，但主体逻辑是一致的）：</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># int i = 1;</span></span><br><span class="line"><span class="symbol">movl</span>	<span class="number">$1</span>, <span class="number">12</span>(%esp)	 # 将立即数 <span class="number">1</span> 存入变量 i 中</span><br><span class="line"><span class="comment"># int x = i++;</span></span><br><span class="line"><span class="symbol">movl</span>	<span class="number">12</span>(%esp), %eax	 # 将变量 i 的值存入寄存器 eax 中</span><br><span class="line"><span class="symbol">incl</span>	<span class="number">12</span>(%esp)	 # 将变量 i 的值 +<span class="number">1</span></span><br><span class="line"><span class="symbol">movl</span>	%eax, <span class="number">8</span>(%esp)	 # 将寄存器 eax 的值存入变量 x 中</span><br></pre></td></tr></table></figure>
+<p>由于 C 语言标准并未规定复制运算符 <code>=</code> 在将等号右侧的运算结果赋给等号左侧的地址之前存在序列点，因此汇编代码也可能如下所示：</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># int i = 1;</span></span><br><span class="line"><span class="symbol">movl</span>	<span class="number">$1</span>, <span class="number">12</span>(%esp)	 # 将立即数 <span class="number">1</span> 存入变量 i 中</span><br><span class="line"><span class="comment"># int x = i++;</span></span><br><span class="line"><span class="symbol">movl</span>	<span class="number">12</span>(%esp), %eax	 # 将变量 i 的值存入寄存器 eax 中</span><br><span class="line"><span class="symbol">movl</span>	%eax, <span class="number">8</span>(%esp)	 # 将寄存器 eax 的值存入变量 x 中</span><br><span class="line"><span class="symbol">incl</span>	<span class="number">12</span>(%esp)	 # 将变量 i 的值 +<span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>根据常识可知，在转换成汇编代码后，单个语句 <code>x = i ++</code> 会被转换为一系列汇编语句，分别执行了读写的操作，而这个简单的事实正是陷阱之所在。请读者思考，当表达式中有多个自增表达式的时候会发生什么？例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">int</span> x = i++ + i++;</span><br></pre></td></tr></table></figure>
+<p>其汇编代码可能如下所示：</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># int i = 1;</span></span><br><span class="line">	movl	<span class="number">$1</span>, <span class="number">12</span>(%esp)	 # 将立即数 <span class="number">1</span> 存入变量 i 中</span><br><span class="line"><span class="comment"># int x = i++ + i++;</span></span><br><span class="line">	movl	<span class="number">12</span>(%esp), %eax	 # 将变量 i 的值存入寄存器 eax 中</span><br><span class="line">	movl	%eax, <span class="number">8</span>(%esp)	 # 将寄存器 eax 的值存入变量 x 中</span><br><span class="line">	incl	<span class="number">12</span>(%esp)	 # 将变量 i 的值 +<span class="number">1</span></span><br><span class="line">	movl	<span class="number">12</span>(%esp), %edx	 # 将变量 i 的值存入寄存器 edx 中</span><br><span class="line">	movl	%edx, <span class="number">8</span>(%esp)	 # 将寄存器 edx 的值存入变量 x 中</span><br><span class="line">	incl	<span class="number">12</span>(%esp)	 # 将变量 i 的值 +<span class="number">1</span></span><br><span class="line">	addl	%edx, %eax	 # 对寄存器 edx 的值和寄存器 eax 的值求和并将结果存入寄存器 eax 中</span><br><span class="line">	movl	%eax, <span class="number">8</span>(%esp)	 # 将寄存器 eax 的值存入变量 x 中</span><br></pre></td></tr></table></figure>
+<p>由于 C 语言标准并未明确规定子表达式的执行顺序，其汇编代码也可能如下所示：</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># int i = 1;</span></span><br><span class="line">	movl	<span class="number">$1</span>, <span class="number">12</span>(%esp)	 # 将立即数 <span class="number">1</span> 存入变量 i 中</span><br><span class="line"><span class="comment"># int x = i++ + i++;</span></span><br><span class="line">	movl	<span class="number">12</span>(%esp), %eax	 # 将变量 i 的值存入寄存器 eax 中</span><br><span class="line">	movl	<span class="number">12</span>(%esp), %edx	 # 将变量 i 的值存入寄存器 edx 中</span><br><span class="line">	movl	%eax, <span class="number">8</span>(%esp)	 # 将寄存器 eax 的值存入变量 x 中</span><br><span class="line">	movl	%edx, <span class="number">8</span>(%esp)	 # 将寄存器 edx 的值存入变量 x 中</span><br><span class="line">	incl	<span class="number">12</span>(%esp)	 # 将变量 i 的值 +<span class="number">1</span></span><br><span class="line">	incl	<span class="number">12</span>(%esp)	 # 将变量 i 的值 +<span class="number">1</span></span><br><span class="line">	addl	%edx, %eax	 # 对寄存器 edx 的值和寄存器 eax 的值求和并将结果存入寄存器 eax 中</span><br><span class="line">	movl	%eax, <span class="number">8</span>(%esp)	 # 将寄存器 eax 的值存入变量 x 中</span><br></pre></td></tr></table></figure>
+<p>而这两份汇编代码的运行结果显然是不同的，前者 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi><mo>=</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">x = 3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span></span></span></span> ，后者 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">x = 2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span> 。显然，问题出在对同一变量 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 的读写冲突上。</p>
+<p>正因为如此，此类表达式被认为是未定义行为，因为不仅是不同的编译环境，哪怕是对于不同的程序上下文，编译器都可能会选择不同的执行顺序。极端地讲，可能你在上面插入了一个和 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi><mo separator="true">,</mo><mtext> </mtext><mi>i</mi></mrow><annotation encoding="application/x-tex">x,\ i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">x</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord mathdefault">i</span></span></span></span> 完全无关的函数调用，也会导致此表达式的结果发生变化，这样的危险代码无疑是不可接受的。</p>
+<p>当然，下面的代码是没有问题的：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">int</span> j = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">int</span> x = i++ + ++j;</span><br><span class="line"><span class="keyword">int</span> y = i++ + j++;</span><br></pre></td></tr></table></figure>
+<p>不过，考虑到代码风格和可读性的问题，即便没有错误，仍然强烈建议读者尽量不要在一个表达式内混用自增自减运算符。</p>
+<p>特别补充一点，研究未定义行为的运行结果是没有意义的，本节中仅是为了让读者明白该行为产生的原因，才对其进行举例分析。请读者不要为了除学习以外的目的去研究未定义行为在不同情况下的运行结果，更不要试图去利用这些结果做些什么，那是非常愚蠢的。</p>
+<hr />
+<h3 id="避免掉入陷阱"><a class="markdownIt-Anchor" href="#避免掉入陷阱"></a> 避免掉入陷阱</h3>
+<h4 id="定义"><a class="markdownIt-Anchor" href="#定义"></a> 定义</h4>
+<p>了解了序列点的陷阱之后，我们当然更要知道如何避免掉入这个陷阱。</p>
+<p>下面是 C99 标准中对此类未定义行为的原文定义：</p>
+<blockquote>
+<p>Between two sequence points, an object is modified more than once, or is modified and the prior value is read other than to determine the value to be stored (6.5)</p>
+</blockquote>
+<p>意思是说，在两个序列点之间，下列行为均属于未定义行为：</p>
+<ul>
+<li>
+<p>修改任何一个对象超过一次；</p>
+</li>
+<li>
+<p>修改任何一个对象的同时在别处读取该对象的值。</p>
+</li>
+</ul>
+<p>也就是说，我们只要避免上述行为即可。</p>
+<h4 id="修改超过一次的例子"><a class="markdownIt-Anchor" href="#修改超过一次的例子"></a> 修改超过一次的例子</h4>
+<p>例1：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">int</span> x = i++ + ++i;</span><br><span class="line"><span class="keyword">int</span> y = i++ + i++;</span><br></pre></td></tr></table></figure>
+<p>例2：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">(<span class="keyword">int</span> * p)</span> </span>&#123;</span><br><span class="line">	*p ++;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">int</span> i = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">int</span> x = f(&amp;i) + f(&amp;i);</span><br></pre></td></tr></table></figure>
+<h4 id="修改并在别处读取的例子"><a class="markdownIt-Anchor" href="#修改并在别处读取的例子"></a> 修改并在别处读取的例子</h4>
+<p>例1：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">1</span>;</span><br><span class="line">i = i++ + <span class="number">1</span>;</span><br><span class="line"><span class="keyword">int</span> x = i + i++;</span><br></pre></td></tr></table></figure>
+<p>例2：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a[<span class="number">10</span>];</span><br><span class="line">a[i++] = i;</span><br><span class="line">a[i] = i++;</span><br></pre></td></tr></table></figure>
+<h4 id="其实没问题的例子"><a class="markdownIt-Anchor" href="#其实没问题的例子"></a> 其实没问题的例子</h4>
+<p>轻松一下，下面这个例子看起来很像是触发了未定义行为：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">0</span>, b = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">int</span> c = (a = b) || (a ++ &amp;&amp; ++ b);</span><br></pre></td></tr></table></figure>
+<p>但是实际上没有，上述代码是完全合法的，因为 <code>||</code> 运算符是有序列点的，左表达式 <code>a = b</code> 和右表达式 <code>a ++ &amp;&amp; ++ b</code> 被分离，各自并不存在任何读写冲突。</p>
+<p>不过即便如此，我们仍然强烈建议读者不要写出这种代码，这真的很无聊。</p>
+<hr />
+<h3 id="分析与总结"><a class="markdownIt-Anchor" href="#分析与总结"></a> 分析与总结</h3>
+<p>这个缺陷并非是不可接受的，虽然这给语言的使用者带来了麻烦，但这是为提高执行效率所付出的代价。而且这个陷阱也并不是什么秘密，在 C 语言标准中专门花费了不小的篇幅去阐明这个问题，按理说任何 C 语言课程都应该教授这个问题才对。</p>
+<p>问题在于，许多国内的教学内容根本不提及此事，因而导致许多初学者深陷其中。老一辈所犯下的错误才是祸乱的根源， C 语言表示不背这个黑锅。早些年甚至在各大高校的 C 语言考试中出现了这些表达式，在考试中考察未定义行为的执行结果，这简直是可笑到了极点。</p>
+<p>特别说明，我也并非是对国内的老一辈计算机学者不尊重，在那个年代，我们能做到这一步已经实属不易，先辈的付出与取得的成就无疑是令人尊敬的。但是时代已经变了，如今我们已经不再面临学习资源和人才匮乏的局面，实在不应当再保留着这些错误。有历史遗留错误并不可怕，可怕的是明知有错误而不改正，还要继续误导一代代的学生。</p>
+<p>值得高兴的是，近年来的情况已经在逐步改善，误人子弟的事情已经少了不少。希望未来我们国内能和国外的顶尖高校一样，在 C 语言基础的教学大纲中就有关于这些知识的科学完整的教学吧。</p>
+<hr />
+<h3 id="更新记录"><a class="markdownIt-Anchor" href="#更新记录"></a> 更新记录</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">更新时间</th>
+<th style="text-align:left">更新内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">2020.3.1</td>
+<td style="text-align:left">为章节【避免掉入陷阱】追加小节【其实没问题的例子】</td>
+</tr>
+</tbody>
+</table>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>JM233333
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="https://blog.jm233333.com/Programming%20Languages/C/C%2006%20-%20Do%20not%20Abuse%20Side%20Effects%20in%20Subexpressions/" title="C 06 - Do not Abuse Side Effects in Subexpressions">https://blog.jm233333.com/Programming Languages/C/C 06 - Do not Abuse Side Effects in Subexpressions/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" rel="tag"># 编程语言</a>
+              <a href="/tags/%E8%BF%9B%E9%98%B6%E6%95%99%E7%A8%8B/" rel="tag"># 进阶教程</a>
+              <a href="/tags/C/" rel="tag"># C</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Programming%20Languages/C/C%2099%20-%20xxx/" rel="prev" title="C 99 - xxx">
+      <i class="fa fa-chevron-left"></i> C 99 - xxx
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Programming%20Languages/C/C%2005%20-%20Array%20Name%20is%20NOT%20a%20Pointer/" rel="next" title="C 05 - Array Name is NOT a Pointer">
+      C 05 - Array Name is NOT a Pointer <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="nav-number">1.</span> <span class="nav-text"> 前置知识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A4%E4%BA%BA%E5%88%B7%E6%96%B0%E4%B8%89%E8%A7%82%E7%9A%84%E7%9C%9F%E7%9B%B8"><span class="nav-number">2.</span> <span class="nav-text"> 令人刷新三观的真相</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%AF%E4%BD%9C%E7%94%A8%E4%B8%8E%E5%BA%8F%E5%88%97%E7%82%B9"><span class="nav-number">3.</span> <span class="nav-text"> 副作用与序列点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%89%AF%E4%BD%9C%E7%94%A8"><span class="nav-number">3.1.</span> <span class="nav-text"> 副作用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BA%8F%E5%88%97%E7%82%B9"><span class="nav-number">3.2.</span> <span class="nav-text"> 序列点</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%8F%E5%88%97%E7%82%B9%E7%9A%84%E9%99%B7%E9%98%B1"><span class="nav-number">4.</span> <span class="nav-text"> 序列点的陷阱</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%81%BF%E5%85%8D%E6%8E%89%E5%85%A5%E9%99%B7%E9%98%B1"><span class="nav-number">5.</span> <span class="nav-text"> 避免掉入陷阱</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89"><span class="nav-number">5.1.</span> <span class="nav-text"> 定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E8%B6%85%E8%BF%87%E4%B8%80%E6%AC%A1%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="nav-number">5.2.</span> <span class="nav-text"> 修改超过一次的例子</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E5%B9%B6%E5%9C%A8%E5%88%AB%E5%A4%84%E8%AF%BB%E5%8F%96%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="nav-number">5.3.</span> <span class="nav-text"> 修改并在别处读取的例子</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B6%E5%AE%9E%E6%B2%A1%E9%97%AE%E9%A2%98%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="nav-number">5.4.</span> <span class="nav-text"> 其实没问题的例子</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%9E%90%E4%B8%8E%E6%80%BB%E7%BB%93"><span class="nav-number">6.</span> <span class="nav-text"> 分析与总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0%E8%AE%B0%E5%BD%95"><span class="nav-number">7.</span> <span class="nav-text"> 更新记录</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="JM233333"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">JM233333</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">238</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">80</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/JM233333" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;JM233333" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/26466398@163.com" title="E-Mail → 26466398@163.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://github.com/JM233333" title="https:&#x2F;&#x2F;github.com&#x2F;JM233333" rel="noopener" target="_blank">Title</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JM233333</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.jm233333.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="概述 大部分编程语言都会有自己的标准，这其中就包括 C 语言。当然，编程语言的初学者无需非常深入地去了解语言的标准，只需要有个大概的认识即可，当你对这门语言有了足够的领悟之后再去深入了解也不迟。 C 语言标准在几十年中没有经历过巨大的变革，毕竟和五花八门的新兴语言不同， C 语言是一门传统的、接近底层的、面向过程的语言，这使得 C 语言标准的制定者无需去考虑那些复杂的面向对象相关的问题。 C 语">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C 02 - Overview of C Standards">
+<meta property="og:url" content="https://blog.jm233333.com/Programming%20Languages/C/C%2002%20-%20Overview%20of%20C%20Standards/index.html">
+<meta property="og:site_name" content="JM233333&#39;s Blog">
+<meta property="og:description" content="概述 大部分编程语言都会有自己的标准，这其中就包括 C 语言。当然，编程语言的初学者无需非常深入地去了解语言的标准，只需要有个大概的认识即可，当你对这门语言有了足够的领悟之后再去深入了解也不迟。 C 语言标准在几十年中没有经历过巨大的变革，毕竟和五花八门的新兴语言不同， C 语言是一门传统的、接近底层的、面向过程的语言，这使得 C 语言标准的制定者无需去考虑那些复杂的面向对象相关的问题。 C 语">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-03-22T09:32:11.634Z">
+<meta property="article:author" content="JM233333">
+<meta property="article:tag" content="基础教程">
+<meta property="article:tag" content="编程语言">
+<meta property="article:tag" content="C">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://blog.jm233333.com/Programming%20Languages/C/C%2002%20-%20Overview%20of%20C%20Standards/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>C 02 - Overview of C Standards | JM233333's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">JM233333's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Contact Me: 26466398@163.com</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">80</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories<span class="badge">16</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.jm233333.com/Programming%20Languages/C/C%2002%20-%20Overview%20of%20C%20Standards/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="JM233333">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JM233333's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          C 02 - Overview of C Standards
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2020-01-01T00:00:00+08:00">2020-01-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming-Languages/" itemprop="url" rel="index"><span itemprop="name">Programming Languages</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming-Languages/C/" itemprop="url" rel="index"><span itemprop="name">C</span></a>
+                </span>
+            </span>
+
+          
+
+          <div class="post-authorization">
+            <p>本文为 JM233333 原创所著，遵循 BY-NC-SA 4.0 许可协议，转载请注明出处。如果您认为文中有谬误或对文中内容有疑问，欢迎理性指出，大家共同探讨和进步。</p>
+          </div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="概述"><a class="markdownIt-Anchor" href="#概述"></a> 概述</h3>
+<p>大部分编程语言都会有自己的标准，这其中就包括 C 语言。当然，编程语言的初学者无需非常深入地去了解语言的标准，只需要有个大概的认识即可，当你对这门语言有了足够的领悟之后再去深入了解也不迟。</p>
+<p>C 语言标准在几十年中没有经历过巨大的变革，毕竟和五花八门的新兴语言不同， C 语言是一门传统的、接近底层的、面向过程的语言，这使得 C 语言标准的制定者无需去考虑那些复杂的面向对象相关的问题。</p>
+<p>C 语言被绝大多数大学选择作为本科计算机专业的入门语言，并且归功于那本广为流传的毒瘤教材（《C程序设计》，作者谭浩强），大多数初学者，甚至是一些教师，都搞不清楚 C 语言标准，甚至是弄错弄混。这篇文章将帮助你弄清楚 C 语言标准到底是怎么一回事，也会对几个常见的主流标准之间的差异进行详细的介绍。</p>
+<p>不要认为这是没有意义的，即便你对这些东西不感兴趣（其实我自己也不怎么感兴趣），你也至少应当对 C89/C90 和 C99 有一个基本的认识，因为它们最为常见，否则你在以后的学习和编程中可能会陷入困惑。</p>
+<hr />
+<h3 id="变迁历程"><a class="markdownIt-Anchor" href="#变迁历程"></a> 变迁历程</h3>
+<h4 id="总览"><a class="markdownIt-Anchor" href="#总览"></a> 总览</h4>
+<p>我们首先对 C 语言标准的变迁历程进行一个大致的介绍，帮读者确立一个基本的认识。</p>
+<p>本节中的内容主要是对 Wikipedia 的 C 语言条目中的内容的翻译和精简，如果读者有兴趣可以前往本文底部的链接自行查阅。</p>
+<p>下表列出了 C 语言标准所经历的主要时间阶段。不过我并不打算和读者探讨这门语言的详细的发展史，毕竟这没什么意义。这张表只是为了提供一个总览而已。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">时间节点</th>
+<th style="text-align:left">创立的 C 语言标准</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">1972</td>
+<td style="text-align:left">最初的诞生</td>
+</tr>
+<tr>
+<td style="text-align:left">1978</td>
+<td style="text-align:left">K&amp;R C</td>
+</tr>
+<tr>
+<td style="text-align:left">1989/1990</td>
+<td style="text-align:left">C89/C90</td>
+</tr>
+<tr>
+<td style="text-align:left">1999</td>
+<td style="text-align:left">C99</td>
+</tr>
+<tr>
+<td style="text-align:left">2011</td>
+<td style="text-align:left">C11</td>
+</tr>
+<tr>
+<td style="text-align:left">2017/2018</td>
+<td style="text-align:left">C18</td>
+</tr>
+</tbody>
+</table>
+<h4 id="早期的发展"><a class="markdownIt-Anchor" href="#早期的发展"></a> 早期的发展</h4>
+<p>C 语言诞生于1972年，它是从 B 语言发展衍生出来的。这其中的历史故事我不打算赘述。</p>
+<p>1978年， Brian Kernighan 和 Dennis Ritchie 发布了《The C Programming Language》的第一版，这本书被大众认为是 C 语言的母书之一，也是被极力推荐的 C 语言入门教材之一。这本书的第一版中所介绍的 C 语言被称为 <strong>K&amp;R C</strong> ，这是最早的、经过精心设计的 C 语言标准。</p>
+<p>很多在今天看来非常普通的语法都是在 K&amp;R C 中被首次定义的，但我不打算在本文中介绍具体是哪些，因为现在几乎不会使用比 K&amp;R C 更早的 C 语言标准了，所以初学者没必要特地去区分出 K&amp;R C 中追加的特性。</p>
+<p>时至今日， K&amp;R C 仍然被认为是 C 语言标准的“最低公分母”。如果你在以后的开发中使用 C 语言，并希望你的程序具有最大的可移植性，你就应当使用 K&amp;R C 标准，以使得程序能在绝大多数运行环境下正常工作。当然，如果你对可移植性没有那么高的要求，就不必使用古老的 K&amp;R C 了，可能 C89 就足以满足要求，这要根据实际情况来判断。</p>
+<p>不过在初学阶段你不需要在意这些，毕竟大多数人将来并不会从事 C 语言的开发，而本科教学通常也不会使用这么古老的标准，你只需要能够知道 K&amp;R C 的存在即可。</p>
+<h4 id="c89c90"><a class="markdownIt-Anchor" href="#c89c90"></a> C89/C90</h4>
+<p>正如其名， C89/C90 标准诞生于1989/1990年。</p>
+<p>1989年， <strong>美国国家标准协会 (American National Standards Institute, ANSI)</strong> 建立了 C 语言的标准规范，并被批准为 <strong>ANSI X3.159-1989</strong> ，通常称为 <strong>ANSI C</strong> ，有时也称为 <strong>Standard C</strong> 或 <strong>C89</strong> 。</p>
+<p>1990年， <strong>国际标准化组织 (International Organization for Standardization, ISO)</strong> 采用了 ANSI C 标准，对其格式有所更改。该标准的正式名称为 <strong>ISO/IEC 9899:1990</strong> ，简称为 <strong>ISO C</strong> ，有时也称为 <strong>C90</strong> 。</p>
+<p>国际标准化组织仅对 C89 的格式进行了一些更改，而技术内容本身没有任何区别，因此 C89 和 C90 指的是相同的编程语言标准。我们常常见到形如 <strong>C89/C90</strong> 的记法，就是因为 C89 和 C90 在本质上是一样的。</p>
+<p>从 C90 以后， ANSI 与其他国家标准机构一样，不再单独开发 C 标准，而是遵循由工作组 ISO/IEC JTC1/SC22/WG14 维护的国际 C 标准。</p>
+<p>后来 ANSI 和 ISO 分别撤销了 C89 和 C90 的标准，但是它们至今仍然被广泛使用。</p>
+<p>大多数现代 C 语言代码都是基于 C89 的。因此我也不打算在这篇面向初学者的文章里介绍 C89 相比于 K&amp;R C 的新特性，这对初学者而言不是必要的内容。</p>
+<h4 id="c95"><a class="markdownIt-Anchor" href="#c95"></a> C95</h4>
+<p>1995年， ISO 针对 C90 标准发布了一个扩展，称为修订1，它的正式名称为 <strong>ISO/IEC 9899:1990/AMD1:1995</strong> ，简称为 <strong>C95</strong> 。</p>
+<p>除此以外， ISO 还针对 C90 发布了两个技术勘误，包括1994年的 ISO/IEC 9899:1990/Cor 1:1994 TCOR1 和1996年的 ISO/IEC 9899:1990/Cor 2:1996 。</p>
+<p>C95 主要是更正了一些 C90 中的细节，并为国际字符集增加更多的支持。由于 C95 相对于 C89/C90 而言并没有大的变化，多数情况下我们不会提及 C95 ，甚至有时只把它当作是 C90 的一个修订版。</p>
+<h4 id="c99"><a class="markdownIt-Anchor" href="#c99"></a> C99</h4>
+<p>1999年， ISO 发布了 <strong>ISO/IEC 9899:1999</strong> ，通常称为 <strong>C99</strong> 。</p>
+<p>后来 ISO 针对 C99 发布了三个技术勘误，包括 ISO/IEC 9899:1999/Cor 1:2001(E) 、 ISO/IEC 9899:1999/Cor 2:2004(E) 和 ISO/IEC 9899:1999/Cor 3:2007(E) 。</p>
+<p>C99 相对于 C89 而言引入了不少新特性，算得上是 C 语言标准的一次大规模变化，其中有些是为了适应计算机软件的发展，有些则是引入了 C++ 中出现的一些有益的内容。</p>
+<p>事实上，有些 C99 引入的新特性已经被许多编译器无形地实现在 C89 中，不需要在编译器中启用 C99 就能使用。例如 <code>//</code> 的单行注释事实上是 C99标准才引入的，这一特性来自 C++ 语言，在最初的 C89 中并没有这种语法，但是在许多编译器中无需启用 C99 也可以合法使用单行注释。也有些新特性被实现为扩展功能。</p>
+<p>由于 C89 和 C99 的差异相对较大，你需要对 C99 引入的新特性有所了解，知道哪些语法和功能是 C89 不支持的。</p>
+<h4 id="c11-和-c18"><a class="markdownIt-Anchor" href="#c11-和-c18"></a> C11 和 C18</h4>
+<p>考虑到 C11 和 C18 的普及程度远不如 K&amp;R C 、 C89 和 C99 ，并且本科课程中也通常不会使用，我们就不在本文中过多地介绍了。</p>
+<hr />
+<h3 id="在-gcc-编译器设置-c-语言标准"><a class="markdownIt-Anchor" href="#在-gcc-编译器设置-c-语言标准"></a> 在 GCC 编译器设置 C 语言标准</h3>
+<p>如果需要设置标准为 C89 ，可以使用编译参数 <code>-std=c89</code> 。如果需要设置标准为带有 GNU 扩展的 C89 ，可以使用编译参数 <code>-std=gnu89</code> 。</p>
+<p>如果需要设置标准为 C99 ，可以使用编译参数 <code>-std=c99</code> 。如果需要设置标准为带有 GNU 扩展的 C99 ，可以使用编译参数 <code>-std=gnu9x</code> 。</p>
+<p>GCC 编译器默认使用带有 GNU 扩展的 C89 作为标准，即以 <code>-std=gnu89</code> 作为默认值。</p>
+<p>实际上，即便你指定了所用的标准，一些不属于所用标准的语法事实上会被编译通过，这是编译器在背地里干的好事。为了保证兼容性，可以使用编译参数 <code>-pedantic-errors</code> 要求编译器对所有不遵循标准 C 的代码严格地报告编译错误，拒绝兼容任何当前标准不支持的语法以及任何扩展语法。</p>
+<hr />
+<h3 id="c99-的部分新特性"><a class="markdownIt-Anchor" href="#c99-的部分新特性"></a> C99 的部分新特性</h3>
+<p>C99 引入的新特性仅仅是一条条罗列出来都能占据两页纸，因此我不打算在面向初学者的文章中逐一介绍，这里只会给出一些初学者需要注意的变化。并不是说这里没有列出的新特性就不重要，只是它们可能相对来说不是特别常用，对于初学者而言不需要去关注而已。</p>
+<p>注意，许多 C99 特性已经被编译器模糊地支持了（即便是在 C89 标准下），因此如果你的编译器能编译通过也不要感到奇怪。你可以使用编译参数 <code>-pedantic-errors</code> ，那么编译器就会关闭所有的扩展支持，并严格地遵循你所设置的 C 语言标准。</p>
+<h4 id="移除隐式-int-声明"><a class="markdownIt-Anchor" href="#移除隐式-int-声明"></a> 移除隐式 int 声明</h4>
+<p>在大多数情况下 C99 都是向后兼容 C89 的，但在这一方面变得更为严格了。在 C99 中，缺少类型说明符的声明不再隐式地假定为 int 类型，包括函数返回值和参数的声明。</p>
+<p>也就是说，在 C89 中下列代码可以正确编译，而在 C99 中则不行：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">f1(<span class="keyword">int</span> x) &#123;</span><br><span class="line">	<span class="keyword">return</span> (x + <span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">f2</span><span class="params">(x)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> (x * <span class="number">2</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> x = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">int</span> y = f1(x), z = f2(x);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 GCC 编译器中使用编译参数 <code>-std=c99 -pedantic-errors</code> 会得到如下报错：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">|1| error: return type defaults to &#39;int&#39;</span><br><span class="line">| | In function &#39;f2&#39;:</span><br><span class="line">|4| error: type of &#39;x&#39; defaults to &#39;int&#39;</span><br></pre></td></tr></table></figure>
+<p>C 标准委员会认为，对于编译器而言，相比于默默地处理那些依赖于隐式 int 声明的历史遗留代码，诊断出类型说明符的无意遗漏更为重要。</p>
+<h4 id="允许混合声明和代码"><a class="markdownIt-Anchor" href="#允许混合声明和代码"></a> 允许混合声明和代码</h4>
+<p>在 C99 之前， C 语言标准要求函数体内的声明语句全部放在其他语句之前，显然这是一个不太人性化的规定，只要不是太老的编程语言几乎都没有这样的语法规定。</p>
+<p>从 C99 开始， C 语言允许程序中混合声明和代码，换句话说，在 C99 中下列代码可以正确编译，而在 C89 中则不行：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> x;</span><br><span class="line">	x = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">int</span> y;</span><br><span class="line">	y = <span class="number">2</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 GCC 编译器中使用编译参数 <code>-std=c89 -pedantic-errors</code> 会得到如下报错：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">| | In function &#39;main&#39;:</span><br><span class="line">|6| error: ISO C90 forbids mixed declarations and code [-Wpedantic]</span><br></pre></td></tr></table></figure>
+<h4 id="支持变长数组"><a class="markdownIt-Anchor" href="#支持变长数组"></a> 支持变长数组</h4>
+<p>在计算机编程中， <strong>变长数组 (variable-length array, or runtime-sized array)</strong> 指的是长度在运行时确定（而不是在编译时确定）的数组。变长数组的意思并不是说数组的长度可以随意变化，不要被它的名字误导了。</p>
+<p>在 C99 之前，数组的长度必须在编译时确定。通俗地讲，你不能使用一个变量的值作为数组的长度，哪怕这个变量是由 <code>const</code> 修饰的。如果希望将多个数组的长度统一用一个量来表示，我们只能使用宏定义来达成目的：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> n 5</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a[n], b[n], c[n];</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>从 C99 开始， C 语言支持使用变长数组，换句话说，在 C99 中下列代码可以正确编译，而在 C89 中则不行：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n = <span class="number">5</span>;</span><br><span class="line">	<span class="keyword">int</span> a[n], b[n];</span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">int</span> m = <span class="number">10</span>;</span><br><span class="line">	<span class="keyword">int</span> c[m], d[m];</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 GCC 编译器中使用编译参数 <code>-std=c89 -pedantic-errors</code> 会得到如下报错：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">| | In function &#39;main&#39;:</span><br><span class="line">|3| error: ISO C90 forbids variable length array &#39;a&#39; [-Wvla]</span><br><span class="line">|5| error: ISO C90 forbids variable length array &#39;b&#39; [-Wvla]</span><br></pre></td></tr></table></figure>
+<p><em>注：在 C 语言的类型系统中，变长数组被归类为 <strong>variably modified type</strong> 。目前我没有找到该类型的一个合适的中文翻译。</em></p>
+<h4 id="支持单行注释"><a class="markdownIt-Anchor" href="#支持单行注释"></a> 支持单行注释</h4>
+<p>从 C99 开始， C 语言支持使用 <code>//</code> 来实现单行注释。你可能会对此感到惊讶，但这确实是 C99 才提出的，虽然绝大多数编译器都会允许你在 C89 设置下使用单行注释，但如果使用严格的编译参数，编译器就会毫不留情地给出一个编译错误。</p>
+<p>在 C99 中下列代码可以正确编译，而在 C89 中则不行：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="comment">// this is an one-line comment</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 GCC 编译器中使用编译参数 <code>-std=c89 -pedantic-errors</code> 会得到如下报错：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">| | In function &#39;main&#39;:</span><br><span class="line">|2| error: expected expression before &#39;&#x2F;&#39; token</span><br></pre></td></tr></table></figure>
+<h4 id="支持-for-循环初始化声明"><a class="markdownIt-Anchor" href="#支持-for-循环初始化声明"></a> 支持 for 循环初始化声明</h4>
+<p>在 C99 之前，我们无法在 for 循环的初始化语句中声明临时变量，从程序设计的角度讲这样并不是好事，因为除了代码的可读性和美观问题以外，从逻辑上讲，变量 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 应当仅供 for 循环内部使用，但是现在，循环外部的代码可以随意地访问 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 的值：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> sum = <span class="number">0</span>, t;</span><br><span class="line">	<span class="keyword">int</span> n = <span class="number">5</span>;</span><br><span class="line">	<span class="keyword">int</span> i;</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">1</span>; i &lt;= n; i ++) &#123;</span><br><span class="line">		sum += i;</span><br><span class="line">	&#125;</span><br><span class="line">	t = i; <span class="comment">/* we can access i everywhere */</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在上例中，这当然不会有什么问题，但是在有些时候就未必了。</p>
+<p>从 C99 开始， C 语言支持 for 循环初始化声明，我们可以让 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 成为真正意义上的临时变量：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> sum = <span class="number">0</span>, t;</span><br><span class="line">	<span class="keyword">int</span> n = <span class="number">5</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i ++) &#123;</span><br><span class="line">		sum += i;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// t = i /* this will get a compile error */</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>或许作为初学者的你还并不能理解，那么请你记住：在编译环境允许的情况下，尽可能将 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mo separator="true">,</mo><mtext> </mtext><mi>j</mi></mrow><annotation encoding="application/x-tex">i,\ j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span></span></span></span> 这类循环体内使用的临时变量声明为真正的临时变量。</p>
+<h4 id="支持复合字面量"><a class="markdownIt-Anchor" href="#支持复合字面量"></a> 支持复合字面量</h4>
+<p>C99 新增了对 <strong>复合字面量 (compound literal)</strong> 的支持。</p>
+<p>下面这段代码演示了数组的复合字面量的使用方法。程序的第 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn></mrow><annotation encoding="application/x-tex">2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span> 行声明并初始化了一个指针 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> ，它指向一个匿名的、长度为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span></span></span></span> 的数组的首元素。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> * p = (<span class="keyword">int</span> [])&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>下面这段代码演示了结构体的复合字面量的使用方法。在 C89 中，只有第 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>6</mn></mrow><annotation encoding="application/x-tex">6</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">6</span></span></span></span> 行能通过编译，而第 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>7</mn></mrow><annotation encoding="application/x-tex">7</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">7</span></span></span></span> 行将报告错误，因为 C89 只允许在初始化时使用 <code>&#123;&#125;</code> 语法，从 C99 开始才提供了对复合字面量的支持。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Block</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> x;</span><br><span class="line">	<span class="keyword">char</span> str[<span class="number">10</span>];</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">Block</span> <span class="title">block</span> =</span> &#123;<span class="number">1</span>, <span class="string">&quot;aaa&quot;</span>&#125;;</span><br><span class="line">	block = (struct Block)&#123;<span class="number">2</span>, <span class="string">&quot;xyz&quot;</span>&#125;;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="支持指定初始值"><a class="markdownIt-Anchor" href="#支持指定初始值"></a> 支持指定初始值</h4>
+<p>C99 新增了对 <strong>指定初始值 (designated initializer)</strong> 的支持。</p>
+<p>在 C89 中，如果你想初始化一个稀疏数组，可能只能这么做：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a[<span class="number">10</span>] = &#123;<span class="number">0</span>, <span class="number">0</span>, <span class="number">3</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">5</span>, <span class="number">0</span>&#125;;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>或者这么做：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a[<span class="number">10</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">	a[<span class="number">2</span>] = <span class="number">3</span>;</span><br><span class="line">	a[<span class="number">8</span>] = <span class="number">5</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>而指定初始值的特性允许你以这样的语法对数组进行初始化，这无疑带来了一些便捷：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a[<span class="number">10</span>] = &#123;[<span class="number">2</span>] = <span class="number">3</span>, [<span class="number">8</span>] = <span class="number">5</span>&#125;;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>类似的特性也存在于结构体的初始化和赋值中，其语法如下所示：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Block</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> a;</span><br><span class="line">	<span class="keyword">double</span> b;</span><br><span class="line">	<span class="keyword">char</span> c;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">Block</span> <span class="title">block</span> =</span> (struct Block)&#123;.a = <span class="number">1</span>, .c = <span class="string">&#x27;x&#x27;</span>&#125;;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d, %.1f, %c\n&quot;</span>, block.a, block.b, block.c);</span><br><span class="line">	block = (struct Block)&#123;.b = <span class="number">0.5</span>, .c = <span class="string">&#x27;z&#x27;</span>&#125;;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d, %.1f, %c\n&quot;</span>, block.a, block.b, block.c);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上述代码的输出结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1, 0.0, x</span><br><span class="line">0, 0.5, z</span><br></pre></td></tr></table></figure>
+<h4 id="新增数据类型"><a class="markdownIt-Anchor" href="#新增数据类型"></a> 新增数据类型</h4>
+<p><strong>long long int 类型</strong></p>
+<p>C99 新增了 long long int 数据类型。在大部分 PC 机上 long long 类型是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>64</mn></mrow><annotation encoding="application/x-tex">64</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">6</span><span class="mord">4</span></span></span></span> 位的，有符号数和无符号数的取值范围分别为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo stretchy="false">[</mo><mo>−</mo><msup><mn>2</mn><mn>63</mn></msup><mo separator="true">,</mo><mtext> </mtext><msup><mn>2</mn><mn>63</mn></msup><mo>−</mo><mn>1</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[-2^{63},\ 2^{63} - 1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">−</span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">6</span><span class="mord mtight">3</span></span></span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">6</span><span class="mord mtight">3</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span></span></span></span> 和 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo stretchy="false">[</mo><mn>0</mn><mo separator="true">,</mo><mtext> </mtext><msup><mn>2</mn><mn>64</mn></msup><mo>−</mo><mn>1</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[0,\ 2^{64} - 1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">6</span><span class="mord mtight">4</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span></span></span></span> 。</p>
+<p>如果进行实际工程开发的话需要注意，这个取值范围在不同的机器上可能会不一样，可以用 <code>sizeof()</code> 运算符查看其实际位数。</p>
+<p>但是这个 long long 类型并没有这么简单，当你想使用 scanf/printf 对 long long 类型的变量进行输入输出时，应当使用什么样的格式符号，是取决于代码运行环境的，可能是 <code>%I64d</code> 或 <code>%lld</code> 之一，也可能这两种格式符号都合法。</p>
+<p>如果搞不清楚的话可以先试试 <code>%lld</code> ，现在在多数情况下 <code>%lld</code> 都是可用的。</p>
+<p><strong>_Bool 类型</strong></p>
+<p>C99 新增了 _Bool 数据类型，用于表示布尔值。</p>
+<p>现代的编程语言基本上都提供了布尔类型， C 语言也做出了改进。布尔类型的值只能是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span> 或 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> 。</p>
+<p>可能是为了方便或是与 C++ 语言相统一， C99 还增加了一些宏定义，包含于头文件 <code>&lt;stdbool.h&gt;</code> 中。实际上这个头文件里的内容非常少，排除掉为了和 C++ 语言兼容而写下的条件宏，就只有这么点内容：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> bool	_Bool</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> true	1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> false	0</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> __bool_true_false_are_defined	1</span></span><br></pre></td></tr></table></figure>
+<p>也就是说，你可以像这样直观地使用布尔类型，用 true/false 代替 0/1 ：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdbool.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">bool</span> x = <span class="literal">true</span>, y = <span class="literal">false</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当然，如果不使用这个头文件，你也可以像这样等效地使用布尔类型，只是这不太方便，代码看起来也没有 true/false 那么直观：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="built_in">_Bool</span> x = <span class="number">0</span>, y = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>_Complex 和 _Imaginary 类型</strong></p>
+<p>C99 新增了 _Complex 和 _Imaginary 数据类型，用于表示复数和虚数，包含于头文件 <code>&lt;complex.h&gt;</code> 中。</p>
+<p>关于 C99 复数的内容我不打算展开介绍，毕竟这对初学者来说不是必要的知识，有兴趣的读者可自行查阅相关资料。</p>
+<h4 id="新增保留字"><a class="markdownIt-Anchor" href="#新增保留字"></a> 新增保留字</h4>
+<p>C99 新增了 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>5</mn></mrow><annotation encoding="application/x-tex">5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">5</span></span></span></span> 种保留字：</p>
+<ul>
+<li>
+<p><code>_Bool</code> , <code>_Complex</code> , <code>_Imaginary</code> ：上一节已经介绍过了。</p>
+</li>
+<li>
+<p><code>inline</code> ：用于定义内联函数。 C 语言在 C99 首次引入内联函数，相比于 C++ 语言， C 语言中的内联函数有诸多复杂的规则，初学者无需深入了解。</p>
+</li>
+<li>
+<p><code>restrict</code> ：用于修饰指针，初学者无需深入了解。</p>
+</li>
+</ul>
+<hr />
+<h3 id="关于-main-函数的返回值"><a class="markdownIt-Anchor" href="#关于-main-函数的返回值"></a> 关于 main 函数的返回值</h3>
+<p>有一些关于 main 函数的谣言广为流传，因此我特别用一节来解释这个问题。</p>
+<p>一些说法认为，在 C89 中允许 main 函数的返回值为 void 类型，而从 C99 开始要求 main 函数的返回值必须为 int 类型：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;hello, world&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>事实上，虽然有些编译器允许这种形式，但是还没有任何标准考虑接受它。 C++ 之父 Bjarne Stroustrup 在他的主页上的 FAQ 中明确地表示 <code>void main()</code> 的定义从来就不存在于 C 或 C++ 中。我专门查阅了 C89 和 C99 标准，也没有见到任何允许 <code>void main()</code> 的说明。所以，编译器不必接受这种形式，并且很多编译器也不允许这么写。</p>
+<p>事实上，当我在GCC编译器中使用编译参数 <code>-std=c89 -pedantic-errors</code> 时，上述代码确实不能通过编译，这也证明了 C89 也并不支持 <code>void main()</code> 的写法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">|3| error: return type of &#39;main&#39; is not &#39;int&#39; [-Wmain]</span><br></pre></td></tr></table></figure>
+<p>因此，为了保证你的程序不会在严格的编译环境下发生错误，请你务必将 main 函数的返回值声明为 int 类型：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;hello, world&quot;</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中 <code>return 0</code> 有时可以被省略，在省略的情况下，绝大部分编译器会自动将 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span> 设为 main 函数的返回值。但我个人建议不要省略。</p>
+<hr />
+<h3 id="参考资料"><a class="markdownIt-Anchor" href="#参考资料"></a> 参考资料</h3>
+<p>Wikipedia的 C 语言条目，其中描述了 C 语言标准的变迁概要。</p>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/C_%28programming_language%29">C (programming language)</a></p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>JM233333
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="https://blog.jm233333.com/Programming%20Languages/C/C%2002%20-%20Overview%20of%20C%20Standards/" title="C 02 - Overview of C Standards">https://blog.jm233333.com/Programming Languages/C/C 02 - Overview of C Standards/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B/" rel="tag"># 基础教程</a>
+              <a href="/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" rel="tag"># 编程语言</a>
+              <a href="/tags/C/" rel="tag"># C</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Programming%20Languages/C/C%2003%20-%20Undefined%20Behavior%20and%20Unspecified%20Behavior/" rel="prev" title="C 03 - Undefined Behavior and Unspecified Behavior">
+      <i class="fa fa-chevron-left"></i> C 03 - Undefined Behavior and Unspecified Behavior
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Programming%20Languages/C/C%2001%20-%20Summary%20of%20Common%20Mistakes%20for%20Beginners/" rel="next" title="C 01 - Summary of Common Mistakes for Beginners">
+      C 01 - Summary of Common Mistakes for Beginners <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text"> 概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%98%E8%BF%81%E5%8E%86%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text"> 变迁历程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%80%BB%E8%A7%88"><span class="nav-number">2.1.</span> <span class="nav-text"> 总览</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%97%A9%E6%9C%9F%E7%9A%84%E5%8F%91%E5%B1%95"><span class="nav-number">2.2.</span> <span class="nav-text"> 早期的发展</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#c89c90"><span class="nav-number">2.3.</span> <span class="nav-text"> C89&#x2F;C90</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#c95"><span class="nav-number">2.4.</span> <span class="nav-text"> C95</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#c99"><span class="nav-number">2.5.</span> <span class="nav-text"> C99</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#c11-%E5%92%8C-c18"><span class="nav-number">2.6.</span> <span class="nav-text"> C11 和 C18</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8-gcc-%E7%BC%96%E8%AF%91%E5%99%A8%E8%AE%BE%E7%BD%AE-c-%E8%AF%AD%E8%A8%80%E6%A0%87%E5%87%86"><span class="nav-number">3.</span> <span class="nav-text"> 在 GCC 编译器设置 C 语言标准</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#c99-%E7%9A%84%E9%83%A8%E5%88%86%E6%96%B0%E7%89%B9%E6%80%A7"><span class="nav-number">4.</span> <span class="nav-text"> C99 的部分新特性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A7%BB%E9%99%A4%E9%9A%90%E5%BC%8F-int-%E5%A3%B0%E6%98%8E"><span class="nav-number">4.1.</span> <span class="nav-text"> 移除隐式 int 声明</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%81%E8%AE%B8%E6%B7%B7%E5%90%88%E5%A3%B0%E6%98%8E%E5%92%8C%E4%BB%A3%E7%A0%81"><span class="nav-number">4.2.</span> <span class="nav-text"> 允许混合声明和代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%94%AF%E6%8C%81%E5%8F%98%E9%95%BF%E6%95%B0%E7%BB%84"><span class="nav-number">4.3.</span> <span class="nav-text"> 支持变长数组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%94%AF%E6%8C%81%E5%8D%95%E8%A1%8C%E6%B3%A8%E9%87%8A"><span class="nav-number">4.4.</span> <span class="nav-text"> 支持单行注释</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%94%AF%E6%8C%81-for-%E5%BE%AA%E7%8E%AF%E5%88%9D%E5%A7%8B%E5%8C%96%E5%A3%B0%E6%98%8E"><span class="nav-number">4.5.</span> <span class="nav-text"> 支持 for 循环初始化声明</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%94%AF%E6%8C%81%E5%A4%8D%E5%90%88%E5%AD%97%E9%9D%A2%E9%87%8F"><span class="nav-number">4.6.</span> <span class="nav-text"> 支持复合字面量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%94%AF%E6%8C%81%E6%8C%87%E5%AE%9A%E5%88%9D%E5%A7%8B%E5%80%BC"><span class="nav-number">4.7.</span> <span class="nav-text"> 支持指定初始值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B0%E5%A2%9E%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">4.8.</span> <span class="nav-text"> 新增数据类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%B0%E5%A2%9E%E4%BF%9D%E7%95%99%E5%AD%97"><span class="nav-number">4.9.</span> <span class="nav-text"> 新增保留字</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E-main-%E5%87%BD%E6%95%B0%E7%9A%84%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="nav-number">5.</span> <span class="nav-text"> 关于 main 函数的返回值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">6.</span> <span class="nav-text"> 参考资料</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="JM233333"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">JM233333</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">238</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">80</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/JM233333" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;JM233333" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/26466398@163.com" title="E-Mail → 26466398@163.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://github.com/JM233333" title="https:&#x2F;&#x2F;github.com&#x2F;JM233333" rel="noopener" target="_blank">Title</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JM233333</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

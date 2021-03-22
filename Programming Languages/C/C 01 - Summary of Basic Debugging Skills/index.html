@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.jm233333.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="前置知识 在阅读本文档前，建议先了解 C 语言的初学者常见错误，详见 C 语言的 01 - Summary of Common Mistakes for Beginners 文档。  C 01 - Summary of Common Mistakes for Beginners    前言 调试 (DEBUG) 能力对于编程来说是非常重要的，即便你写程序写得再好再快再熟练，只要你还是个人，就无法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C 01 - Summary of Basic Debugging Skills">
+<meta property="og:url" content="https://blog.jm233333.com/Programming%20Languages/C/C%2001%20-%20Summary%20of%20Basic%20Debugging%20Skills/index.html">
+<meta property="og:site_name" content="JM233333&#39;s Blog">
+<meta property="og:description" content="前置知识 在阅读本文档前，建议先了解 C 语言的初学者常见错误，详见 C 语言的 01 - Summary of Common Mistakes for Beginners 文档。  C 01 - Summary of Common Mistakes for Beginners    前言 调试 (DEBUG) 能力对于编程来说是非常重要的，即便你写程序写得再好再快再熟练，只要你还是个人，就无法">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-03-22T09:32:11.634Z">
+<meta property="article:author" content="JM233333">
+<meta property="article:tag" content="基础教程">
+<meta property="article:tag" content="编程语言">
+<meta property="article:tag" content="C">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://blog.jm233333.com/Programming%20Languages/C/C%2001%20-%20Summary%20of%20Basic%20Debugging%20Skills/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>C 01 - Summary of Basic Debugging Skills | JM233333's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">JM233333's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Contact Me: 26466398@163.com</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">80</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories<span class="badge">16</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.jm233333.com/Programming%20Languages/C/C%2001%20-%20Summary%20of%20Basic%20Debugging%20Skills/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="JM233333">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JM233333's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          C 01 - Summary of Basic Debugging Skills
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2020-01-01T00:00:00+08:00">2020-01-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming-Languages/" itemprop="url" rel="index"><span itemprop="name">Programming Languages</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming-Languages/C/" itemprop="url" rel="index"><span itemprop="name">C</span></a>
+                </span>
+            </span>
+
+          
+
+          <div class="post-authorization">
+            <p>本文为 JM233333 原创所著，遵循 BY-NC-SA 4.0 许可协议，转载请注明出处。如果您认为文中有谬误或对文中内容有疑问，欢迎理性指出，大家共同探讨和进步。</p>
+          </div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="前置知识"><a class="markdownIt-Anchor" href="#前置知识"></a> 前置知识</h3>
+<p>在阅读本文档前，建议先了解 C 语言的初学者常见错误，详见 <em>C</em> 语言的 <em>01 - Summary of Common Mistakes for Beginners</em> 文档。</p>
+<ul>
+<li><a href="/Programming%20Languages/C/C%2001%20-%20Summary%20of%20Common%20Mistakes%20for%20Beginners/">C 01 - Summary of Common Mistakes for Beginners</a></li>
+</ul>
+<hr />
+<h3 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h3>
+<p><strong>调试 (DEBUG)</strong> 能力对于编程来说是非常重要的，即便你写程序写得再好再快再熟练，只要你还是个人，就无法保证自己不会犯错，因此能够快速查错也是一项非常重要的基本功。不如说，写代码能力和 DEBUG 能力本来就是编程能力的两个关系紧密的子集。</p>
+<p>作为初学者，调试技巧是有必要掌握的，你不能每次都因为一些特别智障的错误去请教他人，次数多了会令他人感到反感，而且也无益于你自身能力的提升。即便你还功力尚浅，也至少应该学会去独立排查并解决一些简单的问题。毕竟，迟早你将不再是一名初学者，如果届时你未能掌握与写代码能力相匹配的 DEBUG 能力，你恐怕会遇到不小的麻烦。</p>
+<p>学习调试技巧之前，你需要养成遇到 BUG 先自己独立尝试解决的习惯。如果你总是依赖于他人帮你 DEBUG 的话，你永远也学不会自己 DEBUG 。就像提高代码能力需要自己多写代码一样，学习调试也需要自己多去独立尝试。当然，如果你花费了很长时间也无法解决，或是经过认真思考也一头雾水毫无头绪，向他人求助才是合适的，再自己死磕就没有意义了。</p>
+<p>本文介绍了一些最基本的调试技巧，并给出若干示例帮助读者掌握这些技巧。此外还通过列举大量实例来帮助读者掌握最基本的阅读编译错误信息的能力。</p>
+<hr />
+<h3 id="概述"><a class="markdownIt-Anchor" href="#概述"></a> 概述</h3>
+<p>基本的调试方法说白了也就是两大类：</p>
+<ul>
+<li>
+<p>利用 IDE 的调试工具进行调试，观测和追踪程序运行的过程；</p>
+</li>
+<li>
+<p>利用输出流获取中间结果，并据此思考找到程序中的错误。</p>
+</li>
+</ul>
+<p>现在 IDE 的调试工具的功能越来越强大，只需要花费一点时间掌握工具的使用方法（一般都不难，而且各种调试工具其实都很相像），就能非常方便地进行单步调试和定点调试等等。</p>
+<p>然而，如果你只是写一个玩具级的单文件程序，想要使用调试工具，通常都必须用 IDE 建立一个工程项目，这实在是有些大材小用，为了调试反而把事情变得麻烦了。</p>
+<p>在这种情况下，我们如果掌握了利用输出流查看中间结果的简单技巧，就能灵活地应对玩具级程序的 DEBUG 任务。这种方法简单粗暴，但是其麻烦程度会随着程序规模的增长而快速增长，在大型软件系统中这种方法几乎是不可行的。但是当程序规模很小的时候，这种方法可能比操作调试工具要高效不少。</p>
+<p>我个人认为，对于规模稍大的项目，利用调试工具进行调试是合适的，而对于玩具级代码和小型项目则显得不那么必要，仅利用输出流查看中间结果就足以达到 DEBUG 的目的。当然，也可以使用调试工具，这没有优劣之分，看个人喜好即可。</p>
+<hr />
+<h3 id="利用输出流进行调试"><a class="markdownIt-Anchor" href="#利用输出流进行调试"></a> 利用输出流进行调试</h3>
+<h4 id="输出中间结果"><a class="markdownIt-Anchor" href="#输出中间结果"></a> 输出中间结果</h4>
+<p>其实这个方法是非常简单的，只是会与不会的问题，你学会了之后都不需要再复习第二遍。</p>
+<p>想象你写好了一段程序，并且编译通过了（关于阅读编译错误的问题详见后文），但是运行后出现了问题——可能是运行结果不符合预期，也可能是程序在中途就崩溃了，或是陷入了死循环。</p>
+<p>以下面这段简单的角度转弧度的代码为例：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;math.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">double</span> pi = <span class="built_in">acos</span>(<span class="number">-1.0</span>);</span><br><span class="line">	<span class="keyword">double</span> angle;</span><br><span class="line">	<span class="keyword">double</span> rad;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%1f&quot;</span>, &amp;angle);</span><br><span class="line">	rad = angle * pi / <span class="number">180</span>;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%.3f\n&quot;</span>, rad);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们运行代码并输入如下内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">45</span><br></pre></td></tr></table></figure>
+<p>程序的输出结果如下，显然是错误的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0.000</span><br></pre></td></tr></table></figure>
+<p>假设你经过肉眼检查后无果，现在你要设法 DEBUG 把程序调通。</p>
+<p>所谓的“利用输出流进行调试”，说白了就是在程序的各个地方利用 printf/puts 等等来输出中间结果，并观察结果是否符合预期。</p>
+<p>首先，我们要确定程序的输入是否正常。我们在原始程序的8~9行之间插入如下代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%.3f\n&quot;</span>, angle);</span><br></pre></td></tr></table></figure>
+<p>输入与之前相同的内容，程序的输出结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">0.000</span><br><span class="line">0.000</span><br></pre></td></tr></table></figure>
+<p>这可以证明：要么是 scanf 写得不对，输入的值没有正确地赋给变量 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mi>n</mi><mi>g</mi><mi>l</mi><mi>e</mi></mrow><annotation encoding="application/x-tex">angle</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">a</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">e</span></span></span></span> ；要么是 printf 写得不对，变量 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mi>n</mi><mi>g</mi><mi>l</mi><mi>e</mi></mrow><annotation encoding="application/x-tex">angle</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">a</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">e</span></span></span></span> 的值没有正确地输出。这就已经基本确定了问题的所在。</p>
+<p>现在我们先排查 printf 是否有问题。我们在原始程序的7~8行之间插入如下代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%.3f\n&quot;</span>, <span class="number">1.5</span>);</span><br></pre></td></tr></table></figure>
+<p>在输入之前，程序的输出结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1.500</span><br></pre></td></tr></table></figure>
+<p>显然 printf 没有问题，那么问题一定出在 scanf 上。</p>
+<p>事实上，是因为 scanf 内我们不小心把 <code>%lf</code> 写成了 <code>%1f</code> ，小写字母 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi></mrow><annotation encoding="application/x-tex">l</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span></span></span></span> 错写成了数字 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> ，因为字体的原因没能发现。</p>
+<p>当然，这个问题可能十分隐蔽，因此或许你仍需去求助他人，但是即便如此，别人帮你解决此问题的难度也已经大大降低了。</p>
+<p>接下来我们再举一个复杂的例子，下例中包含更多的错误。</p>
+<p>以下面这段简单的选择排序的代码为例：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> N 100</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="comment">// 变量声明</span></span><br><span class="line">	<span class="keyword">int</span> a[N];</span><br><span class="line">	<span class="keyword">int</span> n;</span><br><span class="line">	<span class="keyword">int</span> i, j;</span><br><span class="line">	<span class="keyword">int</span> m, t;</span><br><span class="line">	<span class="comment">// 输入</span></span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;n);</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i ++) &#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, a[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 排序</span></span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i ++) &#123;</span><br><span class="line">		m = i;</span><br><span class="line">		<span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; n; j ++) &#123;</span><br><span class="line">			<span class="keyword">if</span> (a[m] &gt; a[j]) &#123;</span><br><span class="line">				m = j;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		t = a[m];</span><br><span class="line">		a[m] = a[j];</span><br><span class="line">		a[j] = t;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 输出</span></span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i ++) &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>, a[i]);</span><br><span class="line">		<span class="built_in">printf</span>(i == n - <span class="number">1</span> ? <span class="string">&quot;\n&quot;</span> : <span class="string">&quot; &quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// 返回</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们运行代码并输入如下内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">7</span><br><span class="line">3 1 4 7 2 5 6</span><br></pre></td></tr></table></figure>
+<p>然后程序就崩溃了！真是个悲伤的故事。</p>
+<p>假设你经过肉眼检查后无果，现在你要设法 DEBUG 把程序调通，当然，错误可能不止一处。</p>
+<p>所谓的“利用输出流进行调试”，说白了就是在程序的各个地方利用 printf/puts 等等来输出中间结果，并观察结果是否符合预期。</p>
+<p>首先，我们要确定程序的输入是否正常。我们在原始程序的15~16行之间插入如下代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, n);</span><br><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i ++) &#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>, a[i]);</span><br><span class="line">	<span class="built_in">printf</span>(i == n - <span class="number">1</span> ? <span class="string">&quot;\n&quot;</span> : <span class="string">&quot; &quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果输入正常，显然屏幕上会输出一份完全相同的内容。</p>
+<p>然而很遗憾，运行后程序仍然是直接崩溃，没有输出任何内容，这就说明输入的代码中很可能存在错误，并导致了程序的崩溃。</p>
+<p>现在我们要确认这一点，我们将原始程序的12行改为：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;before input n\n&quot;</span>);</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;n);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, n);</span><br></pre></td></tr></table></figure>
+<p>现在，程序一运行就立刻输出了 <code>before input n</code> ，说明在输入之前程序没有崩溃；输入一行 <code>7</code> 之后程序立刻输出了 <code>7</code> ，说明输入 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> 的代码是正确的；接下来输入一行 <code>3 1 4 7 2 5 6</code> 之后程序崩溃，此时错误范围已经被锁定到三行以内。</p>
+<p>如果现在你还看不出来 scanf 输入 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mo stretchy="false">[</mo><mi>i</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">a[i]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">a</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span></span></span></span> 时忘记加取地址符，那我也没什么办法了。</p>
+<p>改正这个错误之后，运行程序不再崩溃，前面的这些 DEBUG 输出的内容一切正常，然而排序的结果是错误的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">3 10944512 4 7 2 5 6</span><br></pre></td></tr></table></figure>
+<p>由于之前已经确定了输入是没问题的，我们只需在后半部分进行排查即可。当然，如果程序本来没有 scanf 的那个错误，就在此时用同样的方法排查输入即可。</p>
+<p>注意到输出中出现了 <code>10944512</code> 这种莫名其妙的数字，根据经验，很大概率是发生了非法内存访问，但是现在我们假设你经验不足看不出来，并试图定位错误所在。</p>
+<p>选择排序有两层循环，如果在最内层输出中间结果，满屏幕的输出会让人非常头大，我们不妨先试图在外层循环中输出中间结果，如果实在无法定位错误再说。</p>
+<p>我们在原始程序的23~24行之间插入如下代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;i = %d, find m = %d, a[m] = %d\n&quot;</span>, i, m, a[m]);</span><br></pre></td></tr></table></figure>
+<p>这样可以判断寻找最小元素的那部分代码是否正确。运行程序得到输出结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">i &#x3D; 0, find m &#x3D; 1, a[m] &#x3D; 1</span><br><span class="line">i &#x3D; 1, find m &#x3D; 4, a[m] &#x3D; 2</span><br><span class="line">i &#x3D; 2, find m &#x3D; 4, a[m] &#x3D; 1</span><br><span class="line">i &#x3D; 3, find m &#x3D; 4, a[m] &#x3D; 2</span><br><span class="line">i &#x3D; 4, find m &#x3D; 4, a[m] &#x3D; 1</span><br><span class="line">i &#x3D; 5, find m &#x3D; 4, a[m] &#x3D; 2</span><br><span class="line">i &#x3D; 6, find m &#x3D; 4, a[m] &#x3D; 1</span><br><span class="line">3 7274496 4 7 2 5 6</span><br></pre></td></tr></table></figure>
+<p>可以看到，当 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">i = 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> 时程序找到的最小值变成了 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn></mrow><annotation encoding="application/x-tex">2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span> 而不是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> ，说明可能是在 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">i = 0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span> 或 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">i = 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> 的部分代码中发生了错误，导致数组中原本的 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> 丢失了。</p>
+<p>接下来我们需要进一步确定出错的位置。我们多声明一个临时变量 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span></span></span></span> 以保证我们不会因为任何粗心大意而发生循环变量的冲突使用，并在原始程序的26~27行之间插入如下代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (k = <span class="number">0</span>; k &lt; n; k ++) &#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>, a[k]);</span><br><span class="line">	<span class="built_in">printf</span>(k == n - <span class="number">1</span> ? <span class="string">&quot;\n&quot;</span> : <span class="string">&quot; &quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行程序得到输出结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">i &#x3D; 0, find m &#x3D; 1, a[m] &#x3D; 1</span><br><span class="line">3 13303808 4 7 2 5 6</span><br><span class="line">i &#x3D; 1, find m &#x3D; 4, a[m] &#x3D; 2</span><br><span class="line">3 13303808 4 7 1 5 6</span><br><span class="line">i &#x3D; 2, find m &#x3D; 4, a[m] &#x3D; 1</span><br><span class="line">3 13303808 4 7 2 5 6</span><br><span class="line">i &#x3D; 3, find m &#x3D; 4, a[m] &#x3D; 2</span><br><span class="line">3 13303808 4 7 1 5 6</span><br><span class="line">i &#x3D; 4, find m &#x3D; 4, a[m] &#x3D; 1</span><br><span class="line">3 13303808 4 7 2 5 6</span><br><span class="line">i &#x3D; 5, find m &#x3D; 4, a[m] &#x3D; 2</span><br><span class="line">3 13303808 4 7 1 5 6</span><br><span class="line">i &#x3D; 6, find m &#x3D; 4, a[m] &#x3D; 1</span><br><span class="line">3 13303808 4 7 2 5 6</span><br><span class="line">3 13303808 4 7 2 5 6</span><br></pre></td></tr></table></figure>
+<p>问题已经很明显了，在 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">i = 0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span> 交换元素时就导致了错误。如果现在你还看不出来交换元素的代码中把 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mo stretchy="false">[</mo><mi>i</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">a[i]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">a</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span></span></span></span> 误写成了 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mo stretchy="false">[</mo><mi>j</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">a[j]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">a</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">]</span></span></span></span> ，那我也没什么办法了。</p>
+<p>改正这个错误之后，排序的结果中不再有迷之数字，但是仍然是错误的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">3 4 7 2 5 6 1</span><br></pre></td></tr></table></figure>
+<p>我们仍然用之前的方法来定位错误，输出结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">i &#x3D; 0, find m &#x3D; 1, a[m] &#x3D; 1</span><br><span class="line">1 3 4 7 2 5 6</span><br><span class="line">i &#x3D; 1, find m &#x3D; 0, a[m] &#x3D; 1</span><br><span class="line">3 1 4 7 2 5 6</span><br><span class="line">i &#x3D; 2, find m &#x3D; 1, a[m] &#x3D; 1</span><br><span class="line">3 4 1 7 2 5 6</span><br><span class="line">i &#x3D; 3, find m &#x3D; 2, a[m] &#x3D; 1</span><br><span class="line">3 4 7 1 2 5 6</span><br><span class="line">i &#x3D; 4, find m &#x3D; 3, a[m] &#x3D; 1</span><br><span class="line">3 4 7 2 1 5 6</span><br><span class="line">i &#x3D; 5, find m &#x3D; 4, a[m] &#x3D; 1</span><br><span class="line">3 4 7 2 5 1 6</span><br><span class="line">i &#x3D; 6, find m &#x3D; 5, a[m] &#x3D; 1</span><br><span class="line">3 4 7 2 5 6 1</span><br><span class="line">3 4 7 2 5 6 1</span><br></pre></td></tr></table></figure>
+<p>可以发现，在每一轮循环中，程序找到的最小值都是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> ，是整个数组的最小值。问题已经很明显了，第一轮循环我们将 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> 找到后，下一个应该找到的是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn></mrow><annotation encoding="application/x-tex">2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span> ，因为经过 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 次循环后 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mo stretchy="false">[</mo><mn>0</mn><mo separator="true">,</mo><mtext> </mtext><mi>x</mi><mo>−</mo><mn>1</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">a[0,\ x-1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">a</span><span class="mopen">[</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span></span></span></span> 已经是有序的，我们不应当在这里面寻找最小值。而实际上我们在第二轮循环仍然找到了 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> ，说明我们找最小值的代码把前面排好序的部分也算进去了。</p>
+<p>如果现在你还看不出来内层循环的代码中把 <code>for (j = i + 1; j &lt; n; j ++)</code> 误写成了 <code>for (j = 0; j &lt; n; j ++)</code> ，那我也没什么办法了。</p>
+<p>改正错误，再次运行，大功告成！</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1 2 3 4 5 6 7</span><br></pre></td></tr></table></figure>
+<p>此处我们仅举了一个简单的例子，其中的错误基本上都是可以肉眼查到的，但有时我们的眼睛并不好使，仍然需要利用这样的方法来定位错误。</p>
+<hr />
+<h3 id="利用调试工具进行调试待补"><a class="markdownIt-Anchor" href="#利用调试工具进行调试待补"></a> 利用调试工具进行调试（待补）</h3>
+<hr />
+<h3 id="学会阅读编译错误"><a class="markdownIt-Anchor" href="#学会阅读编译错误"></a> 学会阅读编译错误</h3>
+<h4 id="不要恐慌"><a class="markdownIt-Anchor" href="#不要恐慌"></a> 不要恐慌</h4>
+<p>要想学会阅读编译错误，首先你不能一看到编译错误就陷入恐慌，而是要自己去阅读并尝试理解它。事实上，相当一部分的编译错误的字面意思就足以帮你定位到错误所在。</p>
+<p>可能对于初学者而言，许多编译错误是看不懂的，没关系，在你向他人请教后，要去试着弄懂这些报错的含义，否则下次遇到同样的错误你还得请教别人。</p>
+<p>下面我们将列举一些初学者常见的简单的编译错误，一方面是知识的普及，另一方面是借此教会读者去自己阅读并理解这些编译错误。读者可以尝试自己将这些编译错误翻译成中文，会发现多数情况下字面内容就已经把问题说的很清楚了，你根本没必要去请教别人。</p>
+<p>为便于理解，每个错误都会附带一份对应的代码示例，但考虑到篇幅问题，使用的示例都是极简的。</p>
+<p>编译错误的文本内容在不同的编译器中是不同的，本文将以使用严格 C89 标准的 GCC 编译器为例。</p>
+<h4 id="常见简单编译错误汇总未完成"><a class="markdownIt-Anchor" href="#常见简单编译错误汇总未完成"></a> 常见简单编译错误汇总（未完成）</h4>
+<p><strong>变量使用前未声明</strong></p>
+<p>代码示例：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	a = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编译错误：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">|2| error: &#39;a&#39; undeclared (first use in this function)</span><br></pre></td></tr></table></figure>
+<p>中文释义：</p>
+<p>【第 2 行】错误： <code>a</code> 未声明（此函数中的首次使用）</p>
+<p><strong>语句末尾缺少分号</strong></p>
+<p>代码示例1：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a = <span class="number">1</span>;</span><br><span class="line">	a ++</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编译错误1：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">|4| error: expected &#39;;&#39; before &#39;return&#39;</span><br></pre></td></tr></table></figure>
+<p>中文释义1：</p>
+<p>【第 4 行】错误：预期为 <code>;</code> 在 <code>return</code> 之前</p>
+<p>代码示例2：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编译错误2：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">|3| error: expected &#39;&#x3D;&#39;, &#39;,&#39;, &#39;;&#39;, &#39;asm&#39; or &#39;__attribute__&#39; before &#39;return&#39;</span><br></pre></td></tr></table></figure>
+<p>中文释义2：</p>
+<p>【第 3 行】错误：预期为 <code>=</code> , <code>,</code> , <code>;</code> , … 之一在 <code>return</code> 之前</p>
+<p>这个释义可能看起来有些难懂，因为无初始化的声明语句缺少分号时，也可能是缺少其他符号，但是结合实际情况应该就能明白是缺少分号。</p>
+<p>备注：</p>
+<p>一般会在缺少分号的语句的下一句的开头报错，其原因需要一些编译理论知识才能理解。</p>
+<p><strong>待续</strong></p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>JM233333
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="https://blog.jm233333.com/Programming%20Languages/C/C%2001%20-%20Summary%20of%20Basic%20Debugging%20Skills/" title="C 01 - Summary of Basic Debugging Skills">https://blog.jm233333.com/Programming Languages/C/C 01 - Summary of Basic Debugging Skills/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B/" rel="tag"># 基础教程</a>
+              <a href="/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" rel="tag"># 编程语言</a>
+              <a href="/tags/C/" rel="tag"># C</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Programming%20Languages/C/C%2001%20-%20The%20Right%20Way%20to%20Ask%20Others%20for%20Help/" rel="prev" title="C 01 - The Right Way to Ask Others for Help">
+      <i class="fa fa-chevron-left"></i> C 01 - The Right Way to Ask Others for Help
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Programming%20Languages/C/C%2001%20-%20Convention%20of%20Naming%20Identifier/" rel="next" title="C 01 - Convention of Naming Identifier">
+      C 01 - Convention of Naming Identifier <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="nav-number">1.</span> <span class="nav-text"> 前置知识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">2.</span> <span class="nav-text"> 前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">3.</span> <span class="nav-text"> 概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A9%E7%94%A8%E8%BE%93%E5%87%BA%E6%B5%81%E8%BF%9B%E8%A1%8C%E8%B0%83%E8%AF%95"><span class="nav-number">4.</span> <span class="nav-text"> 利用输出流进行调试</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BE%93%E5%87%BA%E4%B8%AD%E9%97%B4%E7%BB%93%E6%9E%9C"><span class="nav-number">4.1.</span> <span class="nav-text"> 输出中间结果</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%A9%E7%94%A8%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7%E8%BF%9B%E8%A1%8C%E8%B0%83%E8%AF%95%E5%BE%85%E8%A1%A5"><span class="nav-number">5.</span> <span class="nav-text"> 利用调试工具进行调试（待补）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%A6%E4%BC%9A%E9%98%85%E8%AF%BB%E7%BC%96%E8%AF%91%E9%94%99%E8%AF%AF"><span class="nav-number">6.</span> <span class="nav-text"> 学会阅读编译错误</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8D%E8%A6%81%E6%81%90%E6%85%8C"><span class="nav-number">6.1.</span> <span class="nav-text"> 不要恐慌</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%AE%80%E5%8D%95%E7%BC%96%E8%AF%91%E9%94%99%E8%AF%AF%E6%B1%87%E6%80%BB%E6%9C%AA%E5%AE%8C%E6%88%90"><span class="nav-number">6.2.</span> <span class="nav-text"> 常见简单编译错误汇总（未完成）</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="JM233333"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">JM233333</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">238</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">80</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/JM233333" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;JM233333" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/26466398@163.com" title="E-Mail → 26466398@163.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://github.com/JM233333" title="https:&#x2F;&#x2F;github.com&#x2F;JM233333" rel="noopener" target="_blank">Title</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JM233333</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.jm233333.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="前置知识 在阅读本文档前，请确保你已经掌握函数的基础知识，详见 C 语言的 03 - Function 文档。  C 03 - Function  在阅读本文档前，请确保你已经掌握类型的基础知识，详见 C 语言的 03 - Types 文档。  C 03 - Types    前言 动态内存分配是 C 语言语法上必不可少的重要组成部分。我们先考虑两个实际问题，以便先了解动态分配内存的意义和作用。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C 04 - Dynamic Memory Allocation">
+<meta property="og:url" content="https://blog.jm233333.com/Programming%20Languages/C/C%2004%20-%20Dynamic%20Memory%20Allocation/index.html">
+<meta property="og:site_name" content="JM233333&#39;s Blog">
+<meta property="og:description" content="前置知识 在阅读本文档前，请确保你已经掌握函数的基础知识，详见 C 语言的 03 - Function 文档。  C 03 - Function  在阅读本文档前，请确保你已经掌握类型的基础知识，详见 C 语言的 03 - Types 文档。  C 03 - Types    前言 动态内存分配是 C 语言语法上必不可少的重要组成部分。我们先考虑两个实际问题，以便先了解动态分配内存的意义和作用。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-06-30T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-03-22T09:32:11.635Z">
+<meta property="article:author" content="JM233333">
+<meta property="article:tag" content="基础教程">
+<meta property="article:tag" content="编程语言">
+<meta property="article:tag" content="C">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://blog.jm233333.com/Programming%20Languages/C/C%2004%20-%20Dynamic%20Memory%20Allocation/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>C 04 - Dynamic Memory Allocation | JM233333's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">JM233333's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Contact Me: 26466398@163.com</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">80</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories<span class="badge">16</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.jm233333.com/Programming%20Languages/C/C%2004%20-%20Dynamic%20Memory%20Allocation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="JM233333">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JM233333's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          C 04 - Dynamic Memory Allocation
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-07-01 00:00:00" itemprop="dateCreated datePublished" datetime="2020-07-01T00:00:00+08:00">2020-07-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming-Languages/" itemprop="url" rel="index"><span itemprop="name">Programming Languages</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming-Languages/C/" itemprop="url" rel="index"><span itemprop="name">C</span></a>
+                </span>
+            </span>
+
+          
+
+          <div class="post-authorization">
+            <p>本文为 JM233333 原创所著，遵循 BY-NC-SA 4.0 许可协议，转载请注明出处。如果您认为文中有谬误或对文中内容有疑问，欢迎理性指出，大家共同探讨和进步。</p>
+          </div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="前置知识"><a class="markdownIt-Anchor" href="#前置知识"></a> 前置知识</h3>
+<p>在阅读本文档前，请确保你已经掌握函数的基础知识，详见 <em>C</em> 语言的 <em>03 - Function</em> 文档。</p>
+<ul>
+<li><a href="/Programming%20Languages/C/C%2003%20-%20Function/">C 03 - Function</a></li>
+</ul>
+<p>在阅读本文档前，请确保你已经掌握类型的基础知识，详见 <em>C</em> 语言的 <em>03 - Types</em> 文档。</p>
+<ul>
+<li><a href="/Programming%20Languages/C/C%2003%20-%20Types/">C 03 - Types</a></li>
+</ul>
+<hr />
+<h3 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h3>
+<p>动态内存分配是 C 语言语法上必不可少的重要组成部分。我们先考虑两个实际问题，以便先了解动态分配内存的意义和作用。</p>
+<p>其一，如果我们希望定义一个数组，其长度由用户的输入决定，应该如何编写程序实现。</p>
+<p>在 C89 标准中，直接声明并定义的数组无法做到，因为 C89 标准不仅禁止混合声明和代码，而且禁止使用变长数组。例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;n);</span><br><span class="line"><span class="keyword">int</span> a[n];</span><br></pre></td></tr></table></figure>
+<p>上述代码在 C89 标准下会得到如下编译错误：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">| | In function &#39;main&#39;:</span><br><span class="line">|3| error: ISO C90 forbids mixed declarations and code [-Wpedantic]</span><br><span class="line">|3| error: ISO C90 forbids variable length array &#39;a&#39; [-Wvla]</span><br></pre></td></tr></table></figure>
+<p>其二，如果我们希望定义一个数组，它不是全局的，但它的生存期能超出其所在的作用域，应该如何编写程序实现。</p>
+<p>以下面的代码为例，我们试图编写一个能够创建数组并返回其首地址的函数，其它函数可以通过调用该函数来定义一些新的数组，然而这是错误且危险的：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> * <span class="title">get_array</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a[<span class="number">5</span>] = &#123;<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span> * p = &amp;a[<span class="number">0</span>];</span><br><span class="line">	<span class="keyword">return</span> p;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> * p = get_array();</span><br><span class="line">	p[<span class="number">0</span>] = <span class="number">5</span>;</span><br><span class="line">	p[<span class="number">2</span>] = <span class="number">8</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>虽然函数 <code>get_array</code> 返回了一个长为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>5</mn></mrow><annotation encoding="application/x-tex">5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">5</span></span></span></span> 的数组 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span> 的首地址，但是当函数执行完毕时，数组 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span> 的生存期已经结束，编译器可以选择将其销毁，因而 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> 事实上已经成为野指针，在主函数中对 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> 的任何解引用操作都属于未定义行为。程序可能会崩溃，或者产生预料之外的运行结果，但也可能一切正常。</p>
+<p>显然现有的语法知识无法解决这两个问题，为此我们需要掌握动态分配内存的方法。</p>
+<hr />
+<h3 id="内存管理机制"><a class="markdownIt-Anchor" href="#内存管理机制"></a> 内存管理机制</h3>
+<p>在 C 语言中，根据变量的生存期，可以将程序中定义的各种变量分为三大类：</p>
+<ul>
+<li>
+<p><strong>静态变量 (static variables)</strong> 通常在程序的初始化阶段分配好内存，并在程序的整个生命周期内持续存在，包括全局变量、静态变量和字符串常量等；</p>
+</li>
+<li>
+<p><strong>自动变量 (automatic variables)</strong> 随着函数调用自动地分配，并随着函数返回自动地被回收，包括非静态局部变量等；</p>
+</li>
+<li>
+<p><strong>动态变量 (dynamic variables)</strong> 由动态内存管理函数手动地分配和回收。</p>
+</li>
+</ul>
+<p>正如前文所述，在某种程度上，我们可以认为动态变量的主要作用是解决静态变量和自动变量无法解决的问题。</p>
+<p>其一，在 C 语言中，静态变量和自动变量的内存大小必须是在编译时刻可以确定的（除 C99 变长数组外）。也就是说，你不能在程序的运行阶段去指定这两类变量的大小，哪怕是输入一个整数 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> 然后定义一个长为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> 的普通数组这么简单的事情。</p>
+<p>其二，在 C 语言中，静态变量的生存期几乎和整个程序等长，在大型程序中滥用静态变量会导致无法接受的空间浪费；而自动变量的生存期无法超出当次函数调用的生存期，当函数返回时，在当次函数调用中分配的自动变量均会消亡。而在许多情况下，我们在变量的生存期方面都需要更大的灵活性。</p>
+<hr />
+<h3 id="动态内存管理"><a class="markdownIt-Anchor" href="#动态内存管理"></a> 动态内存管理</h3>
+<h4 id="基本概念"><a class="markdownIt-Anchor" href="#基本概念"></a> 基本概念</h4>
+<p>在 C 语言中， <strong>动态内存分配 (dynamic memory allocation)</strong> 是指通过 C 标准库中的一组特定的函数，在一块特定的内存区域中进行 <strong>手动的内存管理 (manual memory management)</strong> 。使用动态分配的内存可以规避静态变量和自动变量的限制。</p>
+<p>用于处理动态内存分配的函数可以分为分配和回收两大类，其中用于分配的函数包括 <code>malloc</code> 、 <code>realloc</code> 、 <code>calloc</code> 等，用于回收的函数为 <code>free</code> 。以 <code>malloc</code> 函数为例，该函数可以分配一个指定大小的内存块，并返回指向内存首部的指针，后续程序可以通过该指针访问该内存块。当不再需要内存时，我们可以以该指针作为参数调用 <code>free</code> 函数，从而释放内存。</p>
+<p>不难看到，我们可以在运行时刻指定动态分配的内存大小，例如 <code>malloc</code> 函数的一个参数就是内存块的大小。此外，动态分配的内存的生存期也非常灵活，只能通过调用 <code>free</code> 函数来释放内存，否则内存就会一直存在。</p>
+<p>在 C 语言中，动态分配的内存一般位于被称为“堆”的特定内存空间中。</p>
+<p>动态内存分配并不是完美的，它引入了发生内存泄漏的风险，为自己的灵活性付出了相应的代价。有关内存泄漏的更多细节详见下文。</p>
+<p>为便于描述，我们会先以 <code>malloc</code> 函数为例介绍基本的动态内存分配方法，并在后文单独介绍 <code>realloc</code> 、 <code>calloc</code> 与 <code>malloc</code> 的区别。</p>
+<h4 id="内存分配"><a class="markdownIt-Anchor" href="#内存分配"></a> 内存分配</h4>
+<p><code>malloc</code> 函数分配指定大小的内存空间，并返回指向该空间首地址的指针。使用该函数分配的空间是未初始化的，在使用前必须显式地将其初始化。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> * <span class="title">malloc</span><span class="params">(<span class="keyword">size_t</span> size)</span></span>;</span><br></pre></td></tr></table></figure>
+<p><code>malloc</code> 函数接收一个 <code>size_t</code> 类型的参数来指定内存大小，其返回的指针类型为 <code>void *</code> ，因为它并不清楚程序会用这块内存去做什么，例如是作为整型数组还是字符数组，又或者是作为单个整数或是一个 struct 对象。应当使用合理类型的变量来接收该返回值。</p>
+<p><em>注： <code>size_t</code> 类型是 C 语言中被赋予了特殊语义的一种无符号整数类型，常用于数组索引和循环计数，其具体长度是实现定义的。初学者可近似将其视为 unsigned int 类型，但事实并非如此。</em></p>
+<p>为准确利用动态分配的内存空间，程序员通常会分配形如 <code>n * sizeof(T)</code> 的内存大小，其中 <code>n</code> 为数组长度， <code>T</code> 为某种类型或某个对象。</p>
+<p>例如下面的代码中，为 <code>p1</code> 分配了一个整数大小的空间，为 <code>p2</code> 分配了一个长为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> 的整数数组对应大小的空间，为 <code>p3</code> 分配了一个结构体类型 <code>Block</code> 对应大小的空间：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="keyword">int</span> *p1, *p2, *p3;</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;n);</span><br><span class="line">p1 = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">int</span>));</span><br><span class="line">p2 = <span class="built_in">malloc</span>(n * <span class="keyword">sizeof</span>(<span class="keyword">int</span>));</span><br><span class="line">p3 = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(struct Block));</span><br></pre></td></tr></table></figure>
+<p>分配好内存之后，我们可以像通常那样对待这些指针，例如对于单个变量：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> * p = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">int</span>));</span><br><span class="line"><span class="keyword">int</span> * q;</span><br><span class="line"><span class="keyword">int</span> x;</span><br><span class="line">q = p;</span><br><span class="line">*q = <span class="number">1</span>;</span><br><span class="line">x = *p;</span><br></pre></td></tr></table></figure>
+<p>再例如对于数组：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> n = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">int</span> * p = <span class="built_in">malloc</span>(n * <span class="keyword">sizeof</span>(<span class="keyword">int</span>));</span><br><span class="line"><span class="keyword">int</span> * q;</span><br><span class="line"><span class="keyword">int</span> x;</span><br><span class="line"><span class="keyword">int</span> i;</span><br><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i ++) &#123;</span><br><span class="line">	p[i] = i * i;</span><br><span class="line">&#125;</span><br><span class="line">q = p + <span class="number">3</span>;</span><br><span class="line">*q = <span class="number">-1</span>;</span><br><span class="line">x = p[<span class="number">2</span>] + *(p + <span class="number">3</span>);</span><br></pre></td></tr></table></figure>
+<p>当然，要想获取指定内存大小的具体数值有多种方法，并没有什么唯一或最好的方法，选择合适的或自己偏好的写法即可。例如下面的两组代码展示了其它获取内存大小的写法：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="keyword">int</span> * p1 = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(n));   <span class="comment">// n is an int-type-variable</span></span><br><span class="line"><span class="keyword">int</span> * p2 = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(*p2)); <span class="comment">// p2 is pointer-to-int so *p2 is int</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="keyword">int</span> *p1, *p2;</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;n);</span><br><span class="line">p1 = <span class="built_in">malloc</span>(n * <span class="keyword">sizeof</span>(<span class="keyword">int</span>));</span><br><span class="line">p2 = <span class="built_in">malloc</span>(*p1);</span><br></pre></td></tr></table></figure>
+<p>再例如对于已知长度的数组我们可以用这样的写法来指定长度：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="keyword">int</span> *p1, *p2;</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;n);</span><br><span class="line">p1 = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">int</span>[<span class="number">4</span>])); <span class="comment">// same as 4 * sizeof(int)</span></span><br><span class="line">p2 = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">int</span>[n])); <span class="comment">// illegal before C99</span></span><br></pre></td></tr></table></figure>
+<p>再举一个二级指针的例子：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> x = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">int</span> * p = &amp;x;</span><br><span class="line"><span class="keyword">int</span> ** pp1 = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">int</span> *));</span><br><span class="line"><span class="keyword">int</span> ** pp2 = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(p));</span><br></pre></td></tr></table></figure>
+<p>现在我们可以很轻松地实现前文中所述的 <code>get_array</code> 函数的功能了：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> * <span class="title">get_array</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">malloc</span>(n * <span class="keyword">sizeof</span>(<span class="keyword">int</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当然，要想投入实际工程使用，上述实现是有很多问题的，后文会对此给出详细解释。</p>
+<h4 id="内存回收"><a class="markdownIt-Anchor" href="#内存回收"></a> 内存回收</h4>
+<p>计算机不会像对待静态变量和自动变量那样对待动态变量，由你手动分配的动态内存必须手动回收。当我们不再需要这些空间时，需要用 <code>free</code> 函数将其回收，例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="keyword">int</span> * p;</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;n);</span><br><span class="line">p = <span class="built_in">malloc</span>(n * <span class="keyword">sizeof</span>(<span class="keyword">int</span>));</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * maybe a large amount of codes ...</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="built_in">free</span>(p);</span><br></pre></td></tr></table></figure>
+<p>回收内存需要确保以下几点：</p>
+<ul>
+<li>
+<p>任何动态分配的内存都必须回收。如果程序失去了回收某块内存的能力（例如丢失了所有指向该内存块的指针），将会导致内存泄漏。</p>
+</li>
+<li>
+<p>任何内存都仅能回收一次。如果多次回收同一块内存（且期间未再次在同一位置分配内存），将会触发未定义行为，程序可能崩溃，也可能会导致程序状态发生意料之外的变化。</p>
+</li>
+<li>
+<p>任何情况下不得回收静态内存或自动内存。如果错误回收，将会触发未定义行为。</p>
+</li>
+</ul>
+<p>上述条例看似容易维持，但是实际操作起来却有极大概率出现问题，尤其是在复杂的大型程序中，内存泄漏总是与 C/C++ 实现的软件“紧密相伴”。更多具体细节详见下文。</p>
+<h4 id="处理分配失败"><a class="markdownIt-Anchor" href="#处理分配失败"></a> 处理分配失败</h4>
+<p><code>malloc</code> 函数（及其它分配函数）并不总是能正确地分配程序所要求的内存空间，存在失败的可能性。当系统无法满足程序的内存分配请求，或系统出现故障时， <code>malloc</code> 函数将会分配失败，并返回一个空指针（即 <code>NULL</code> ）。因此一个健壮的程序应该为潜在的内存分配失败做好准备，例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> * <span class="title">get_array</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> * p = <span class="built_in">malloc</span>(n * <span class="keyword">sizeof</span>(<span class="keyword">int</span>));</span><br><span class="line">	<span class="keyword">if</span> (p == <span class="literal">NULL</span>) &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;error: failed to allocate.\n&quot;</span>);</span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>否则一旦分配失败，后续程序对无效指针的解引用很可能会触发未定义行为，且由于 <code>get_array</code> 函数可能在程序的各个位置被调用，排查错误的难度将会急剧上升。</p>
+<p>除系统故障外，无法满足内存分配请求的情况主要有两种：一是申请空间过大（比如二话不说先要个 10G 什么的），二是内存泄漏太过严重以至于进程的可用空间耗尽。有关内存泄漏的更多细节详见下文。</p>
+<p>另外一个需要注意的问题是，如果我们试图分配一块大小为零的内存，那么将会触发未指定行为，结果将是不确定的。对于上面的例子，如果传入参数 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">n = 0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span> ，那么 <code>malloc</code> 函数可能会真的返回一块大小为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span> 的内存空间的首地址（即便这毫无用处）而不是一个空指针。不仅 if 表达式不会起作用，而且接下来任何试图利用 <code>p</code> 访问内存的行为都将引起非法内存访问，进而触发未定义行为。</p>
+<p>因此我们必须专门处理 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mo>=</mo><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">n == 0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span></span><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span> 的情况。例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> * <span class="title">get_array</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (n == <span class="number">0</span>) &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;error: try to invoke get_array(0).\n&quot;</span>);</span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> * p = <span class="built_in">malloc</span>(n * <span class="keyword">sizeof</span>(<span class="keyword">int</span>));</span><br><span class="line">	<span class="keyword">if</span> (p == <span class="literal">NULL</span>) &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;error: failed to allocate.\n&quot;</span>);</span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">-1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="良好的代码风格"><a class="markdownIt-Anchor" href="#良好的代码风格"></a> 良好的代码风格</h4>
+<p>如果目标变量的指针类型在程序的维护过程中发生了变化，但是因为疏忽而没有同步更新 <code>sizeof</code> 表达式的内容，很可能会导致内存大小的计算出错。因此在有必要时，我们建议选择更便捷且更安全的实现，例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="keyword">int</span> * p1;</span><br><span class="line"><span class="keyword">int</span> * p2;</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;n);</span><br><span class="line">p1 = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(*p1));</span><br><span class="line">p2 = <span class="built_in">malloc</span>(n * <span class="keyword">sizeof</span>(*p2));</span><br></pre></td></tr></table></figure>
+<p>这样一来，指针声明和分配函数调用之间的耦合性将被削弱。通俗地讲，当指针 <code>p1</code> , <code>p2</code> 的类型发生变化（例如由 <code>int *</code> 类型改为 <code>double *</code> 类型）时，我们无需对 <code>sizeof</code> 表达式进行任何修改。</p>
+<p>下面是一个简单的例子。想象一下 <code>p</code> 的类型被修改为 <code>double *</code> 类型，那么每一条调用 <code>malloc</code> 函数并将指针赋给 <code>p</code> 的程序语句都需要被修改。但是如果使用耦合性弱的写法（即上面的示例；或下面示例中的注释），我们就无需为散步在程序各处的 <code>malloc</code> 调用感到头疼。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> * p;                     <span class="comment">// type modified</span></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line">p = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">int</span>));     <span class="comment">// malloc(sizeof(*p));</span></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="built_in">free</span>(p);</span><br><span class="line">p = <span class="built_in">malloc</span>(n * <span class="keyword">sizeof</span>(<span class="keyword">int</span>)); <span class="comment">// malloc(n * sizeof(*p));</span></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="built_in">free</span>(p);</span><br><span class="line">p = <span class="built_in">malloc</span>(<span class="number">2</span> * <span class="keyword">sizeof</span>(<span class="keyword">int</span>)); <span class="comment">// malloc(2 * sizeof(*p));</span></span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
+<h4 id="类型安全"><a class="markdownIt-Anchor" href="#类型安全"></a> 类型安全</h4>
+<p><code>malloc</code> 函数返回的是 <code>void *</code> 类型的指针，这表明它是指向未知数据类型的指针。</p>
+<p>在具有强类型系统的 C++ 语言中，我们必须使用强制类型转换来将这样的指针转换为指向具体数据类型的指针。而在 C 语言中 <code>void *</code> 类型可以无阻碍地自动转换为指向任意数据类型的指针，强制类型转换不是必要的。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> * p = <span class="built_in">malloc</span>(n * <span class="keyword">sizeof</span>(<span class="keyword">int</span>));        <span class="comment">// without a cast</span></span><br><span class="line"><span class="keyword">int</span> * p = (<span class="keyword">int</span> *)<span class="built_in">malloc</span>(n * <span class="keyword">sizeof</span>(<span class="keyword">int</span>)); <span class="comment">// with a cast</span></span><br></pre></td></tr></table></figure>
+<p>在 C 语言中，是否在接收 <code>malloc</code> 及其它分配函数传回的指针时使用强制类型转换是可选的，我们应当根据实际情况和个人喜好来决定是否使用。</p>
+<p>使用强制类型转换的优点包括：</p>
+<ul>
+<li>
+<p>易于将程序移植到 C++ 语言。在 C++ 中，此种情况下必须使用强制类型转换。</p>
+</li>
+<li>
+<p>可兼容早期版本的 C 语言。在 C89 之前，这些分配函数返回的是 <code>char *</code> 类型而不是 <code>void *</code> 类型，无法隐式转换。</p>
+</li>
+<li>
+<p>如果目标变量的指针类型在程序的维护过程中发生了变化，强制类型转换可以识别出类型大小的不一致性。</p>
+</li>
+</ul>
+<p>使用强制类型转换的缺点包括：</p>
+<ul>
+<li>
+<p>在 C89 及更新的标准下，此种情况下使用强制类型转换是多余的。</p>
+</li>
+<li>
+<p>可能会在未能正确包含头文件 <code>stdlib.h</code> 时掩盖错误事实。在 C89 标准下，如果未能正确包含头文件，编译器找不到 <code>malloc</code> 函数原型，将会假定 <code>malloc</code> 函数的返回值为 int 类型（这在 <em>C</em> 语言的 <em>03 - Function</em> 文档中已有提及）。如果没有强制类型转换，则在将 int 类型的对象赋值给某个指针类型的变量时，编译器会发出警告，而如果使用了强制类型转换，那么编译器显然不会发出警告，导致错误被掩盖。</p>
+</li>
+<li>
+<p>指针声明和分配函数调用之间的耦合性将被增强。</p>
+</li>
+</ul>
+<p>优缺点的第三点可能看起来很晦涩，下面我们将给出详细的解释。</p>
+<p>假设我们使用强制类型转换，那么如果目标变量的指针类型在程序的维护过程中发生了变化，所有与之相关的使用了强制类型转换的 <code>malloc</code> 调用语句都需要被修改。相反，假设我们不使用强制类型转换，那么基于前文中“良好的代码风格”一节的前提，当目标变量的指针类型发生变化时，我们无需为散步在程序各处的 <code>malloc</code> 调用感到头疼。这解释了缺点中的第三点。</p>
+<p>但是相对地，如果你的 <code>sizeof</code> 表达式是与类型说明符相关联的（例如 <code>n * sizeof(int)</code> 等），那么使用强制类型转换可以帮助你检测出所有需要修改的程序语句，不使用反而会为程序埋下修改时发生遗漏的隐患。这解释了优点中的第三点。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> * p;                     <span class="comment">// type modified</span></span><br><span class="line">p = (<span class="keyword">int</span> *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">int</span>)); <span class="comment">// will get a compile-error</span></span><br></pre></td></tr></table></figure>
+<h4 id="动态内存的匿名性"><a class="markdownIt-Anchor" href="#动态内存的匿名性"></a> 动态内存的匿名性</h4>
+<p>在 C 语言中，动态分配的内存往往是 <strong>匿名的 (anonymous)</strong> ，这意味着我们不能通过某些标识符直接访问这些内存。</p>
+<p>静态或自动管理的内存都可以通过至少一种标识符（例如变量名或 typedef 名称等）直接访问，当然，需要在变量的作用域内，而动态管理的内存则不然。当我们使用分配函数动态地分配好内存块时，会获得该内存块的地址值，我们可以将该值赋给一个指针变量，并通过指针进行间接访问，但是却没有可以直接访问这块内存的标识符（变量名）。</p>
+<p>事实上，动态内存的匿名性也是 C 语言容易发生内存泄漏的重要原因之一。</p>
+<h4 id="常用分配函数"><a class="markdownIt-Anchor" href="#常用分配函数"></a> 常用分配函数</h4>
+<p>常用的分配的函数包括 <code>malloc</code> 、 <code>realloc</code> 和 <code>calloc</code> 。三者的共同点是返回值均为 <code>void *</code> 类型，且在分配失败时均会返回空指针，但它们之间还是有很大区别的。</p>
+<p><strong>malloc</strong></p>
+<p><code>malloc</code> 函数用于分配大小为 <code>size</code> 字节的内存空间。该函数分配的内存是未初始化的，在使用前必须显式地将其初始化。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> * <span class="title">malloc</span><span class="params">(<span class="keyword">size_t</span> size)</span></span>;</span><br></pre></td></tr></table></figure>
+<p><strong>calloc</strong></p>
+<p><code>calloc</code> 函数用于分配一个长为 <code>num</code> 的数组，数组中每个元素的大小为 <code>size</code> 字节。该函数分配的内存是自动初始化为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span> 的。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> * <span class="title">calloc</span><span class="params">(<span class="keyword">size_t</span> num, <span class="keyword">size_t</span> size)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>需要注意的是，由于内存对齐， <code>calloc</code> 函数的语义并不等价于“分配大小为 <code>num * size</code> 字节的内存空间”。有关内存对齐的更多细节，详见 <em>C</em> 语言的 <em>05 - Memory Model and Layout</em> 文档。</p>
+<ul>
+<li><a href="/Programming%20Languages/C/C%2005%20-%20Memory%20Model%20and%20Layout/">C 05 - Memory Model and Layout</a></li>
+</ul>
+<p><code>calloc</code> 函数的使用示例如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> * p1 = <span class="built_in">calloc</span>(<span class="number">4</span>, <span class="keyword">sizeof</span>(<span class="keyword">int</span>));    <span class="comment">// allocate and zero out an array of 4 int</span></span><br><span class="line"><span class="keyword">int</span> * p2 = <span class="built_in">calloc</span>(<span class="number">1</span>, <span class="keyword">sizeof</span>(<span class="keyword">int</span>[<span class="number">4</span>])); <span class="comment">// same, naming the array type directly</span></span><br><span class="line"><span class="keyword">int</span> * p3 = <span class="built_in">calloc</span>(<span class="number">4</span>, <span class="keyword">sizeof</span> *p3);     <span class="comment">// same, without repeating the type name</span></span><br></pre></td></tr></table></figure>
+<p><strong>realloc</strong></p>
+<p><code>realloc</code> 函数用于重新分配指针 <code>ptr</code> 所指定的内存区域，将其大小重置为 <code>new_size</code> 字节。该函数只能用于动态分配的、且尚未被释放的内存空间，否则将会触发未定义行为。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> * <span class="title">realloc</span><span class="params">(<span class="keyword">void</span> * ptr, <span class="keyword">size_t</span> new_size)</span></span>;</span><br></pre></td></tr></table></figure>
+<p><code>realloc</code> 函数需要注意的细节较多，包括：</p>
+<ul>
+<li>
+<p>如果内存空间扩大，则新增部分的内存是未初始化的；如果内存空间缩小，则剩余部分的内存中的内容与原先保持一致。</p>
+</li>
+<li>
+<p>重新分配可能会直接在旧内存块的位置处直接扩大或缩小；也可能重新寻找另外的地址整个重新分配，并将旧内存块中的内容按照上一条所述的规则复制到新内存块中。因此 <code>ptr</code> 所指的地址值可能会发生变化、也可能不会。</p>
+</li>
+<li>
+<p>调用 <code>calloc(NULL, size)</code> 等同于调用 <code>malloc(size)</code> 。</p>
+</li>
+<li>
+<p>如果分配失败，虽然函数返回空指针，但是 <code>ptr</code> 所指向的旧内存块不会被释放。</p>
+</li>
+</ul>
+<hr />
+<h3 id="内存泄漏"><a class="markdownIt-Anchor" href="#内存泄漏"></a> 内存泄漏</h3>
+<p><strong>内存泄漏 (Memory Leak)</strong> 是指程序未能释放已经不再使用的内存的情况。内存泄漏通常都指代动态分配的内存空间未能正确释放，因为在正常情况下，静态或自动管理的内存空间都能被程序正确回收。实际上，内存泄漏通常意味着程序失去了访问某块动态分配的内存的能力。</p>
+<p>由于 C 语言的语法没有提供任何识别某块动态内存的状态的方法，而这些内存又必须手动地回收，所以我们必须确保对每一块动态分配的内存空间保持追踪。一旦运行中的程序丢失了指向某块空间的所有指针，将会导致内存不能正确回收（即导致内存泄漏），例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a[<span class="number">10</span>];</span><br><span class="line"><span class="keyword">int</span> * p;</span><br><span class="line">p = <span class="built_in">malloc</span>(<span class="number">10</span> * <span class="keyword">sizeof</span>(*p));</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * maybe a large amount of codes ...</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">p = a + <span class="number">4</span>;</span><br><span class="line"><span class="comment">// now, how to free the dynamic-allocated memory ?</span></span><br></pre></td></tr></table></figure>
+<p>另外，如果程序忘记了某块空间是否已经被释放，也可能导致内存泄漏，或导致内存的重复释放。</p>
+<p>内存泄漏会给运行中的程序留下潜在的巨大隐患。这绝不是危言耸听，不要以为少量内存的泄漏无伤大雅，积少成多就可能会导致不可挽回的后果。</p>
+<p>由于动态内存具有匿名性，并且 C 语言不支持在语法层面识别一块动态内存的状态（例如是否已经被释放），我们必须谨慎地维护那些指向动态分配的内存块的指针，以避免内存泄漏或内存重复释放。这说起来容易，但在实践中却极易出错。事实上，许多 C/C++ 实现的大型软件系统都饱受内存泄漏问题的困扰，且问题大多是由动态分配内存的处理不当导致的，可见即便是经验丰富的程序员也必须对此保持谨慎。</p>
+<p>我们在此只举一个简单的例子来说明维护这些指针并不是看起来那么简单：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">	<span class="comment">// allocate</span></span><br><span class="line">	<span class="keyword">int</span> * p = <span class="built_in">malloc</span>(n * <span class="keyword">sizeof</span>(*p));</span><br><span class="line">	<span class="comment">// some other codes</span></span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">	<span class="comment">// when we need to check something</span></span><br><span class="line">	<span class="keyword">if</span> (xxx) &#123;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// some other codes</span></span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">	<span class="comment">// dispose</span></span><br><span class="line">	<span class="built_in">free</span>(p);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>你以为你正确地释放了内存，但是实际上并没有。实践经验表明，初学者极易犯下类似的错误，正确的处理方式是在函数的每个返回点释放内存：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// when we need to check something</span></span><br><span class="line"><span class="keyword">if</span> (xxx) &#123;</span><br><span class="line">	<span class="built_in">free</span>(p);</span><br><span class="line">	<span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>还存在其它多种可能，例如因为异常捕获导致内存未能正确释放等等，就不再一一列举。</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>JM233333
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="https://blog.jm233333.com/Programming%20Languages/C/C%2004%20-%20Dynamic%20Memory%20Allocation/" title="C 04 - Dynamic Memory Allocation">https://blog.jm233333.com/Programming Languages/C/C 04 - Dynamic Memory Allocation/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%9F%BA%E7%A1%80%E6%95%99%E7%A8%8B/" rel="tag"># 基础教程</a>
+              <a href="/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" rel="tag"># 编程语言</a>
+              <a href="/tags/C/" rel="tag"># C</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Programming%20Languages/C/C%2005%20-%20Memory%20Model%20and%20Layout/" rel="prev" title="C 05 - Memory Model and Layout">
+      <i class="fa fa-chevron-left"></i> C 05 - Memory Model and Layout
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Programming%20Languages/C/C%2004%20-%20Lvalue%20and%20Rvalue/" rel="next" title="C 04 - Lvalue and Rvalue">
+      C 04 - Lvalue and Rvalue <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="nav-number">1.</span> <span class="nav-text"> 前置知识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">2.</span> <span class="nav-text"> 前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E6%9C%BA%E5%88%B6"><span class="nav-number">3.</span> <span class="nav-text"> 内存管理机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86"><span class="nav-number">4.</span> <span class="nav-text"> 动态内存管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">4.1.</span> <span class="nav-text"> 基本概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D"><span class="nav-number">4.2.</span> <span class="nav-text"> 内存分配</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E5%9B%9E%E6%94%B6"><span class="nav-number">4.3.</span> <span class="nav-text"> 内存回收</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%84%E7%90%86%E5%88%86%E9%85%8D%E5%A4%B1%E8%B4%A5"><span class="nav-number">4.4.</span> <span class="nav-text"> 处理分配失败</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%89%AF%E5%A5%BD%E7%9A%84%E4%BB%A3%E7%A0%81%E9%A3%8E%E6%A0%BC"><span class="nav-number">4.5.</span> <span class="nav-text"> 良好的代码风格</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B%E5%AE%89%E5%85%A8"><span class="nav-number">4.6.</span> <span class="nav-text"> 类型安全</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98%E7%9A%84%E5%8C%BF%E5%90%8D%E6%80%A7"><span class="nav-number">4.7.</span> <span class="nav-text"> 动态内存的匿名性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%88%86%E9%85%8D%E5%87%BD%E6%95%B0"><span class="nav-number">4.8.</span> <span class="nav-text"> 常用分配函数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F"><span class="nav-number">5.</span> <span class="nav-text"> 内存泄漏</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="JM233333"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">JM233333</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">238</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">80</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/JM233333" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;JM233333" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/26466398@163.com" title="E-Mail → 26466398@163.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://github.com/JM233333" title="https:&#x2F;&#x2F;github.com&#x2F;JM233333" rel="noopener" target="_blank">Title</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JM233333</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

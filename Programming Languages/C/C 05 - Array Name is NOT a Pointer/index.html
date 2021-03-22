@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.jm233333.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="前置知识 在阅读本文档前，建议你先掌握左值和右值的基本概念，详见 C 语言的 04 - Lvalue and Rvalue 文档。  C 04 - Lvalue and Rvalue  请注意：本文是面向进阶读者的，在阅读本文档前，请确保你已经具备了较为完整的 C 语言基础。   前言 在我介绍指针的文章中已经提到过这一可能令人震惊的事实： 数组名和指针是不同的。 没人会认为数组等同于指针，但是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C 05 - Array Name is NOT a Pointer">
+<meta property="og:url" content="https://blog.jm233333.com/Programming%20Languages/C/C%2005%20-%20Array%20Name%20is%20NOT%20a%20Pointer/index.html">
+<meta property="og:site_name" content="JM233333&#39;s Blog">
+<meta property="og:description" content="前置知识 在阅读本文档前，建议你先掌握左值和右值的基本概念，详见 C 语言的 04 - Lvalue and Rvalue 文档。  C 04 - Lvalue and Rvalue  请注意：本文是面向进阶读者的，在阅读本文档前，请确保你已经具备了较为完整的 C 语言基础。   前言 在我介绍指针的文章中已经提到过这一可能令人震惊的事实： 数组名和指针是不同的。 没人会认为数组等同于指针，但是">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-03-22T09:31:43.075Z">
+<meta property="article:author" content="JM233333">
+<meta property="article:tag" content="编程语言">
+<meta property="article:tag" content="进阶教程">
+<meta property="article:tag" content="C">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://blog.jm233333.com/Programming%20Languages/C/C%2005%20-%20Array%20Name%20is%20NOT%20a%20Pointer/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>C 05 - Array Name is NOT a Pointer | JM233333's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">JM233333's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Contact Me: 26466398@163.com</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">80</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories<span class="badge">16</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.jm233333.com/Programming%20Languages/C/C%2005%20-%20Array%20Name%20is%20NOT%20a%20Pointer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="JM233333">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JM233333's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          C 05 - Array Name is NOT a Pointer
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2020-01-01T00:00:00+08:00">2020-01-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming-Languages/" itemprop="url" rel="index"><span itemprop="name">Programming Languages</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming-Languages/C/" itemprop="url" rel="index"><span itemprop="name">C</span></a>
+                </span>
+            </span>
+
+          
+
+          <div class="post-authorization">
+            <p>本文为 JM233333 原创所著，遵循 BY-NC-SA 4.0 许可协议，转载请注明出处。如果您认为文中有谬误或对文中内容有疑问，欢迎理性指出，大家共同探讨和进步。</p>
+          </div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="前置知识"><a class="markdownIt-Anchor" href="#前置知识"></a> 前置知识</h3>
+<p>在阅读本文档前，建议你先掌握左值和右值的基本概念，详见 <em>C</em> 语言的 <em>04 - Lvalue and Rvalue</em> 文档。</p>
+<ul>
+<li><a href="/Programming%20Languages/C/C%2004%20-%20Lvalue%20and%20Rvalue/">C 04 - Lvalue and Rvalue</a></li>
+</ul>
+<p><em>请注意：本文是面向进阶读者的，在阅读本文档前，请确保你已经具备了较为完整的 C 语言基础。</em></p>
+<hr />
+<h3 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h3>
+<p>在我介绍指针的文章中已经提到过这一可能令人震惊的事实： <strong>数组名和指针是不同的。</strong> 没人会认为数组等同于指针，但是有很多人认为数组名等同于指针，这是错误的。</p>
+<p>本文将会全方位地介绍数组名和指针之间的区别。</p>
+<hr />
+<h3 id="错误的理解"><a class="markdownIt-Anchor" href="#错误的理解"></a> 错误的理解</h3>
+<p>有很多人认为数组名等同于指针，通常是基于如下几点事实：</p>
+<p>其一，当我们把一个指针指向数组首地址后，指针和数组的地址值相等。例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a[<span class="number">5</span>];</span><br><span class="line"><span class="keyword">int</span> * p = &amp;a[<span class="number">0</span>];</span><br><span class="line"><span class="keyword">int</span> * q = a;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;p(%u), q(%u)\n&quot;</span>, p, q);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;(p == q) = %d\n&quot;</span>, (p == q));</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;(p == a) = %d\n&quot;</span>, (p == a));</span><br></pre></td></tr></table></figure>
+<p>上述代码在我本机上的某次运行结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">p(6356708), q(6356708)</span><br><span class="line">(p &#x3D;&#x3D; q) &#x3D; 1</span><br><span class="line">(p &#x3D;&#x3D; a) &#x3D; 1</span><br></pre></td></tr></table></figure>
+<p>其二，指针和数组的语法几乎可以互换，我们似乎总是可以将指针和数组名进行互换而不改变程序运行的结果，例如下面的代码中，第 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span></span></span></span> 行对 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>w</mi><mo separator="true">,</mo><mtext> </mtext><mi>x</mi></mrow><annotation encoding="application/x-tex">w,\ x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord mathdefault">x</span></span></span></span> 的初始化语句是等价的，第 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>4</mn></mrow><annotation encoding="application/x-tex">4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">4</span></span></span></span> 行对 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi><mo separator="true">,</mo><mtext> </mtext><mi>z</mi></mrow><annotation encoding="application/x-tex">y,\ z</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord mathdefault" style="margin-right:0.04398em;">z</span></span></span></span> 的初始化语句也是等价的：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a[<span class="number">5</span>] = &#123;<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>&#125;;</span><br><span class="line"><span class="keyword">int</span> * p = a;</span><br><span class="line"><span class="keyword">int</span> w = *(p + <span class="number">3</span>), x = *(a + <span class="number">3</span>);</span><br><span class="line"><span class="keyword">int</span> y = a[<span class="number">1</span>], z = p[<span class="number">1</span>];</span><br></pre></td></tr></table></figure>
+<p>其三，在函数传参时，数组和指针作为参数时的语法是等价的，例如下面两种函数声明是等价的，而且在函数体中我们既可以使用数组的语法也可以使用指针的语法：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f1</span><span class="params">(<span class="keyword">int</span> a[], <span class="keyword">int</span> n)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f2</span><span class="params">(<span class="keyword">int</span> * a, <span class="keyword">int</span> n)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>然而事情并不是表面上看起来这么简单。</p>
+<hr />
+<h3 id="简单的区别"><a class="markdownIt-Anchor" href="#简单的区别"></a> 简单的区别</h3>
+<p>为了先向读者证明数组名不是指针，我们先举出两个最简单的区别，虽然这并不涉及问题背后的本质原因。</p>
+<h4 id="数组名中的长度信息"><a class="markdownIt-Anchor" href="#数组名中的长度信息"></a> 数组名中的长度信息</h4>
+<p>事实上数组名包括了两个信息：其一是数组的首地址，其二是数组的长度。我们看下面的代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a[<span class="number">5</span>] = &#123;<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>&#125;;</span><br><span class="line"><span class="keyword">int</span> * p = a;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d %d\n&quot;</span>, <span class="keyword">sizeof</span>(a), <span class="keyword">sizeof</span>(p));</span><br></pre></td></tr></table></figure>
+<p>你认为输出的结果会是什么？事实上二者并不相同：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">20 4</span><br></pre></td></tr></table></figure>
+<p>这是二者之间最简单的区别，但是已经足以说明数组名不等同于指针了。</p>
+<h4 id="数组名的不可修改性"><a class="markdownIt-Anchor" href="#数组名的不可修改性"></a> 数组名的不可修改性</h4>
+<p>我们无法像修改指针的指向那样修改数组名的“指向”，例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a[<span class="number">5</span>];</span><br><span class="line"><span class="keyword">int</span> b[<span class="number">5</span>];</span><br><span class="line"><span class="keyword">int</span> * p = a;</span><br><span class="line">a = b;     <span class="comment">// compile error</span></span><br><span class="line">p = b;     <span class="comment">// ok</span></span><br><span class="line">a = &amp;a[<span class="number">2</span>]; <span class="comment">// compile error</span></span><br><span class="line">p = &amp;a[<span class="number">2</span>]; <span class="comment">// ok</span></span><br></pre></td></tr></table></figure>
+<hr />
+<h3 id="数组的退化"><a class="markdownIt-Anchor" href="#数组的退化"></a> 数组的退化</h3>
+<p>读者肯定会感到困惑，既然数组名和指针并不相同，那么为什么下面的代码中的逻辑表达式的结果为真：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a[<span class="number">5</span>];</span><br><span class="line"><span class="keyword">int</span> * p = a;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;(p == a) = %d\n&quot;</span>, (p == a));</span><br></pre></td></tr></table></figure>
+<p>事实上，当你令 <code>p = a</code> 时，首先数组名 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span> 被转换为指针类型，然后赋值表达式才被执行。这个过程被称为数组的 <strong>退化 (decay)</strong> 。</p>
+<p>数组的退化类似于隐式类型转换（但并不同），就像下面的代码中，浮点字面量 <code>0.5</code> 会被隐式转换为整型，然后再赋值给 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> ：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> x = <span class="number">0.5</span>;</span><br></pre></td></tr></table></figure>
+<p>现在考虑 <code>p == a</code> 的判断式，事实上 <code>a</code> 会退化成指针，然后再与 <code>p</code> 进行比较。因为数组名中的地址信息是数组首地址 <code>&amp;a[0]</code> ，所以比较的结果为真。</p>
+<p>现在我们解释前文所述的最后一个现象。在函数传参时，无论你使用下列哪种语法，此时的 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span> 都不再是一个数组名，而是一个指针。下面两种函数声明是等价的：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f1</span><span class="params">(<span class="keyword">int</span> a[], <span class="keyword">int</span> n)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f2</span><span class="params">(<span class="keyword">int</span> * a, <span class="keyword">int</span> n)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>这个事实很容易被验证，例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f1</span><span class="params">(<span class="keyword">int</span> a[])</span> </span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;f1: %d\n&quot;</span>, <span class="keyword">sizeof</span>(a));</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f2</span><span class="params">(<span class="keyword">int</span> * a)</span> </span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;f2: %d\n&quot;</span>, <span class="keyword">sizeof</span>(a));</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a[<span class="number">5</span>];</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;main: %d\n&quot;</span>, <span class="keyword">sizeof</span>(a));</span><br><span class="line">	f1(a);</span><br><span class="line">	f2(a);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上述代码的运行结果如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">main: <span class="number">20</span></span><br><span class="line">f1: <span class="number">4</span></span><br><span class="line">f2: <span class="number">4</span></span><br></pre></td></tr></table></figure>
+<p>当我们将数组作为参数传递时，事实上发生了数组的退化，数组的长度信息已经丢失，只有地址信息会被保留并成为指针。</p>
+<p>因此，虽然在函数体中我们既可以使用数组的语法也可以使用指针的语法，但是实际上我们都是在对一个指针进行操作。这也是当我们将数组作为参数传递时，需要另外传递一个整数参数来记录数组长度，而不能利用 <code>sizeof</code> 来获取数组长度的原因：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f1</span><span class="params">(<span class="keyword">int</span> a[], <span class="keyword">int</span> n)</span> </span>&#123;            <span class="comment">// correct</span></span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f2</span><span class="params">(<span class="keyword">int</span> a[])</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n = <span class="keyword">sizeof</span>(a) / <span class="keyword">sizeof</span>(<span class="keyword">int</span>); <span class="comment">// wrong</span></span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>至于将二维数组作为参数传递时，事实上是退化成了数组指针，下面两种函数声明是等价的：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f1</span><span class="params">(<span class="keyword">int</span> a[][<span class="number">10</span>], <span class="keyword">int</span> n)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f2</span><span class="params">(<span class="keyword">int</span> (*a)[<span class="number">10</span>], <span class="keyword">int</span> n)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>至于更高维的数组则会退化为对应的高维的数组指针，读者可以自行推演。</p>
+<p>指针的退化是一个隐式的过程，因而导致许多人误以为数组名等同于指针，堪称是问题的“元凶”。</p>
+<p>事实上，指针的退化无处不在。根据 C 语言标准的规定，除以下表达式外，在表达式（不包括声明语句）中出现的任何数组名，都会退化为指针类型。退化得到的指针指向数组的首地址，且不是一个左值：</p>
+<ul>
+<li>
+<p><code>sizeof</code> 运算符；</p>
+</li>
+<li>
+<p>单元 <code>&amp;</code> 取地址运算符；</p>
+</li>
+<li>
+<p>用字符串常量初始化数组。</p>
+</li>
+</ul>
+<p>下面是 C99 标准中关于此项规定的原文解释：</p>
+<blockquote>
+<p>6.3.2.1 Lvalues, arrays, and function designators<br />
+3<br />
+Except when it is the operand of the sizeof operator or the unary &amp; operator, or is a string literal used to initialize an array, an expression that has type “array of type” is converted to an expression with type “pointer to type” that points to the initial element of the array object and is not an lvalue.</p>
+</blockquote>
+<hr />
+<h3 id="当你混用语法时究竟发生了什么"><a class="markdownIt-Anchor" href="#当你混用语法时究竟发生了什么"></a> 当你混用语法时究竟发生了什么</h3>
+<p>在前文中以及我介绍指针的文章中已经提到过，指针和数组的语法几乎可以互换，例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a[<span class="number">5</span>];</span><br><span class="line"><span class="keyword">int</span> p = a;</span><br></pre></td></tr></table></figure>
+<p>对于 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span> 和 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> ，使用 <code>p[i]</code> ， <code>*(p + i)</code> ， <code>a[i]</code> ， <code>*(a + i)</code> 的运行结果都是相同的。然而，这并不意味着这些语法是等价的。</p>
+<p>使用 <code>a[i]</code> 的形式访问数组元素的代码，总是会被编译器解释为使用 <code>*(a + i)</code> 的形式，二者完全等价。类似地， <code>p[i]</code> 与 <code>*(p + i)</code> 完全等价。但是 <code>a[i]</code> 与 <code>p[i]</code> 是不同的。</p>
+<p>当你试图直接访问数组 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span> 中的元素 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mo stretchy="false">[</mo><mi>i</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">a[i]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">a</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span></span></span></span> 时，可以看作是经历了如下过程：</p>
+<ol>
+<li>
+<p>取 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 的值，将 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 与 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span> 的地址值相加，记为 <code>X = a + i</code> ；</p>
+</li>
+<li>
+<p>访问内存地址 <code>X</code> 并获取其内容。</p>
+</li>
+</ol>
+<p>当你试图通过指向 <code>&amp;a[0]</code> 的指针 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> 访问数组元素 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mo stretchy="false">[</mo><mi>i</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">a[i]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">a</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span></span></span></span> 时，可以看作是经历了如下过程：</p>
+<ol>
+<li>
+<p>访问 <code>p</code> 的内存地址并获取其内容，记为 <code>X</code> ；</p>
+</li>
+<li>
+<p>取 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 的值，将 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 与 <code>X</code> 相加，记为 <code>Y = X + i</code> ；</p>
+</li>
+<li>
+<p>访问内存地址 <code>Y</code> 并获取其内容。</p>
+</li>
+</ol>
+<p>因为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span> 和 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> 都是变量，所以 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span> 和 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> 的地址值将在编译期（全局变量）或运行期早些时候（局部变量）被确定。注意，是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> 这个指针变量本身的地址（即 <code>&amp;p</code> ）被确定，这也是区别之所在。</p>
+<p>对于数组名 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span> ，我们可以直接访问内存地址 <code>&amp;a[0]</code> ；而对于指针 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> ，我们要先获取 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> 中的内容 <code>v</code> ，然后再访问地址 <code>v</code> 。</p>
+<p>我们可以由汇编结果来验证这一定论。考虑如下代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a[<span class="number">5</span>] = &#123;<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span> * p = a;</span><br><span class="line">	<span class="keyword">int</span> w = a[<span class="number">0</span>];</span><br><span class="line">	<span class="keyword">int</span> x = *(a + <span class="number">1</span>);</span><br><span class="line">	<span class="keyword">int</span> y = p[<span class="number">2</span>];</span><br><span class="line">	<span class="keyword">int</span> z = *(p + <span class="number">3</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其汇编代码可能如下所示（在不同编译环境下可能会有不同的汇编语句，但主体逻辑是一致的），省略了开头和结尾的一些无关的汇编代码：</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># test.c:1: int main() &#123;</span></span><br><span class="line"><span class="symbol">call</span>	___main	 #</span><br><span class="line"><span class="comment"># test.c:2: 	int a[5] = &#123;0, 1, 2, 3, 4&#125;;</span></span><br><span class="line"><span class="symbol">movl</span>	<span class="number">$0</span>, <span class="number">8</span>(%esp) 	 #, a</span><br><span class="line"><span class="symbol">movl</span>	<span class="number">$1</span>, <span class="number">12</span>(%esp)	 #, a</span><br><span class="line"><span class="symbol">movl</span>	<span class="number">$2</span>, <span class="number">16</span>(%esp)	 #, a</span><br><span class="line"><span class="symbol">movl</span>	<span class="number">$3</span>, <span class="number">20</span>(%esp)	 #, a</span><br><span class="line"><span class="symbol">movl</span>	<span class="number">$4</span>, <span class="number">24</span>(%esp)	 #, a</span><br><span class="line"><span class="comment"># test.c:3: 	int * p = a;</span></span><br><span class="line"><span class="symbol">leal</span>	<span class="number">8</span>(%esp), %eax	 #, tmp89</span><br><span class="line"><span class="symbol">movl</span>	%eax, <span class="number">44</span>(%esp)	 # tmp89, p</span><br><span class="line"><span class="comment"># test.c:4: 	int w = a[0];</span></span><br><span class="line"><span class="symbol">movl</span>	<span class="number">8</span>(%esp), %eax	 # a, tmp90</span><br><span class="line"><span class="symbol">movl</span>	%eax, <span class="number">40</span>(%esp)	 # tmp90, w</span><br><span class="line"><span class="comment"># test.c:5: 	int x = *(a + 1);</span></span><br><span class="line"><span class="symbol">movl</span>	<span class="number">12</span>(%esp), %eax	 # MEM[(int *)&amp;a + <span class="number">4</span>B], tmp91</span><br><span class="line"><span class="symbol">movl</span>	%eax, <span class="number">36</span>(%esp)	 # tmp91, x</span><br><span class="line"><span class="comment"># test.c:6: 	int y = p[2];</span></span><br><span class="line"><span class="symbol">movl</span>	<span class="number">44</span>(%esp), %eax	 # p, tmp92</span><br><span class="line"><span class="symbol">movl</span>	<span class="number">8</span>(%eax), %eax	 # MEM[(int *)p_7 + <span class="number">8</span>B], tmp93</span><br><span class="line"><span class="symbol">movl</span>	%eax, <span class="number">32</span>(%esp)	 # tmp93, y</span><br><span class="line"><span class="comment"># test.c:7: 	int z = *(p + 3);</span></span><br><span class="line"><span class="symbol">movl</span>	<span class="number">44</span>(%esp), %eax	 # p, tmp94</span><br><span class="line"><span class="symbol">movl</span>	<span class="number">12</span>(%eax), %eax	 # MEM[(int *)p_7 + <span class="number">12</span>B], tmp95</span><br><span class="line"><span class="symbol">movl</span>	%eax, <span class="number">28</span>(%esp)	 # tmp95, z</span><br><span class="line"><span class="comment"># test.c:8: 	return 0;</span></span><br><span class="line"><span class="symbol">movl</span>	<span class="number">$0</span>, %eax    	 #, _12</span><br><span class="line"><span class="comment"># test.c:9: &#125;</span></span><br><span class="line">	leave	</span><br></pre></td></tr></table></figure>
+<p>由此可见，虽然二者语法相同，运行结果也相同，但是运行过程却是不同的。通过指针进行的是间接访问，比直接访问要多出一个步骤，运行效率更低。这也彻底推翻了数组名等同于指针的论断。</p>
+<hr />
+<h3 id="数组的地址和首地址"><a class="markdownIt-Anchor" href="#数组的地址和首地址"></a> 数组的地址和首地址</h3>
+<p>这里还另外提一点：数组的地址和数组的首地址是不同的。</p>
+<p>有些人会认为 <code>a</code> , <code>&amp;a[0]</code> , <code>&amp;a</code> 在作为指针使用时是等价的，然而事实并非如此。例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a[<span class="number">5</span>];</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;size:  %d %d %d\n&quot;</span>, <span class="keyword">sizeof</span>(a), <span class="keyword">sizeof</span>(&amp;a[<span class="number">0</span>]), <span class="keyword">sizeof</span>(&amp;a));</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;addr:  %u %u %u\n&quot;</span>, a, &amp;a[<span class="number">0</span>], &amp;a);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;addr+: %u %u %u\n&quot;</span>, a + <span class="number">1</span>, &amp;a[<span class="number">0</span>] + <span class="number">1</span>, &amp;a + <span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+<p>上述代码在我本机上的某次运行结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">size:  20 4 4</span><br><span class="line">addr:  6356716 6356716 6356716</span><br><span class="line">addr+: 6356720 6356720 6356736</span><br></pre></td></tr></table></figure>
+<p>由此我们可以发现：</p>
+<ul>
+<li>
+<p>根据 <code>sizeof</code> 的结果可知，数组名 <code>a</code> 代表数组本身，包含长度信息，而 <code>&amp;a[0]</code> , <code>&amp;a</code> 都是指针类型；</p>
+</li>
+<li>
+<p>根据其地址值可知，三者的地址值都是数组的首地址；</p>
+</li>
+<li>
+<p>根据其地址值 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">+</span><span class="mord">1</span></span></span></span> 可知， <code>a</code> 会退化为指向整型的指针， <code>&amp;a[0]</code> 是指向整型的指针，而 <code>&amp;a</code> 则是指向长为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>5</mn></mrow><annotation encoding="application/x-tex">5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">5</span></span></span></span> 的整型数组的指针。</p>
+</li>
+</ul>
+<p>前两条很好懂，重点是第三条。我们注意到对三者的地址值 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">+</span><span class="mord">1</span></span></span></span> 的结果不同，对 <code>&amp;a</code> <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">+</span><span class="mord">1</span></span></span></span> 相当于对其数值加上了 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>4</mn><mo>∗</mo><mn>5</mn><mo>=</mo><mn>20</mn></mrow><annotation encoding="application/x-tex">4 * 5 = 20</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">4</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">5</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mord">0</span></span></span></span> 字节，恰好是整整一个数组的长度。这意味着 <code>&amp;a</code> 是一个数组指针，它代表着数组本身的地址。</p>
+<p>不过，由于三者的地址值相同，因此下面的代码事实上是合法的，只不过看起来有些愚蠢：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a[<span class="number">5</span>];</span><br><span class="line"><span class="keyword">int</span> * p = (<span class="keyword">int</span> *)&amp;a;</span><br><span class="line"><span class="keyword">int</span> (*q)[<span class="number">5</span>] = (<span class="keyword">int</span> (*)[<span class="number">5</span>])a;</span><br></pre></td></tr></table></figure>
+<p>总之，虽然单论地址值而言三者是相同的，但是 <code>&amp;a</code> 的指针类型和另外两者不同。数组的地址和数组的首地址是不同的。</p>
+<hr />
+<h3 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h3>
+<p>数组名和指针的主要区别如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left"></th>
+<th style="text-align:left">数组名</th>
+<th style="text-align:left">指针（已指向数组首地址的）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">内容</td>
+<td style="text-align:left">数组的地址信息和长度信息</td>
+<td style="text-align:left">仅数组的地址信息</td>
+</tr>
+<tr>
+<td style="text-align:left">可修改性</td>
+<td style="text-align:left">不可修改指向</td>
+<td style="text-align:left">可以修改指向</td>
+</tr>
+<tr>
+<td style="text-align:left">参与执行表达式时</td>
+<td style="text-align:left">有时会先退化成指针再参与</td>
+<td style="text-align:left">直接参与</td>
+</tr>
+<tr>
+<td style="text-align:left">函数传参时</td>
+<td style="text-align:left">退化成指针再传递</td>
+<td style="text-align:left">直接传递</td>
+</tr>
+<tr>
+<td style="text-align:left">访问数组元素时</td>
+<td style="text-align:left">直接访问</td>
+<td style="text-align:left">间接访问</td>
+</tr>
+</tbody>
+</table>
+<p>对于 <code>int a[5]</code> ，数组的几个易混淆语法如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">语法</th>
+<th style="text-align:left">含义</th>
+<th style="text-align:left">类型</th>
+<th style="text-align:left">类型说明符</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>a</code></td>
+<td style="text-align:left">数组本身</td>
+<td style="text-align:left">数组</td>
+<td style="text-align:left">–</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>&amp;a[0]</code></td>
+<td style="text-align:left">数组的首地址</td>
+<td style="text-align:left">整型指针</td>
+<td style="text-align:left"><code>int *</code></td>
+</tr>
+<tr>
+<td style="text-align:left"><code>&amp;a</code></td>
+<td style="text-align:left">数组的地址</td>
+<td style="text-align:left">长为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>5</mn></mrow><annotation encoding="application/x-tex">5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">5</span></span></span></span> 的整型数组指针</td>
+<td style="text-align:left"><code>int (*)[5]</code></td>
+</tr>
+</tbody>
+</table>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>JM233333
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="https://blog.jm233333.com/Programming%20Languages/C/C%2005%20-%20Array%20Name%20is%20NOT%20a%20Pointer/" title="C 05 - Array Name is NOT a Pointer">https://blog.jm233333.com/Programming Languages/C/C 05 - Array Name is NOT a Pointer/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" rel="tag"># 编程语言</a>
+              <a href="/tags/%E8%BF%9B%E9%98%B6%E6%95%99%E7%A8%8B/" rel="tag"># 进阶教程</a>
+              <a href="/tags/C/" rel="tag"># C</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Programming%20Languages/C/C%2006%20-%20Do%20not%20Abuse%20Side%20Effects%20in%20Subexpressions/" rel="prev" title="C 06 - Do not Abuse Side Effects in Subexpressions">
+      <i class="fa fa-chevron-left"></i> C 06 - Do not Abuse Side Effects in Subexpressions
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Programming%20Languages/C/C%2003%20-%20Types/" rel="next" title="C 03 - Types">
+      C 03 - Types <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="nav-number">1.</span> <span class="nav-text"> 前置知识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">2.</span> <span class="nav-text"> 前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%99%E8%AF%AF%E7%9A%84%E7%90%86%E8%A7%A3"><span class="nav-number">3.</span> <span class="nav-text"> 错误的理解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">4.</span> <span class="nav-text"> 简单的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E7%BB%84%E5%90%8D%E4%B8%AD%E7%9A%84%E9%95%BF%E5%BA%A6%E4%BF%A1%E6%81%AF"><span class="nav-number">4.1.</span> <span class="nav-text"> 数组名中的长度信息</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E7%BB%84%E5%90%8D%E7%9A%84%E4%B8%8D%E5%8F%AF%E4%BF%AE%E6%94%B9%E6%80%A7"><span class="nav-number">4.2.</span> <span class="nav-text"> 数组名的不可修改性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E7%BB%84%E7%9A%84%E9%80%80%E5%8C%96"><span class="nav-number">5.</span> <span class="nav-text"> 数组的退化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BD%93%E4%BD%A0%E6%B7%B7%E7%94%A8%E8%AF%AD%E6%B3%95%E6%97%B6%E7%A9%B6%E7%AB%9F%E5%8F%91%E7%94%9F%E4%BA%86%E4%BB%80%E4%B9%88"><span class="nav-number">6.</span> <span class="nav-text"> 当你混用语法时究竟发生了什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E7%BB%84%E7%9A%84%E5%9C%B0%E5%9D%80%E5%92%8C%E9%A6%96%E5%9C%B0%E5%9D%80"><span class="nav-number">7.</span> <span class="nav-text"> 数组的地址和首地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">8.</span> <span class="nav-text"> 总结</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="JM233333"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">JM233333</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">238</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">80</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/JM233333" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;JM233333" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/26466398@163.com" title="E-Mail → 26466398@163.com"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://github.com/JM233333" title="https:&#x2F;&#x2F;github.com&#x2F;JM233333" rel="noopener" target="_blank">Title</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JM233333</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
