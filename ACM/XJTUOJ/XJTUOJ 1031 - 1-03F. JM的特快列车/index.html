@@ -16,7 +16,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"blog.jm233333.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"blog.jm233333.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="二分查找 + 贪心     Time Limit Memory Limit Source     1000 MS 524288 K 2019小学期    题目描述 由于JM太菜了，他总是要去向强无敌的神仙cyy请教问题，但是神仙cyy住在深山老林，路途遥远，太不方便，因此JM洗劫了史前巨富jwp的宝库，并用这笔钱建造一段铁路。 铁路是蜿蜒崎岖的，不过这并不重要，因为我们知道准确的铁轨长度。 除了">
@@ -342,12 +342,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/ACM/XJTUOJ/XJTUOJ%201035%20-%201-04B.%20%E6%84%9A%E8%A0%A2%E7%9A%84tyx/" rel="prev" title="XJTUOJ 1035 - 1-04B. 愚蠢的tyx">
-      <i class="fa fa-chevron-left"></i> XJTUOJ 1035 - 1-04B. 愚蠢的tyx
+    <a href="/ACM/XJTUOJ/XJTUOJ%201032%20-%201-03G.%20JM%E7%9A%84%E6%AF%92%E7%98%A4%E9%A2%98/" rel="prev" title="XJTUOJ 1032 - 1-03G. JM的毒瘤题">
+      <i class="fa fa-chevron-left"></i> XJTUOJ 1032 - 1-03G. JM的毒瘤题
     </a></div>
       <div class="post-nav-item">
-    <a href="/ACM/XJTUOJ/XJTUOJ%201032%20-%201-03G.%20JM%E7%9A%84%E6%AF%92%E7%98%A4%E9%A2%98/" rel="next" title="XJTUOJ 1032 - 1-03G. JM的毒瘤题">
-      XJTUOJ 1032 - 1-03G. JM的毒瘤题 <i class="fa fa-chevron-right"></i>
+    <a href="/ACM/XJTUOJ/XJTUOJ%201030%20-%201-03E.%20JM%E7%9A%84%E6%98%9F%E7%B3%BB%E6%88%98%E4%BA%89/" rel="next" title="XJTUOJ 1030 - 1-03E. JM的星系战争">
+      XJTUOJ 1030 - 1-03E. JM的星系战争 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -361,6 +361,7 @@
 
           </div>
           
+    <div class="comments" id="gitalk-container"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -460,7 +461,7 @@
     </div>
     <ul class="links-of-blogroll-list">
         <li class="links-of-blogroll-item">
-          <a href="https://github.com/JM233333" title="https:&#x2F;&#x2F;github.com&#x2F;JM233333" rel="noopener" target="_blank">Title</a>
+          <a href="https://github.com/JM233333" title="https:&#x2F;&#x2F;github.com&#x2F;JM233333" rel="noopener" target="_blank">test</a>
         </li>
     </ul>
   </div>
@@ -525,6 +526,15 @@
 
 
   
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
 
 
 
@@ -549,6 +559,26 @@
   
 
   
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '178e382e816cf95bf1f5',
+      clientSecret: '339eed49afa70517ffc29128039239c788ed961d',
+      repo        : 'rep-for-gitalk',
+      owner       : 'JM233333',
+      admin       : ['JM233333'],
+      id          : '60aed287450b8b0533ccd472fc806449',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
 
 </body>
 </html>

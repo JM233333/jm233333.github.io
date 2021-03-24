@@ -16,7 +16,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"blog.jm233333.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"blog.jm233333.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="前置知识 在阅读本文档前，请确保你已经掌握指针的基础知识，详见 C 语言的 02 - Pointer 文档。  C 02 - Pointer    前言 输入 (input) 意味着将一些数据从文件或命令行载入到程序中，输出 (output) 则意味着将一些数据从程序传出到文件或设备中存储或显示，二者并称为 输入输出 (input and output, IO, or I&#x2F;O) 。大多数程序都需">
@@ -27,7 +27,7 @@
 <meta property="og:description" content="前置知识 在阅读本文档前，请确保你已经掌握指针的基础知识，详见 C 语言的 02 - Pointer 文档。  C 02 - Pointer    前言 输入 (input) 意味着将一些数据从文件或命令行载入到程序中，输出 (output) 则意味着将一些数据从程序传出到文件或设备中存储或显示，二者并称为 输入输出 (input and output, IO, or I&#x2F;O) 。大多数程序都需">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-05-31T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-03-22T09:32:11.634Z">
+<meta property="article:modified_time" content="2021-03-24T08:16:20.704Z">
 <meta property="article:author" content="JM233333">
 <meta property="article:tag" content="基础教程">
 <meta property="article:tag" content="编程语言">
@@ -259,21 +259,9 @@
 <hr />
 <h3 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h3>
 <p><strong>输入 (input)</strong> 意味着将一些数据从文件或命令行载入到程序中，<strong>输出 (output)</strong> 则意味着将一些数据从程序传出到文件或设备中存储或显示，二者并称为 <strong>输入输出 (input and output, IO, or I/O)</strong> 。大多数程序都需要 IO 的帮助，可以说 IO 是计算机理论中不可或缺的重要部分，和编程语言无关。</p>
-<p>C 语言提供了一组内置函数来方便用户编写程序执行 IO 操作，例如 scanf/printf 等。然而这些函数虽然方便，却也囊括了大量的初学者常见错误。</p>
-<p>不知读者是否曾想过，当我们使用 scanf/printf 或其它内置 IO 函数执行输入输出操作时，其过程中究竟发生了什么？几乎所有的初学者在 IO 方面都踩过无数的坑（尤其是涉及到字符类型的 IO 时），这都是由对 C/C++ 语言和命令行的输入机制的不了解所致。因为对 IO 仅有极度浅显的理解，不深入了解相关原理，很多人写了几年的程序也没完全搞清楚为什么他输入 <code>%c</code> 的时候经常会出问题。本文将对相关内容进行详细的介绍。</p>
-<p>顺带一提，计算机的 IO 操作不仅是在黑框里 scanf/printf 那么简单，还可以对文件执行 IO ，或是对缓存或字符串执行 IO ，等等。虽然初学者很少接触，但你应当知道它们的存在——除了 scanf/printf 、 gets/puts 、 getchar/putchar 等以外， C 语言还有数十种不同的内置 IO 函数。如果深入学习 C/C++ 语言，你总会接触到它们，本文只对其中最通用和常见的几个进行简要介绍。</p>
-<hr />
-<h3 id="基本输入机制"><a class="markdownIt-Anchor" href="#基本输入机制"></a> 基本输入机制</h3>
-<p>为便于后文的描述，我们先介绍一些初学者可能不了解的基本的输入机制，以免读者在一些无关紧要的细节中陷入困惑。</p>
-<h4 id="其实都是字符"><a class="markdownIt-Anchor" href="#其实都是字符"></a> 其实都是字符</h4>
-<p>读者不妨思考一个问题：当我们在命令行上输入一个整数（比如 <code>233</code> ）时，存在输入缓冲区的真的是数值为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>233</mn></mrow><annotation encoding="application/x-tex">233</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mord">3</span><span class="mord">3</span></span></span></span> 的整数吗？</p>
-<p>显然这是不合理的，因为在程序读入数据之前，不可能知道你输入的 <code>233</code> 是一个整数还是一个长度为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span></span></span></span> 的字符串，只不过字符串里的字符恰好都是数字。事实上，你在命令行中输入的一切内容都是“字符”，在 C 程序读入之后得到的是三个整数值（对应于 ASCII 码分别为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>50</mn><mo separator="true">,</mo><mn>51</mn><mo separator="true">,</mo><mn>51</mn></mrow><annotation encoding="application/x-tex">50, 51, 51</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="mord">5</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">5</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">5</span><span class="mord">1</span></span></span></span> ）而不是一个整数值 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>233</mn></mrow><annotation encoding="application/x-tex">233</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mord">3</span><span class="mord">3</span></span></span></span> 。</p>
-<p>至于在输入时这几个字符是如何以数值 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>233</mn></mrow><annotation encoding="application/x-tex">233</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mord">3</span><span class="mord">3</span></span></span></span> 被赋值给一个整型变量的，则与 <code>scanf</code> 函数的内部实现有关，其处理 <code>%d</code> 具体过程的核心逻辑就像是把字符串转换为整数的过程：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">stoi</span><span class="params">(<span class="keyword">char</span> str[])</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> x = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; str[i] != <span class="string">&#x27;\0&#x27;</span>; i ++) &#123;</span><br><span class="line">		x *= <span class="number">10</span>;</span><br><span class="line">		x += (str[i] - <span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> x;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>当然实际的实现要比这个复杂得多，但是核心逻辑基本一致。</p>
-<p>总之，无论 <code>scanf</code> 配上 <code>%d</code> 还是 <code>%c</code> ，亦或是 <code>getchar</code> ，在数据从命令行（或文件等其他来源）输入到程序中时，都是以字符类型被读入的。例如，当你使用 <code>scanf</code> 函数输入整型或其它类型时，只是该函数在背后为你执行了从字符到其他类型的转换过程，并非是计算机智能地将你在命令行上输入的内容直接视为整数读入了。</p>
-<h4 id="特殊字符"><a class="markdownIt-Anchor" href="#特殊字符"></a> 特殊字符</h4>
-<p>这是一个虽然很基础但仍可能有人不清楚的问题。在字符类型中，空格和换行都只是被赋予了特殊含义的整数值，例如空格字符和 <code>\n</code> 字符对应于 ASCII 码分别为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>32</mn></mrow><annotation encoding="application/x-tex">32</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span><span class="mord">2</span></span></span></span> 和 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>10</mn></mrow><annotation encoding="application/x-tex">10</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">0</span></span></span></span> 。除此以外还有其它类似的特殊字符，其中有些是不可见字符，例如文件结束符 <code>EOF</code> 等。这方面的具体细节不是本文的重点。</p>
+<p>C 语言提供了一组内置函数来方便用户编写程序执行 IO 操作，例如 <code>scanf</code> / <code>printf</code> 等。然而这些函数虽然方便，却也囊括了大量的初学者常见错误。</p>
+<p>不知读者是否曾想过，当我们使用 <code>scanf</code> / <code>printf</code> 或其它内置 IO 函数执行输入输出操作时，其过程中究竟发生了什么？几乎所有的初学者在 IO 方面都踩过无数的坑（尤其是涉及到字符类型的 IO 时），尤其是在最初的时期，被各种问题折磨得痛不欲生，这都是由对 C/C++ 语言和命令行的输入机制的不了解所致。因为对 IO 仅有极度浅显的理解，不深入了解相关原理，别说是初学者了，很多人写了几年的程序也没完全搞清楚为什么他输入 <code>%c</code> 的时候经常会出问题。本文将对相关内容进行详细的介绍。</p>
+<p>顺带一提，计算机的 IO 操作不仅是在黑框里 <code>scanf</code> / <code>printf</code> 那么简单，还可以对文件执行 IO ，或是对缓存或字符串执行 IO ，等等。虽然初学者很少接触，但你应当知道它们的存在——除了 <code>scanf</code> / <code>printf</code> 、 <code>gets</code> / <code>puts</code> 、 <code>getchar</code> / <code>putchar</code> 等以外， C 语言还有数十种不同的内置 IO 函数。如果深入学习 C/C++ 语言，你总会接触到它们，本文只对其中最通用和常见的几个进行简要介绍。</p>
 <hr />
 <h3 id="缓冲输入"><a class="markdownIt-Anchor" href="#缓冲输入"></a> 缓冲输入</h3>
 <h4 id="引言"><a class="markdownIt-Anchor" href="#引言"></a> 引言</h4>
@@ -314,6 +302,20 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;x);</span><br><span class="line">getchar();</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%c&quot;</span>, &amp;ch);</span><br></pre></td></tr></table></figure>
 <p>或者：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%d %c&quot;</span>, &amp;x, &amp;ch);</span><br></pre></td></tr></table></figure>
+<hr />
+<h3 id="常见误区"><a class="markdownIt-Anchor" href="#常见误区"></a> 常见误区</h3>
+<p>为便于后文的描述，我们先介绍一些关于 IO 的常见误区，以免读者在一些无关紧要的细节中陷入困惑。</p>
+<h4 id="其实都是字符"><a class="markdownIt-Anchor" href="#其实都是字符"></a> 其实都是字符</h4>
+<p>理解了缓冲输入，现在读者不妨思考一个问题：当我们在命令行上输入一个整数（比如 <code>233</code> ）时，存在输入缓冲区的真的是数值为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>233</mn></mrow><annotation encoding="application/x-tex">233</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mord">3</span><span class="mord">3</span></span></span></span> 的整数吗？</p>
+<p>显然这是不合理的，因为在程序读入数据之前，不可能知道你输入的 <code>233</code> 是一个整数还是一个长度为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span></span></span></span> 的字符串，只不过字符串里的字符恰好都是数字。事实上，你在命令行中输入的一切内容都是“字符”（类同 C 语言中的 <code>char</code> 类型），在 C 程序读入之后得到的是三个整数值（对应于 ASCII 码分别为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>50</mn><mo separator="true">,</mo><mn>51</mn><mo separator="true">,</mo><mn>51</mn></mrow><annotation encoding="application/x-tex">50, 51, 51</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="mord">5</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">5</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">5</span><span class="mord">1</span></span></span></span> ）而不是一个整数值 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>233</mn></mrow><annotation encoding="application/x-tex">233</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mord">3</span><span class="mord">3</span></span></span></span> 。</p>
+<p>至于在输入时这几个字符是如何以数值 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>233</mn></mrow><annotation encoding="application/x-tex">233</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mord">3</span><span class="mord">3</span></span></span></span> 被赋值给一个整型变量的，则与 <code>scanf</code> 函数的内部实现有关，其处理 <code>%d</code> 具体过程的核心逻辑就像是把字符串转换为整数的过程：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">stoi</span><span class="params">(<span class="keyword">char</span> str[])</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> x = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; str[i] != <span class="string">&#x27;\0&#x27;</span>; i ++) &#123;</span><br><span class="line">		x *= <span class="number">10</span>;</span><br><span class="line">		x += (str[i] - <span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> x;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当然库函数中 <code>scanf</code> 的实际实现要比这个复杂得多，因为需要支持很多额外的功能和机制，但是核心逻辑是一致的。</p>
+<p>总之，无论 <code>scanf</code> 配上 <code>%d</code> 还是 <code>%c</code> ，亦或是 <code>getchar</code> ，在数据从命令行（或文件等其他来源）输入到程序中时，都是以字符类型被读入的。例如，当你使用 <code>scanf</code> 函数输入整型或其它类型时，只是该函数在背后为你执行了从字符到其他类型的转换过程，并非是计算机智能地将你在命令行上输入的内容直接视为整数读入了。</p>
+<h4 id="特殊字符"><a class="markdownIt-Anchor" href="#特殊字符"></a> 特殊字符</h4>
+<p>这是一个虽然很基础但仍可能有人不清楚的问题。在字符类型中，空格和换行都只是被赋予了特殊含义的整数值，例如空格字符和 <code>\n</code> 字符对应于 ASCII 码分别为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>32</mn></mrow><annotation encoding="application/x-tex">32</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span><span class="mord">2</span></span></span></span> 和 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>10</mn></mrow><annotation encoding="application/x-tex">10</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">0</span></span></span></span> 。除此以外还有其它类似的特殊字符，其中有些是不可见字符，例如文件结束符 <code>EOF</code> 等。这方面的具体细节不是本文的重点。</p>
+<h4 id="输入和输出的隔离性"><a class="markdownIt-Anchor" href="#输入和输出的隔离性"></a> 输入和输出的隔离性</h4>
+<p>（unfinished）</p>
 <hr />
 <h3 id="输入输出流"><a class="markdownIt-Anchor" href="#输入输出流"></a> 输入输出流</h3>
 <p>（unfinished）</p>
@@ -418,6 +420,7 @@
 
           </div>
           
+    <div class="comments" id="gitalk-container"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -464,7 +467,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="nav-number">1.</span> <span class="nav-text"> 前置知识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">2.</span> <span class="nav-text"> 前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E8%BE%93%E5%85%A5%E6%9C%BA%E5%88%B6"><span class="nav-number">3.</span> <span class="nav-text"> 基本输入机制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B6%E5%AE%9E%E9%83%BD%E6%98%AF%E5%AD%97%E7%AC%A6"><span class="nav-number">3.1.</span> <span class="nav-text"> 其实都是字符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6"><span class="nav-number">3.2.</span> <span class="nav-text"> 特殊字符</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%93%E5%86%B2%E8%BE%93%E5%85%A5"><span class="nav-number">4.</span> <span class="nav-text"> 缓冲输入</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%95%E8%A8%80"><span class="nav-number">4.1.</span> <span class="nav-text"> 引言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%B4%E6%8E%A5%E8%BE%93%E5%85%A5%E5%92%8C%E7%BC%93%E5%86%B2%E8%BE%93%E5%85%A5"><span class="nav-number">4.2.</span> <span class="nav-text"> 直接输入和缓冲输入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BE%93%E5%85%A5%E7%BC%93%E5%86%B2%E5%8C%BA%E7%9A%84%E9%99%B7%E9%98%B1"><span class="nav-number">4.3.</span> <span class="nav-text"> 输入缓冲区的陷阱</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E6%B5%81"><span class="nav-number">5.</span> <span class="nav-text"> 输入输出流</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">5.1.</span> <span class="nav-text"> 基本概念</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#scanf-%E5%87%BD%E6%95%B0%E6%80%BB%E7%BB%93"><span class="nav-number">6.</span> <span class="nav-text"> scanf 函数总结</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5-2"><span class="nav-number">6.1.</span> <span class="nav-text"> 基本概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A9%BA%E7%99%BD%E5%AD%97%E7%AC%A6"><span class="nav-number">6.2.</span> <span class="nav-text"> 空白字符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%84%E8%8C%83%E6%A0%BC%E5%BC%8F%E8%BE%93%E5%85%A5"><span class="nav-number">6.3.</span> <span class="nav-text"> 规范格式输入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%A3%E5%88%99%E5%8C%B9%E9%85%8D%E5%88%9D%E6%8E%A2"><span class="nav-number">6.4.</span> <span class="nav-text"> 正则匹配初探</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="nav-number">1.</span> <span class="nav-text"> 前置知识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">2.</span> <span class="nav-text"> 前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%93%E5%86%B2%E8%BE%93%E5%85%A5"><span class="nav-number">3.</span> <span class="nav-text"> 缓冲输入</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%95%E8%A8%80"><span class="nav-number">3.1.</span> <span class="nav-text"> 引言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%B4%E6%8E%A5%E8%BE%93%E5%85%A5%E5%92%8C%E7%BC%93%E5%86%B2%E8%BE%93%E5%85%A5"><span class="nav-number">3.2.</span> <span class="nav-text"> 直接输入和缓冲输入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BE%93%E5%85%A5%E7%BC%93%E5%86%B2%E5%8C%BA%E7%9A%84%E9%99%B7%E9%98%B1"><span class="nav-number">3.3.</span> <span class="nav-text"> 输入缓冲区的陷阱</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E8%AF%AF%E5%8C%BA"><span class="nav-number">4.</span> <span class="nav-text"> 常见误区</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B6%E5%AE%9E%E9%83%BD%E6%98%AF%E5%AD%97%E7%AC%A6"><span class="nav-number">4.1.</span> <span class="nav-text"> 其实都是字符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6"><span class="nav-number">4.2.</span> <span class="nav-text"> 特殊字符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BE%93%E5%85%A5%E5%92%8C%E8%BE%93%E5%87%BA%E7%9A%84%E9%9A%94%E7%A6%BB%E6%80%A7"><span class="nav-number">4.3.</span> <span class="nav-text"> 输入和输出的隔离性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E6%B5%81"><span class="nav-number">5.</span> <span class="nav-text"> 输入输出流</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">5.1.</span> <span class="nav-text"> 基本概念</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#scanf-%E5%87%BD%E6%95%B0%E6%80%BB%E7%BB%93"><span class="nav-number">6.</span> <span class="nav-text"> scanf 函数总结</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5-2"><span class="nav-number">6.1.</span> <span class="nav-text"> 基本概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A9%BA%E7%99%BD%E5%AD%97%E7%AC%A6"><span class="nav-number">6.2.</span> <span class="nav-text"> 空白字符</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%A7%84%E8%8C%83%E6%A0%BC%E5%BC%8F%E8%BE%93%E5%85%A5"><span class="nav-number">6.3.</span> <span class="nav-text"> 规范格式输入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AD%A3%E5%88%99%E5%8C%B9%E9%85%8D%E5%88%9D%E6%8E%A2"><span class="nav-number">6.4.</span> <span class="nav-text"> 正则匹配初探</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -517,7 +520,7 @@
     </div>
     <ul class="links-of-blogroll-list">
         <li class="links-of-blogroll-item">
-          <a href="https://github.com/JM233333" title="https:&#x2F;&#x2F;github.com&#x2F;JM233333" rel="noopener" target="_blank">Title</a>
+          <a href="https://github.com/JM233333" title="https:&#x2F;&#x2F;github.com&#x2F;JM233333" rel="noopener" target="_blank">test</a>
         </li>
     </ul>
   </div>
@@ -582,6 +585,15 @@
 
 
   
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
 
 
 
@@ -606,6 +618,26 @@
   
 
   
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '178e382e816cf95bf1f5',
+      clientSecret: '339eed49afa70517ffc29128039239c788ed961d',
+      repo        : 'rep-for-gitalk',
+      owner       : 'JM233333',
+      admin       : ['JM233333'],
+      id          : '07d2257bbc5b6e1e06e14769c40c478a',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
 
 </body>
 </html>

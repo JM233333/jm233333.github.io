@@ -16,7 +16,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"blog.jm233333.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"blog.jm233333.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"gitalk","storage":true,"lazyload":false,"nav":null,"activeClass":"gitalk"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="水题     Time Limit Memory Limit Source     1000 MS 524288 K 2019校赛    题目描述 你和你的迷弟们吃饭的时候，一般是你请客。 但万一你csf囊中羞涩（怎么可能？），大家就会执行AA制(平分饭费)，并且其中一个迷弟去结账，其它人把钱转给他。这个去结账的人也是需要给钱的，但是此时你csf是不需要给钱的。 csf的迷弟们在给人转钱的时候总">
@@ -349,8 +349,8 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/ACM/XJTUOJ/XJTUOJ%201008%20-%20H.%20%E5%BC%80%E7%96%86%E8%BE%9F%E5%9C%9F%EF%BC%8C%E5%85%AC%E5%8F%B8%E6%88%90%E7%AB%8B/" rel="prev" title="XJTUOJ 1008 - H. 开疆辟土，公司成立">
-      <i class="fa fa-chevron-left"></i> XJTUOJ 1008 - H. 开疆辟土，公司成立
+    <a href="/ACM/XJTUOJ/XJTUOJ%201010%20-%20J.%20%E5%9B%A2%E9%98%9F%E9%85%8D%E7%BD%AE%EF%BC%8C%E6%96%B0%E5%A5%87%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98/" rel="prev" title="XJTUOJ 1010 - J. 团队配置，新奇的面试题">
+      <i class="fa fa-chevron-left"></i> XJTUOJ 1010 - J. 团队配置，新奇的面试题
     </a></div>
       <div class="post-nav-item">
     <a href="/ACM/XJTUOJ/XJTUOJ%201004%20-%20D.%20%E6%88%90%E7%AB%8B%E8%A5%BF%E5%AE%89%E2%80%9C%E5%85%A8%E5%A4%A9%E5%80%99%E2%80%9D%E9%87%8F%E5%8C%96%E7%A7%91%E6%8A%80%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8/" rel="next" title="XJTUOJ 1004 - D. 成立西安“全天候”量化科技有限公司">
@@ -368,6 +368,7 @@
 
           </div>
           
+    <div class="comments" id="gitalk-container"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -467,7 +468,7 @@
     </div>
     <ul class="links-of-blogroll-list">
         <li class="links-of-blogroll-item">
-          <a href="https://github.com/JM233333" title="https:&#x2F;&#x2F;github.com&#x2F;JM233333" rel="noopener" target="_blank">Title</a>
+          <a href="https://github.com/JM233333" title="https:&#x2F;&#x2F;github.com&#x2F;JM233333" rel="noopener" target="_blank">test</a>
         </li>
     </ul>
   </div>
@@ -532,6 +533,15 @@
 
 
   
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
 
 
 
@@ -556,6 +566,26 @@
   
 
   
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : '178e382e816cf95bf1f5',
+      clientSecret: '339eed49afa70517ffc29128039239c788ed961d',
+      repo        : 'rep-for-gitalk',
+      owner       : 'JM233333',
+      admin       : ['JM233333'],
+      id          : '67eb74b734295f5a6e99f55add0c5984',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
 
 </body>
 </html>
