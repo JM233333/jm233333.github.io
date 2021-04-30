@@ -125,7 +125,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">80</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">83</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -188,7 +188,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://blog.jm233333.com/LeetCode/LeetCode%20xxx%20copy%2041/">
+    <link itemprop="mainEntityOfPage" href="https://blog.jm233333.com/LeetCode/LeetCode%200091%20-%20Decode%20Ways/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -202,7 +202,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/LeetCode/LeetCode%20xxx%20copy%2041/" class="post-title-link" itemprop="url">LeetCode 0001 - xxx</a>
+            <a href="/LeetCode/LeetCode%200091%20-%20Decode%20Ways/" class="post-title-link" itemprop="url">LeetCode 0091 - Decode Ways</a>
         </h2>
 
         <div class="post-meta">
@@ -234,8 +234,8 @@
       <span class="post-meta-item-text">Changyan: </span>
     
     
-      <a title="changyan" href="/LeetCode/LeetCode%20xxx%20copy%2041/#SOHUCS" itemprop="discussionUrl">
-        <span id="url::https://blog.jm233333.com/LeetCode/LeetCode%20xxx%20copy%2041/" class="cy_cmt_count" data-xid="LeetCode/LeetCode xxx copy 41/" itemprop="commentCount"></span>
+      <a title="changyan" href="/LeetCode/LeetCode%200091%20-%20Decode%20Ways/#SOHUCS" itemprop="discussionUrl">
+        <span id="url::https://blog.jm233333.com/LeetCode/LeetCode%200091%20-%20Decode%20Ways/" class="cy_cmt_count" data-xid="LeetCode/LeetCode 0091 - Decode Ways/" itemprop="commentCount"></span>
       </a>
     
   </span>
@@ -256,8 +256,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h4 id="xxx"><a class="markdownIt-Anchor" href="#xxx"></a> xxx</h4>
+          <h3 id="hints"><a class="markdownIt-Anchor" href="#hints"></a> Hints</h3>
+<ul>
+<li>DP</li>
+</ul>
 <hr />
+<h3 id="题面"><a class="markdownIt-Anchor" href="#题面"></a> 题面</h3>
 <table>
 <thead>
 <tr>
@@ -274,16 +278,63 @@
 </tr>
 </tbody>
 </table>
-<p>xxx</p>
+<p>A message containing letters from <code>A-Z</code> can be encoded into numbers using the following mapping:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#39;A&#39; -&gt; &quot;1&quot;</span><br><span class="line">&#39;B&#39; -&gt; &quot;2&quot;</span><br><span class="line">...</span><br><span class="line">&#39;Z&#39; -&gt; &quot;26&quot;</span><br></pre></td></tr></table></figure>
+<p>To decode an encoded message, all the digits must be grouped then mapped back into letters using the reverse of the mapping above (there may be multiple ways). For example, <code>&quot;11106&quot;</code> can be mapped into:</p>
+<ul>
+<li>
+<p><code>&quot;AAJF&quot;</code> with the grouping <code>(1 1 10 6)</code></p>
+</li>
+<li>
+<p><code>&quot;KJF&quot;</code> with the grouping <code>(11 10 6)</code></p>
+</li>
+</ul>
+<p>Note that the grouping <code>(1 11 06)</code> is invalid because <code>&quot;06&quot;</code> cannot be mapped into <code>'F'</code> since <code>&quot;6&quot;</code> is different from <code>&quot;06&quot;</code>.</p>
+<p>Given a string <code>s</code> containing only digits, return the number of ways to decode it.</p>
+<p>The answer is guaranteed to fit in a 32-bit integer.</p>
+<p><strong>Example 1:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: s &#x3D; &quot;12&quot;</span><br><span class="line">Output: 2</span><br><span class="line">Explanation: &quot;12&quot; could be decoded as &quot;AB&quot; (1 2) or &quot;L&quot; (12).</span><br></pre></td></tr></table></figure>
+<p><strong>Example 2:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: s &#x3D; &quot;226&quot;</span><br><span class="line">Output: 3</span><br><span class="line">Explanation: &quot;226&quot; could be decoded as &quot;BZ&quot; (2 26), &quot;VF&quot; (22 6), or &quot;BBF&quot; (2 2 6).</span><br></pre></td></tr></table></figure>
+<p><strong>Example 3:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Input: s &#x3D; &quot;0&quot;</span><br><span class="line">Output: 0</span><br><span class="line">Explanation: There is no character that is mapped to a number starting with 0.</span><br><span class="line">The only valid mappings with 0 are &#39;J&#39; -&gt; &quot;10&quot; and &#39;T&#39; -&gt; &quot;20&quot;, neither of which start with 0.</span><br><span class="line">Hence, there are no valid ways to decode this since all digits need to be mapped.</span><br></pre></td></tr></table></figure>
+<p><strong>Example 4:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: s &#x3D; &quot;06&quot;</span><br><span class="line">Output: 0</span><br><span class="line">Explanation: &quot;06&quot; cannot be mapped to &quot;F&quot; because of the leading zero (&quot;6&quot; is different from &quot;06&quot;).</span><br></pre></td></tr></table></figure>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo>≤</mo><mi mathvariant="normal">∣</mi><mi>s</mi><mi mathvariant="normal">∣</mi><mo>≤</mo><mn>100</mn></mrow><annotation encoding="application/x-tex">1 \le |s| \le 100</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.78041em;vertical-align:-0.13597em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">∣</span><span class="mord mathdefault">s</span><span class="mord">∣</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">0</span></span></span></span></p>
+</li>
+<li>
+<p><code>s</code> contains only digits and may contain leading zero(s).</p>
+</li>
+</ul>
 <hr />
-<p><strong>题意</strong></p>
-<p>xxx</p>
-<p><strong>题解</strong></p>
-<p>xxx</p>
-<p><img src="/images/LeetCode/LeetCode_0000.jpg" alt="" /></p>
+<h3 id="题意"><a class="markdownIt-Anchor" href="#题意"></a> 题意</h3>
+<p>给定一个仅由数字 <code>0-9</code> 组成的字符串 <code>s</code> ，可以将数字串 <code>1-26</code> 映射到字母 <code>A-Z</code> ，不允许用含有前导零的数字串进行映射，求有多少种方法将 <code>s</code> 转化为仅由字母 <code>A-Z</code> 组成的字符串。</p>
 <hr />
-<p><strong>AC代码</strong></p>
-<figure class="highlight cpp"><figcaption><span>LeetCode_0001.cpp</span><a href="/.//codes/LeetCode/LeetCode_0001.cpp">view raw</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> {</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">twoSum</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt; &amp; nums, <span class="keyword">int</span> target)</span> </span>{</span><br><span class="line">		<span class="comment">// 求解</span></span><br><span class="line">		unordered_map&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; ump;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.<span class="built_in">size</span>(); i ++) {</span><br><span class="line">			<span class="comment">// 查找</span></span><br><span class="line">			<span class="keyword">int</span> val = target - nums[i];</span><br><span class="line">			<span class="keyword">if</span> (ump.<span class="built_in">find</span>(val) != ump.<span class="built_in">end</span>()) {</span><br><span class="line">				<span class="keyword">return</span> vector&lt;<span class="keyword">int</span>&gt;({ump[val], i});</span><br><span class="line">			}</span><br><span class="line">			<span class="comment">// 插入</span></span><br><span class="line">			ump[nums[i]] = i;</span><br><span class="line">		}</span><br><span class="line">		<span class="comment">// 返回</span></span><br><span class="line">		<span class="keyword">return</span> vector&lt;<span class="keyword">int</span>&gt;({<span class="number">-1</span>, <span class="number">-1</span>});</span><br><span class="line">	}</span><br><span class="line">};</span><br></pre></td></tr></table></figure>
+<h3 id="题解"><a class="markdownIt-Anchor" href="#题解"></a> 题解</h3>
+<p>设 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi></mrow><annotation encoding="application/x-tex">s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">s</span></span></span></span> 的下标为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1..</mn><mi>n</mi></mrow><annotation encoding="application/x-tex">1..n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">.</span><span class="mord">.</span><span class="mord mathdefault">n</span></span></span></span> 。考虑动态规划，设 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><mi>p</mi><mo stretchy="false">[</mo><mi>i</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">dp[i]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span></span></span></span> 表示子串 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mo stretchy="false">[</mo><mn>1</mn><mo separator="true">,</mo><mtext> </mtext><mi>i</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">s[1,\ i]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">s</span><span class="mopen">[</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord mathdefault">i</span><span class="mclose">]</span></span></span></span> 的可行解的数量。</p>
+<p>不妨先假设长度为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn></mrow><annotation encoding="application/x-tex">2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span> 的任意数字串 <code>00-99</code> 都能合法映射，那么我们可以很容易地写出如下状态转移方程：</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo fence="true">{</mo><mtable rowspacing="0.3599999999999999em" columnalign="left left" columnspacing="1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mi>d</mi><mi>p</mi><mo stretchy="false">[</mo><mn>0</mn><mo stretchy="false">]</mo><mo>=</mo><mn>1</mn><mo separator="true">,</mo></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mo stretchy="false">(</mo><mi>i</mi><mi>n</mi><mi>i</mi><mi>t</mi><mi>i</mi><mi>a</mi><mi>l</mi><mi>i</mi><mi>z</mi><mi>e</mi><mo stretchy="false">)</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mi>d</mi><mi>p</mi><mo stretchy="false">[</mo><mn>1</mn><mo stretchy="false">]</mo><mo>=</mo><mn>1</mn><mo separator="true">,</mo></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mo stretchy="false">(</mo><mi>i</mi><mi>n</mi><mi>i</mi><mi>t</mi><mi>i</mi><mi>a</mi><mi>l</mi><mi>i</mi><mi>z</mi><mi>e</mi><mo stretchy="false">)</mo></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mi>d</mi><mi>p</mi><mo stretchy="false">[</mo><mi>i</mi><mo stretchy="false">]</mo><mo>=</mo><mi>d</mi><mi>p</mi><mo stretchy="false">[</mo><mi>i</mi><mo>−</mo><mn>1</mn><mo stretchy="false">]</mo><mo>+</mo><mi>d</mi><mi>p</mi><mo stretchy="false">[</mo><mi>i</mi><mo>−</mo><mn>2</mn><mo stretchy="false">]</mo><mo separator="true">,</mo></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mo stretchy="false">(</mo><mi>i</mi><mo>∈</mo><mo stretchy="false">[</mo><mn>2</mn><mo separator="true">,</mo><mtext> </mtext><mi>n</mi><mo stretchy="false">]</mo><mo stretchy="false">)</mo></mrow></mstyle></mtd></mtr></mtable></mrow><annotation encoding="application/x-tex">\begin{cases}
+dp[0] = 1, &amp;(initialize) \\
+dp[1] = 1, &amp;(initialize) \\
+dp[i] = dp[i - 1] + dp[i - 2], &amp;(i \in [2,\ n])
+\end{cases}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:4.32em;vertical-align:-1.9099999999999997em;"></span><span class="minner"><span class="mopen"><span class="delimsizing mult"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.35002em;"><span style="top:-2.19999em;"><span class="pstrut" style="height:3.15em;"></span><span class="delimsizinginner delim-size4"><span>⎩</span></span></span><span style="top:-2.19999em;"><span class="pstrut" style="height:3.15em;"></span><span class="delimsizinginner delim-size4"><span>⎪</span></span></span><span style="top:-3.1500100000000004em;"><span class="pstrut" style="height:3.15em;"></span><span class="delimsizinginner delim-size4"><span>⎨</span></span></span><span style="top:-4.30001em;"><span class="pstrut" style="height:3.15em;"></span><span class="delimsizinginner delim-size4"><span>⎪</span></span></span><span style="top:-4.60002em;"><span class="pstrut" style="height:3.15em;"></span><span class="delimsizinginner delim-size4"><span>⎧</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.8500199999999998em;"><span></span></span></span></span></span></span><span class="mord"><span class="mtable"><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.41em;"><span style="top:-4.41em;"><span class="pstrut" style="height:3.008em;"></span><span class="mord"><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span><span class="mopen">[</span><span class="mord">0</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord">1</span><span class="mpunct">,</span></span></span><span style="top:-2.97em;"><span class="pstrut" style="height:3.008em;"></span><span class="mord"><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span><span class="mopen">[</span><span class="mord">1</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord">1</span><span class="mpunct">,</span></span></span><span style="top:-1.5300000000000002em;"><span class="pstrut" style="height:3.008em;"></span><span class="mord"><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord">1</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord">2</span><span class="mclose">]</span><span class="mpunct">,</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.9099999999999997em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:1em;"></span><span class="col-align-l"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:2.41em;"><span style="top:-4.41em;"><span class="pstrut" style="height:3.008em;"></span><span class="mord"><span class="mopen">(</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault">i</span><span class="mord mathdefault">t</span><span class="mord mathdefault">i</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">i</span><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="mord mathdefault">e</span><span class="mclose">)</span></span></span><span style="top:-2.97em;"><span class="pstrut" style="height:3.008em;"></span><span class="mord"><span class="mopen">(</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault">i</span><span class="mord mathdefault">t</span><span class="mord mathdefault">i</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">i</span><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="mord mathdefault">e</span><span class="mclose">)</span></span></span><span style="top:-1.5300000000000002em;"><span class="pstrut" style="height:3.008em;"></span><span class="mord"><span class="mopen">(</span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mopen">[</span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord mathdefault">n</span><span class="mclose">]</span><span class="mclose">)</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:1.9099999999999997em;"><span></span></span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+<p>则 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><mi>p</mi><mo stretchy="false">[</mo><mi>n</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">dp[n]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span><span class="mopen">[</span><span class="mord mathdefault">n</span><span class="mclose">]</span></span></span></span> 即为答案。</p>
+<p>实际转移时，要分别判断 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mo stretchy="false">[</mo><mi>i</mi><mo separator="true">,</mo><mtext> </mtext><mi>i</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">s[i,\ i]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">s</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord mathdefault">i</span><span class="mclose">]</span></span></span></span> 和 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mo stretchy="false">[</mo><mi>i</mi><mo>−</mo><mn>1</mn><mo separator="true">,</mo><mtext> </mtext><mi>i</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">s[i - 1,\ i]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">s</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord mathdefault">i</span><span class="mclose">]</span></span></span></span> 是否为合法可映射的子串，并且一旦出现 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">∃</mi><mi>i</mi><mo>∈</mo><mo stretchy="false">[</mo><mn>1</mn><mo separator="true">,</mo><mtext> </mtext><mi>n</mi><mo stretchy="false">]</mo><mo separator="true">,</mo><mtext> </mtext><mi>d</mi><mi>p</mi><mo stretchy="false">[</mo><mi>i</mi><mo stretchy="false">]</mo><mo>=</mo><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\exists i \in [1,\ n],\ dp[i] == 0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.73354em;vertical-align:-0.0391em;"></span><span class="mord">∃</span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord mathdefault">n</span><span class="mclose">]</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span></span><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span> 则说明无解。</p>
+<p>细节问题：</p>
+<ol>
+<li>
+<p>注意特判 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mo stretchy="false">[</mo><mn>1</mn><mo stretchy="false">]</mo><mo>=</mo><msup><mo>=</mo><mo mathvariant="normal">′</mo></msup><msup><mn>0</mn><mo mathvariant="normal">′</mo></msup></mrow><annotation encoding="application/x-tex">s[1] == &#x27;0&#x27;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">s</span><span class="mopen">[</span><span class="mord">1</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span></span><span class="base"><span class="strut" style="height:0.751892em;vertical-align:0em;"></span><span class="mrel"><span class="mrel">=</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.751892em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.751892em;vertical-align:0em;"></span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.751892em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">′</span></span></span></span></span></span></span></span></span></span></span></span> 的情况。</p>
+</li>
+<li>
+<p>注意处理各种不存在合法映射的情况。</p>
+</li>
+</ol>
+<hr />
+<h3 id="ac代码"><a class="markdownIt-Anchor" href="#ac代码"></a> AC代码</h3>
+<figure class="highlight cpp"><figcaption><span>LeetCode_0091.cpp</span><a href="/.//codes/LeetCode/LeetCode_0091.cpp">view raw</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> {</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">check</span><span class="params">(<span class="keyword">char</span> a, <span class="keyword">char</span> b)</span> </span>{</span><br><span class="line">		<span class="keyword">int</span> x = a - <span class="string">&#x27;0&#x27;</span>, y = b - <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">		<span class="keyword">int</span> z = x * <span class="number">10</span> + y;</span><br><span class="line">		<span class="keyword">return</span> (x != <span class="number">0</span> &amp;&amp; z &gt;= <span class="number">1</span> &amp;&amp; z &lt;= <span class="number">26</span>);</span><br><span class="line">	}</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">numDecodings</span><span class="params">(<span class="keyword">const</span> string &amp; s)</span> </span>{</span><br><span class="line">		<span class="comment">// 特判</span></span><br><span class="line">		<span class="keyword">if</span> (s[<span class="number">0</span>] == <span class="string">&#x27;0&#x27;</span>) {</span><br><span class="line">			<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">		}</span><br><span class="line">		<span class="comment">// 初始化</span></span><br><span class="line">		<span class="keyword">int</span> n = s.<span class="built_in">length</span>();</span><br><span class="line">		<span class="keyword">int</span> dp[n + <span class="number">5</span>];</span><br><span class="line">		<span class="built_in">memset</span>(dp, <span class="number">0</span>, <span class="built_in"><span class="keyword">sizeof</span></span>(dp));</span><br><span class="line">		dp[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">		dp[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">		<span class="comment">// 递推</span></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= n; i ++) {</span><br><span class="line">			<span class="keyword">if</span> (s[i - <span class="number">1</span>] != <span class="string">&#x27;0&#x27;</span>) {</span><br><span class="line">				dp[i] += dp[i - <span class="number">1</span>];</span><br><span class="line">			}</span><br><span class="line">			<span class="keyword">if</span> (<span class="built_in">check</span>(s[i - <span class="number">2</span>], s[i - <span class="number">1</span>])) {</span><br><span class="line">				dp[i] += dp[i - <span class="number">2</span>];</span><br><span class="line">			}</span><br><span class="line">			<span class="keyword">if</span> (dp[i] == <span class="number">0</span>) {</span><br><span class="line">				<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">			}</span><br><span class="line">		}</span><br><span class="line">		<span class="comment">// 返回</span></span><br><span class="line">		<span class="keyword">return</span> dp[n];</span><br><span class="line">	}</span><br><span class="line">};</span><br></pre></td></tr></table></figure>
       
     </div>
 
@@ -302,7 +353,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://blog.jm233333.com/LeetCode/LeetCode%20xxx%20copy%2042/">
+    <link itemprop="mainEntityOfPage" href="https://blog.jm233333.com/LeetCode/LeetCode%200092%20-%20Reverse%20Linked%20List%20II/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -316,7 +367,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/LeetCode/LeetCode%20xxx%20copy%2042/" class="post-title-link" itemprop="url">LeetCode 0001 - xxx</a>
+            <a href="/LeetCode/LeetCode%200092%20-%20Reverse%20Linked%20List%20II/" class="post-title-link" itemprop="url">LeetCode 0092 - Reverse Linked List II</a>
         </h2>
 
         <div class="post-meta">
@@ -348,8 +399,8 @@
       <span class="post-meta-item-text">Changyan: </span>
     
     
-      <a title="changyan" href="/LeetCode/LeetCode%20xxx%20copy%2042/#SOHUCS" itemprop="discussionUrl">
-        <span id="url::https://blog.jm233333.com/LeetCode/LeetCode%20xxx%20copy%2042/" class="cy_cmt_count" data-xid="LeetCode/LeetCode xxx copy 42/" itemprop="commentCount"></span>
+      <a title="changyan" href="/LeetCode/LeetCode%200092%20-%20Reverse%20Linked%20List%20II/#SOHUCS" itemprop="discussionUrl">
+        <span id="url::https://blog.jm233333.com/LeetCode/LeetCode%200092%20-%20Reverse%20Linked%20List%20II/" class="cy_cmt_count" data-xid="LeetCode/LeetCode 0092 - Reverse Linked List II/" itemprop="commentCount"></span>
       </a>
     
   </span>
@@ -370,8 +421,20 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h4 id="xxx"><a class="markdownIt-Anchor" href="#xxx"></a> xxx</h4>
+          <h3 id="hints"><a class="markdownIt-Anchor" href="#hints"></a> Hints</h3>
+<ul>
+<li>
+<p>水题</p>
+</li>
+<li>
+<p>链表</p>
+</li>
+</ul>
 <hr />
+<h3 id="前置题目"><a class="markdownIt-Anchor" href="#前置题目"></a> 前置题目</h3>
+<p><a href="/LeetCode/LeetCode%200206%20-%20Reverse%20Linked%20List/">LeetCode 0206 - Reverse Linked List</a></p>
+<hr />
+<h3 id="题面"><a class="markdownIt-Anchor" href="#题面"></a> 题面</h3>
 <table>
 <thead>
 <tr>
@@ -388,16 +451,44 @@
 </tr>
 </tbody>
 </table>
-<p>xxx</p>
+<p>Given the head of a singly linked list and two integers <code>left</code> and <code>right</code> where <code>left &lt;= right</code> , reverse the nodes of the list from position <code>left</code> to position <code>right</code> , and return the reversed list.</p>
+<p><strong>Example 1:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: head &#x3D; [1,2,3,4,5], left &#x3D; 2, right &#x3D; 4</span><br><span class="line">Output: [1,4,3,2,5]</span><br></pre></td></tr></table></figure>
+<p><strong>Example 2:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: head &#x3D; [5], left &#x3D; 1, right &#x3D; 1</span><br><span class="line">Output: [5]</span><br></pre></td></tr></table></figure>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>
+<p>The number of nodes in the list is n.</p>
+</li>
+<li>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo>≤</mo><mi>n</mi><mo>≤</mo><mn>500</mn></mrow><annotation encoding="application/x-tex">1 \le n \le 500</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.78041em;vertical-align:-0.13597em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.7719400000000001em;vertical-align:-0.13597em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">5</span><span class="mord">0</span><span class="mord">0</span></span></span></span></p>
+</li>
+<li>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>−</mo><mn>500</mn><mo>≤</mo><mi>N</mi><mi>o</mi><mi>d</mi><mi>e</mi><mi mathvariant="normal">.</mi><mi>v</mi><mi>a</mi><mi>l</mi><mo>≤</mo><mn>500</mn></mrow><annotation encoding="application/x-tex">-500 \le Node.val \le 500</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.78041em;vertical-align:-0.13597em;"></span><span class="mord">−</span><span class="mord">5</span><span class="mord">0</span><span class="mord">0</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.83041em;vertical-align:-0.13597em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mord mathdefault">o</span><span class="mord mathdefault">d</span><span class="mord mathdefault">e</span><span class="mord">.</span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">5</span><span class="mord">0</span><span class="mord">0</span></span></span></span></p>
+</li>
+<li>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo>≤</mo><mi>l</mi><mi>e</mi><mi>f</mi><mi>t</mi><mo>≤</mo><mi>r</mi><mi>i</mi><mi>g</mi><mi>h</mi><mi>t</mi><mo>≤</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">1 \le left \le right \le n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.78041em;vertical-align:-0.13597em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">i</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">h</span><span class="mord mathdefault">t</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span></p>
+</li>
+</ul>
 <hr />
-<p><strong>题意</strong></p>
-<p>xxx</p>
-<p><strong>题解</strong></p>
-<p>xxx</p>
-<p><img src="/images/LeetCode/LeetCode_0000.jpg" alt="" /></p>
+<h3 id="题意"><a class="markdownIt-Anchor" href="#题意"></a> 题意</h3>
+<p>给定一个单链表，给定两个整数 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi></mrow><annotation encoding="application/x-tex">l</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span></span></span></span> 和 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>r</mi></mrow><annotation encoding="application/x-tex">r</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span> ，要求将子链表 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo stretchy="false">[</mo><mi>l</mi><mo separator="true">,</mo><mtext> </mtext><mi>r</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[l,\ r]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mclose">]</span></span></span></span> 的顺序翻转。</p>
 <hr />
-<p><strong>AC代码</strong></p>
-<figure class="highlight cpp"><figcaption><span>LeetCode_0001.cpp</span><a href="/.//codes/LeetCode/LeetCode_0001.cpp">view raw</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> {</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">twoSum</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt; &amp; nums, <span class="keyword">int</span> target)</span> </span>{</span><br><span class="line">		<span class="comment">// 求解</span></span><br><span class="line">		unordered_map&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; ump;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.<span class="built_in">size</span>(); i ++) {</span><br><span class="line">			<span class="comment">// 查找</span></span><br><span class="line">			<span class="keyword">int</span> val = target - nums[i];</span><br><span class="line">			<span class="keyword">if</span> (ump.<span class="built_in">find</span>(val) != ump.<span class="built_in">end</span>()) {</span><br><span class="line">				<span class="keyword">return</span> vector&lt;<span class="keyword">int</span>&gt;({ump[val], i});</span><br><span class="line">			}</span><br><span class="line">			<span class="comment">// 插入</span></span><br><span class="line">			ump[nums[i]] = i;</span><br><span class="line">		}</span><br><span class="line">		<span class="comment">// 返回</span></span><br><span class="line">		<span class="keyword">return</span> vector&lt;<span class="keyword">int</span>&gt;({<span class="number">-1</span>, <span class="number">-1</span>});</span><br><span class="line">	}</span><br><span class="line">};</span><br></pre></td></tr></table></figure>
+<h3 id="题解"><a class="markdownIt-Anchor" href="#题解"></a> 题解</h3>
+<p>本题是 <em>LeetCode 0206</em> 的简单扩展，我们只需找到 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">l - 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> 和 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>r</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">r + 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> 对应的节点位置，在翻转子链表之后单独处理边界处的指针即可。</p>
+<p>细节问题：</p>
+<ol>
+<li>
+<p>注意特判空链表。</p>
+</li>
+<li>
+<p>注意特判 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">l = 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> 的情况。</p>
+</li>
+</ol>
+<hr />
+<h3 id="ac代码"><a class="markdownIt-Anchor" href="#ac代码"></a> AC代码</h3>
+<figure class="highlight cpp"><figcaption><span>LeetCode_0092.cpp</span><a href="/.//codes/LeetCode/LeetCode_0092.cpp">view raw</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * struct ListNode {</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode * next;</span></span><br><span class="line"><span class="comment"> *     ListNode() : val(0), next(nullptr) {}</span></span><br><span class="line"><span class="comment"> *     ListNode(int x) : val(x), next(nullptr) {}</span></span><br><span class="line"><span class="comment"> *     ListNode(int x, ListNode * next) : val(x), next(next) {}</span></span><br><span class="line"><span class="comment"> * };</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> {</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function">ListNode * <span class="title">reverseBetween</span><span class="params">(ListNode * head, <span class="keyword">int</span> left, <span class="keyword">int</span> right)</span> </span>{</span><br><span class="line">		<span class="comment">// 特判</span></span><br><span class="line">		<span class="keyword">if</span> (head == <span class="literal">nullptr</span>) {</span><br><span class="line">			<span class="keyword">return</span> head;</span><br><span class="line">		}</span><br><span class="line">		<span class="comment">// 初始化</span></span><br><span class="line">		ListNode * prv = <span class="literal">nullptr</span>;</span><br><span class="line">		ListNode * cur = head;</span><br><span class="line">		<span class="keyword">int</span> idx = <span class="number">0</span>;</span><br><span class="line">		<span class="comment">// 获取边界</span></span><br><span class="line">		<span class="keyword">while</span> (cur != <span class="literal">nullptr</span> &amp;&amp; idx &lt; left - <span class="number">1</span>) {</span><br><span class="line">			prv = cur;</span><br><span class="line">			cur = cur-&gt;next;</span><br><span class="line">			idx ++;</span><br><span class="line">		}</span><br><span class="line">		ListNode * xprv = prv;</span><br><span class="line">		ListNode * xcur = cur;</span><br><span class="line">		<span class="comment">// 遍历</span></span><br><span class="line">		<span class="keyword">while</span> (cur != <span class="literal">nullptr</span> &amp;&amp; idx &lt; right) {</span><br><span class="line">			ListNode * nxt = cur-&gt;next;</span><br><span class="line">			cur-&gt;next = prv;</span><br><span class="line">			prv = cur;</span><br><span class="line">			cur = nxt;</span><br><span class="line">			idx ++;</span><br><span class="line">		}</span><br><span class="line">		<span class="comment">// 处理边界</span></span><br><span class="line">		<span class="keyword">if</span> (xprv != <span class="literal">nullptr</span>) {</span><br><span class="line">			xprv-&gt;next = prv;</span><br><span class="line">		} <span class="keyword">else</span> {</span><br><span class="line">			head = prv;</span><br><span class="line">		}</span><br><span class="line">		xcur-&gt;next = cur;</span><br><span class="line">		<span class="comment">// 返回</span></span><br><span class="line">		<span class="keyword">return</span> head;</span><br><span class="line">	}</span><br><span class="line">};</span><br></pre></td></tr></table></figure>
       
     </div>
 
@@ -416,7 +507,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://blog.jm233333.com/LeetCode/LeetCode%20xxx%20copy%2043/">
+    <link itemprop="mainEntityOfPage" href="https://blog.jm233333.com/LeetCode/LeetCode%200093%20-%20Restore%20IP%20Addresses/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -430,7 +521,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/LeetCode/LeetCode%20xxx%20copy%2043/" class="post-title-link" itemprop="url">LeetCode 0001 - xxx</a>
+            <a href="/LeetCode/LeetCode%200093%20-%20Restore%20IP%20Addresses/" class="post-title-link" itemprop="url">LeetCode 0093 - Restore IP Addresses</a>
         </h2>
 
         <div class="post-meta">
@@ -462,8 +553,8 @@
       <span class="post-meta-item-text">Changyan: </span>
     
     
-      <a title="changyan" href="/LeetCode/LeetCode%20xxx%20copy%2043/#SOHUCS" itemprop="discussionUrl">
-        <span id="url::https://blog.jm233333.com/LeetCode/LeetCode%20xxx%20copy%2043/" class="cy_cmt_count" data-xid="LeetCode/LeetCode xxx copy 43/" itemprop="commentCount"></span>
+      <a title="changyan" href="/LeetCode/LeetCode%200093%20-%20Restore%20IP%20Addresses/#SOHUCS" itemprop="discussionUrl">
+        <span id="url::https://blog.jm233333.com/LeetCode/LeetCode%200093%20-%20Restore%20IP%20Addresses/" class="cy_cmt_count" data-xid="LeetCode/LeetCode 0093 - Restore IP Addresses/" itemprop="commentCount"></span>
       </a>
     
   </span>
@@ -484,8 +575,17 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h4 id="xxx"><a class="markdownIt-Anchor" href="#xxx"></a> xxx</h4>
+          <h3 id="hints"><a class="markdownIt-Anchor" href="#hints"></a> Hints</h3>
+<ul>
+<li>
+<p>模拟</p>
+</li>
+<li>
+<p>DFS</p>
+</li>
+</ul>
 <hr />
+<h3 id="题面"><a class="markdownIt-Anchor" href="#题面"></a> 题面</h3>
 <table>
 <thead>
 <tr>
@@ -497,21 +597,45 @@
 <tbody>
 <tr>
 <td style="text-align:left">Medium</td>
-<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>−</mo></mrow><annotation encoding="application/x-tex">-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span></span></span></span></td>
 <td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>−</mo></mrow><annotation encoding="application/x-tex">-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span></span></span></span></td>
 </tr>
 </tbody>
 </table>
-<p>xxx</p>
+<p>Given a string <code>s</code> containing only digits, return all possible valid IP addresses that can be obtained from <code>s</code> . You can return them in <strong>any</strong> order.</p>
+<p>A valid IP address consists of exactly four integers, each integer is between <code>0</code> and <code>255</code> , separated by single dots and cannot have leading zeros. For example, <code>&quot;0.1.2.201&quot;</code> and <code>&quot;192.168.1.1&quot;</code> are valid IP addresses and <code>&quot;0.011.255.245&quot;</code> , <code>&quot;192.168.1.312&quot;</code> and <code>&quot;192.168@1.1&quot;</code> are invalid IP addresses.</p>
+<p><strong>Example 1:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: s &#x3D; &quot;25525511135&quot;</span><br><span class="line">Output: [&quot;255.255.11.135&quot;,&quot;255.255.111.35&quot;]</span><br></pre></td></tr></table></figure>
+<p><strong>Example 2:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: s &#x3D; &quot;0000&quot;</span><br><span class="line">Output: [&quot;0.0.0.0&quot;]</span><br></pre></td></tr></table></figure>
+<p><strong>Example 3:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: s &#x3D; &quot;1111&quot;</span><br><span class="line">Output: [&quot;1.1.1.1&quot;]</span><br></pre></td></tr></table></figure>
+<p><strong>Example 4:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: s &#x3D; &quot;010010&quot;</span><br><span class="line">Output: [&quot;0.10.0.10&quot;,&quot;0.100.1.0&quot;]</span><br></pre></td></tr></table></figure>
+<p><strong>Example 5:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: s &#x3D; &quot;101023&quot;</span><br><span class="line">Output: [&quot;1.0.10.23&quot;,&quot;1.0.102.3&quot;,&quot;10.1.0.23&quot;,&quot;10.10.2.3&quot;,&quot;101.0.2.3&quot;]</span><br></pre></td></tr></table></figure>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn><mo>≤</mo><mi mathvariant="normal">∣</mi><mi>s</mi><mi mathvariant="normal">∣</mi><mo>≤</mo><mn>3000</mn></mrow><annotation encoding="application/x-tex">0 \le |s| \le 3000</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.78041em;vertical-align:-0.13597em;"></span><span class="mord">0</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">∣</span><span class="mord mathdefault">s</span><span class="mord">∣</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span></span></span></span></p>
+</li>
+<li>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi></mrow><annotation encoding="application/x-tex">s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">s</span></span></span></span> consists of digits only.</p>
+</li>
+</ul>
 <hr />
-<p><strong>题意</strong></p>
-<p>xxx</p>
-<p><strong>题解</strong></p>
-<p>xxx</p>
-<p><img src="/images/LeetCode/LeetCode_0000.jpg" alt="" /></p>
+<h3 id="题意"><a class="markdownIt-Anchor" href="#题意"></a> 题意</h3>
+<p>给定一个仅含数字 <code>0-9</code> 的字符串 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi></mrow><annotation encoding="application/x-tex">s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">s</span></span></span></span> ，可以在 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi></mrow><annotation encoding="application/x-tex">s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">s</span></span></span></span> 中插入三个 <code>.</code> 字符将其转化为一个合法的 IP 地址，求所有可能的合法地址，答案可以以任意的顺序排列。</p>
 <hr />
-<p><strong>AC代码</strong></p>
-<figure class="highlight cpp"><figcaption><span>LeetCode_0001.cpp</span><a href="/.//codes/LeetCode/LeetCode_0001.cpp">view raw</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> {</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">twoSum</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt; &amp; nums, <span class="keyword">int</span> target)</span> </span>{</span><br><span class="line">		<span class="comment">// 求解</span></span><br><span class="line">		unordered_map&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; ump;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.<span class="built_in">size</span>(); i ++) {</span><br><span class="line">			<span class="comment">// 查找</span></span><br><span class="line">			<span class="keyword">int</span> val = target - nums[i];</span><br><span class="line">			<span class="keyword">if</span> (ump.<span class="built_in">find</span>(val) != ump.<span class="built_in">end</span>()) {</span><br><span class="line">				<span class="keyword">return</span> vector&lt;<span class="keyword">int</span>&gt;({ump[val], i});</span><br><span class="line">			}</span><br><span class="line">			<span class="comment">// 插入</span></span><br><span class="line">			ump[nums[i]] = i;</span><br><span class="line">		}</span><br><span class="line">		<span class="comment">// 返回</span></span><br><span class="line">		<span class="keyword">return</span> vector&lt;<span class="keyword">int</span>&gt;({<span class="number">-1</span>, <span class="number">-1</span>});</span><br><span class="line">	}</span><br><span class="line">};</span><br></pre></td></tr></table></figure>
+<h3 id="题解"><a class="markdownIt-Anchor" href="#题解"></a> 题解</h3>
+<p>按题意模拟，用 DFS 实现即可。</p>
+<p>细节问题：</p>
+<ol>
+<li>在递归时注意截断非法情况，若不及时剪枝会导致时间复杂度达到指数级，对于 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">∣</mi><mi>s</mi><mi mathvariant="normal">∣</mi><mo>≤</mo><mn>3000</mn></mrow><annotation encoding="application/x-tex">|s| \le 3000</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">∣</span><span class="mord mathdefault">s</span><span class="mord">∣</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span></span></span></span> 的数据范围来说是不可接受的。</li>
+</ol>
+<hr />
+<h3 id="ac代码"><a class="markdownIt-Anchor" href="#ac代码"></a> AC代码</h3>
+<figure class="highlight cpp"><figcaption><span>LeetCode_0093.cpp</span><a href="/.//codes/LeetCode/LeetCode_0093.cpp">view raw</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> {</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function">vector&lt;string&gt; <span class="title">restoreIpAddresses</span><span class="params">(<span class="keyword">const</span> string &amp; s)</span> </span>{</span><br><span class="line">		<span class="comment">// DFS</span></span><br><span class="line">		vector&lt;string&gt; vec;</span><br><span class="line">		vector&lt;string&gt; res;</span><br><span class="line">		<span class="built_in">dfs</span>(<span class="number">0</span>, <span class="number">0</span>, s, vec, res);</span><br><span class="line">		<span class="comment">// 返回</span></span><br><span class="line">		<span class="keyword">return</span> res;</span><br><span class="line">	}</span><br><span class="line">	<span class="comment">// 深度优先搜索</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> depth, <span class="keyword">int</span> index, <span class="keyword">const</span> string &amp; s, vector&lt;string&gt; &amp; vec, vector&lt;string&gt; &amp; res)</span> </span>{</span><br><span class="line">		<span class="comment">// 递归终止</span></span><br><span class="line">		<span class="keyword">if</span> (depth == <span class="number">4</span>) {</span><br><span class="line">			<span class="built_in">assert</span>(vec.<span class="built_in">size</span>() == <span class="number">4</span>);</span><br><span class="line">			string ip;</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; vec.<span class="built_in">size</span>(); i ++) {</span><br><span class="line">				ip += vec[i];</span><br><span class="line">				<span class="keyword">if</span> (i != (<span class="keyword">int</span>)vec.<span class="built_in">size</span>() - <span class="number">1</span>) {</span><br><span class="line">					ip += <span class="string">&#x27;.&#x27;</span>;</span><br><span class="line">				}</span><br><span class="line">			}</span><br><span class="line">			res.<span class="built_in">push_back</span>(ip);</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		}</span><br><span class="line">		<span class="keyword">if</span> (index &gt;= s.<span class="built_in">length</span>()) {</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		}</span><br><span class="line">		<span class="comment">// 递归</span></span><br><span class="line">		<span class="keyword">int</span> val = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = index; i &lt; s.<span class="built_in">length</span>(); i ++) {</span><br><span class="line">			val *= <span class="number">10</span>;</span><br><span class="line">			val += (s[i] - <span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">			<span class="keyword">if</span> (val &gt; <span class="number">255</span>) {</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			}</span><br><span class="line">			<span class="keyword">if</span> (depth &lt; <span class="number">3</span> || i == (<span class="keyword">int</span>)s.<span class="built_in">length</span>() - <span class="number">1</span>) {</span><br><span class="line">				vec.<span class="built_in">push_back</span>(s.<span class="built_in">substr</span>(index, i - index + <span class="number">1</span>));</span><br><span class="line">				<span class="built_in">dfs</span>(depth + <span class="number">1</span>, i + <span class="number">1</span>, s, vec, res);</span><br><span class="line">				vec.<span class="built_in">pop_back</span>();</span><br><span class="line">			}</span><br><span class="line">			<span class="keyword">if</span> (val == <span class="number">0</span>) {</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			}</span><br><span class="line">		}</span><br><span class="line">	}</span><br><span class="line">};</span><br></pre></td></tr></table></figure>
       
     </div>
 
@@ -530,7 +654,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://blog.jm233333.com/LeetCode/LeetCode%20xxx/">
+    <link itemprop="mainEntityOfPage" href="https://blog.jm233333.com/LeetCode/LeetCode%200094%20-%20/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -544,7 +668,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/LeetCode/LeetCode%20xxx/" class="post-title-link" itemprop="url">LeetCode 0001 - xxx</a>
+            <a href="/LeetCode/LeetCode%200094%20-%20/" class="post-title-link" itemprop="url">LeetCode 0094 -</a>
         </h2>
 
         <div class="post-meta">
@@ -554,7 +678,7 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2020-08-01 00:00:00" itemprop="dateCreated datePublished" datetime="2020-08-01T00:00:00+08:00">2020-08-01</time>
+              <time title="Created: 2021-05-01 00:00:00" itemprop="dateCreated datePublished" datetime="2021-05-01T00:00:00+08:00">2021-05-01</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -576,8 +700,8 @@
       <span class="post-meta-item-text">Changyan: </span>
     
     
-      <a title="changyan" href="/LeetCode/LeetCode%20xxx/#SOHUCS" itemprop="discussionUrl">
-        <span id="url::https://blog.jm233333.com/LeetCode/LeetCode%20xxx/" class="cy_cmt_count" data-xid="LeetCode/LeetCode xxx/" itemprop="commentCount"></span>
+      <a title="changyan" href="/LeetCode/LeetCode%200094%20-%20/#SOHUCS" itemprop="discussionUrl">
+        <span id="url::https://blog.jm233333.com/LeetCode/LeetCode%200094%20-%20/" class="cy_cmt_count" data-xid="LeetCode/LeetCode 0094 - /" itemprop="commentCount"></span>
       </a>
     
   </span>
@@ -598,8 +722,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h4 id="xxx"><a class="markdownIt-Anchor" href="#xxx"></a> xxx</h4>
+          <h3 id="hints"><a class="markdownIt-Anchor" href="#hints"></a> Hints</h3>
+<p>xxx</p>
 <hr />
+<h3 id="题面"><a class="markdownIt-Anchor" href="#题面"></a> 题面</h3>
 <table>
 <thead>
 <tr>
@@ -618,13 +744,14 @@
 </table>
 <p>xxx</p>
 <hr />
-<p><strong>题意</strong></p>
+<h3 id="题意"><a class="markdownIt-Anchor" href="#题意"></a> 题意</h3>
 <p>xxx</p>
-<p><strong>题解</strong></p>
+<hr />
+<h3 id="题解"><a class="markdownIt-Anchor" href="#题解"></a> 题解</h3>
 <p>xxx</p>
 <p><img src="/images/LeetCode/LeetCode_0000.jpg" alt="" /></p>
 <hr />
-<p><strong>AC代码</strong></p>
+<h3 id="ac代码"><a class="markdownIt-Anchor" href="#ac代码"></a> AC代码</h3>
 <figure class="highlight cpp"><figcaption><span>LeetCode_0001.cpp</span><a href="/.//codes/LeetCode/LeetCode_0001.cpp">view raw</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> {</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">twoSum</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt; &amp; nums, <span class="keyword">int</span> target)</span> </span>{</span><br><span class="line">		<span class="comment">// 求解</span></span><br><span class="line">		unordered_map&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; ump;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.<span class="built_in">size</span>(); i ++) {</span><br><span class="line">			<span class="comment">// 查找</span></span><br><span class="line">			<span class="keyword">int</span> val = target - nums[i];</span><br><span class="line">			<span class="keyword">if</span> (ump.<span class="built_in">find</span>(val) != ump.<span class="built_in">end</span>()) {</span><br><span class="line">				<span class="keyword">return</span> vector&lt;<span class="keyword">int</span>&gt;({ump[val], i});</span><br><span class="line">			}</span><br><span class="line">			<span class="comment">// 插入</span></span><br><span class="line">			ump[nums[i]] = i;</span><br><span class="line">		}</span><br><span class="line">		<span class="comment">// 返回</span></span><br><span class="line">		<span class="keyword">return</span> vector&lt;<span class="keyword">int</span>&gt;({<span class="number">-1</span>, <span class="number">-1</span>});</span><br><span class="line">	}</span><br><span class="line">};</span><br></pre></td></tr></table></figure>
       
     </div>
@@ -644,7 +771,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://blog.jm233333.com/Programming%20Languages/Programming%20Languages%2000%20-%20Overall%20Introduction/">
+    <link itemprop="mainEntityOfPage" href="https://blog.jm233333.com/LeetCode/LeetCode%200095%20-%20Unique%20Binary%20Search%20Trees%20II/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -658,7 +785,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/Programming%20Languages/Programming%20Languages%2000%20-%20Overall%20Introduction/" class="post-title-link" itemprop="url">Programming Languages 00 - Overall Introduction</a>
+            <a href="/LeetCode/LeetCode%200095%20-%20Unique%20Binary%20Search%20Trees%20II/" class="post-title-link" itemprop="url">LeetCode 0095 - Unique Binary Search Trees II</a>
         </h2>
 
         <div class="post-meta">
@@ -668,7 +795,7 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2020-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2020-01-01T00:00:00+08:00">2020-01-01</time>
+              <time title="Created: 2020-08-27 00:00:00" itemprop="dateCreated datePublished" datetime="2020-08-27T00:00:00+08:00">2020-08-27</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -676,7 +803,7 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Programming-Languages/" itemprop="url" rel="index"><span itemprop="name">Programming Languages</span></a>
+                  <a href="/categories/LeetCode/" itemprop="url" rel="index"><span itemprop="name">LeetCode</span></a>
                 </span>
             </span>
 
@@ -690,8 +817,8 @@
       <span class="post-meta-item-text">Changyan: </span>
     
     
-      <a title="changyan" href="/Programming%20Languages/Programming%20Languages%2000%20-%20Overall%20Introduction/#SOHUCS" itemprop="discussionUrl">
-        <span id="url::https://blog.jm233333.com/Programming%20Languages/Programming%20Languages%2000%20-%20Overall%20Introduction/" class="cy_cmt_count" data-xid="Programming Languages/Programming Languages 00 - Overall Introduction/" itemprop="commentCount"></span>
+      <a title="changyan" href="/LeetCode/LeetCode%200095%20-%20Unique%20Binary%20Search%20Trees%20II/#SOHUCS" itemprop="discussionUrl">
+        <span id="url::https://blog.jm233333.com/LeetCode/LeetCode%200095%20-%20Unique%20Binary%20Search%20Trees%20II/" class="cy_cmt_count" data-xid="LeetCode/LeetCode 0095 - Unique Binary Search Trees II/" itemprop="commentCount"></span>
       </a>
     
   </span>
@@ -712,127 +839,58 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h3>
-<p>这里是关于我的 <em>Programming Languages</em> 栏目下的文档内容的一些规范和解释。</p>
-<p>在本栏目中的文章中，我会分享一些我对我所学的各个编程语言的一些知识点的理解。我不会提供这些编程语言的手把手入门教程，这样的教程已经有太多太多了。相反，我会对语言中的重难点知识和新手易错点进行归纳总结，并尽可能地举一反三，帮助读者更深入地学习这些编程语言。</p>
-<p>基于上述条件，本栏目中的任何文章都假定你至少已经对“编程”有所认识，能写出一些简单的玩具级代码。</p>
-<p>在每个编程语言的板块内，每篇文档会有一个标号，这个标号表示了该文档大致的在当前知识板块内的相对级别，建议按标号从小到大阅读，标号相同的则无所谓。</p>
-<p>有些文档会具有相同的标号，这是按层划分的，可能会让您感到有些困惑，您可以参阅本文底部的阅读指引图来获得确切的阅读顺序。</p>
-<p>一些文档的开头会给出前置知识声明，如果你没有掌握这些知识，建议进行递归学习。这些前置声明和阅读指引图提供的顺序是相同的。</p>
-<p>每篇文档的开头均包含版权声明和对本文适用人群的声明，分为“面向初学者”和“面向进阶读者”两大类。</p>
-<p>面向初学者：</p>
-<ol>
-<li>
-<p>适合处在该编程语言的初学阶段的读者。</p>
-</li>
-<li>
-<p>假设读者未曾接触过文中介绍的知识，或是对该知识感到难以理解、学起来很吃力。</p>
-</li>
-<li>
-<p>通常会以大量的篇幅对简单的基础知识进行解释，用语言引导读者举一反三深入思考。</p>
-</li>
-<li>
-<p>会使用大量而又简单的代码实例并附上详细讲解，用大量的简单示例图来帮助学习。</p>
-</li>
-</ol>
-<p>面向进阶读者：</p>
-<ol>
-<li>
-<p>适合已经入门该编程语言，希望学习语言高级特性或深入底层的知识的读者。</p>
-</li>
-<li>
-<p>假设读者未曾接触过文中介绍的知识，或是对该知识感到难以理解、学起来很吃力。但默认读者已经掌握该编程语言的 <strong>所有</strong> 基础内容。</p>
-</li>
-</ol>
-<hr />
-<h3 id="阅读指引图"><a class="markdownIt-Anchor" href="#阅读指引图"></a> 阅读指引图</h3>
-<p>下面将分别给出每个知识板块对应的阅读指引图，其中：</p>
+          <h3 id="hints"><a class="markdownIt-Anchor" href="#hints"></a> Hints</h3>
 <ul>
 <li>
-<p>淡黄色方块表示面向初学者的文章。</p>
+<p>二叉树</p>
 </li>
 <li>
-<p>小麦色方块表示面向进阶读者的文章。</p>
+<p>DP</p>
 </li>
 <li>
-<p>箭头表示一组前置知识的关系。在阅读一篇文章前，推荐您先阅读其所有前置文章。</p>
-</li>
-<li>
-<p>虚线箭头表示一组建议的前置关系，是可选的，您可以选择忽略此类提示。</p>
-</li>
-<li>
-<p>空心大箭头表示你将进入到进阶区域。</p>
-</li>
-<li>
-<p>淡粉色方块表示来自其他知识板块的文章，因为它们是本板块内某些文章的前置知识，所以被专门标示出来。</p>
+<p>记忆化搜索</p>
 </li>
 </ul>
-<img src='https://g.gravizo.com/svg?'/>
-<h4 id="c"><a class="markdownIt-Anchor" href="#c"></a> C</h4>
-<p><img src="/images/Programming-Languages/Guideline/Guideline-C.png" alt="" /></p>
-<p>@startuml<br />
-hide members<br />
-hide circle<br />
-hide _B_01<br />
-hide _B_02</p>
-<p>class &quot; Overall Introduction &quot; as P0000 #FFEEFF</p>
-<p>class &quot; Introduction &quot; as C0000 &lt;<C>&gt;</p>
-<p>class &quot; Summary of Common Mistakes \n for Beginners &quot; as C0100 &lt;<C>&gt;<br />
-class &quot; Summary of Basic Debugging Skills &quot; as C0101 &lt;<C>&gt;<br />
-class &quot; Develop Good Coding Style and \n Programming Habits&quot; as C0102 &lt;<C>&gt;<br />
-class &quot; Convention of Naming Identifier &quot; as C0103 &lt;<C>&gt;<br />
-class &quot; The Right Way to Ask Others for Help &quot; as C0104 &lt;<C>&gt;</p>
-<p>class &quot; Pointer &quot; as C0200 &lt;<C>&gt;</p>
-<p>class &quot; Overview of C Standards &quot; as C0210 &lt;<C>&gt;<br />
-class &quot; Undefined Behavior and \n Unspecified Behavior &quot; as C0310 &lt;<C>&gt;<br />
-class &quot; Do not Abuse Side Effects \n in Subexpressions &quot;  as C0610 &lt;<C>&gt; #wheat</p>
-<p>class &quot; Function &quot; as C0300 &lt;<C>&gt;<br />
-class &quot; Types &quot; as C0301 &lt;<C>&gt;<br />
-class &quot; Input and Output &quot; as C0302 &lt;<C>&gt;</p>
-<p>class &quot; Dynamic Memory Allocation &quot; as C0400 &lt;<C>&gt;<br />
-class &quot; Type Conversion &quot; as C0401 &lt;<C>&gt;<br />
-class &quot; Declaration and Definition &quot; as C0402 &lt;<C>&gt;<br />
-class &quot; Lvalue and Rvalue &quot; as C0403 &lt;<C>&gt;</p>
-<p>class &quot; Memory Model and Layout &quot; as C0500 &lt;<C>&gt; #wheat<br />
-class &quot; Improve Your Code with [typedef] &quot; as C0501 &lt;<C>&gt; #wheat<br />
-class &quot; Array Name is NOT a Pointer &quot; as C0502 &lt;<C>&gt; #wheat</p>
-<p>class &quot; More about the Structure Type &quot; as C0600 &lt;<C>&gt; #wheat<br />
-class &quot; Macro &quot; as C0601 &lt;<C>&gt; #wheat</p>
-<p>P0000 --&gt; C0000</p>
-<p>C0000 -left-&gt; C0100<br />
-C0100 .left.&gt; C0101<br />
-C0000 -right-&gt; C0102<br />
-C0102 -right-&gt; C0103<br />
-C0000 --&gt; C0104</p>
-<p>C0000 —&gt; C0200<br />
-C0200 --&gt; C0300<br />
-C0200 --&gt; C0301<br />
-C0200 -right-&gt; C0302</p>
-<p>C0300 --&gt; C0400<br />
-C0300 --&gt; C0401<br />
-C0300 --&gt; C0402<br />
-C0301 --&gt; C0400<br />
-C0301 --&gt; C0401<br />
-C0301 --&gt; C0402<br />
-C0301 --&gt; C0403</p>
-<p>C0400 --|&gt; C0500<br />
-C0301 -right-|&gt; C0501<br />
-C0403 …|&gt; C0502<br />
-C0300 -left[hidden]-&gt; C0600<br />
-C0600 -left[hidden]-&gt; C0601</p>
-<p>C0000 --&gt; C0210<br />
-C0200 -left-&gt; C0310<br />
-C0310 -left-|&gt; C0610</p>
-<p>C0300 -right[hidden]-&gt; _B_01<br />
-_B_01 -right[hidden]-&gt; C0301</p>
-<p>C0100 -down[hidden]-&gt; C0210<br />
-C0100 -down[hidden]–&gt; C0310<br />
-C0102 -down[hidden]-&gt; C0104<br />
-C0102 -down[hidden]-&gt; C0302<br />
-C0400 -right[hidden]-&gt; C0402<br />
-C0402 -right[hidden]-&gt; C0401</p>
-<p>@enduml</p>
-
+<hr />
+<h3 id="前置题目"><a class="markdownIt-Anchor" href="#前置题目"></a> 前置题目</h3>
+<p><a href="/LeetCode/LeetCode%200096%20-%20Unique%20Binary%20Search%20Trees/">LeetCode 0096 - Unique Binary Search Trees</a></p>
+<hr />
+<h3 id="题面"><a class="markdownIt-Anchor" href="#题面"></a> 题面</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Difficulty</th>
+<th style="text-align:left">Time Complexity Limit</th>
+<th style="text-align:left">Extra-Memory Complexity Limit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Medium</td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>−</mo></mrow><annotation encoding="application/x-tex">-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span></span></span></span></td>
+<td style="text-align:left"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>−</mo></mrow><annotation encoding="application/x-tex">-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span></span></span></span></td>
+</tr>
+</tbody>
+</table>
+<p>Given an integer <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> , return all the structurally unique BST’s (binary search trees), which has exactly <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> nodes of unique values from <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> to <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> . Return the answer in any order.</p>
+<p><img src="/images/LeetCode/LeetCode_0096.jpg" alt="" /></p>
+<p><strong>Example 1:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: n &#x3D; 3</span><br><span class="line">Output: [[1,null,2,null,3],[1,null,3,2],[2,1,3],[3,1,null,null,2],[3,2,null,1]]</span><br></pre></td></tr></table></figure>
+<p><strong>Example 2:</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: n &#x3D; 1</span><br><span class="line">Output: [[1]]</span><br></pre></td></tr></table></figure>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo>≤</mo><mi>n</mi><mo>≤</mo><mn>8</mn></mrow><annotation encoding="application/x-tex">1 \le n \le 8</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.78041em;vertical-align:-0.13597em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.7719400000000001em;vertical-align:-0.13597em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">8</span></span></span></span></li>
+</ul>
+<hr />
+<h3 id="题意"><a class="markdownIt-Anchor" href="#题意"></a> 题意</h3>
+<p>给定一个正整数 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> ，求由键值为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo separator="true">,</mo><mn>2</mn><mo separator="true">,</mo><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mo separator="true">,</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">1, 2, ..., n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">.</span><span class="mord">.</span><span class="mord">.</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">n</span></span></span></span> 的 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> 个节点组成的二叉查找树的所有可能的结构。返回的结果可按任意顺序排列。</p>
+<hr />
+<h3 id="题解"><a class="markdownIt-Anchor" href="#题解"></a> 题解</h3>
+<p>根据 <em>LeetCode 0096</em> 的解法进行记忆化搜索即可。本题数据范围小，无需记忆化直接暴力 DFS 也能通过。</p>
+<hr />
+<h3 id="ac代码"><a class="markdownIt-Anchor" href="#ac代码"></a> AC代码</h3>
+<figure class="highlight cpp"><figcaption><span>LeetCode_0095.cpp</span><a href="/.//codes/LeetCode/LeetCode_0095.cpp">view raw</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * struct TreeNode {</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     TreeNode * left;</span></span><br><span class="line"><span class="comment"> *     TreeNode * right;</span></span><br><span class="line"><span class="comment"> *     TreeNode() : val(0), left(nullptr), right(nullptr) {}</span></span><br><span class="line"><span class="comment"> *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}</span></span><br><span class="line"><span class="comment"> *     TreeNode(int x, TreeNode * left, TreeNode * right) : val(x), left(left), right(right) {}</span></span><br><span class="line"><span class="comment"> * };</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> {</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="keyword">typedef</span> vector&lt;TreeNode *&gt; vectrees;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">int</span> MAXN = <span class="number">8</span> + <span class="number">1</span>;</span><br><span class="line">	vectrees dp[MAXN][MAXN];</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function">vectrees <span class="title">generateTrees</span><span class="params">(<span class="keyword">int</span> n)</span> </span>{</span><br><span class="line">		<span class="keyword">return</span> <span class="built_in">dfs</span>(<span class="number">1</span>, n);</span><br><span class="line">	}</span><br><span class="line">	<span class="comment">// 深度优先搜索</span></span><br><span class="line">	<span class="function">vectrees <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> left, <span class="keyword">int</span> right)</span> </span>{</span><br><span class="line">		<span class="comment">// 递归终止</span></span><br><span class="line">		<span class="keyword">if</span> (left &gt; right) {</span><br><span class="line">			<span class="keyword">return</span> <span class="built_in">vectrees</span>({<span class="literal">nullptr</span>});</span><br><span class="line">		}</span><br><span class="line">		<span class="keyword">if</span> (!dp[left][right].<span class="built_in">empty</span>()) {</span><br><span class="line">			<span class="keyword">return</span> dp[left][right];</span><br><span class="line">		}</span><br><span class="line">		<span class="comment">// 递归</span></span><br><span class="line">		vectrees curtrees;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = left; i &lt;= right; i ++) {</span><br><span class="line">			vectrees ltrees = <span class="built_in">dfs</span>(left, i - <span class="number">1</span>);</span><br><span class="line">			vectrees rtrees = <span class="built_in">dfs</span>(i + <span class="number">1</span>, right);</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">auto</span> l : ltrees) <span class="keyword">for</span> (<span class="keyword">auto</span> r : rtrees) {</span><br><span class="line">				TreeNode * root = <span class="keyword">new</span> <span class="built_in">TreeNode</span>(i, l, r);</span><br><span class="line">				curtrees.<span class="built_in">push_back</span>(root);</span><br><span class="line">			}</span><br><span class="line">		}</span><br><span class="line">		<span class="comment">// 返回</span></span><br><span class="line">		dp[left][right] = curtrees;</span><br><span class="line">		<span class="keyword">return</span> dp[left][right];</span><br><span class="line">	}</span><br><span class="line">};</span><br></pre></td></tr></table></figure>
       
     </div>
 
@@ -850,7 +908,7 @@ C0402 -right[hidden]-&gt; C0401</p>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/33/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/33/">33</a><span class="page-number current">34</span><a class="page-number" href="/page/35/">35</a><span class="space">&hellip;</span><a class="page-number" href="/page/48/">48</a><a class="extend next" rel="next" href="/page/35/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/33/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/33/">33</a><span class="page-number current">34</span><a class="page-number" href="/page/35/">35</a><span class="space">&hellip;</span><a class="page-number" href="/page/50/">50</a><a class="extend next" rel="next" href="/page/35/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -917,7 +975,7 @@ C0402 -right[hidden]-&gt; C0401</p>
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">238</span>
+          <span class="site-state-item-count">246</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -930,7 +988,7 @@ C0402 -right[hidden]-&gt; C0401</p>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">80</span>
+        <span class="site-state-item-count">83</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

@@ -19,15 +19,15 @@
     var CONFIG = {"hostname":"blog.jm233333.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"changyan","storage":true,"lazyload":false,"nav":null,"activeClass":"changyan"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="DFS     Difficulty Time Complexity Limit Extra-Memory Complexity Limit     Medium −-− −-−    Given a set of candidate numbers candidates (without duplicates) and a target number target , find all uni">
+  <meta name="description" content="Hints  DFS    题面    Difficulty Time Complexity Limit Extra-Memory Complexity Limit     Medium −-− −-−    Given a set of candidate numbers candidates (without duplicates) and a target number target ,">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LeetCode 0039 - Combination Sum">
 <meta property="og:url" content="https://blog.jm233333.com/LeetCode/LeetCode%200039%20-%20Combination%20Sum/index.html">
 <meta property="og:site_name" content="JM233333&#39;s Blog">
-<meta property="og:description" content="DFS     Difficulty Time Complexity Limit Extra-Memory Complexity Limit     Medium −-− −-−    Given a set of candidate numbers candidates (without duplicates) and a target number target , find all uni">
+<meta property="og:description" content="Hints  DFS    题面    Difficulty Time Complexity Limit Extra-Memory Complexity Limit     Medium −-− −-−    Given a set of candidate numbers candidates (without duplicates) and a target number target ,">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-11-19T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-07-30T13:54:45.551Z">
+<meta property="article:modified_time" content="2021-04-14T15:36:39.476Z">
 <meta property="article:author" content="JM233333">
 <meta property="article:tag" content="LeetCode">
 <meta property="article:tag" content="LeetCode Medium">
@@ -133,7 +133,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">80</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">83</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -264,8 +264,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h4 id="dfs"><a class="markdownIt-Anchor" href="#dfs"></a> DFS</h4>
+        <h3 id="hints"><a class="markdownIt-Anchor" href="#hints"></a> Hints</h3>
+<ul>
+<li>DFS</li>
+</ul>
 <hr />
+<h3 id="题面"><a class="markdownIt-Anchor" href="#题面"></a> 题面</h3>
 <table>
 <thead>
 <tr>
@@ -298,13 +302,14 @@
 <p><strong>Example 2:</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Input: candidates &#x3D; [2,3,5], target &#x3D; 8,</span><br><span class="line">A solution set is:</span><br><span class="line">[</span><br><span class="line">  [2,2,2,2],</span><br><span class="line">  [2,3,3],</span><br><span class="line">  [3,5]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
 <hr />
-<p><strong>题意</strong></p>
+<h3 id="题意"><a class="markdownIt-Anchor" href="#题意"></a> 题意</h3>
 <p>给定一个长为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> 的正整数数组 <code>candidates</code> ，数组中不含重复元素。给定一个整数 <code>target</code> ，要求从 <code>candidates</code> 中选择若干个数，其和恰好为 <code>target</code> 。每个数可以选择任意多次，要求求出所有的合法选数方案。</p>
-<p><strong>题解</strong></p>
+<hr />
+<h3 id="题解"><a class="markdownIt-Anchor" href="#题解"></a> 题解</h3>
 <p>直接 DFS 暴力枚举所有方案即可。</p>
 <p>可以进行一个简单的剪枝。我们先将数组升序排序，然后依次枚举每个数的选择次数。设 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 为当前枚举到的数的下标，当已选数之和 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>u</mi><mi>m</mi></mrow><annotation encoding="application/x-tex">sum</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">u</span><span class="mord mathdefault">m</span></span></span></span> 满足 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>u</mi><mi>m</mi><mo>+</mo><mi>c</mi><mi>a</mi><mi>n</mi><mi>d</mi><mi>i</mi><mi>d</mi><mi>a</mi><mi>t</mi><mi>e</mi><mi>s</mi><mo stretchy="false">[</mo><mi>i</mi><mo stretchy="false">]</mo><mo>&gt;</mo><mi>t</mi><mi>a</mi><mi>r</mi><mi>g</mi><mi>e</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">sum + candidates[i] &gt; target</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">u</span><span class="mord mathdefault">m</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">a</span><span class="mord mathdefault">n</span><span class="mord mathdefault">d</span><span class="mord mathdefault">i</span><span class="mord mathdefault">d</span><span class="mord mathdefault">a</span><span class="mord mathdefault">t</span><span class="mord mathdefault">e</span><span class="mord mathdefault">s</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.80952em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">t</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">e</span><span class="mord mathdefault">t</span></span></span></span> 时，说明无论接下来如何选都会导致总和超过 <code>target</code> ，可停止当前支路的搜索。</p>
 <hr />
-<p><strong>AC代码</strong></p>
+<h3 id="ac代码"><a class="markdownIt-Anchor" href="#ac代码"></a> AC代码</h3>
 <figure class="highlight cpp"><figcaption><span>LeetCode_0039.cpp</span><a href="/.//codes/LeetCode/LeetCode_0039.cpp">view raw</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> {</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	vector&lt;vector&lt;<span class="keyword">int</span>&gt;&gt; <span class="built_in">combinationSum</span>(vector&lt;<span class="keyword">int</span>&gt; &amp; candidates, <span class="keyword">int</span> target) {</span><br><span class="line">		<span class="comment">// 排序</span></span><br><span class="line">		<span class="built_in">sort</span>(candidates.<span class="built_in">begin</span>(), candidates.<span class="built_in">end</span>());</span><br><span class="line">		<span class="comment">// DFS</span></span><br><span class="line">		vector&lt;vector&lt;<span class="keyword">int</span>&gt;&gt; res;</span><br><span class="line">		vector&lt;<span class="keyword">int</span>&gt; vec;</span><br><span class="line">		<span class="built_in">dfs</span>(<span class="number">0</span>, target, vec, res, candidates);</span><br><span class="line">		<span class="comment">// 返回</span></span><br><span class="line">		<span class="keyword">return</span> res;</span><br><span class="line">	}</span><br><span class="line">	<span class="comment">// 深度优先搜索</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> index, <span class="keyword">int</span> target, vector&lt;<span class="keyword">int</span>&gt; &amp; vec, vector&lt;vector&lt;<span class="keyword">int</span>&gt;&gt; &amp; res, <span class="keyword">const</span> vector&lt;<span class="keyword">int</span>&gt; &amp; candidates)</span> </span>{</span><br><span class="line">		<span class="comment">// 递归终止</span></span><br><span class="line">		<span class="keyword">if</span> (target == <span class="number">0</span>) {</span><br><span class="line">			res.<span class="built_in">push_back</span>(vec);</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		}</span><br><span class="line">		<span class="keyword">if</span> (index == candidates.<span class="built_in">size</span>()) {</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		}</span><br><span class="line">		<span class="comment">// 剪枝</span></span><br><span class="line">		<span class="keyword">if</span> (target &lt; candidates[index]) {</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		}</span><br><span class="line">		<span class="comment">// 递归</span></span><br><span class="line">		<span class="keyword">int</span> m = target / candidates[index];</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= m; i ++) {</span><br><span class="line">			<span class="built_in">dfs</span>(index + <span class="number">1</span>, target - i * candidates[index], vec, res, candidates);</span><br><span class="line">			vec.<span class="built_in">push_back</span>(candidates[index]);</span><br><span class="line">		}</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= m; i ++) {</span><br><span class="line">			vec.<span class="built_in">pop_back</span>();</span><br><span class="line">		}</span><br><span class="line">	}</span><br><span class="line">};</span><br></pre></td></tr></table></figure>
     </div>
 
@@ -413,7 +418,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#dfs"><span class="nav-number">1.</span> <span class="nav-text"> DFS</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#hints"><span class="nav-number">1.</span> <span class="nav-text"> Hints</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E9%9D%A2"><span class="nav-number">2.</span> <span class="nav-text"> 题面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E6%84%8F"><span class="nav-number">3.</span> <span class="nav-text"> 题意</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-number">4.</span> <span class="nav-text"> 题解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ac%E4%BB%A3%E7%A0%81"><span class="nav-number">5.</span> <span class="nav-text"> AC代码</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -428,7 +433,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">238</span>
+          <span class="site-state-item-count">246</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -441,7 +446,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">80</span>
+        <span class="site-state-item-count">83</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

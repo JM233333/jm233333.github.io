@@ -19,15 +19,15 @@
     var CONFIG = {"hostname":"blog.jm233333.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"changyan","storage":true,"lazyload":false,"nav":null,"activeClass":"changyan"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="水题     Difficulty Time Complexity Limit Extra-Memory Complexity Limit     Easy O(n)O(n)O(n) −-−    Given a non-empty array of digits representing a non-negative integer, increment one to the integer.">
+  <meta name="description" content="Hints  水题    题面    Difficulty Time Complexity Limit Extra-Memory Complexity Limit     Easy O(n)O(n)O(n) −-−    Given a non-empty array of digits representing a non-negative integer, increment one to">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LeetCode 0066 - Plus One">
 <meta property="og:url" content="https://blog.jm233333.com/LeetCode/LeetCode%200066%20-%20Plus%20One/index.html">
 <meta property="og:site_name" content="JM233333&#39;s Blog">
-<meta property="og:description" content="水题     Difficulty Time Complexity Limit Extra-Memory Complexity Limit     Easy O(n)O(n)O(n) −-−    Given a non-empty array of digits representing a non-negative integer, increment one to the integer.">
+<meta property="og:description" content="Hints  水题    题面    Difficulty Time Complexity Limit Extra-Memory Complexity Limit     Easy O(n)O(n)O(n) −-−    Given a non-empty array of digits representing a non-negative integer, increment one to">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-08-11T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-08-12T12:41:18.457Z">
+<meta property="article:modified_time" content="2021-04-14T15:38:53.842Z">
 <meta property="article:author" content="JM233333">
 <meta property="article:tag" content="LeetCode">
 <meta property="article:tag" content="LeetCode Easy">
@@ -132,7 +132,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">80</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">83</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -263,8 +263,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h4 id="水题"><a class="markdownIt-Anchor" href="#水题"></a> 水题</h4>
+        <h3 id="hints"><a class="markdownIt-Anchor" href="#hints"></a> Hints</h3>
+<ul>
+<li>水题</li>
+</ul>
 <hr />
+<h3 id="题面"><a class="markdownIt-Anchor" href="#题面"></a> 题面</h3>
 <table>
 <thead>
 <tr>
@@ -289,16 +293,17 @@
 <p><strong>Example 2:</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: [4,3,2,1]</span><br><span class="line">Output: [4,3,2,2]</span><br><span class="line">Explanation: The array represents the integer 4321.</span><br></pre></td></tr></table></figure>
 <hr />
-<p><strong>题意</strong></p>
+<h3 id="题意"><a class="markdownIt-Anchor" href="#题意"></a> 题意</h3>
 <p>给定一个由个位数字组成的数组，该数组表示了一个非负整数的各个数位，要求将该整数 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">+</span><span class="mord">1</span></span></span></span> ，并返回新的、由个位数字组成的数组。输入保证不含前导零（除 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span> 本身以外）。</p>
-<p><strong>题解</strong></p>
+<hr />
+<h3 id="题解"><a class="markdownIt-Anchor" href="#题解"></a> 题解</h3>
 <p>水题，直接模拟即可。</p>
 <p>细节问题：</p>
 <ol>
 <li>注意处理形如 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>999</mn></mrow><annotation encoding="application/x-tex">999</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">9</span><span class="mord">9</span><span class="mord">9</span></span></span></span> 的情况。</li>
 </ol>
 <hr />
-<p><strong>AC代码</strong></p>
+<h3 id="ac代码"><a class="markdownIt-Anchor" href="#ac代码"></a> AC代码</h3>
 <figure class="highlight cpp"><figcaption><span>LeetCode_0066.cpp</span><a href="/.//codes/LeetCode/LeetCode_0066.cpp">view raw</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> {</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">plusOne</span><span class="params">(vector&lt;<span class="keyword">int</span>&gt; &amp; digits)</span> </span>{</span><br><span class="line">		<span class="comment">// 初始化</span></span><br><span class="line">		<span class="keyword">int</span> n = digits.<span class="built_in">size</span>();</span><br><span class="line">		vector&lt;<span class="keyword">int</span>&gt; res;</span><br><span class="line">		<span class="comment">// 求解</span></span><br><span class="line">		<span class="keyword">bool</span> added = <span class="literal">true</span>;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = n - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i --) {</span><br><span class="line">			<span class="keyword">if</span> (added) {</span><br><span class="line">				<span class="keyword">int</span> x = digits[i] + <span class="number">1</span>;</span><br><span class="line">				res.<span class="built_in">push_back</span>(x % <span class="number">10</span>);</span><br><span class="line">				added = (x == <span class="number">10</span>);</span><br><span class="line">			} <span class="keyword">else</span> {</span><br><span class="line">				res.<span class="built_in">push_back</span>(digits[i]);</span><br><span class="line">			}</span><br><span class="line">		}</span><br><span class="line">		<span class="keyword">if</span> (added) {</span><br><span class="line">			res.<span class="built_in">push_back</span>(<span class="number">1</span>);</span><br><span class="line">		}</span><br><span class="line">		<span class="comment">// 返回</span></span><br><span class="line">		<span class="built_in">reverse</span>(res.<span class="built_in">begin</span>(), res.<span class="built_in">end</span>());</span><br><span class="line">		<span class="keyword">return</span> res;</span><br><span class="line">	}</span><br><span class="line">};</span><br></pre></td></tr></table></figure>
     </div>
 
@@ -336,8 +341,8 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/LeetCode/LeetCode%200063%20-%20Unique%20Paths%20II/" rel="prev" title="LeetCode 0063 - Unique Paths II">
-      <i class="fa fa-chevron-left"></i> LeetCode 0063 - Unique Paths II
+    <a href="/LeetCode/LeetCode%200064%20-%20Minimum%20Path%20Sum/" rel="prev" title="LeetCode 0064 - Minimum Path Sum">
+      <i class="fa fa-chevron-left"></i> LeetCode 0064 - Minimum Path Sum
     </a></div>
       <div class="post-nav-item">
     <a href="/LeetCode/LeetCode%200065%20-%20Valid%20Number/" rel="next" title="LeetCode 0065 - Valid Number">
@@ -406,7 +411,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B0%B4%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text"> 水题</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#hints"><span class="nav-number">1.</span> <span class="nav-text"> Hints</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E9%9D%A2"><span class="nav-number">2.</span> <span class="nav-text"> 题面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E6%84%8F"><span class="nav-number">3.</span> <span class="nav-text"> 题意</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-number">4.</span> <span class="nav-text"> 题解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ac%E4%BB%A3%E7%A0%81"><span class="nav-number">5.</span> <span class="nav-text"> AC代码</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -421,7 +426,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">238</span>
+          <span class="site-state-item-count">246</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -434,7 +439,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">80</span>
+        <span class="site-state-item-count">83</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

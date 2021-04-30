@@ -19,15 +19,15 @@
     var CONFIG = {"hostname":"blog.jm233333.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"changyan","storage":true,"lazyload":false,"nav":null,"activeClass":"changyan"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="水题 || KMP     Difficulty Time Complexity Limit Extra-Memory Complexity Limit     Easy O(nm)O(nm)O(nm) or O(n+m)O(n + m)O(n+m) −-−    Implement strStr() . Return the index of the first occurrence of n">
+  <meta name="description" content="Hints   水题   KMP     题面    Difficulty Time Complexity Limit Extra-Memory Complexity Limit     Easy O(nm)O(nm)O(nm) or O(n+m)O(n + m)O(n+m) −-−    Implement strStr() . Return the index of the first oc">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LeetCode 0028 - Implement strStr()">
 <meta property="og:url" content="https://blog.jm233333.com/LeetCode/LeetCode%200028%20-%20Implement%20strStr()/index.html">
 <meta property="og:site_name" content="JM233333&#39;s Blog">
-<meta property="og:description" content="水题 || KMP     Difficulty Time Complexity Limit Extra-Memory Complexity Limit     Easy O(nm)O(nm)O(nm) or O(n+m)O(n + m)O(n+m) −-−    Implement strStr() . Return the index of the first occurrence of n">
+<meta property="og:description" content="Hints   水题   KMP     题面    Difficulty Time Complexity Limit Extra-Memory Complexity Limit     Easy O(nm)O(nm)O(nm) or O(n+m)O(n + m)O(n+m) −-−    Implement strStr() . Return the index of the first oc">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-11-13T16:00:00.000Z">
-<meta property="article:modified_time" content="2019-11-07T08:57:37.205Z">
+<meta property="article:modified_time" content="2021-04-14T15:35:52.327Z">
 <meta property="article:author" content="JM233333">
 <meta property="article:tag" content="LeetCode">
 <meta property="article:tag" content="LeetCode Easy">
@@ -133,7 +133,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">80</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">83</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -264,8 +264,17 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h4 id="水题-kmp"><a class="markdownIt-Anchor" href="#水题-kmp"></a> 水题 || KMP</h4>
+        <h3 id="hints"><a class="markdownIt-Anchor" href="#hints"></a> Hints</h3>
+<ul>
+<li>
+<p>水题</p>
+</li>
+<li>
+<p>KMP</p>
+</li>
+</ul>
 <hr />
+<h3 id="题面"><a class="markdownIt-Anchor" href="#题面"></a> 题面</h3>
 <table>
 <thead>
 <tr>
@@ -292,9 +301,10 @@
 <p>What should we return when needle is an empty string? This is a great question to ask during an interview.</p>
 <p>For the purpose of this problem, we will return 0 when needle is an empty string. This is consistent to C’s <code>strstr()</code> and Java’s <code>indexOf()</code> .</p>
 <hr />
-<p><strong>题意</strong></p>
+<h3 id="题意"><a class="markdownIt-Anchor" href="#题意"></a> 题意</h3>
 <p>给定两个字符串 <code>haystack</code> 和 <code>needle</code> ，求 <code>needle</code> 在 <code>haystack</code> 中首次出现的下标，如果未出现则返回 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">−</span><span class="mord">1</span></span></span></span> 。</p>
-<p><strong>题解</strong></p>
+<hr />
+<h3 id="题解"><a class="markdownIt-Anchor" href="#题解"></a> 题解</h3>
 <p>字符串的单模式匹配问题，对于本题而言，暴力求解和KMP算法均可。</p>
 <p>由于本题数据量太小，考虑到常数的原因，KMP的运行速度甚至未必有暴力求解更高，但性能优越的KMP算法仍然是有必要掌握的。</p>
 <p>细节问题：</p>
@@ -302,9 +312,9 @@
 <li>当 <code>needle</code> 为空时应当返回 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span> 是合理的。</li>
 </ol>
 <hr />
-<p><strong>AC代码（暴力求解）</strong></p>
+<h3 id="ac代码暴力求解"><a class="markdownIt-Anchor" href="#ac代码暴力求解"></a> AC代码（暴力求解）</h3>
 <figure class="highlight cpp"><figcaption><span>LeetCode_0028_1.cpp</span><a href="/.//codes/LeetCode/LeetCode_0028_1.cpp">view raw</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> {</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">strStr</span><span class="params">(string haystack, string needle)</span> </span>{</span><br><span class="line">		<span class="comment">// ����</span></span><br><span class="line">		<span class="keyword">if</span> (needle.<span class="built_in">length</span>() == <span class="number">0</span>) {</span><br><span class="line">			<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">		}</span><br><span class="line">		<span class="comment">// ���</span></span><br><span class="line">		<span class="keyword">int</span> n = haystack.<span class="built_in">length</span>(), m = needle.<span class="built_in">length</span>();</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> t = <span class="number">0</span>; t + m - <span class="number">1</span> &lt; n; t ++) {</span><br><span class="line">			<span class="comment">// ƥ��</span></span><br><span class="line">			<span class="keyword">int</span> i = t, j = <span class="number">0</span>;</span><br><span class="line">			<span class="keyword">while</span> (j &lt; m &amp;&amp; haystack[i] == needle[j]) {</span><br><span class="line">				i ++;</span><br><span class="line">				j ++;</span><br><span class="line">			}</span><br><span class="line">			<span class="comment">// ƥ��ɹ������</span></span><br><span class="line">			<span class="keyword">if</span> (j == m) {</span><br><span class="line">				<span class="keyword">return</span> t;</span><br><span class="line">			}</span><br><span class="line">		}</span><br><span class="line">		<span class="comment">// ����</span></span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	}</span><br><span class="line">};</span><br></pre></td></tr></table></figure>
-<p><strong>AC代码（KMP）</strong></p>
+<h3 id="ac代码kmp"><a class="markdownIt-Anchor" href="#ac代码kmp"></a> AC代码（KMP）</h3>
 <figure class="highlight cpp"><figcaption><span>LeetCode_0028_2.cpp</span><a href="/.//codes/LeetCode/LeetCode_0028_2.cpp">view raw</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> {</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">strStr</span><span class="params">(string haystack, string needle)</span> </span>{</span><br><span class="line">		<span class="comment">// ����</span></span><br><span class="line">		<span class="keyword">if</span> (needle.<span class="built_in">length</span>() == <span class="number">0</span>) {</span><br><span class="line">			<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">		}</span><br><span class="line">		<span class="comment">// ��ʼ��</span></span><br><span class="line">		<span class="keyword">int</span> fail[needle.<span class="built_in">length</span>() + <span class="number">5</span>];</span><br><span class="line">		<span class="comment">// KMP</span></span><br><span class="line">		<span class="built_in">make_fail</span>(needle, fail);</span><br><span class="line">		<span class="keyword">return</span> <span class="built_in">kmp</span>(haystack, needle, fail);</span><br><span class="line">	}</span><br><span class="line">	<span class="comment">// ����fail����</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">make_fail</span><span class="params">(<span class="keyword">const</span> string &amp; mode, <span class="keyword">int</span> fail[])</span> </span>{</span><br><span class="line">		<span class="comment">// ��ʼ��</span></span><br><span class="line">		fail[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">		<span class="comment">// ����</span></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>, j = <span class="number">0</span>; i &lt; mode.<span class="built_in">length</span>(); i ++) {</span><br><span class="line">			<span class="keyword">while</span> (j &gt; <span class="number">0</span> &amp;&amp; mode[i] != mode[j]) {</span><br><span class="line">				j = fail[j - <span class="number">1</span>];</span><br><span class="line">			}</span><br><span class="line">			<span class="keyword">if</span> (mode[i] == mode[j]) {</span><br><span class="line">				fail[i] = ++j;</span><br><span class="line">			} <span class="keyword">else</span> {</span><br><span class="line">				fail[i] = <span class="number">0</span>;</span><br><span class="line">			}</span><br><span class="line">		}</span><br><span class="line">	}</span><br><span class="line">	<span class="comment">// KMP</span></span><br><span class="line">	<span class="function"><span class="keyword">int</span> <span class="title">kmp</span><span class="params">(<span class="keyword">const</span> string &amp; str, <span class="keyword">const</span> string &amp; mode, <span class="keyword">int</span> fail[])</span> </span>{</span><br><span class="line">		<span class="comment">// ����</span></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>; i &lt; str.<span class="built_in">length</span>(); i ++) {</span><br><span class="line">			<span class="keyword">while</span> (j &gt; <span class="number">0</span> &amp;&amp; str[i] != mode[j]) {</span><br><span class="line">				j = fail[j - <span class="number">1</span>];</span><br><span class="line">			}</span><br><span class="line">			<span class="keyword">if</span> (str[i] == mode[j]) {</span><br><span class="line">				j ++;</span><br><span class="line">			}</span><br><span class="line">			<span class="keyword">if</span> (j == mode.<span class="built_in">length</span>()) {</span><br><span class="line">				<span class="keyword">return</span> (i - mode.<span class="built_in">length</span>() + <span class="number">1</span>);</span><br><span class="line">			}</span><br><span class="line">		}</span><br><span class="line">		<span class="comment">// ����</span></span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	}</span><br><span class="line">};</span><br></pre></td></tr></table></figure>
     </div>
 
@@ -413,7 +423,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B0%B4%E9%A2%98-kmp"><span class="nav-number">1.</span> <span class="nav-text"> 水题 || KMP</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#hints"><span class="nav-number">1.</span> <span class="nav-text"> Hints</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E9%9D%A2"><span class="nav-number">2.</span> <span class="nav-text"> 题面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E6%84%8F"><span class="nav-number">3.</span> <span class="nav-text"> 题意</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-number">4.</span> <span class="nav-text"> 题解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ac%E4%BB%A3%E7%A0%81%E6%9A%B4%E5%8A%9B%E6%B1%82%E8%A7%A3"><span class="nav-number">5.</span> <span class="nav-text"> AC代码（暴力求解）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ac%E4%BB%A3%E7%A0%81kmp"><span class="nav-number">6.</span> <span class="nav-text"> AC代码（KMP）</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -428,7 +438,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">238</span>
+          <span class="site-state-item-count">246</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -441,7 +451,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">80</span>
+        <span class="site-state-item-count">83</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

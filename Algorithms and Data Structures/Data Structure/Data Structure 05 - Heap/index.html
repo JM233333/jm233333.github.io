@@ -19,16 +19,16 @@
     var CONFIG = {"hostname":"blog.jm233333.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"changyan","storage":true,"lazyload":false,"nav":null,"activeClass":"changyan"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="前置知识 在阅读本文档前，请确保你已经掌握二叉树的基础知识，详见 Data Structure 知识板块中的 04 - Binary Tree 文档。  Data Structure 04 - Binary Tree    基本概念 堆 (Heap) 是一种满足 堆属性 (heap property) 的树或森林。我们称堆上每个节点上的元素值为节点的 键值 (key) 。 如果在树上任取一个节点">
+  <meta name="description" content="前置知识 在阅读本文档前，请确保你已经掌握二叉树的基础知识，详见 Data Structure 知识板块中的 04 - Binary Tree 文档。  Data Structure 04 - Binary Tree    基本概念 堆 (Heap) 是一种满足堆属性的树或森林。我们称堆上每个节点上的元素值为节点的 键值 (key) 。 如果在树上（或森林中）任取一个节点 PPP ，对于 PP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Data Structure 05 - Heap">
 <meta property="og:url" content="https://blog.jm233333.com/Algorithms%20and%20Data%20Structures/Data%20Structure/Data%20Structure%2005%20-%20Heap/index.html">
 <meta property="og:site_name" content="JM233333&#39;s Blog">
-<meta property="og:description" content="前置知识 在阅读本文档前，请确保你已经掌握二叉树的基础知识，详见 Data Structure 知识板块中的 04 - Binary Tree 文档。  Data Structure 04 - Binary Tree    基本概念 堆 (Heap) 是一种满足 堆属性 (heap property) 的树或森林。我们称堆上每个节点上的元素值为节点的 键值 (key) 。 如果在树上任取一个节点">
+<meta property="og:description" content="前置知识 在阅读本文档前，请确保你已经掌握二叉树的基础知识，详见 Data Structure 知识板块中的 04 - Binary Tree 文档。  Data Structure 04 - Binary Tree    基本概念 堆 (Heap) 是一种满足堆属性的树或森林。我们称堆上每个节点上的元素值为节点的 键值 (key) 。 如果在树上（或森林中）任取一个节点 PPP ，对于 PP">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://blog.jm233333.com/images/Algorithms-and-Data-Structures/Data-Structure/Data-Structure-0501-i01.png">
 <meta property="article:published_time" content="2019-08-31T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-03-22T09:32:11.633Z">
+<meta property="article:modified_time" content="2021-03-26T10:09:11.350Z">
 <meta property="article:author" content="JM233333">
 <meta property="article:tag" content="基础教程">
 <meta property="article:tag" content="数据结构">
@@ -133,7 +133,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">80</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">83</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -268,21 +268,23 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h3 id="前置知识"><a class="markdownIt-Anchor" href="#前置知识"></a> 前置知识</h3>
+        <hr />
+<h3 id="前置知识"><a class="markdownIt-Anchor" href="#前置知识"></a> 前置知识</h3>
 <p>在阅读本文档前，请确保你已经掌握二叉树的基础知识，详见 <em>Data Structure</em> 知识板块中的 <em>04 - Binary Tree</em> 文档。</p>
 <ul>
 <li><a href="/Algorithms%20and%20Data%20Structures/Data%20Structure/Data%20Structure%2004%20-%20Binary%20Tree/">Data Structure 04 - Binary Tree</a></li>
 </ul>
 <hr />
 <h3 id="基本概念"><a class="markdownIt-Anchor" href="#基本概念"></a> 基本概念</h3>
-<p><strong>堆 (Heap)</strong> 是一种满足 <strong>堆属性 (heap property)</strong> 的树或森林。我们称堆上每个节点上的元素值为节点的 <strong>键值 (key)</strong> 。</p>
-<p>如果在树上任取一个节点 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>P</mi></mrow><annotation encoding="application/x-tex">P</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span></span></span></span> ，对于 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>P</mi></mrow><annotation encoding="application/x-tex">P</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span></span></span></span> 的任意一个子节点 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>C</mi></mrow><annotation encoding="application/x-tex">C</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span></span></span></span> ， <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>P</mi></mrow><annotation encoding="application/x-tex">P</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span></span></span></span> 的键值一定大于等于（或小于等于） <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>C</mi></mrow><annotation encoding="application/x-tex">C</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span></span></span></span> 的键值，则称该树满足堆属性，看可将其称为堆。如果该关系为大于等于，则称这个堆为 <strong>大顶堆 (max heap)</strong> ，如果该关系为小于等于，则称这个堆为 <strong>小顶堆 (min heap)</strong> 。堆的根节点被称为 <strong>堆顶 (top)</strong> ，堆顶的键值为堆中所有元素的最大值（或最小值）。</p>
-<p>注意，一个堆要么是大顶堆、要么是小顶堆，二者只能取其一。</p>
-<p>通常，堆也被称为 <strong>优先队列 (priority queue)</strong> ，例如在C++的STL库中就有 priority_queue 的实现。</p>
-<p>堆本身是一个抽象数据结构，并未规定其具体实现，只要一种数据结构满足堆属性，它就可以被称为堆。事实上，堆的实现方式有很多种，并且各有优缺点。</p>
-<p>下图是几个大顶堆的例子。</p>
+<p><strong>堆 (Heap)</strong> 是一种满足堆属性的树或森林。我们称堆上每个节点上的元素值为节点的 <strong>键值 (key)</strong> 。</p>
+<p>如果在树上（或森林中）任取一个节点 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>P</mi></mrow><annotation encoding="application/x-tex">P</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span></span></span></span> ，对于 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>P</mi></mrow><annotation encoding="application/x-tex">P</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span></span></span></span> 的任意一个子节点 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>C</mi></mrow><annotation encoding="application/x-tex">C</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span></span></span></span> ， <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>P</mi></mrow><annotation encoding="application/x-tex">P</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span></span></span></span> 的键值一定大于等于（或小于等于） <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>C</mi></mrow><annotation encoding="application/x-tex">C</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span></span></span></span> 的键值，则称该树（或森林）满足 <strong>堆属性 (heap property)</strong> ，并称该树（或森林）为堆。</p>
+<p>如果上述节点间关系为大于等于，则称这个堆为 <strong>大顶堆 (max heap)</strong> ；如果为小于等于，则称这个堆为 <strong>小顶堆 (min heap)</strong> 。堆的根节点被称为 <strong>堆顶 (top)</strong> ，堆顶的键值为堆中所有元素的最大值（或最小值）。</p>
+<p>一个堆要么是大顶堆、要么是小顶堆，二者只能取其一。堆上节点的键值不局限于实数，但是节点间的关系必须定义为某种全序关系。</p>
+<p>堆也经常被称为 <strong>优先队列 (priority queue)</strong> ，例如在 C++ 语言的 STL 库中就有 <code>priority_queue</code> 的实现。</p>
+<p>堆这一概念指的是一类抽象数据结构，并未规定其具体实现，只要一种数据结构满足堆属性，它就可以被称为堆。事实上，堆的实现方式有很多种，并且各有优缺点。</p>
+<p>下图是几个不同实现的大顶堆的例子。</p>
 <p><img src="/images/Algorithms-and-Data-Structures/Data-Structure/Data-Structure-0501-i01.png" alt="" /></p>
-<p>堆的重要之处在于，它可以提供快速地从大量元素中取出最值的功能，并且在插入元素或取出堆顶时能快速地维护整个堆，保证每个节点都满足堆属性。事实上，维护堆属性的目的就是保证能够一直快速地从堆顶处取出最值，这是堆的核心目的。这里的“快速”通常指的是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>log</mi><mo>⁡</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(\log{n})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">n</span></span><span class="mclose">)</span></span></span></span> 或 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord">1</span><span class="mclose">)</span></span></span></span> ，因其具体实现不同而不同。</p>
+<p>堆的重要之处在于，它可以提供快速地从大量元素中取出最值的功能，并且在插入元素或取出堆顶时能快速地维护整个堆，保证每个节点都满足堆属性。事实上，维护堆属性的目的就是保证能够一直快速地从堆顶处取出最值，这是堆的核心目的。这里的“快速”指的是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>log</mi><mo>⁡</mo><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(\log{n})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mop">lo<span style="margin-right:0.01389em;">g</span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">n</span></span><span class="mclose">)</span></span></span></span> 、 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord">1</span><span class="mclose">)</span></span></span></span> 或其他低时间复杂度，取决于堆的具体实现。</p>
 <p>一般来说，一个堆 <strong>至少</strong> 会提供以下基本功能：</p>
 <ul>
 <li>
@@ -476,7 +478,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">238</span>
+          <span class="site-state-item-count">246</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -489,7 +491,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">80</span>
+        <span class="site-state-item-count">83</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

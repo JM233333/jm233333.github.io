@@ -19,15 +19,15 @@
     var CONFIG = {"hostname":"blog.jm233333.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"changyan","storage":true,"lazyload":false,"nav":null,"activeClass":"changyan"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="DFS     Difficulty Time Complexity Limit Extra-Memory Complexity Limit     Medium O(?)O(?)O(?) −-−    Given a 2D board and a word, find if the word exists in the grid. The word can be constructed fro">
+  <meta name="description" content="Hints  DFS    题面    Difficulty Time Complexity Limit Extra-Memory Complexity Limit     Medium O(?)O(?)O(?) −-−    Given a 2D board and a word, find if the word exists in the grid. The word can be con">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LeetCode 0079 - Word Search">
 <meta property="og:url" content="https://blog.jm233333.com/LeetCode/LeetCode%200079%20-%20Word%20Search/index.html">
 <meta property="og:site_name" content="JM233333&#39;s Blog">
-<meta property="og:description" content="DFS     Difficulty Time Complexity Limit Extra-Memory Complexity Limit     Medium O(?)O(?)O(?) −-−    Given a 2D board and a word, find if the word exists in the grid. The word can be constructed fro">
+<meta property="og:description" content="Hints  DFS    题面    Difficulty Time Complexity Limit Extra-Memory Complexity Limit     Medium O(?)O(?)O(?) −-−    Given a 2D board and a word, find if the word exists in the grid. The word can be con">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-08-18T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-08-20T08:26:49.628Z">
+<meta property="article:modified_time" content="2021-04-14T15:39:38.740Z">
 <meta property="article:author" content="JM233333">
 <meta property="article:tag" content="LeetCode">
 <meta property="article:tag" content="LeetCode Medium">
@@ -133,7 +133,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">80</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">83</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -264,8 +264,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h4 id="dfs"><a class="markdownIt-Anchor" href="#dfs"></a> DFS</h4>
+        <h3 id="hints"><a class="markdownIt-Anchor" href="#hints"></a> Hints</h3>
+<ul>
+<li>DFS</li>
+</ul>
 <hr />
+<h3 id="题面"><a class="markdownIt-Anchor" href="#题面"></a> 题面</h3>
 <table>
 <thead>
 <tr>
@@ -302,12 +306,13 @@
 </li>
 </ul>
 <hr />
-<p><strong>题意</strong></p>
+<h3 id="题意"><a class="markdownIt-Anchor" href="#题意"></a> 题意</h3>
 <p>给定一个字符矩阵 <code>board</code> 和一个字符串 <code>word</code> ，二者均仅含大小写字母，求 <code>board</code> 中是否存在一条路径可以构成 <code>word</code> 。路径可以沿相邻四方向前进，但不可交叉重叠。</p>
-<p><strong>题解</strong></p>
+<hr />
+<h3 id="题解"><a class="markdownIt-Anchor" href="#题解"></a> 题解</h3>
 <p>考虑到本题的状态空间搜索事实上很难跑满，直接 DFS 暴力枚举加剪枝即可。</p>
 <hr />
-<p><strong>AC代码</strong></p>
+<h3 id="ac代码"><a class="markdownIt-Anchor" href="#ac代码"></a> AC代码</h3>
 <figure class="highlight cpp"><figcaption><span>LeetCode_0079.cpp</span><a href="/.//codes/LeetCode/LeetCode_0079.cpp">view raw</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> {</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">int</span> dx[] = {<span class="number">1</span>, <span class="number">-1</span>, <span class="number">0</span>, <span class="number">0</span>};</span><br><span class="line">	<span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">int</span> dy[] = {<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">-1</span>};</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">exist</span><span class="params">(vector&lt;vector&lt;<span class="keyword">char</span>&gt;&gt; &amp; board, <span class="keyword">const</span> string &amp; word)</span> </span>{</span><br><span class="line">		<span class="comment">// 特判</span></span><br><span class="line">		<span class="keyword">if</span> (word.<span class="built_in">empty</span>()) {</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">		}</span><br><span class="line">		<span class="keyword">if</span> (board.<span class="built_in">empty</span>() || board.<span class="built_in">front</span>().<span class="built_in">empty</span>()) {</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">		}</span><br><span class="line">		<span class="comment">// 初始化</span></span><br><span class="line">		<span class="keyword">int</span> m = board.<span class="built_in">size</span>(), n = board.<span class="built_in">front</span>().<span class="built_in">size</span>();</span><br><span class="line">		vector&lt;vector&lt;<span class="keyword">bool</span>&gt;&gt; visited;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i ++) {</span><br><span class="line">			visited.<span class="built_in">push_back</span>(vector&lt;<span class="keyword">bool</span>&gt;(n, <span class="literal">false</span>));</span><br><span class="line">		}</span><br><span class="line">		<span class="comment">// DFS</span></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; m; i ++) <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; n; j ++) {</span><br><span class="line">			<span class="keyword">if</span> (board[i][j] == word[<span class="number">0</span>] &amp;&amp; <span class="built_in">dfs</span>(<span class="number">0</span>, i, j, board, word, m, n, visited)) {</span><br><span class="line">				<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">			}</span><br><span class="line">		}</span><br><span class="line">		<span class="comment">// 返回</span></span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	}</span><br><span class="line">	<span class="comment">// 深度优先搜索</span></span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> depth, <span class="keyword">int</span> x, <span class="keyword">int</span> y, vector&lt;vector&lt;<span class="keyword">char</span>&gt;&gt; &amp; board, <span class="keyword">const</span> string &amp; word,</span></span></span><br><span class="line"><span class="function"><span class="params">			<span class="keyword">const</span> <span class="keyword">int</span> m, <span class="keyword">const</span> <span class="keyword">int</span> n, vector&lt;vector&lt;<span class="keyword">bool</span>&gt;&gt; &amp; visited)</span> </span>{</span><br><span class="line">		<span class="comment">// 递归终止</span></span><br><span class="line">		<span class="keyword">if</span> (depth == word.<span class="built_in">length</span>() - <span class="number">1</span>) {</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">		}</span><br><span class="line">		<span class="comment">// 递归</span></span><br><span class="line">		visited[x][y] = <span class="literal">true</span>;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i ++) {</span><br><span class="line">			<span class="keyword">int</span> nx = x + dx[i], ny = y + dy[i];</span><br><span class="line">			<span class="keyword">if</span> (nx &gt;= <span class="number">0</span> &amp;&amp; nx &lt; m &amp;&amp; ny &gt;= <span class="number">0</span> &amp;&amp; ny &lt; n &amp;&amp; board[nx][ny] == word[depth + <span class="number">1</span>] &amp;&amp; !visited[nx][ny]) {</span><br><span class="line">				<span class="keyword">if</span> (<span class="built_in">dfs</span>(depth + <span class="number">1</span>, nx, ny, board, word, m, n, visited)) {</span><br><span class="line">					<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">				}</span><br><span class="line">			}</span><br><span class="line">		}</span><br><span class="line">		visited[x][y] = <span class="literal">false</span>;</span><br><span class="line">		<span class="comment">// 返回</span></span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	}</span><br><span class="line">};</span><br></pre></td></tr></table></figure>
     </div>
 
@@ -350,8 +355,8 @@
       <i class="fa fa-chevron-left"></i> LeetCode 0080 - Remove Duplicates from Sorted Array II
     </a></div>
       <div class="post-nav-item">
-    <a href="/LeetCode/LeetCode%200083%20-%20Remove%20Duplicates%20from%20Sorted%20List/" rel="next" title="LeetCode 0083 - Remove Duplicates from Sorted List">
-      LeetCode 0083 - Remove Duplicates from Sorted List <i class="fa fa-chevron-right"></i>
+    <a href="/LeetCode/LeetCode%200082%20-%20Remove%20Duplicates%20from%20Sorted%20List%20II/" rel="next" title="LeetCode 0082 - Remove Duplicates from Sorted List II">
+      LeetCode 0082 - Remove Duplicates from Sorted List II <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -416,7 +421,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#dfs"><span class="nav-number">1.</span> <span class="nav-text"> DFS</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#hints"><span class="nav-number">1.</span> <span class="nav-text"> Hints</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E9%9D%A2"><span class="nav-number">2.</span> <span class="nav-text"> 题面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E6%84%8F"><span class="nav-number">3.</span> <span class="nav-text"> 题意</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-number">4.</span> <span class="nav-text"> 题解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ac%E4%BB%A3%E7%A0%81"><span class="nav-number">5.</span> <span class="nav-text"> AC代码</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -431,7 +436,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">238</span>
+          <span class="site-state-item-count">246</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -444,7 +449,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">80</span>
+        <span class="site-state-item-count">83</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

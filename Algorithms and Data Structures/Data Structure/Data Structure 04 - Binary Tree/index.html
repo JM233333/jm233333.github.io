@@ -19,12 +19,12 @@
     var CONFIG = {"hostname":"blog.jm233333.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"changyan","storage":true,"lazyload":false,"nav":null,"activeClass":"changyan"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="前置知识 在阅读本文档前，请确保你已经掌握树的基础知识，详见 Data Structure 知识板块中的 03 - Tree 文档。  Data Structure 03 - Tree    基本概念 二叉树 (Binary Tree) 是一种追加了特殊限制的有根有序树。二叉树的每个节点最多只能有两个子节点，我们将其定义为左儿子和右儿子。也就是说，每个节点都有且仅有两棵子树——左子树和右子树（当">
+  <meta name="description" content="前置知识 在阅读本文档前，请确保你已经掌握树的基础知识，详见 Data Structure 知识板块中的 03 - Tree 文档。  Data Structure 03 - Tree    基本概念 二叉树 (Binary Tree) 是一种追加了特殊限制的有根有序树。二叉树的每个节点最多只能有两个子节点，我们将其定义为左儿子和右儿子。也就是说，每个节点都有且仅有两棵子树——左子树和右子树（">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Data Structure 04 - Binary Tree">
 <meta property="og:url" content="https://blog.jm233333.com/Algorithms%20and%20Data%20Structures/Data%20Structure/Data%20Structure%2004%20-%20Binary%20Tree/index.html">
 <meta property="og:site_name" content="JM233333&#39;s Blog">
-<meta property="og:description" content="前置知识 在阅读本文档前，请确保你已经掌握树的基础知识，详见 Data Structure 知识板块中的 03 - Tree 文档。  Data Structure 03 - Tree    基本概念 二叉树 (Binary Tree) 是一种追加了特殊限制的有根有序树。二叉树的每个节点最多只能有两个子节点，我们将其定义为左儿子和右儿子。也就是说，每个节点都有且仅有两棵子树——左子树和右子树（当">
+<meta property="og:description" content="前置知识 在阅读本文档前，请确保你已经掌握树的基础知识，详见 Data Structure 知识板块中的 03 - Tree 文档。  Data Structure 03 - Tree    基本概念 二叉树 (Binary Tree) 是一种追加了特殊限制的有根有序树。二叉树的每个节点最多只能有两个子节点，我们将其定义为左儿子和右儿子。也就是说，每个节点都有且仅有两棵子树——左子树和右子树（">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://blog.jm233333.com/images/Algorithms-and-Data-Structures/Data-Structure/Data-Structure-0400-i01.png">
 <meta property="og:image" content="https://blog.jm233333.com/images/Algorithms-and-Data-Structures/Data-Structure/Data-Structure-0400-i02.png">
@@ -35,7 +35,7 @@
 <meta property="og:image" content="https://blog.jm233333.com/images/Algorithms-and-Data-Structures/Data-Structure/Data-Structure-0400-i07.png">
 <meta property="og:image" content="https://blog.jm233333.com/images/Algorithms-and-Data-Structures/Data-Structure/Data-Structure-0400-i08.png">
 <meta property="article:published_time" content="2019-08-31T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-03-22T09:32:11.634Z">
+<meta property="article:modified_time" content="2021-03-26T10:09:30.584Z">
 <meta property="article:author" content="JM233333">
 <meta property="article:tag" content="基础教程">
 <meta property="article:tag" content="数据结构">
@@ -140,7 +140,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">80</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">83</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -275,7 +275,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h3 id="前置知识"><a class="markdownIt-Anchor" href="#前置知识"></a> 前置知识</h3>
+        <hr />
+<h3 id="前置知识"><a class="markdownIt-Anchor" href="#前置知识"></a> 前置知识</h3>
 <p>在阅读本文档前，请确保你已经掌握树的基础知识，详见 <em>Data Structure</em> 知识板块中的 <em>03 - Tree</em> 文档。</p>
 <ul>
 <li><a href="/Algorithms%20and%20Data%20Structures/Data%20Structure/Data%20Structure%2003%20-%20Tree/">Data Structure 03 - Tree</a></li>
@@ -514,12 +515,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/Algorithms%20and%20Data%20Structures/Data%20Structure/Data%20Structure%2005%20-%20Binary%20Search%20Tree/" rel="prev" title="Data Structure 05 - Binary Search Tree">
-      <i class="fa fa-chevron-left"></i> Data Structure 05 - Binary Search Tree
+    <a href="/Algorithms%20and%20Data%20Structures/Data%20Structure/Data%20Structure%2007%20-%20AVL%20Tree/" rel="prev" title="Data Structure 07 - AVL Tree">
+      <i class="fa fa-chevron-left"></i> Data Structure 07 - AVL Tree
     </a></div>
       <div class="post-nav-item">
-    <a href="/Algorithms%20and%20Data%20Structures/Data%20Structure/Data%20Structure%2002%20-%20Restricted%20Linear%20List/" rel="next" title="Data Structure 02 - Restricted Linear List">
-      Data Structure 02 - Restricted Linear List <i class="fa fa-chevron-right"></i>
+    <a href="/Algorithms%20and%20Data%20Structures/Data%20Structure/Data%20Structure%2005%20-%20Binary%20Search%20Tree/" rel="next" title="Data Structure 05 - Binary Search Tree">
+      Data Structure 05 - Binary Search Tree <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -599,7 +600,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">238</span>
+          <span class="site-state-item-count">246</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -612,7 +613,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">80</span>
+        <span class="site-state-item-count">83</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

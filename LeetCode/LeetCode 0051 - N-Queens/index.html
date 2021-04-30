@@ -19,16 +19,16 @@
     var CONFIG = {"hostname":"blog.jm233333.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"changyan","storage":true,"lazyload":false,"nav":null,"activeClass":"changyan"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="DFS     Difficulty Time Complexity Limit Extra-Memory Complexity Limit     Hard −-− −-−    The n-queens puzzle is the problem of placing nnn queens on an n×nn \times nn×n chessboard such that no two">
+  <meta name="description" content="Hints  DFS    题面    Difficulty Time Complexity Limit Extra-Memory Complexity Limit     Hard −-− −-−    The n-queens puzzle is the problem of placing nnn queens on an n×nn \times nn×n chessboard such">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LeetCode 0051 - N-Queens">
 <meta property="og:url" content="https://blog.jm233333.com/LeetCode/LeetCode%200051%20-%20N-Queens/index.html">
 <meta property="og:site_name" content="JM233333&#39;s Blog">
-<meta property="og:description" content="DFS     Difficulty Time Complexity Limit Extra-Memory Complexity Limit     Hard −-− −-−    The n-queens puzzle is the problem of placing nnn queens on an n×nn \times nn×n chessboard such that no two">
+<meta property="og:description" content="Hints  DFS    题面    Difficulty Time Complexity Limit Extra-Memory Complexity Limit     Hard −-− −-−    The n-queens puzzle is the problem of placing nnn queens on an n×nn \times nn×n chessboard such">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://blog.jm233333.com/images/LeetCode/LeetCode_0051.png">
 <meta property="article:published_time" content="2020-08-04T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-08-19T11:08:12.323Z">
+<meta property="article:modified_time" content="2021-04-14T15:37:56.529Z">
 <meta property="article:author" content="JM233333">
 <meta property="article:tag" content="LeetCode">
 <meta property="article:tag" content="LeetCode Hard">
@@ -135,7 +135,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">80</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">83</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -266,8 +266,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h4 id="dfs"><a class="markdownIt-Anchor" href="#dfs"></a> DFS</h4>
+        <h3 id="hints"><a class="markdownIt-Anchor" href="#hints"></a> Hints</h3>
+<ul>
+<li>DFS</li>
+</ul>
 <hr />
+<h3 id="题面"><a class="markdownIt-Anchor" href="#题面"></a> 题面</h3>
 <table>
 <thead>
 <tr>
@@ -291,13 +295,14 @@
 <p><strong>Example:</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Input: 4</span><br><span class="line">Output: [</span><br><span class="line"> [&quot;.Q..&quot;,  &#x2F;&#x2F; Solution 1</span><br><span class="line">  &quot;...Q&quot;,</span><br><span class="line">  &quot;Q...&quot;,</span><br><span class="line">  &quot;..Q.&quot;],</span><br><span class="line"></span><br><span class="line"> [&quot;..Q.&quot;,  &#x2F;&#x2F; Solution 2</span><br><span class="line">  &quot;Q...&quot;,</span><br><span class="line">  &quot;...Q&quot;,</span><br><span class="line">  &quot;.Q..&quot;]</span><br><span class="line">]</span><br><span class="line">Explanation: There exist two distinct solutions to the 4-queens puzzle as shown above.</span><br></pre></td></tr></table></figure>
 <hr />
-<p><strong>题意</strong></p>
+<h3 id="题意"><a class="markdownIt-Anchor" href="#题意"></a> 题意</h3>
 <p>给定一个正整数 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> ，求 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> 皇后问题的所有合法解。</p>
-<p><strong>题解</strong></p>
+<hr />
+<h3 id="题解"><a class="markdownIt-Anchor" href="#题解"></a> 题解</h3>
 <p>N 皇后问题是 DFS 的经典问题。</p>
 <p>在具体实现中，我们用 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>y</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">y_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 表示第 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 行的皇后的列编号，并在 DFS 时维护 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span> 数组，这样可以高效地检查当前方案的合法性。</p>
 <hr />
-<p><strong>AC代码</strong></p>
+<h3 id="ac代码"><a class="markdownIt-Anchor" href="#ac代码"></a> AC代码</h3>
 <figure class="highlight cpp"><figcaption><span>LeetCode_0051.cpp</span><a href="/.//codes/LeetCode/LeetCode_0051.cpp">view raw</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> {</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	vector&lt;vector&lt;string&gt;&gt; <span class="built_in">solveNQueens</span>(<span class="keyword">int</span> n) {</span><br><span class="line">		<span class="comment">// 初始化</span></span><br><span class="line">		<span class="keyword">int</span> y[n];</span><br><span class="line">		vector&lt;vector&lt;string&gt;&gt; res;</span><br><span class="line">		<span class="comment">// DFS</span></span><br><span class="line">		<span class="built_in">dfs</span>(<span class="number">0</span>, y, res, n);</span><br><span class="line">		<span class="comment">// 返回</span></span><br><span class="line">		<span class="keyword">return</span> res;</span><br><span class="line">	}</span><br><span class="line">	<span class="comment">// 深度优先搜索</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> index, <span class="keyword">int</span> y[], vector&lt;vector&lt;string&gt;&gt; &amp; res, <span class="keyword">const</span> <span class="keyword">int</span> n)</span> </span>{</span><br><span class="line">		<span class="comment">// 递归终止</span></span><br><span class="line">		<span class="keyword">if</span> (index == n) {</span><br><span class="line">			<span class="comment">// 绘制答案</span></span><br><span class="line">			vector&lt;string&gt; solution;</span><br><span class="line">			<span class="function">string <span class="title">row</span><span class="params">(n, <span class="string">&#x27;.&#x27;</span>)</span></span>;</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i ++) {</span><br><span class="line">				row[y[i]] = <span class="string">&#x27;Q&#x27;</span>;</span><br><span class="line">				solution.<span class="built_in">push_back</span>(row);</span><br><span class="line">				row[y[i]] = <span class="string">&#x27;.&#x27;</span>;</span><br><span class="line">			}</span><br><span class="line">			<span class="comment">// 更新答案</span></span><br><span class="line">			res.<span class="built_in">push_back</span>(solution);</span><br><span class="line">			<span class="comment">// 返回</span></span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		}</span><br><span class="line">		<span class="comment">// 递归</span></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i ++) {</span><br><span class="line">			y[index] = i;</span><br><span class="line">			<span class="keyword">if</span> (<span class="built_in">is_legal</span>(index, y)) {</span><br><span class="line">				<span class="built_in">dfs</span>(index + <span class="number">1</span>, y, res, n);</span><br><span class="line">			}</span><br><span class="line">		}</span><br><span class="line">	}</span><br><span class="line">	<span class="comment">// 判断是否合法</span></span><br><span class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">is_legal</span><span class="params">(<span class="keyword">int</span> index, <span class="keyword">int</span> y[])</span> </span>{</span><br><span class="line">		<span class="comment">// 遍历行</span></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; index; i ++) {</span><br><span class="line">			<span class="comment">// 同列的情况</span></span><br><span class="line">			<span class="keyword">if</span> (y[index] == y[i]) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">			<span class="comment">// 同对角线的情况</span></span><br><span class="line">			<span class="keyword">if</span> (<span class="built_in">abs</span>(index - i) == <span class="built_in">abs</span>(y[index] - y[i])) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">		}</span><br><span class="line">		<span class="comment">// 返回</span></span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	}</span><br><span class="line">};</span><br></pre></td></tr></table></figure>
     </div>
 
@@ -406,7 +411,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#dfs"><span class="nav-number">1.</span> <span class="nav-text"> DFS</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#hints"><span class="nav-number">1.</span> <span class="nav-text"> Hints</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E9%9D%A2"><span class="nav-number">2.</span> <span class="nav-text"> 题面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E6%84%8F"><span class="nav-number">3.</span> <span class="nav-text"> 题意</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-number">4.</span> <span class="nav-text"> 题解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ac%E4%BB%A3%E7%A0%81"><span class="nav-number">5.</span> <span class="nav-text"> AC代码</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -421,7 +426,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">238</span>
+          <span class="site-state-item-count">246</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -434,7 +439,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">80</span>
+        <span class="site-state-item-count">83</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

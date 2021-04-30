@@ -125,7 +125,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">80</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">83</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -256,8 +256,17 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h4 id="stl-dfs"><a class="markdownIt-Anchor" href="#stl-dfs"></a> STL || DFS</h4>
+          <h3 id="hints"><a class="markdownIt-Anchor" href="#hints"></a> Hints</h3>
+<ul>
+<li>
+<p>STL</p>
+</li>
+<li>
+<p>DFS</p>
+</li>
+</ul>
 <hr />
+<h3 id="题面"><a class="markdownIt-Anchor" href="#题面"></a> 题面</h3>
 <table>
 <thead>
 <tr>
@@ -278,15 +287,16 @@
 <p><strong>Example:</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Input: [1,2,3]</span><br><span class="line">Output:</span><br><span class="line">[</span><br><span class="line">  [1,2,3],</span><br><span class="line">  [1,3,2],</span><br><span class="line">  [2,1,3],</span><br><span class="line">  [2,3,1],</span><br><span class="line">  [3,1,2],</span><br><span class="line">  [3,2,1]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
 <hr />
-<p><strong>题意</strong></p>
+<h3 id="题意"><a class="markdownIt-Anchor" href="#题意"></a> 题意</h3>
 <p>给定一个大小为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> 的不重复集合，求其所有排列。</p>
-<p><strong>题解</strong></p>
+<hr />
+<h3 id="题解"><a class="markdownIt-Anchor" href="#题解"></a> 题解</h3>
 <p>用 STL 的 <code>next_permutation</code> 直接求解即可。</p>
 <p>如果禁止使用这一标准库函数，则 DFS 遍历全排列即可。</p>
 <hr />
-<p><strong>AC代码（STL）</strong></p>
+<h3 id="ac代码stl"><a class="markdownIt-Anchor" href="#ac代码stl"></a> AC代码（STL）</h3>
 <figure class="highlight cpp"><figcaption><span>LeetCode_0046_1.cpp</span><a href="/.//codes/LeetCode/LeetCode_0046_1.cpp">view raw</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> {</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	vector&lt;vector&lt;<span class="keyword">int</span>&gt;&gt; <span class="built_in">permute</span>(vector&lt;<span class="keyword">int</span>&gt; &amp; nums) {</span><br><span class="line">		<span class="comment">// 排序</span></span><br><span class="line">		<span class="built_in">sort</span>(nums.<span class="built_in">begin</span>(), nums.<span class="built_in">end</span>());</span><br><span class="line">		<span class="comment">// 求解</span></span><br><span class="line">		vector&lt;vector&lt;<span class="keyword">int</span>&gt;&gt; res;</span><br><span class="line">		<span class="keyword">do</span> {</span><br><span class="line">			res.<span class="built_in">push_back</span>(nums);</span><br><span class="line">		} <span class="keyword">while</span> (<span class="built_in">next_permutation</span>(nums.<span class="built_in">begin</span>(), nums.<span class="built_in">end</span>()));</span><br><span class="line">		<span class="comment">// 返回</span></span><br><span class="line">		<span class="keyword">return</span> res;</span><br><span class="line">	}</span><br><span class="line">};</span><br></pre></td></tr></table></figure>
-<p><strong>AC代码（DFS）</strong></p>
+<h3 id="ac代码dfs"><a class="markdownIt-Anchor" href="#ac代码dfs"></a> AC代码（DFS）</h3>
 <figure class="highlight cpp"><figcaption><span>LeetCode_0046_2.cpp</span><a href="/.//codes/LeetCode/LeetCode_0046_2.cpp">view raw</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> {</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	vector&lt;vector&lt;<span class="keyword">int</span>&gt;&gt; <span class="built_in">permute</span>(vector&lt;<span class="keyword">int</span>&gt; &amp; nums) {</span><br><span class="line">		<span class="comment">// 排序</span></span><br><span class="line">		<span class="built_in">sort</span>(nums.<span class="built_in">begin</span>(), nums.<span class="built_in">end</span>());</span><br><span class="line">		<span class="comment">// DFS</span></span><br><span class="line">		<span class="function">vector&lt;<span class="keyword">bool</span>&gt; <span class="title">visited</span><span class="params">(nums.size(), <span class="literal">false</span>)</span></span>;</span><br><span class="line">		<span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">perm</span><span class="params">(nums.size())</span></span>;</span><br><span class="line">		vector&lt;vector&lt;<span class="keyword">int</span>&gt;&gt; res;</span><br><span class="line">		<span class="built_in">dfs</span>(<span class="number">0</span>, nums, visited, perm, res);</span><br><span class="line">		<span class="comment">// 返回</span></span><br><span class="line">		<span class="keyword">return</span> res;</span><br><span class="line">	}</span><br><span class="line">	<span class="comment">// 深度优先搜索</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> depth, vector&lt;<span class="keyword">int</span>&gt; &amp; nums, vector&lt;<span class="keyword">bool</span>&gt; &amp; visited, vector&lt;<span class="keyword">int</span>&gt; &amp; perm, vector&lt;vector&lt;<span class="keyword">int</span>&gt;&gt; &amp; res)</span> </span>{</span><br><span class="line">		<span class="comment">// 递归终止</span></span><br><span class="line">		<span class="keyword">if</span> (depth == nums.<span class="built_in">size</span>()) {</span><br><span class="line">			res.<span class="built_in">push_back</span>(perm);</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		}</span><br><span class="line">		<span class="comment">// 遍历</span></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.<span class="built_in">size</span>(); i ++) {</span><br><span class="line">			<span class="comment">// 递归</span></span><br><span class="line">			<span class="keyword">if</span> (!visited[i]) {</span><br><span class="line">				visited[i] = <span class="literal">true</span>;</span><br><span class="line">				perm[depth] = nums[i];</span><br><span class="line">				<span class="built_in">dfs</span>(depth + <span class="number">1</span>, nums, visited, perm, res);</span><br><span class="line">				visited[i] = <span class="literal">false</span>;</span><br><span class="line">			}</span><br><span class="line">		}</span><br><span class="line">	}</span><br><span class="line">};</span><br></pre></td></tr></table></figure>
       
     </div>
@@ -374,11 +384,20 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h4 id="stl-dfs"><a class="markdownIt-Anchor" href="#stl-dfs"></a> STL || DFS</h4>
+          <h3 id="hints"><a class="markdownIt-Anchor" href="#hints"></a> Hints</h3>
+<ul>
+<li>
+<p>STL</p>
+</li>
+<li>
+<p>DFS</p>
+</li>
+</ul>
 <hr />
-<p><strong>前置题目</strong></p>
+<h3 id="前置题目"><a class="markdownIt-Anchor" href="#前置题目"></a> 前置题目</h3>
 <p><a href="/LeetCode/LeetCode%200046%20-%20Permutations/">LeetCode 0046 - Permutations</a></p>
 <hr />
+<h3 id="题面"><a class="markdownIt-Anchor" href="#题面"></a> 题面</h3>
 <table>
 <thead>
 <tr>
@@ -399,9 +418,10 @@
 <p><strong>Example:</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Input: [1,1,2]</span><br><span class="line">Output:</span><br><span class="line">[</span><br><span class="line">  [1,1,2],</span><br><span class="line">  [1,2,1],</span><br><span class="line">  [2,1,1]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
 <hr />
-<p><strong>题意</strong></p>
+<h3 id="题意"><a class="markdownIt-Anchor" href="#题意"></a> 题意</h3>
 <p>给定一个长为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> 的数组（可能存在重复元素），求其所有本质不同的排列（即对结果进行去重）。</p>
-<p><strong>题解</strong></p>
+<hr />
+<h3 id="题解"><a class="markdownIt-Anchor" href="#题解"></a> 题解</h3>
 <p>用 STL 的 <code>next_permutation</code> 直接求解即可。该函数的内部实现包括了去重处理，不需要我们再进行额外的去重操作。代码和 <em>LeetCode 0046</em> 相同，此处就不再重复贴出了。</p>
 <p>如果禁止使用这一标准库函数，我们可以 DFS 遍历全排列然后直接用 set 暴力去重，但是这样做的时间复杂度会很差。我们有必要先对数组排序，然后在 DFS 的过程中去重。</p>
 <p>细节问题：</p>
@@ -409,7 +429,7 @@
 <li>去重代码的位置和写法。</li>
 </ol>
 <hr />
-<p><strong>AC代码（DFS）</strong></p>
+<h3 id="ac代码dfs"><a class="markdownIt-Anchor" href="#ac代码dfs"></a> AC代码（DFS）</h3>
 <figure class="highlight cpp"><figcaption><span>LeetCode_0047.cpp</span><a href="/.//codes/LeetCode/LeetCode_0047.cpp">view raw</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> {</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	vector&lt;vector&lt;<span class="keyword">int</span>&gt;&gt; <span class="built_in">permuteUnique</span>(vector&lt;<span class="keyword">int</span>&gt; &amp; nums) {</span><br><span class="line">		<span class="comment">// 排序</span></span><br><span class="line">		<span class="built_in">sort</span>(nums.<span class="built_in">begin</span>(), nums.<span class="built_in">end</span>());</span><br><span class="line">		<span class="comment">// DFS</span></span><br><span class="line">		<span class="function">vector&lt;<span class="keyword">bool</span>&gt; <span class="title">visited</span><span class="params">(nums.size(), <span class="literal">false</span>)</span></span>;</span><br><span class="line">		<span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">perm</span><span class="params">(nums.size())</span></span>;</span><br><span class="line">		vector&lt;vector&lt;<span class="keyword">int</span>&gt;&gt; res;</span><br><span class="line">		<span class="built_in">dfs</span>(<span class="number">0</span>, nums, visited, perm, res);</span><br><span class="line">		<span class="comment">// 返回</span></span><br><span class="line">		<span class="keyword">return</span> res;</span><br><span class="line">	}</span><br><span class="line">	<span class="comment">// 深度优先搜索</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> depth, vector&lt;<span class="keyword">int</span>&gt; &amp; nums, vector&lt;<span class="keyword">bool</span>&gt; &amp; visited, vector&lt;<span class="keyword">int</span>&gt; &amp; perm, vector&lt;vector&lt;<span class="keyword">int</span>&gt;&gt; &amp; res)</span> </span>{</span><br><span class="line">		<span class="comment">// 递归终止</span></span><br><span class="line">		<span class="keyword">if</span> (depth == nums.<span class="built_in">size</span>()) {</span><br><span class="line">			res.<span class="built_in">push_back</span>(perm);</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		}</span><br><span class="line">		<span class="comment">// 遍历</span></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.<span class="built_in">size</span>(); i ++) {</span><br><span class="line">			<span class="comment">// 递归</span></span><br><span class="line">			<span class="keyword">if</span> (!visited[i]) {</span><br><span class="line">				visited[i] = <span class="literal">true</span>;</span><br><span class="line">				perm[depth] = nums[i];</span><br><span class="line">				<span class="built_in">dfs</span>(depth + <span class="number">1</span>, nums, visited, perm, s);</span><br><span class="line">				visited[i] = <span class="literal">false</span>;</span><br><span class="line">				<span class="comment">// 去重</span></span><br><span class="line">				<span class="keyword">while</span> (i &lt; (<span class="keyword">int</span>)nums.<span class="built_in">size</span>() - <span class="number">1</span> &amp;&amp; nums[i] == nums[i + <span class="number">1</span>]) {</span><br><span class="line">					i ++;</span><br><span class="line">				}</span><br><span class="line">			}</span><br><span class="line">		}</span><br><span class="line">	}</span><br><span class="line">};</span><br></pre></td></tr></table></figure>
       
     </div>
@@ -497,8 +517,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h4 id="模拟"><a class="markdownIt-Anchor" href="#模拟"></a> 模拟</h4>
+          <h3 id="hints"><a class="markdownIt-Anchor" href="#hints"></a> Hints</h3>
+<ul>
+<li>模拟</li>
+</ul>
 <hr />
+<h3 id="题面"><a class="markdownIt-Anchor" href="#题面"></a> 题面</h3>
 <table>
 <thead>
 <tr>
@@ -524,13 +548,14 @@
 <p><strong>Example 2:</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Given input matrix &#x3D;</span><br><span class="line">[</span><br><span class="line">  [ 5, 1, 9,11],</span><br><span class="line">  [ 2, 4, 8,10],</span><br><span class="line">  [13, 3, 6, 7],</span><br><span class="line">  [15,14,12,16]</span><br><span class="line">], </span><br><span class="line"></span><br><span class="line">rotate the input matrix in-place such that it becomes:</span><br><span class="line">[</span><br><span class="line">  [15,13, 2, 5],</span><br><span class="line">  [14, 3, 4, 1],</span><br><span class="line">  [12, 6, 8, 9],</span><br><span class="line">  [16, 7,10,11]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
 <hr />
-<p><strong>题意</strong></p>
+<h3 id="题意"><a class="markdownIt-Anchor" href="#题意"></a> 题意</h3>
 <p>给定一个 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mo>×</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">n \times n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> 的矩阵，要求将其顺时针旋转 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>90</mn></mrow><annotation encoding="application/x-tex">90</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">9</span><span class="mord">0</span></span></span></span> 度，且不能额外开辟一个 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mo>×</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">n \times n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> 的辅助空间。</p>
-<p><strong>题解</strong></p>
+<hr />
+<h3 id="题解"><a class="markdownIt-Anchor" href="#题解"></a> 题解</h3>
 <p>简单模拟题。由于对额外空间复杂度的限制，我们无法直接解决问题。不难发现在旋转时是每四个点为一组独立旋转的，因此我们只需要找到所有的四点组，然后对每组点进行三次交换即可。</p>
 <p>我的实现是从外圈到内圈逐层处理，共 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mi mathvariant="normal">/</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">n / 2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">n</span><span class="mord">/</span><span class="mord">2</span></span></span></span> 层，每个圈内的坐标变换都是相同的。其他的实现方法亦可。</p>
 <hr />
-<p><strong>AC代码</strong></p>
+<h3 id="ac代码"><a class="markdownIt-Anchor" href="#ac代码"></a> AC代码</h3>
 <figure class="highlight cpp"><figcaption><span>LeetCode_0048.cpp</span><a href="/.//codes/LeetCode/LeetCode_0048.cpp">view raw</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> {</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">int</span> px[<span class="number">4</span>] = {<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>};</span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">int</span> py[<span class="number">4</span>] = {<span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>};</span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">int</span> dx[<span class="number">4</span>] = {<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">-1</span>};</span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">int</span> dy[<span class="number">4</span>] = {<span class="number">1</span>, <span class="number">0</span>, <span class="number">-1</span>, <span class="number">0</span>};</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">rotate</span><span class="params">(vector&lt;vector&lt;<span class="keyword">int</span>&gt;&gt; &amp; matrix)</span> </span>{</span><br><span class="line">		<span class="comment">// 初始化</span></span><br><span class="line">		<span class="keyword">int</span> n = matrix.<span class="built_in">size</span>();</span><br><span class="line">		<span class="keyword">int</span> x[<span class="number">4</span>], y[<span class="number">4</span>];</span><br><span class="line">		<span class="comment">// 遍历</span></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> d = <span class="number">0</span>; d &lt; n / <span class="number">2</span>; d ++) {</span><br><span class="line">			<span class="keyword">int</span> len = n - <span class="number">1</span> - <span class="number">2</span>*d;</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i ++) {</span><br><span class="line">				<span class="comment">// 获取坐标</span></span><br><span class="line">				<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">4</span>; j ++) {</span><br><span class="line">					x[j] = d + len * px[j] + i * dx[j];</span><br><span class="line">					y[j] = d + len * py[j] + i * dy[j];</span><br><span class="line">				}</span><br><span class="line">				<span class="comment">// 交换</span></span><br><span class="line">				<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; <span class="number">4</span>; j ++) {</span><br><span class="line">					<span class="built_in">swap</span>(matrix[x[<span class="number">0</span>]][y[<span class="number">0</span>]], matrix[x[j]][y[j]]);</span><br><span class="line">				}</span><br><span class="line">			}</span><br><span class="line">		}</span><br><span class="line">	}</span><br><span class="line">};</span><br></pre></td></tr></table></figure>
       
     </div>
@@ -618,8 +643,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h4 id="stl"><a class="markdownIt-Anchor" href="#stl"></a> STL</h4>
+          <h3 id="hints"><a class="markdownIt-Anchor" href="#hints"></a> Hints</h3>
+<ul>
+<li>STL</li>
+</ul>
 <hr />
+<h3 id="题面"><a class="markdownIt-Anchor" href="#题面"></a> 题面</h3>
 <table>
 <thead>
 <tr>
@@ -649,12 +678,13 @@
 </li>
 </ul>
 <hr />
-<p><strong>题意</strong></p>
+<h3 id="题意"><a class="markdownIt-Anchor" href="#题意"></a> 题意</h3>
 <p>给定 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> 个字符串，称一个字符串的本质串为将其内部字母排序后得到的字符串，要求将所有本质相同的字符串放在一个 vector 内，返回所有的 vector 。</p>
-<p><strong>题解</strong></p>
+<hr />
+<h3 id="题解"><a class="markdownIt-Anchor" href="#题解"></a> 题解</h3>
 <p>显然每一个本质串都对应了一个 vector ，我们用 <code>unordered_map</code> 实现该映射，遍历所有字符串并求出其本质串，根据映射放入对应的 vector 中，最后将所有的 vector 取出即可。</p>
 <hr />
-<p><strong>AC代码</strong></p>
+<h3 id="ac代码"><a class="markdownIt-Anchor" href="#ac代码"></a> AC代码</h3>
 <figure class="highlight cpp"><figcaption><span>LeetCode_0049.cpp</span><a href="/.//codes/LeetCode/LeetCode_0049.cpp">view raw</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> {</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	vector&lt;vector&lt;string&gt;&gt; <span class="built_in">groupAnagrams</span>(vector&lt;string&gt; &amp; strs) {</span><br><span class="line">		<span class="comment">// 求解</span></span><br><span class="line">		unordered_map&lt;string, vector&lt;string&gt;&gt; ump;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">auto</span> &amp; str : strs) {</span><br><span class="line">			<span class="comment">// 获取有序串</span></span><br><span class="line">			string sorted = str;</span><br><span class="line">			<span class="built_in">sort</span>(sorted.<span class="built_in">begin</span>(), sorted.<span class="built_in">end</span>());</span><br><span class="line">			<span class="comment">// 记录</span></span><br><span class="line">			ump[sorted].<span class="built_in">push_back</span>(str);</span><br><span class="line">		}</span><br><span class="line">		<span class="comment">// 获取答案</span></span><br><span class="line">		vector&lt;vector&lt;string&gt;&gt; res;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">auto</span> it = ump.<span class="built_in">begin</span>(); it != ump.<span class="built_in">end</span>(); it ++) {</span><br><span class="line">			res.<span class="built_in">push_back</span>(it-&gt;second);</span><br><span class="line">		}</span><br><span class="line">		<span class="comment">// 返回</span></span><br><span class="line">		<span class="keyword">return</span> res;</span><br><span class="line">	}</span><br><span class="line">};</span><br></pre></td></tr></table></figure>
       
     </div>
@@ -742,8 +772,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h4 id="快速幂"><a class="markdownIt-Anchor" href="#快速幂"></a> 快速幂</h4>
+          <h3 id="hints"><a class="markdownIt-Anchor" href="#hints"></a> Hints</h3>
+<ul>
+<li>快速幂</li>
+</ul>
 <hr />
+<h3 id="题面"><a class="markdownIt-Anchor" href="#题面"></a> 题面</h3>
 <table>
 <thead>
 <tr>
@@ -780,17 +814,18 @@
 </li>
 </ul>
 <hr />
-<p><strong>题意</strong></p>
+<h3 id="题意"><a class="markdownIt-Anchor" href="#题意"></a> 题意</h3>
 <p>给定一个浮点数 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 和一个整数 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> ，求 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>x</mi><mi>n</mi></msup></mrow><annotation encoding="application/x-tex">x^n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.664392em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span></span></span></span></span></span></span> 的值。</p>
 <p>注：原题没有说明，不要使用大数运算，任由编译器将超大答案设置为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mi>n</mi><mi>f</mi></mrow><annotation encoding="application/x-tex">inf</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span></span></span></span> 即可。</p>
-<p><strong>题解</strong></p>
+<hr />
+<h3 id="题解"><a class="markdownIt-Anchor" href="#题解"></a> 题解</h3>
 <p>用快速幂直接求解即可。对于 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mo>&lt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">n &lt; 0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span> 的情况，求出 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mi>x</mi><mrow><mo>−</mo><mi>n</mi></mrow></msup></mrow><annotation encoding="application/x-tex">x^{-n}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.771331em;vertical-align:0em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.771331em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">−</span><span class="mord mathdefault mtight">n</span></span></span></span></span></span></span></span></span></span></span></span> 后取倒数即可。</p>
 <p>细节问题：</p>
 <ol>
 <li>注意特判 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mo>=</mo><mo>−</mo><msup><mn>2</mn><mn>31</mn></msup></mrow><annotation encoding="application/x-tex">n = -2^{31}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.897438em;vertical-align:-0.08333em;"></span><span class="mord">−</span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">3</span><span class="mord mtight">1</span></span></span></span></span></span></span></span></span></span></span></span> 的情形。</li>
 </ol>
 <hr />
-<p><strong>AC代码</strong></p>
+<h3 id="ac代码"><a class="markdownIt-Anchor" href="#ac代码"></a> AC代码</h3>
 <figure class="highlight cpp"><figcaption><span>LeetCode_0050.cpp</span><a href="/.//codes/LeetCode/LeetCode_0050.cpp">view raw</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> {</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">int</span> MIN = (<span class="number">1</span> &lt;&lt; <span class="number">31</span>);</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">double</span> <span class="title">myPow</span><span class="params">(<span class="keyword">double</span> x, <span class="keyword">int</span> n)</span> </span>{</span><br><span class="line">		<span class="keyword">double</span> res;</span><br><span class="line">		<span class="keyword">if</span> (n &gt;= <span class="number">0</span>) {</span><br><span class="line">			res = <span class="built_in">power</span>(x, n);</span><br><span class="line">		} <span class="keyword">else</span> {</span><br><span class="line">			res = <span class="number">1.0</span> / (n == MIN ? (<span class="built_in">power</span>(x, <span class="built_in">abs</span>(n + <span class="number">1</span>)) * x) : <span class="built_in">power</span>(x, <span class="built_in">abs</span>(n)));</span><br><span class="line">		}</span><br><span class="line">		<span class="keyword">return</span> res;</span><br><span class="line">	}</span><br><span class="line">	<span class="comment">// 快速幂</span></span><br><span class="line">	<span class="function"><span class="keyword">double</span> <span class="title">power</span><span class="params">(<span class="keyword">double</span> a, <span class="keyword">int</span> n)</span> </span>{</span><br><span class="line">		<span class="keyword">double</span> res = <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">while</span> (n &gt; <span class="number">0</span>) {</span><br><span class="line">			<span class="keyword">if</span> (n &amp; <span class="number">1</span>) res = res * a;</span><br><span class="line">			a = a * a;</span><br><span class="line">			n &gt;&gt;= <span class="number">1</span>;</span><br><span class="line">		}</span><br><span class="line">		<span class="keyword">return</span> res;</span><br><span class="line">	}</span><br><span class="line">};</span><br></pre></td></tr></table></figure>
       
     </div>
@@ -809,7 +844,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/24/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/24/">24</a><span class="page-number current">25</span><a class="page-number" href="/page/26/">26</a><span class="space">&hellip;</span><a class="page-number" href="/page/48/">48</a><a class="extend next" rel="next" href="/page/26/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/24/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/24/">24</a><span class="page-number current">25</span><a class="page-number" href="/page/26/">26</a><span class="space">&hellip;</span><a class="page-number" href="/page/50/">50</a><a class="extend next" rel="next" href="/page/26/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -876,7 +911,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">238</span>
+          <span class="site-state-item-count">246</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -889,7 +924,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">80</span>
+        <span class="site-state-item-count">83</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

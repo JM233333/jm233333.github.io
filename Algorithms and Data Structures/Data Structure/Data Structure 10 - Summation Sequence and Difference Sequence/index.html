@@ -19,16 +19,16 @@
     var CONFIG = {"hostname":"blog.jm233333.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"changyan","storage":true,"lazyload":false,"nav":null,"activeClass":"changyan"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="前置知识 在阅读本文档前，请确保你已经掌握线性表的基础知识，详见 Data Structure 知识板块中的 01 - Linear List 文档。  Data Structure 01 - Linear List    前言 前缀和序列 与 差分序列 是两种基础数据结构，多数情况下会用顺序表来实现，常用于解决简单区间问题。 前缀和序列与差分序列包含了最基础的数据结构思想，它们的优点是简单易于">
+  <meta name="description" content="前置知识 在阅读本文档前，请确保你已经掌握线性表的基础知识，详见 Data Structure 知识板块中的 01 - Linear List 文档。  Data Structure 01 - Linear List    前言 前缀和序列 与 差分序列 是两种基础数据结构，多数情况下会用顺序表来实现，常用于解决简单区间问题。 前缀和序列与差分序列包含了最基础的数据结构思想，它们的优点是简单易">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Data Structure 10 - Summation Sequence and Difference Sequence">
 <meta property="og:url" content="https://blog.jm233333.com/Algorithms%20and%20Data%20Structures/Data%20Structure/Data%20Structure%2010%20-%20Summation%20Sequence%20and%20Difference%20Sequence/index.html">
 <meta property="og:site_name" content="JM233333&#39;s Blog">
-<meta property="og:description" content="前置知识 在阅读本文档前，请确保你已经掌握线性表的基础知识，详见 Data Structure 知识板块中的 01 - Linear List 文档。  Data Structure 01 - Linear List    前言 前缀和序列 与 差分序列 是两种基础数据结构，多数情况下会用顺序表来实现，常用于解决简单区间问题。 前缀和序列与差分序列包含了最基础的数据结构思想，它们的优点是简单易于">
+<meta property="og:description" content="前置知识 在阅读本文档前，请确保你已经掌握线性表的基础知识，详见 Data Structure 知识板块中的 01 - Linear List 文档。  Data Structure 01 - Linear List    前言 前缀和序列 与 差分序列 是两种基础数据结构，多数情况下会用顺序表来实现，常用于解决简单区间问题。 前缀和序列与差分序列包含了最基础的数据结构思想，它们的优点是简单易">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://blog.jm233333.com/images/Algorithms-and-Data-Structures/Data-Structure/Data-Structure-1000-i01.png">
 <meta property="article:published_time" content="2019-08-31T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-03-22T09:31:43.025Z">
+<meta property="article:modified_time" content="2021-03-26T10:10:34.434Z">
 <meta property="article:author" content="JM233333">
 <meta property="article:tag" content="数据结构">
 <meta property="article:tag" content="进阶教程">
@@ -133,7 +133,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">80</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">83</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -268,7 +268,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h3 id="前置知识"><a class="markdownIt-Anchor" href="#前置知识"></a> 前置知识</h3>
+        <hr />
+<h3 id="前置知识"><a class="markdownIt-Anchor" href="#前置知识"></a> 前置知识</h3>
 <p>在阅读本文档前，请确保你已经掌握线性表的基础知识，详见 <em>Data Structure</em> 知识板块中的 <em>01 - Linear List</em> 文档。</p>
 <ul>
 <li><a href="/Algorithms%20and%20Data%20Structures/Data%20Structure/Data%20Structure%2001%20-%20Linear%20List/">Data Structure 01 - Linear List</a></li>
@@ -478,7 +479,7 @@ dif = \{&amp;a_1 - a_0,&amp; &amp;a_2 - a_1 + x,&amp; &amp;a_3 - a_2,&amp; &amp;
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">238</span>
+          <span class="site-state-item-count">246</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -491,7 +492,7 @@ dif = \{&amp;a_1 - a_0,&amp; &amp;a_2 - a_1 + x,&amp; &amp;a_3 - a_2,&amp; &amp;
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">80</span>
+        <span class="site-state-item-count">83</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

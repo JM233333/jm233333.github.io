@@ -19,15 +19,15 @@
     var CONFIG = {"hostname":"blog.jm233333.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"changyan","storage":true,"lazyload":false,"nav":null,"activeClass":"changyan"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="思维 || 格雷码     Difficulty Time Complexity Limit Extra-Memory Complexity Limit     Medium O(2n)O(2^n)O(2n) −-−    The gray code is a binary numeral system where two successive values differ in only one">
+  <meta name="description" content="Hints   思维   格雷码     题面    Difficulty Time Complexity Limit Extra-Memory Complexity Limit     Medium O(2n)O(2^n)O(2n) −-−    The gray code is a binary numeral system where two successive values diffe">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LeetCode 0089 - Gray Code">
 <meta property="og:url" content="https://blog.jm233333.com/LeetCode/LeetCode%200089%20-%20Gray%20Code/index.html">
 <meta property="og:site_name" content="JM233333&#39;s Blog">
-<meta property="og:description" content="思维 || 格雷码     Difficulty Time Complexity Limit Extra-Memory Complexity Limit     Medium O(2n)O(2^n)O(2n) −-−    The gray code is a binary numeral system where two successive values differ in only one">
+<meta property="og:description" content="Hints   思维   格雷码     题面    Difficulty Time Complexity Limit Extra-Memory Complexity Limit     Medium O(2n)O(2^n)O(2n) −-−    The gray code is a binary numeral system where two successive values diffe">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-08-23T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-09-04T08:03:46.559Z">
+<meta property="article:modified_time" content="2021-04-14T15:41:32.156Z">
 <meta property="article:author" content="JM233333">
 <meta property="article:tag" content="LeetCode">
 <meta property="article:tag" content="LeetCode Medium">
@@ -133,7 +133,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">80</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">83</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -264,8 +264,17 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h4 id="思维-格雷码"><a class="markdownIt-Anchor" href="#思维-格雷码"></a> 思维 || 格雷码</h4>
+        <h3 id="hints"><a class="markdownIt-Anchor" href="#hints"></a> Hints</h3>
+<ul>
+<li>
+<p>思维</p>
+</li>
+<li>
+<p>格雷码</p>
+</li>
+</ul>
 <hr />
+<h3 id="题面"><a class="markdownIt-Anchor" href="#题面"></a> 题面</h3>
 <table>
 <thead>
 <tr>
@@ -289,9 +298,10 @@
 <p><strong>Example 2:</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Input: 0</span><br><span class="line">Output: [0]</span><br><span class="line">Explanation: We define the gray code sequence to begin with 0.</span><br><span class="line">             A gray code sequence of n has size &#x3D; 2^n, which for n &#x3D; 0 the size is 2^0 &#x3D; 1.</span><br><span class="line">             Therefore, for n &#x3D; 0 the gray code sequence is [0].</span><br></pre></td></tr></table></figure>
 <hr />
-<p><strong>题意</strong></p>
+<h3 id="题意"><a class="markdownIt-Anchor" href="#题意"></a> 题意</h3>
 <p>给定一个正整数 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> ，要求将所有 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> 位二进制数按特定顺序排列，使得每两个相邻数之间只有一个二进制位不同。求出任意一种合法解即可。</p>
-<p><strong>题解</strong></p>
+<hr />
+<h3 id="题解"><a class="markdownIt-Anchor" href="#题解"></a> 题解</h3>
 <p>方法1：</p>
 <p>列举 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mo>=</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">n = 3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span></span></span></span> 和 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mo>=</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">n = 4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">4</span></span></span></span> 的情况不难发现一种合法解的对称性质。</p>
 <p>对于 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mo>=</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">n = 3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span></span></span></span> 的情况：</p>
@@ -303,9 +313,9 @@
 <p>本题事实上是要求生成 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> 位格雷码，若对格雷码有所了解，根据由二进制码生成格雷码的公式即可直接求解，时间复杂度为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><msup><mn>2</mn><mi>n</mi></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(2^n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span> 。</p>
 <p>格雷码：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/zhuruibi/p/8988044.html">https://www.cnblogs.com/zhuruibi/p/8988044.html</a></p>
 <hr />
-<p><strong>AC代码（思维）</strong></p>
+<h3 id="ac代码思维"><a class="markdownIt-Anchor" href="#ac代码思维"></a> AC代码（思维）</h3>
 <figure class="highlight cpp"><figcaption><span>LeetCode_0089_1.cpp</span><a href="/.//codes/LeetCode/LeetCode_0089_1.cpp">view raw</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> {</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">grayCode</span><span class="params">(<span class="keyword">int</span> n)</span> </span>{</span><br><span class="line">		<span class="comment">// 生成</span></span><br><span class="line">		vector&lt;<span class="keyword">int</span>&gt; res;</span><br><span class="line">		res.<span class="built_in">push_back</span>(<span class="number">0</span>);</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> t = <span class="number">1</span>; t &lt; (<span class="number">1</span> &lt;&lt; n); t &lt;&lt;= <span class="number">1</span>) {</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>, j = t - <span class="number">1</span>; i &lt;= t; i ++, j --) {</span><br><span class="line">				res.<span class="built_in">push_back</span>(t + res[j]);</span><br><span class="line">			}</span><br><span class="line">		}</span><br><span class="line">		<span class="comment">// 返回</span></span><br><span class="line">		<span class="keyword">return</span> res;</span><br><span class="line">	}</span><br><span class="line">};</span><br></pre></td></tr></table></figure>
-<p><strong>AC代码（格雷码）</strong></p>
+<h3 id="ac代码格雷码"><a class="markdownIt-Anchor" href="#ac代码格雷码"></a> AC代码（格雷码）</h3>
 <figure class="highlight cpp"><figcaption><span>LeetCode_0089_2.cpp</span><a href="/.//codes/LeetCode/LeetCode_0089_2.cpp">view raw</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> {</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">grayCode</span><span class="params">(<span class="keyword">int</span> n)</span> </span>{</span><br><span class="line">		<span class="comment">// 生成</span></span><br><span class="line">		<span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">res</span><span class="params">(<span class="number">1</span> &lt;&lt; n)</span></span>;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (<span class="number">1</span> &lt;&lt; n); i ++) {</span><br><span class="line">			res[i] = i ^ (i &gt;&gt; <span class="number">1</span>);</span><br><span class="line">		}</span><br><span class="line">		<span class="comment">// 返回</span></span><br><span class="line">		<span class="keyword">return</span> res;</span><br><span class="line">	}</span><br><span class="line">};</span><br></pre></td></tr></table></figure>
     </div>
 
@@ -344,12 +354,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/LeetCode/LeetCode%200090%20-%20Subsets%20II/" rel="prev" title="LeetCode 0090 - Subsets II">
-      <i class="fa fa-chevron-left"></i> LeetCode 0090 - Subsets II
+    <a href="/LeetCode/LeetCode%200087%20-%20Scramble%20String/" rel="prev" title="LeetCode 0087 - Scramble String">
+      <i class="fa fa-chevron-left"></i> LeetCode 0087 - Scramble String
     </a></div>
       <div class="post-nav-item">
-    <a href="/LeetCode/LeetCode%20xxx%20copy%2042/" rel="next" title="LeetCode 0001 - xxx">
-      LeetCode 0001 - xxx <i class="fa fa-chevron-right"></i>
+    <a href="/LeetCode/LeetCode%200090%20-%20Subsets%20II/" rel="next" title="LeetCode 0090 - Subsets II">
+      LeetCode 0090 - Subsets II <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -414,7 +424,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%80%9D%E7%BB%B4-%E6%A0%BC%E9%9B%B7%E7%A0%81"><span class="nav-number">1.</span> <span class="nav-text"> 思维 || 格雷码</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#hints"><span class="nav-number">1.</span> <span class="nav-text"> Hints</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E9%9D%A2"><span class="nav-number">2.</span> <span class="nav-text"> 题面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E6%84%8F"><span class="nav-number">3.</span> <span class="nav-text"> 题意</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%98%E8%A7%A3"><span class="nav-number">4.</span> <span class="nav-text"> 题解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ac%E4%BB%A3%E7%A0%81%E6%80%9D%E7%BB%B4"><span class="nav-number">5.</span> <span class="nav-text"> AC代码（思维）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ac%E4%BB%A3%E7%A0%81%E6%A0%BC%E9%9B%B7%E7%A0%81"><span class="nav-number">6.</span> <span class="nav-text"> AC代码（格雷码）</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -429,7 +439,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">238</span>
+          <span class="site-state-item-count">246</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -442,7 +452,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">80</span>
+        <span class="site-state-item-count">83</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
