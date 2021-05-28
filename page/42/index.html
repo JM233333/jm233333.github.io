@@ -188,6 +188,338 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.jm233333.com/Programming%20Languages/C/C%2005%20-%20Memory%20Model%20and%20Layout/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="JM233333">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JM233333's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/Programming%20Languages/C/C%2005%20-%20Memory%20Model%20and%20Layout/" class="post-title-link" itemprop="url">C 05 - Memory Model and Layout</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-07-01 00:00:00" itemprop="dateCreated datePublished" datetime="2020-07-01T00:00:00+08:00">2020-07-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming-Languages/" itemprop="url" rel="index"><span itemprop="name">Programming Languages</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming-Languages/C/" itemprop="url" rel="index"><span itemprop="name">C</span></a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Changyan: </span>
+    
+    
+      <a title="changyan" href="/Programming%20Languages/C/C%2005%20-%20Memory%20Model%20and%20Layout/#SOHUCS" itemprop="discussionUrl">
+        <span id="url::https://blog.jm233333.com/Programming%20Languages/C/C%2005%20-%20Memory%20Model%20and%20Layout/" class="cy_cmt_count" data-xid="Programming Languages/C/C 05 - Memory Model and Layout/" itemprop="commentCount"></span>
+      </a>
+    
+  </span>
+  
+  
+
+        </div>
+
+        <div class="post-authorization">
+          <p>本文为 JM233333 原创所著，遵循 BY-NC-SA 4.0 许可协议，转载请注明出处。如果您认为文中有谬误或对文中内容有疑问，欢迎理性指出，大家共同探讨和进步。</p>
+        </div>
+
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <hr />
+<h3 id="前置知识"><a class="markdownIt-Anchor" href="#前置知识"></a> 前置知识</h3>
+<p>在阅读本文档前，请确保你已经掌握动态内存分配的基础知识，详见 <em>C</em> 语言的 <em>04 - Dynamic Memory Allocation</em> 文档。</p>
+<ul>
+<li><a href="/Programming%20Languages/C/C%2004%20-%20Dynamic%20Memory%20Allocation/">C 04 - Dynamic Memory Allocation</a></li>
+</ul>
+<p><em>请注意：本文是面向进阶读者的，在阅读本文档前，请确保你已经具备了较为完整的 C 语言基础。</em></p>
+<hr />
+<h3 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h3>
+<p>要想深入了解 C 语言，先掌握其内存模型和布局是必不可少的步骤。本文对 C 语言的内存相关知识进行了详细的介绍。</p>
+<hr />
+<h3 id="内存布局"><a class="markdownIt-Anchor" href="#内存布局"></a> 内存布局</h3>
+<h4 id="整体模型"><a class="markdownIt-Anchor" href="#整体模型"></a> 整体模型</h4>
+<p>C 语言的内存布局总体上可以分为代码段、（静态）数据段、堆区和栈区四大区域，如下图所示。</p>
+<p><img src="/images/Programming-Languages/C/C-0500-i01.png" alt="" /></p>
+<p>在不同的系统环境下，各个内存区域的相对位置可能不同（例如代码段和数据段可能在靠近高地址的一侧），但是堆和栈通常都会像图中那样在一起（谁在高低地址位是不一定的），在共享空间内沿着相反的方向增长，二者的头部相遇则意味着内存耗尽，而代码段和数据段则通常位于堆栈区域的“外围”。</p>
+<h4 id="代码段"><a class="markdownIt-Anchor" href="#代码段"></a> 代码段</h4>
+<p><strong>代码段 (Code Segment)</strong> 用于存储源程序编译后产生的二进制机器码，即可执行机器指令，有时也称为 <strong>文本段 (Text Segment)</strong> ，是目标文件或内存中程序的一部分。</p>
+<p>代码段通常是可共享的，因此对于频繁执行的程序（例如文本编辑器、编译器和 shell 等），仅一个副本需要存储在内存中。</p>
+<p>代码段通常是只读的，以防止程序中触发的非法内存访问修改了代码段中的指令，导致严重后果。</p>
+<h4 id="数据段"><a class="markdownIt-Anchor" href="#数据段"></a> 数据段</h4>
+<p><strong>数据段 (Data Segment)</strong> 用于存储全局变量、静态变量和字符串常量，该区域又可细分为初始化数据段和未初始化数据段。</p>
+<p><strong>初始化数据段 (Initialized Data Segment)</strong> 用于存储数据段中的以下数据：</p>
+<ul>
+<li>
+<p>无 const 修饰，且被初始化为 <strong>非零值</strong> 的所有全局变量和静态变量；</p>
+</li>
+<li>
+<p>有 const 修饰，且被显式初始化为任意值的所有全局变量和静态变量；</p>
+</li>
+<li>
+<p>所有字符串常量。</p>
+</li>
+</ul>
+<p>初始化数据的又分为 <strong>初始化只读区域 (initialized read-only area)</strong> 和 <strong>初始化可读写区域 (initialized read-write area)</strong> 。顾名思义，不可修改的数据（包括字符串常量）都存储在只读区域，而其它可修改的数据则存储在可读写区域。例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">1</span>;                  <span class="comment">// stored in initialized read-write area</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> b = <span class="number">2</span>;            <span class="comment">// stored in initialized read-only area</span></span><br><span class="line"><span class="keyword">int</span> c = <span class="number">0</span>;                  <span class="comment">// NOT stored in initialized data segment</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> d = <span class="number">0</span>;            <span class="comment">// stored in initialized read-only area</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> e;                <span class="comment">// NOT stored in initialized data segment</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">char</span>[] s = <span class="string">&quot;abc&quot;</span>;           <span class="comment">// stored in initialized read-write area</span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">char</span>[] t = <span class="string">&quot;def&quot;</span>;     <span class="comment">// stored in initialized read-only area</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">char</span> * p = <span class="string">&quot;foo&quot;</span>;           <span class="comment">// discussed later</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">static</span> <span class="keyword">int</span> x = <span class="number">1</span>;       <span class="comment">// stored in initialized read-write area</span></span><br><span class="line">	<span class="keyword">static</span> <span class="keyword">const</span> <span class="keyword">int</span> y = <span class="number">2</span>; <span class="comment">// stored in initialized read-only area</span></span><br><span class="line">	<span class="keyword">const</span> <span class="keyword">int</span> z = <span class="number">3</span>;        <span class="comment">// NOT stored in initialized data segment</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>用字符串初始化的字符指针则需要特别注意。在上例中，指针 <code>p</code> 将存储在可读写区域，而字符串常量 <code>&quot;foo&quot;</code> 则存储在只读区域。但是上例中的 <code>&quot;abc&quot;</code> 和 <code>&quot;def&quot;</code> 都不会作为字符串常量被存储，因为 <code>s</code> 和 <code>t</code> 被定义为 char 数组而非 char 指针。</p>
+<p>两个容易记错的情况：</p>
+<ul>
+<li>
+<p>被初始化为零值但是有 const 修饰的全局或静态变量。此类变量会被存储在初始化数据段的只读区域，例如上例中的 <code>d</code> 。</p>
+</li>
+<li>
+<p>未被显式初始化但是有 const 修饰的全局或静态变量。此类变量会被存储在未初始化数据段，例如上例中的 <code>e</code> 。</p>
+</li>
+</ul>
+<p><strong>未初始化数据段 (Uninitialized Data Segment)</strong> 用于存储数据段中的以下数据：</p>
+<ul>
+<li>
+<p>无 const 修饰，且被程序显式初始化为 <strong>零值</strong> 的全局变量和静态变量；</p>
+</li>
+<li>
+<p>未被程序显式初始化的全局变量和静态变量，无论是否有 const 修饰。</p>
+</li>
+</ul>
+<p>在程序开始执行之前，该区域中的数据会被自动地初始化为零值。该区域有时也被称为 <strong>BSS 段 (Block Started by Symbol, BSS)</strong> 。</p>
+<p>下面是一个验证上述内容正确性的简单程序，假设在程序的运行环境中 int 类型的长度为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>32</mn></mrow><annotation encoding="application/x-tex">32</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span><span class="mord">2</span></span></span></span> 位，且程序运行在 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>32</mn></mrow><annotation encoding="application/x-tex">32</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span><span class="mord">2</span></span></span></span> 位环境：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">int</span> b = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> c = <span class="number">2</span>;</span><br><span class="line"><span class="keyword">int</span> d = <span class="number">3</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> e = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">int</span> f = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> g = <span class="number">4</span>;</span><br><span class="line"><span class="keyword">int</span> h = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">int</span> j;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> k;</span><br><span class="line"><span class="keyword">int</span> l;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%u %u %u\n&quot;</span>, &amp;a, &amp;d, &amp;h); <span class="comment">// initialized read-write area</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%u %u %u\n&quot;</span>, &amp;c, &amp;e, &amp;g); <span class="comment">// initialized read-only area</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%u %u %u\n&quot;</span>, &amp;b, &amp;f, &amp;i); <span class="comment">// uninitialized data segment</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%u %u %u\n&quot;</span>, &amp;j, &amp;k, &amp;l); <span class="comment">// uninitialized data segment</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上述代码在我本机上的某次运行结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">4222984 4222980 4222976</span><br><span class="line">4227128 4227124 4227120</span><br><span class="line">4235280 4235276 4235272</span><br><span class="line">4237856 4237860 4237864</span><br></pre></td></tr></table></figure>
+<p>根据变量地址的连贯性，我们可以很容易地判断出各个变量的存储区域都是符合规则的。</p>
+<h4 id="堆区和栈区"><a class="markdownIt-Anchor" href="#堆区和栈区"></a> 堆区和栈区</h4>
+<p><strong>栈区 (Stack)</strong> 用于存储所有的局部变量，包括函数参数以及在函数体内定义的所有非静态变量。 <strong>堆区 (Heap)</strong> 用于进行动态分配内存，例如由 malloc 或 calloc 等函数分配的存储空间都位于堆区。</p>
+<p>堆栈区域所存储的都是在运行时刻才能决定的内存分配。对于栈区，局部变量的产生受函数调用和分支逻辑决定；对于堆区，动态分配内存完全取决于运行时刻的各种程序状态。以下面的代码为例：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a, b;</span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">g</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a, b, c;</span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;n);</span><br><span class="line">	<span class="keyword">if</span> (n &gt; <span class="number">0</span>) &#123;</span><br><span class="line">		f(<span class="number">1</span>);</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		g(<span class="number">1</span>, <span class="number">-1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果输入满足 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mo>&gt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">n &gt; 0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span> ，则栈区头部新使用的内存包括三个整型变量，反之则包括五个整型变量，只有在程序的运行时刻才可能知道内存分配的具体大小。而代码段和数据段的具体大小都可以在编译时刻确定。</p>
+<p>堆区和栈区通常沿着相反的方向增长，并且“起点”位于堆栈区的相反两端，正如前文的内存布局示意图中所示。</p>
+<p>栈区的存储方式与数据结构中的栈相同。而堆区的存储方式则并非像数据结构中的堆那样，二者完全无关。</p>
+<hr />
+<h3 id="内存对齐与填充"><a class="markdownIt-Anchor" href="#内存对齐与填充"></a> 内存对齐与填充</h3>
+<h4 id="前言-2"><a class="markdownIt-Anchor" href="#前言-2"></a> 前言</h4>
+<p>对初学者来说，内存对齐是一个很有趣的现象。依据内存对齐进行空间优化是许多底层代码所关注的问题，是深入学习 C/C++ 语言所必须了解的。</p>
+<p>为了引入这个问题，我们先看如下代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">block</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> x;</span><br><span class="line">	<span class="keyword">char</span> ch;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>, <span class="keyword">sizeof</span>(struct block));</span><br></pre></td></tr></table></figure>
+<p>你觉得应该是多少？答案并不等于 <code>sizeof(int) + sizeof(char)</code> ，输出的结果不是 <code>5</code> ，而是令人惊奇的 <code>8</code> 。</p>
+<p>再看另一个示例：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">block1</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> x;</span><br><span class="line">	<span class="keyword">short</span> a;</span><br><span class="line">	<span class="keyword">short</span> b;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">block2</span> &#123;</span></span><br><span class="line">	<span class="keyword">short</span> a;</span><br><span class="line">	<span class="keyword">int</span> x;</span><br><span class="line">	<span class="keyword">short</span> b;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d %d&quot;</span>, <span class="keyword">sizeof</span>(struct block1), <span class="keyword">sizeof</span>(struct block2));</span><br></pre></td></tr></table></figure>
+<p>输出的结果是 <code>8 12</code> ，同样的成员变量，两个结构体的大小竟然并不相同。</p>
+<p>这些看似神奇的现象，其背后的原理正是 C/C++ 语言的内存对齐机制。</p>
+<h4 id="基本概念"><a class="markdownIt-Anchor" href="#基本概念"></a> 基本概念</h4>
+<p>简单来说， <strong>内存对齐 (memory alignment)</strong> 是 C/C++ 语言为了提高程序的运行效率、以及为了与下层的体系结构和处理器相兼容，而设计的一种机制，该机制规定了数据在复合数据结构中的排布规则。有时也称为 <strong>数据结构对齐 (data structure alignment)</strong> ，实际上指的是同一个东西。</p>
+<p>与之共存的是，在对 struct 这样的复合类型内部的成员进行内存对齐的时候，会产生一些冗余区域，编译器会使用一些匿名内存填满这些区域，称为 <strong>内存填充 (memory padding)</strong> 。</p>
+<p>为什么要有内存对齐？往深了挖的话，这是一个非常复杂的问题。简单来说，在多种原因的推动下，计算机处理器选择尽量以内存对齐的方式处理数据，这样更加高效，并且能避免很多不必要的麻烦；而作为最接近底层的高级语言之一，在 C 语言中直接遵循内存对齐的规则也就不奇怪了。</p>
+<p><em>注：如果读者对内存对齐背后的理由感兴趣，可以查阅本节末尾附的链接。这部分内容已经超出了编程语言的范畴，会涉及大量的计算机体系结构的相关知识。</em></p>
+<h4 id="基本类型的内存对齐"><a class="markdownIt-Anchor" href="#基本类型的内存对齐"></a> 基本类型的内存对齐</h4>
+<p>在 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>32</mn></mrow><annotation encoding="application/x-tex">32</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span><span class="mord">2</span></span></span></span> 位 x86 环境下，根据 C 语言标准，基本数据类型的内存长度与内存对齐长度如下表所示，单位为字节数：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">类型</th>
+<th style="text-align:left">长度</th>
+<th style="text-align:left">对齐长度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>char</code></td>
+<td style="text-align:left">1</td>
+<td style="text-align:left">1</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>short</code></td>
+<td style="text-align:left">2</td>
+<td style="text-align:left">2</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>int</code></td>
+<td style="text-align:left">4</td>
+<td style="text-align:left">4</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>long</code></td>
+<td style="text-align:left">4</td>
+<td style="text-align:left">4</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>float</code></td>
+<td style="text-align:left">4</td>
+<td style="text-align:left">4</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>double</code></td>
+<td style="text-align:left">8</td>
+<td style="text-align:left">8 or 4</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>long long</code></td>
+<td style="text-align:left">8</td>
+<td style="text-align:left">4</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>T *</code></td>
+<td style="text-align:left">4</td>
+<td style="text-align:left">4</td>
+</tr>
+</tbody>
+</table>
+<p>数组类型 <code>T []</code> 的对齐长度与类型 <code>T</code> 相同。</p>
+<p>在默认情况下，对于存储在相同内存区域的若干个变量（例如一组在 <code>main</code> 函数内定义的局部变量），编译器会在遵循内存对齐规则的前提下，自由地调整各个变量的相对位置，以尽可能地节省空间消耗。</p>
+<p>我们将利用几组示例来辅助理解这一点，每组示例包括代码、运行结果和相对位置的图示（图中每个方块表示一个字节）。为了节省文章页面，我们会将多个不同类型的变量的声明语句挤压到一行内，但这不是一个好的代码习惯。注意，在不同运行环境和不同编译参数下，这些变量在内存中的具体地址和相对位置都可能会不同。</p>
+<p>示例 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mclose">)</span></span></span></span> ：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a; <span class="keyword">int</span> b; <span class="keyword">int</span> c;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%x %x %x\n&quot;</span>, &amp;a, &amp;b, &amp;c);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">61fef4 61fef8 61fefc</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">f4              f8              fc</span><br><span class="line">+---------------+---------------+---------------+</span><br><span class="line">|       a       |       b       |       c       |</span><br><span class="line">+---------------+---------------+---------------+</span><br></pre></td></tr></table></figure>
+<p>示例 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo stretchy="false">(</mo><mn>2</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">2</span><span class="mclose">)</span></span></span></span> ：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a; <span class="keyword">char</span> b; <span class="keyword">int</span> c;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%x %x %x\n&quot;</span>, &amp;a, &amp;b, &amp;c);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">61fef8 61fef7 61fefc</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">f4          f7  f8              fc</span><br><span class="line">+---+---+---+---+---------------+---------------+</span><br><span class="line">| &#x2F; | &#x2F; | &#x2F; | b |       a       |       c       |</span><br><span class="line">+---+---+---+---+---------------+---------------+</span><br></pre></td></tr></table></figure>
+<p>示例 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo stretchy="false">(</mo><mn>3</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(3)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">3</span><span class="mclose">)</span></span></span></span> ：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a; <span class="keyword">char</span> b; <span class="keyword">short</span> c; <span class="keyword">char</span> d;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%x %x %x %x\n&quot;</span>, &amp;a, &amp;b, &amp;c, &amp;d);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">61fefc 61fef8 61fefa 61fef9</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">f4              f8  f9  fa      fc</span><br><span class="line">+---+---+---+---+---+---+-------+---------------+</span><br><span class="line">| &#x2F; | &#x2F; | &#x2F; | &#x2F; | b | d |   c   |       a       |</span><br><span class="line">+---+---+---+---+---+---+-------+---------------+</span><br></pre></td></tr></table></figure>
+<p>示例 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo stretchy="false">(</mo><mn>4</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(4)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">4</span><span class="mclose">)</span></span></span></span> ：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">char</span> a; <span class="keyword">int</span> b; <span class="keyword">char</span> c; <span class="keyword">short</span> d; <span class="keyword">char</span> e; <span class="keyword">short</span> f;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%x %x %x %x %x %x\n&quot;</span>, &amp;a, &amp;b, &amp;c, &amp;d, &amp;e, &amp;f);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">61fef5 61fefc 61fef6 61fef8 61fef7 61fefa</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">f4  f5  f6  f7  f8      fa      fc</span><br><span class="line">+---+---+---+---+-------+-------+---------------+</span><br><span class="line">| &#x2F; | a | c | e |   d   |   f   |       b       |</span><br><span class="line">+---+---+---+---+-------+-------+---------------+</span><br></pre></td></tr></table></figure>
+<p>可以看到， <strong>在我的运行环境下，</strong> 对于长度相同的变量，编译器只是简单地将其顺序排布；否则，编译器会尽量把几个长度相同的变量靠在一起，以减少由内存对齐引起的空间浪费。</p>
+<p>当数组变量加入时，排布的情况会更加复杂。遵循对齐原则时，变量之间有时会产生空余的内存区域。受篇幅所限，这里就只展示几个简单的例子，复杂的组合读者可自行尝试。</p>
+<p>示例 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo stretchy="false">(</mo><mn>5</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(5)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">5</span><span class="mclose">)</span></span></span></span> ：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">char</span> a[<span class="number">2</span>]; <span class="keyword">char</span> b[<span class="number">4</span>]; <span class="keyword">short</span> c[<span class="number">3</span>];</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%x %x %x\n&quot;</span>, &amp;a, &amp;b, &amp;c);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">61fef4 61fef6 61fefa</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">f4      f6              fa</span><br><span class="line">+---+---+---+---+---+---+-------+-------+-------+</span><br><span class="line">| a   . | b   .   .   . |   c       .       .   |</span><br><span class="line">+---+---+---+---+-------+-------+-------+-------+</span><br></pre></td></tr></table></figure>
+<p>示例 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo stretchy="false">(</mo><mn>6</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(6)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">6</span><span class="mclose">)</span></span></span></span> ：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">char</span> a[<span class="number">3</span>]; <span class="keyword">char</span> b[<span class="number">3</span>]; <span class="keyword">short</span> c[<span class="number">2</span>];</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%x %x %x\n&quot;</span>, &amp;a, &amp;b, &amp;c);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">61fef6 61fef9 61fefc</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">f6          f9          fc</span><br><span class="line">+---+---+---+---+---+---+-------+-------+</span><br><span class="line">| a   .   . | b   .   . |   c       .   |</span><br><span class="line">+---+---+-------+---+---+-------+-------+</span><br></pre></td></tr></table></figure>
+<p>示例 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo stretchy="false">(</mo><mn>7</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(7)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">7</span><span class="mclose">)</span></span></span></span> ：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">short</span> a[<span class="number">2</span>]; <span class="keyword">char</span> b[<span class="number">5</span>]; <span class="keyword">short</span> c[<span class="number">3</span>];</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%x %x %x\n&quot;</span>, &amp;a, &amp;b, &amp;c);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">61fef0 61fef5 61fefa</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">f0              f4  f5                  fa</span><br><span class="line">+-------+-------+---+---+---+---+---+---+-------+-------+-------+</span><br><span class="line">|   a       .   | &#x2F; | b   .   .   .   . |   c       .       .   |</span><br><span class="line">+-------+-------+---+---+---+---+---+---+-------+-------+-------+</span><br></pre></td></tr></table></figure>
+<p>需要注意的是，在不同的运行环境和编译参数下，基本类型的对齐长度可能会不同，这也将进一步影响到结构体和联合体类型的对齐长度。但是标准规定的对齐规则是不会随环境而变的，无论对齐长度是多少。</p>
+<h4 id="结构体类型的内存对齐与填充"><a class="markdownIt-Anchor" href="#结构体类型的内存对齐与填充"></a> 结构体类型的内存对齐与填充</h4>
+<p>根据 C 语言标准，结构体类型的内存对齐遵循如下规则：</p>
+<ul>
+<li>
+<p>在默认情况下，结构体类型的对齐长度为结构体内所有成员的对齐长度的 <strong>最小公倍数</strong> <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi></mrow><annotation encoding="application/x-tex">m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">m</span></span></span></span> ；这导致结构体类型的长度为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi></mrow><annotation encoding="application/x-tex">m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">m</span></span></span></span> 的最小整数倍数 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>k</mi><mi>m</mi></mrow><annotation encoding="application/x-tex">km</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mord mathdefault">m</span></span></span></span> ，使其内存大小足够装下所有成员；</p>
+</li>
+<li>
+<p>在结构体内部，结构体内的每个成员都要按照该成员类型的对齐长度来对齐；形式化地讲，设成员类型的对齐长度为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi></mrow><annotation encoding="application/x-tex">l</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span></span></span></span> ，那么该成员的偏移地址一定是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>min</mi><mo>⁡</mo><mo stretchy="false">{</mo><mi>m</mi><mo separator="true">,</mo><mtext> </mtext><mi>l</mi><mo stretchy="false">}</mo></mrow><annotation encoding="application/x-tex">\min\{m,\ l\}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop">min</span><span class="mopen">{</span><span class="mord mathdefault">m</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mclose">}</span></span></span></span> 的整数倍。</p>
+</li>
+<li>
+<p>结构体用若干段匿名内存填充由内存对齐所产生的冗余区域，称为 <strong>内存填充 (memory padding)</strong> ；结构体的首部不能有内存填充，而成员之间及末尾都可能有；</p>
+</li>
+</ul>
+<p>上述规则本身不受运行环境和编译参数的影响，但基本类型的对齐长度会受到影响，进而影响到结构体的对齐长度。</p>
+<p>我们将利用几组示例来辅助理解上述规则，每组示例包括代码、运行结果和相对位置的图示。这些示例囊括了本节最初的两组示例。</p>
+<p>示例 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mclose">)</span></span></span></span> ：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">block</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> a; <span class="keyword">char</span> b;</span><br><span class="line">&#125; t;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%-2d %x %x\n&quot;</span>, <span class="keyword">sizeof</span>(t), &amp;t.a, &amp;t.b);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">8  61fef8 61fefc</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">f8              fc</span><br><span class="line">+---------------+---+---+---+---+</span><br><span class="line">|       a       | b | &#x2F; | &#x2F; | &#x2F; |</span><br><span class="line">+---------------+---+---+---+---+</span><br></pre></td></tr></table></figure>
+<p>示例 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo stretchy="false">(</mo><mn>2</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">2</span><span class="mclose">)</span></span></span></span> ：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">block</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> a; <span class="keyword">char</span> b; <span class="keyword">short</span> c;</span><br><span class="line">&#125; t;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%-2d %x %x %x\n&quot;</span>, <span class="keyword">sizeof</span>(t), &amp;t.a, &amp;t.b, &amp;t.c);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">8  61fef8 61fefc 61fefe</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">f8              fc      fe</span><br><span class="line">+---------------+---+---+-------+</span><br><span class="line">|       a       | b | &#x2F; |   c   |</span><br><span class="line">+---------------+---+---+-------+</span><br></pre></td></tr></table></figure>
+<p>示例 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo stretchy="false">(</mo><mn>3</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(3)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">3</span><span class="mclose">)</span></span></span></span> ：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">block</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> a; <span class="keyword">short</span> b; <span class="keyword">short</span> c;</span><br><span class="line">&#125; t;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%-2d %x %x %x\n&quot;</span>, <span class="keyword">sizeof</span>(t), &amp;t.a, &amp;t.b, &amp;t.c);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">8  61fef8 61fefc 61fefe</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">f8              fc      fe</span><br><span class="line">+---------------+-------+-------+</span><br><span class="line">|       a       |   b   |   c   |</span><br><span class="line">+---------------+-------+-------+</span><br></pre></td></tr></table></figure>
+<p>示例 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo stretchy="false">(</mo><mn>4</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(4)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">4</span><span class="mclose">)</span></span></span></span> ：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">block</span> &#123;</span></span><br><span class="line">	<span class="keyword">short</span> a; <span class="keyword">int</span> b; <span class="keyword">short</span> c;</span><br><span class="line">&#125; t;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%-2d %x %x %x\n&quot;</span>, <span class="keyword">sizeof</span>(t), &amp;t.a, &amp;t.b, &amp;t.c);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">12 61fef4 61fef8 61fefc</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">f4              f8              fc</span><br><span class="line">+-------+---+---+---------------+-------+---+---+</span><br><span class="line">|   a   | &#x2F; | &#x2F; |       b       |   c   | &#x2F; | &#x2F; |</span><br><span class="line">+-------+---+---+---------------+-------+---+---+</span><br></pre></td></tr></table></figure>
+<p>示例 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo stretchy="false">(</mo><mn>5</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(5)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">5</span><span class="mclose">)</span></span></span></span> ：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">block</span> &#123;</span></span><br><span class="line">	<span class="keyword">short</span> a; <span class="keyword">short</span> b; <span class="keyword">short</span> c;</span><br><span class="line">&#125; t;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%-2d %x %x %x\n&quot;</span>, <span class="keyword">sizeof</span>(t), &amp;t.a, &amp;t.b, &amp;t.c);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">6  61fefa 61fefc 61fefe</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fa      fc      fe</span><br><span class="line">+-------+-------+-------+</span><br><span class="line">|   a   |   b   |   c   |</span><br><span class="line">+-------+-------+-------+</span><br></pre></td></tr></table></figure>
+<p>示例 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo stretchy="false">(</mo><mn>6</mn><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">(6)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">6</span><span class="mclose">)</span></span></span></span> ：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">block</span> &#123;</span></span><br><span class="line">	<span class="keyword">short</span> a; <span class="keyword">char</span> b; <span class="keyword">short</span> c;</span><br><span class="line">	<span class="keyword">char</span> d; <span class="keyword">char</span> e; <span class="keyword">short</span> f;</span><br><span class="line">&#125; t;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%-2d %x %x %x %x %x %x\n&quot;</span>, </span><br><span class="line">	<span class="keyword">sizeof</span>(t), &amp;t.a, &amp;t.b, &amp;t.c, &amp;t.d, &amp;t.e, &amp;t.f);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">10 61fef6 61fef8 61fefa 61fefc 61fefd 61fefe</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">f6      f8      fa      fc  fd  fe</span><br><span class="line">+-------+---+---+-------+---+---+-------+</span><br><span class="line">|   a   | b | &#x2F; |   c   | d | e |   f   |</span><br><span class="line">+-------+---+---+-------+---+---+-------+</span><br></pre></td></tr></table></figure>
+<p>可以看到，即便是完全相同的成员类型的组合，不同的顺序也会导致结构体的总长度相差甚远。因此，在有必要的情况下（例如需要存储大量的结构体），我们需要合理地排布成员变量以避免空间浪费。</p>
+<p>需要注意的是，当修改结构体及联合体的数据时（例如为其成员赋值），其内部的匿名填充内存中的数据状态属于未指定行为，因此下面两种定义事实上是不等价的，尽管人为设置但不使用的 <code>padding</code> 数组看起来只是占据了匿名填充内存的位置：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">block</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> a;</span><br><span class="line">	<span class="keyword">char</span> b;</span><br><span class="line">	<span class="keyword">int</span> c;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">block</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> a;</span><br><span class="line">	<span class="keyword">char</span> b;</span><br><span class="line">	<span class="keyword">char</span> padding[<span class="number">3</span>];</span><br><span class="line">	<span class="keyword">int</span> c;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>事实上， C 语言也支持手动指定结构体的对齐长度。预处理指令 <code>#pragma pack(n)</code> 可以指示编译器按对齐长度 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> 打包结构体成员，而 <code>#pragma pack()</code> 会恢复当前环境中默认的对齐长度。</p>
+<p>类似地，我们还是利用示例来理解其作用：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="meta">#<span class="meta-keyword">pragma</span> pack(1)</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">block1</span> &#123;</span></span><br><span class="line">		<span class="keyword">char</span> a; <span class="keyword">int</span> b; <span class="keyword">char</span> c;</span><br><span class="line">	&#125; t1;</span><br><span class="line">	<span class="meta">#<span class="meta-keyword">pragma</span> pack(2)</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">block2</span> &#123;</span></span><br><span class="line">		<span class="keyword">char</span> a; <span class="keyword">int</span> b; <span class="keyword">char</span> c;</span><br><span class="line">	&#125; t2;</span><br><span class="line">	<span class="meta">#<span class="meta-keyword">pragma</span> pack()</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">block</span> &#123;</span></span><br><span class="line">		<span class="keyword">char</span> a; <span class="keyword">int</span> b; <span class="keyword">char</span> c;</span><br><span class="line">	&#125; t;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%-2d %x %x %x\n&quot;</span>, <span class="keyword">sizeof</span>(t1), &amp;t1.a, &amp;t1.b, &amp;t1.c);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%-2d %x %x %x\n&quot;</span>, <span class="keyword">sizeof</span>(t2), &amp;t2.a, &amp;t2.b, &amp;t2.c);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%-2d %x %x %x\n&quot;</span>, <span class="keyword">sizeof</span>(t), &amp;t.a, &amp;t.b, &amp;t.c);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">6  61fee6 61fee7 61feeb</span><br><span class="line">8  61feec 61feee 61fef2</span><br><span class="line">12 61fef4 61fef8 61fefc</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">e6  e7              eb</span><br><span class="line">+---+---------------+---+</span><br><span class="line">| a |       b       | c |</span><br><span class="line">+---+---------------+---+</span><br><span class="line"></span><br><span class="line">ec      ee              f2</span><br><span class="line">+---+---+---------------+---+---+</span><br><span class="line">| a | &#x2F; |       b       | c | &#x2F; |</span><br><span class="line">+---+---+---------------+---+---+</span><br><span class="line"></span><br><span class="line">f4              f8              fc</span><br><span class="line">+---+---+---+---+---------------+---+---+---+---+</span><br><span class="line">| a | &#x2F; | &#x2F; | &#x2F; |       b       | c | &#x2F; | &#x2F; | &#x2F; |</span><br><span class="line">+---+---+---+---+---------------+---+---+---+---+</span><br></pre></td></tr></table></figure>
+<p>需要注意的是，尽管 <code>#pragma pack</code> 确实极力压缩了空间，但是它也会降低程序的执行效率，以及引入一些其它的负面结果——内存对齐会浪费空间，但这么做显然是有必要的。具体原因涉及计算机体系结构的相关知识，这里就不再深入探讨了。</p>
+<p>因此，除非确实有必要，以及你很清楚自己在做什么，否则不要滥用这个指令，毕竟手动调整成员的排列顺序通常足以解决问题。</p>
+<h4 id="延伸阅读"><a class="markdownIt-Anchor" href="#延伸阅读"></a> 延伸阅读</h4>
+<p><a target="_blank" rel="noopener" href="https://medium.com/dev-genius/c-programming-hacks-01-memory-efficient-struct-design-8e7252c2b986">https://medium.com/dev-genius/c-programming-hacks-01-memory-efficient-struct-design-8e7252c2b986</a></p>
+<p><a target="_blank" rel="noopener" href="https://medium.datadriveninvestor.com/c-programming-hacks-3-diving-deep-into-memory-alignment-and-bit-fields-457b31dbd3e1">https://medium.datadriveninvestor.com/c-programming-hacks-3-diving-deep-into-memory-alignment-and-bit-fields-457b31dbd3e1</a></p>
+<p><a target="_blank" rel="noopener" href="https://developer.ibm.com/technologies/systems/articles/pa-dalign/">https://developer.ibm.com/technologies/systems/articles/pa-dalign/</a></p>
+<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/381244/purpose-of-memory-alignment">https://stackoverflow.com/questions/381244/purpose-of-memory-alignment</a></p>
+<hr />
+<h3 id="文章更新记录"><a class="markdownIt-Anchor" href="#文章更新记录"></a> 文章更新记录</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">更新时间</th>
+<th style="text-align:left">更新内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">2020.3.18</td>
+<td style="text-align:left">追加章节【内存对齐与填充】</td>
+</tr>
+</tbody>
+</table>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://blog.jm233333.com/Programming%20Languages/C/C%2005%20-%20Improve%20Your%20Code%20with%20[typedef]/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -977,241 +1309,6 @@ Determined by ABI.</li>
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://blog.jm233333.com/Programming%20Languages/C/C%2006%20-%20Do%20not%20Abuse%20Side%20Effects%20in%20Subexpressions/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="JM233333">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="JM233333's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/Programming%20Languages/C/C%2006%20-%20Do%20not%20Abuse%20Side%20Effects%20in%20Subexpressions/" class="post-title-link" itemprop="url">C 06 - Do not Abuse Side Effects in Subexpressions</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2020-01-01T00:00:00+08:00">2020-01-01</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Programming-Languages/" itemprop="url" rel="index"><span itemprop="name">Programming Languages</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Programming-Languages/C/" itemprop="url" rel="index"><span itemprop="name">C</span></a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Changyan: </span>
-    
-    
-      <a title="changyan" href="/Programming%20Languages/C/C%2006%20-%20Do%20not%20Abuse%20Side%20Effects%20in%20Subexpressions/#SOHUCS" itemprop="discussionUrl">
-        <span id="url::https://blog.jm233333.com/Programming%20Languages/C/C%2006%20-%20Do%20not%20Abuse%20Side%20Effects%20in%20Subexpressions/" class="cy_cmt_count" data-xid="Programming Languages/C/C 06 - Do not Abuse Side Effects in Subexpressions/" itemprop="commentCount"></span>
-      </a>
-    
-  </span>
-  
-  
-
-        </div>
-
-        <div class="post-authorization">
-          <p>本文为 JM233333 原创所著，遵循 BY-NC-SA 4.0 许可协议，转载请注明出处。如果您认为文中有谬误或对文中内容有疑问，欢迎理性指出，大家共同探讨和进步。</p>
-        </div>
-
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <hr />
-<h3 id="前置知识"><a class="markdownIt-Anchor" href="#前置知识"></a> 前置知识</h3>
-<p>在阅读本文档前，请确保你已经知晓未定义行为的基本概念，详见 <em>C</em> 语言的 <em>03 - Undefined Behavior and Unspecified Behavior</em> 文档。只需看过概述部分知道什么是未定义行为即可，无需知晓各种具体的未定义行为。</p>
-<ul>
-<li><a href="/Programming%20Languages/C/C%2003%20-%20Undefined%20Behavior%20and%20Unspecified%20Behavior/">C 03 - Undefined Behavior and Unspecified Behavior</a></li>
-</ul>
-<p><em>请注意：本文是面向进阶读者的，在阅读本文档前，请确保你已经具备了完整的 C 语言基础。</em></p>
-<hr />
-<h3 id="令人刷新三观的真相"><a class="markdownIt-Anchor" href="#令人刷新三观的真相"></a> 令人刷新三观的真相</h3>
-<p>如果你学过 C 语言的基本语法，你可能会觉得类似下面的代码并没有什么问题，只是有些晦涩难懂、并且代码风格糟糕。例如：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">int</span> x = i++ + i++;</span><br></pre></td></tr></table></figure>
-<p>你或许会认为：既然后缀自增运算符是在主表达式计算之后被计算的，那么结果似乎就应当是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi><mo>=</mo><mn>2</mn><mo separator="true">,</mo><mtext> </mtext><mi>i</mi><mo>=</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">x = 2,\ i = 3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span></span></span></span> 。然而事实却并非如此。例如在我的编译环境中，结果竟然是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi><mo>=</mo><mn>3</mn><mo separator="true">,</mo><mtext> </mtext><mi>i</mi><mo>=</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">x = 3,\ i = 3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord">3</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span></span></span></span> 。</p>
-<p>你可能见过一些垃圾教学者夸夸其谈地分析其运行结果，并且看起来十分有道理。如果是这样的话，那么很不幸，你被坑了。事实上，这段看起来似乎“很正常只是代码风格很糟糕”的代码属于未定义行为。</p>
-<p>我们知道，花费精力去研究未定义行为在不同编译环境下的运行结果是没有意义的。但如果想要深入学习 C/C++ 语言，你有必要去探究此类未定义行为的内在原因。</p>
-<p>在 <em>C</em> 语言的 <em>99 - Undefined Behavior and Unspecified Behavior</em> 文档中，我仅对此类未定义行为作了一个表层的介绍，并且没有涉及其内在原因。本文将对此进行详细的介绍。阅读本文需要具备一定的 C 语言基础，且具备一定的汇编语言基础。</p>
-<hr />
-<h3 id="副作用与序列点"><a class="markdownIt-Anchor" href="#副作用与序列点"></a> 副作用与序列点</h3>
-<p>为了弄清此类未定义行为的内在原因，我们需要先掌握两个语言层面的基本概念，包括副作用和序列点。</p>
-<h4 id="副作用"><a class="markdownIt-Anchor" href="#副作用"></a> 副作用</h4>
-<p>C 语言规定，一个表达式（或是子表达式）被执行时产生的以下结果均属于 <strong>副作用 (side effect)</strong> ：</p>
-<ul>
-<li>
-<p>修改一个对象的值；</p>
-</li>
-<li>
-<p>修改一个文件；</p>
-</li>
-<li>
-<p>访问一个 volatile 对象；</p>
-</li>
-<li>
-<p>调用一个会产生以上结果之一的函数。</p>
-</li>
-</ul>
-<p>也就是说，副作用会改变程序的运行时刻环境。</p>
-<p>下面是 C99 标准中对副作用的原文定义：</p>
-<blockquote>
-<p>5.1.2.3 Program execution<br />
-2<br />
-Accessing a volatile object, modifying an object, modifying a file, or calling a function that does any of those operations are all side effects, which are changes in the state of the execution environment. Evaluation of an expression may produce side effects.</p>
-</blockquote>
-<h4 id="序列点"><a class="markdownIt-Anchor" href="#序列点"></a> 序列点</h4>
-<p>C 语言规定，在执行序列中某些特定的点上，此前触发的所有副作用都应被执行完毕，并且此后的所有副作用都不应被触发，这些特定的点被称为 <strong>序列点 (sequence point)</strong> 。</p>
-<p>常见的序列点包括：</p>
-<ul>
-<li>
-<p>函数调用 <code>()</code> 。也就是说，对于任意一个函数调用，在真正调用这个函数之前，其所有参数必须被执行完毕；</p>
-</li>
-<li>
-<p>逻辑运算符 <code>&amp;&amp;</code> 和 <code>||</code> 、三元运算符 <code>? :</code> 、逗号运算符 <code>,</code> 。也就是说，对于上述运算符，在逻辑运算和第二个操作数被执行之前，第一个操作数必须被执行完毕；</p>
-</li>
-<li>
-<p>一个完整表达式的结束点。完整的表达式也包括初始化语句、逻辑控制结构、循环控制结构、返回语句等。</p>
-</li>
-<li>
-<p>与每个格式化的输入/输出功能转换说明符关联的动作之后。</p>
-</li>
-</ul>
-<p>下面是 C99 标准中对序列点的原文定义：</p>
-<blockquote>
-<p>5.1.2.3 Program execution<br />
-2<br />
-At certain specified points in the execution sequence called sequence points, all side effects of previous evaluations shall be complete and no side effects of subsequent evaluations shall have taken place.<br />
-(A summary of the sequence points is given in annex C.)</p>
-</blockquote>
-<hr />
-<h3 id="序列点的陷阱"><a class="markdownIt-Anchor" href="#序列点的陷阱"></a> 序列点的陷阱</h3>
-<p>我们知道，对于程序执行过程中的各个序列点，此前触发的所有副作用都应被执行完毕，并且此后的所有副作用都不应被触发。这里面就隐藏了一个黑暗的秘密：反过来说，只要没有遇到序列点，副作用的执行顺序就是不确定的。</p>
-<p><strong>在两个序列点之间，如果有多个副作用，则它们的执行顺序事实上是不确定的！</strong></p>
-<p>这意味着 C 标准把这个执行顺序的决定权交给了编译器，也就是说，编译器可以自由地调整编译后得到的汇编指令的顺序，以便得到最优的执行效率。这对 C 语言的执行速度有一个不小的提高，但也因此埋下了一个陷阱。</p>
-<p>到此你可能仍然不明白问题出在哪，因为弄清根源还必须深入到汇编的层次。接下来你将触及到 C 语言的黑暗角落。</p>
-<p>我们先从最简单的自增表达式说起。考虑如下代码：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">int</span> x = i++;</span><br></pre></td></tr></table></figure>
-<p>其汇编代码可能如下所示（在不同编译环境下可能会有不同的汇编语句，但主体逻辑是一致的）：</p>
-<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># int i = 1;</span></span><br><span class="line"><span class="symbol">movl</span>	<span class="number">$1</span>, <span class="number">12</span>(%esp)	 # 将立即数 <span class="number">1</span> 存入变量 i 中</span><br><span class="line"><span class="comment"># int x = i++;</span></span><br><span class="line"><span class="symbol">movl</span>	<span class="number">12</span>(%esp), %eax	 # 将变量 i 的值存入寄存器 eax 中</span><br><span class="line"><span class="symbol">incl</span>	<span class="number">12</span>(%esp)	 # 将变量 i 的值 +<span class="number">1</span></span><br><span class="line"><span class="symbol">movl</span>	%eax, <span class="number">8</span>(%esp)	 # 将寄存器 eax 的值存入变量 x 中</span><br></pre></td></tr></table></figure>
-<p>由于 C 语言标准并未规定复制运算符 <code>=</code> 在将等号右侧的运算结果赋给等号左侧的地址之前存在序列点，因此汇编代码也可能如下所示：</p>
-<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># int i = 1;</span></span><br><span class="line"><span class="symbol">movl</span>	<span class="number">$1</span>, <span class="number">12</span>(%esp)	 # 将立即数 <span class="number">1</span> 存入变量 i 中</span><br><span class="line"><span class="comment"># int x = i++;</span></span><br><span class="line"><span class="symbol">movl</span>	<span class="number">12</span>(%esp), %eax	 # 将变量 i 的值存入寄存器 eax 中</span><br><span class="line"><span class="symbol">movl</span>	%eax, <span class="number">8</span>(%esp)	 # 将寄存器 eax 的值存入变量 x 中</span><br><span class="line"><span class="symbol">incl</span>	<span class="number">12</span>(%esp)	 # 将变量 i 的值 +<span class="number">1</span></span><br></pre></td></tr></table></figure>
-<p>根据常识可知，在转换成汇编代码后，单个语句 <code>x = i ++</code> 会被转换为一系列汇编语句，分别执行了读写的操作，而这个简单的事实正是陷阱之所在。请读者思考，当表达式中有多个自增表达式的时候会发生什么？例如：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">int</span> x = i++ + i++;</span><br></pre></td></tr></table></figure>
-<p>其汇编代码可能如下所示：</p>
-<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># int i = 1;</span></span><br><span class="line">	movl	<span class="number">$1</span>, <span class="number">12</span>(%esp)	 # 将立即数 <span class="number">1</span> 存入变量 i 中</span><br><span class="line"><span class="comment"># int x = i++ + i++;</span></span><br><span class="line">	movl	<span class="number">12</span>(%esp), %eax	 # 将变量 i 的值存入寄存器 eax 中</span><br><span class="line">	movl	%eax, <span class="number">8</span>(%esp)	 # 将寄存器 eax 的值存入变量 x 中</span><br><span class="line">	incl	<span class="number">12</span>(%esp)	 # 将变量 i 的值 +<span class="number">1</span></span><br><span class="line">	movl	<span class="number">12</span>(%esp), %edx	 # 将变量 i 的值存入寄存器 edx 中</span><br><span class="line">	movl	%edx, <span class="number">8</span>(%esp)	 # 将寄存器 edx 的值存入变量 x 中</span><br><span class="line">	incl	<span class="number">12</span>(%esp)	 # 将变量 i 的值 +<span class="number">1</span></span><br><span class="line">	addl	%edx, %eax	 # 对寄存器 edx 的值和寄存器 eax 的值求和并将结果存入寄存器 eax 中</span><br><span class="line">	movl	%eax, <span class="number">8</span>(%esp)	 # 将寄存器 eax 的值存入变量 x 中</span><br></pre></td></tr></table></figure>
-<p>由于 C 语言标准并未明确规定子表达式的执行顺序，其汇编代码也可能如下所示：</p>
-<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># int i = 1;</span></span><br><span class="line">	movl	<span class="number">$1</span>, <span class="number">12</span>(%esp)	 # 将立即数 <span class="number">1</span> 存入变量 i 中</span><br><span class="line"><span class="comment"># int x = i++ + i++;</span></span><br><span class="line">	movl	<span class="number">12</span>(%esp), %eax	 # 将变量 i 的值存入寄存器 eax 中</span><br><span class="line">	movl	<span class="number">12</span>(%esp), %edx	 # 将变量 i 的值存入寄存器 edx 中</span><br><span class="line">	movl	%eax, <span class="number">8</span>(%esp)	 # 将寄存器 eax 的值存入变量 x 中</span><br><span class="line">	movl	%edx, <span class="number">8</span>(%esp)	 # 将寄存器 edx 的值存入变量 x 中</span><br><span class="line">	incl	<span class="number">12</span>(%esp)	 # 将变量 i 的值 +<span class="number">1</span></span><br><span class="line">	incl	<span class="number">12</span>(%esp)	 # 将变量 i 的值 +<span class="number">1</span></span><br><span class="line">	addl	%edx, %eax	 # 对寄存器 edx 的值和寄存器 eax 的值求和并将结果存入寄存器 eax 中</span><br><span class="line">	movl	%eax, <span class="number">8</span>(%esp)	 # 将寄存器 eax 的值存入变量 x 中</span><br></pre></td></tr></table></figure>
-<p>而这两份汇编代码的运行结果显然是不同的，前者 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi><mo>=</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">x = 3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span></span></span></span> ，后者 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">x = 2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span> 。显然，问题出在对同一变量 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 的读写冲突上。</p>
-<p>正因为如此，此类表达式被认为是未定义行为，因为不仅是不同的编译环境，哪怕是对于不同的程序上下文，编译器都可能会选择不同的执行顺序。极端地讲，可能你在上面插入了一个和 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi><mo separator="true">,</mo><mtext> </mtext><mi>i</mi></mrow><annotation encoding="application/x-tex">x,\ i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">x</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord mathdefault">i</span></span></span></span> 完全无关的函数调用，也会导致此表达式的结果发生变化，这样的危险代码无疑是不可接受的。</p>
-<p>当然，下面的代码是没有问题的：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">int</span> j = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">int</span> x = i++ + ++j;</span><br><span class="line"><span class="keyword">int</span> y = i++ + j++;</span><br></pre></td></tr></table></figure>
-<p>不过，考虑到代码风格和可读性的问题，即便没有错误，仍然强烈建议读者尽量不要在一个表达式内混用自增自减运算符。</p>
-<p>特别补充一点，研究未定义行为的运行结果是没有意义的，本节中仅是为了让读者明白该行为产生的原因，才对其进行举例分析。请读者不要为了除学习以外的目的去研究未定义行为在不同情况下的运行结果，更不要试图去利用这些结果做些什么，那是非常愚蠢的。</p>
-<hr />
-<h3 id="避免掉入陷阱"><a class="markdownIt-Anchor" href="#避免掉入陷阱"></a> 避免掉入陷阱</h3>
-<h4 id="定义"><a class="markdownIt-Anchor" href="#定义"></a> 定义</h4>
-<p>了解了序列点的陷阱之后，我们当然更要知道如何避免掉入这个陷阱。</p>
-<p>下面是 C99 标准中对此类未定义行为的原文定义：</p>
-<blockquote>
-<p>Between two sequence points, an object is modified more than once, or is modified and the prior value is read other than to determine the value to be stored (6.5)</p>
-</blockquote>
-<p>意思是说，在两个序列点之间，下列行为均属于未定义行为：</p>
-<ul>
-<li>
-<p>修改任何一个对象超过一次；</p>
-</li>
-<li>
-<p>修改任何一个对象的同时在别处读取该对象的值。</p>
-</li>
-</ul>
-<p>也就是说，我们只要避免上述行为即可。</p>
-<h4 id="修改超过一次的例子"><a class="markdownIt-Anchor" href="#修改超过一次的例子"></a> 修改超过一次的例子</h4>
-<p>例1：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">int</span> x = i++ + ++i;</span><br><span class="line"><span class="keyword">int</span> y = i++ + i++;</span><br></pre></td></tr></table></figure>
-<p>例2：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">(<span class="keyword">int</span> * p)</span> </span>&#123;</span><br><span class="line">	*p ++;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">int</span> i = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">int</span> x = f(&amp;i) + f(&amp;i);</span><br></pre></td></tr></table></figure>
-<h4 id="修改并在别处读取的例子"><a class="markdownIt-Anchor" href="#修改并在别处读取的例子"></a> 修改并在别处读取的例子</h4>
-<p>例1：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">1</span>;</span><br><span class="line">i = i++ + <span class="number">1</span>;</span><br><span class="line"><span class="keyword">int</span> x = i + i++;</span><br></pre></td></tr></table></figure>
-<p>例2：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a[<span class="number">10</span>];</span><br><span class="line">a[i++] = i;</span><br><span class="line">a[i] = i++;</span><br></pre></td></tr></table></figure>
-<h4 id="其实没问题的例子"><a class="markdownIt-Anchor" href="#其实没问题的例子"></a> 其实没问题的例子</h4>
-<p>轻松一下，下面这个例子看起来很像是触发了未定义行为：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">0</span>, b = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">int</span> c = (a = b) || (a ++ &amp;&amp; ++ b);</span><br></pre></td></tr></table></figure>
-<p>但是实际上没有，上述代码是完全合法的，因为 <code>||</code> 运算符是有序列点的，左表达式 <code>a = b</code> 和右表达式 <code>a ++ &amp;&amp; ++ b</code> 被分离，各自并不存在任何读写冲突。</p>
-<p>不过即便如此，我们仍然强烈建议读者不要写出这种代码，这真的很无聊。</p>
-<hr />
-<h3 id="分析与总结"><a class="markdownIt-Anchor" href="#分析与总结"></a> 分析与总结</h3>
-<p>这个缺陷并非是不可接受的，虽然这给语言的使用者带来了麻烦，但这是为提高执行效率所付出的代价。而且这个陷阱也并不是什么秘密，在 C 语言标准中专门花费了不小的篇幅去阐明这个问题，按理说任何 C 语言课程都应该教授这个问题才对。</p>
-<p>问题在于，许多国内的教学内容根本不提及此事，因而导致许多初学者深陷其中。老一辈所犯下的错误才是祸乱的根源， C 语言表示不背这个黑锅。早些年甚至在各大高校的 C 语言考试中出现了这些表达式，在考试中考察未定义行为的执行结果，这简直是可笑到了极点。</p>
-<p>特别说明，我也并非是对国内的老一辈计算机学者不尊重，在那个年代，我们能做到这一步已经实属不易，先辈的付出与取得的成就无疑是令人尊敬的。但是时代已经变了，如今我们已经不再面临学习资源和人才匮乏的局面，实在不应当再保留着这些错误。有历史遗留错误并不可怕，可怕的是明知有错误而不改正，还要继续误导一代代的学生。</p>
-<p>值得高兴的是，近年来的情况已经在逐步改善，误人子弟的事情已经少了不少。希望未来我们国内能和国外的顶尖高校一样，在 C 语言基础的教学大纲中就有关于这些知识的科学完整的教学吧。</p>
-<hr />
-<h3 id="更新记录"><a class="markdownIt-Anchor" href="#更新记录"></a> 更新记录</h3>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">更新时间</th>
-<th style="text-align:left">更新内容</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">2020.3.1</td>
-<td style="text-align:left">为章节【避免掉入陷阱】追加小节【其实没问题的例子】</td>
-</tr>
-</tbody>
-</table>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1282,7 +1379,7 @@ At certain specified points in the execution sequence called sequence points, al
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">254</span>
+          <span class="site-state-item-count">255</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
