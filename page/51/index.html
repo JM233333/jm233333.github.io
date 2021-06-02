@@ -188,6 +188,292 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.jm233333.com/Programming%20Languages/C/C%2006%20-%20More%20about%20the%20Structure%20Type/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="JM233333">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JM233333's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/Programming%20Languages/C/C%2006%20-%20More%20about%20the%20Structure%20Type/" class="post-title-link" itemprop="url">C 06 - More about the Structure Type</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-04-01 00:00:00" itemprop="dateCreated datePublished" datetime="2021-04-01T00:00:00+08:00">2021-04-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming-Languages/" itemprop="url" rel="index"><span itemprop="name">Programming Languages</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming-Languages/C/" itemprop="url" rel="index"><span itemprop="name">C</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+
+        <div class="post-authorization">
+          <p>本文为 JM233333 原创所著，遵循 BY-NC-SA 4.0 许可协议，转载请注明出处。如果您认为文中有谬误或对文中内容有疑问，欢迎理性指出，大家共同探讨和进步。</p>
+        </div>
+
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <hr />
+<h3 id="前置知识"><a class="markdownIt-Anchor" href="#前置知识"></a> 前置知识</h3>
+<p>本文后半部分的内容相对较为深入，在阅读本文档前，建议你先阅读我的其它所有非进阶文档，详见 <em>C</em> 语言栏目。</p>
+<p><em>请注意：本文是面向进阶读者的，在阅读本文档前，请确保你已经具备了较为完整的 C 语言基础。</em></p>
+<hr />
+<h3 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h3>
+<p>读者可能会感到奇怪，为什么我会专门用一篇文章来介绍结构体这种基本语法，还将其标记为进阶文章。事实上看文章的标题就知道了——我们讨论的是 More about 的部分。因此本文假设读者已经掌握了结构体相关的基础知识。</p>
+<p>本文将分别介绍一些与结构体密切相关的、相对冷门的语法知识，包括内部内存布局、内存对齐与填充、位域等，读者可根据自身需要来阅读。</p>
+<hr />
+<h3 id="新的基本语法"><a class="markdownIt-Anchor" href="#新的基本语法"></a> 新的基本语法</h3>
+<p>C99 引入的一些新特性为数组、结构体和联合体类型增添了新的基本语法，本节对此部分内容作出简要总结。</p>
+<h4 id="复合字面量"><a class="markdownIt-Anchor" href="#复合字面量"></a> 复合字面量</h4>
+<p>C99 引入的新特性 <strong>复合字面量 (compound literal)</strong> 是一种用于初始化和赋值复合类型的语法规则，它提供了一个未命名的对象，其值由初始化列表提供。初始化列表的所有语法规则均应用于复合字面量。</p>
+<p>下面几组示例代码展示了复合字面量的用法。</p>
+<p>在下面的代码中，程序声明并初始化了一个指针 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> ，它指向一个匿名的、长度为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span></span></span></span> 的数组的首元素：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> * p = (<span class="keyword">int</span> [])&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;;</span><br></pre></td></tr></table></figure>
+<p>在下面的代码中，程序声明了一个指针 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> ，并在后续代码中令它指向一个匿名的、长度为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>4</mn></mrow><annotation encoding="application/x-tex">4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">4</span></span></span></span> 的数组的第二个元素，随后使其指向首元素：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> * p;</span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line">p = (<span class="keyword">int</span> [<span class="number">4</span>])&#123;<span class="number">1</span>, <span class="number">5</span>&#125; + <span class="number">1</span>;</span><br><span class="line">p --;</span><br></pre></td></tr></table></figure>
+<p>匿名数组并没有什么特别的，他仍然储存于其被定义的位置，例如上面的代码和下面的代码 <em>几乎</em> 等价，只是数组 <code>aa</code> 是匿名的，无法通过数组名直接访问：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> aa[<span class="number">4</span>] = &#123;<span class="number">1</span>, <span class="number">5</span>&#125;;</span><br><span class="line"><span class="keyword">int</span> * p = &amp;a[<span class="number">0</span>];</span><br></pre></td></tr></table></figure>
+<p>另外，即便是复合字面量也不能用于非初始化地赋值数组：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a[<span class="number">3</span>];</span><br><span class="line">a = (<span class="keyword">int</span> [<span class="number">3</span>])&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;; <span class="comment">// compile error</span></span><br></pre></td></tr></table></figure>
+<p>对于下面的代码，在 C89 中，只有第 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>6</mn></mrow><annotation encoding="application/x-tex">6</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">6</span></span></span></span> 行能通过编译，而第 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>7</mn></mrow><annotation encoding="application/x-tex">7</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">7</span></span></span></span> 行将报告错误，因为 C89 只允许在初始化时使用 <code>&#123;&#125;</code> 语法，从 C99 开始才提供了对复合字面量的支持：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Block</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> x;</span><br><span class="line">	<span class="keyword">char</span> str[<span class="number">10</span>];</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">Block</span> <span class="title">block</span> =</span> &#123;<span class="number">1</span>, <span class="string">&quot;aaa&quot;</span>&#125;;</span><br><span class="line">	block = (struct Block)&#123;<span class="number">2</span>, <span class="string">&quot;xyz&quot;</span>&#125;;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在下面的代码中，程序在函数调用时传入了一个匿名对象和一个指向匿名对象的指针：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">point</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> x;</span><br><span class="line">	<span class="keyword">int</span> y;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">(struct point a, struct point * p)</span> </span>&#123;</span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">	f((struct point)&#123;<span class="number">1</span>, <span class="number">1</span>&#125;, &amp;(struct point)&#123;<span class="number">3</span>, <span class="number">2</span>&#125;);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意区分匿名结构体实例（匿名对象）和匿名结构体类型，关于匿名结构体类型详见下文。</p>
+<h4 id="指定初始值"><a class="markdownIt-Anchor" href="#指定初始值"></a> 指定初始值</h4>
+<p>C99 引入的新特性 <strong>指定初始值 (designated initializer)</strong> 是一种用于初始化复合类型的语法规则，在与复合字面量的共同作用下亦可用于赋值结构体和联合体类型。</p>
+<p>在 C89 中，如果你想初始化一个稀疏数组，可能只能这么做：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a[<span class="number">10</span>] = &#123;<span class="number">0</span>, <span class="number">0</span>, <span class="number">3</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">5</span>, <span class="number">0</span>&#125;;</span><br></pre></td></tr></table></figure>
+<p>或者这么做：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a[<span class="number">10</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">a[<span class="number">2</span>] = <span class="number">3</span>;</span><br><span class="line">a[<span class="number">8</span>] = <span class="number">5</span>;</span><br></pre></td></tr></table></figure>
+<p>而指定初始值的特性允许你以这样的语法对数组进行初始化，并且依然保证会将其中未指定的数组元素初始化为零值：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a[<span class="number">10</span>] = &#123;[<span class="number">2</span>] = <span class="number">3</span>, [<span class="number">8</span>] = <span class="number">5</span>&#125;;</span><br></pre></td></tr></table></figure>
+<p>类似的特性也存在于结构体的初始化和赋值中，其语法如下所示：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Block</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> a;</span><br><span class="line">	<span class="keyword">double</span> b;</span><br><span class="line">	<span class="keyword">char</span> c;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">Block</span> <span class="title">block</span> =</span> (struct Block)&#123;.a = <span class="number">1</span>, .c = <span class="string">&#x27;x&#x27;</span>&#125;;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d, %.1f, %c\n&quot;</span>, block.a, block.b, block.c);</span><br><span class="line">	block = (struct Block)&#123;.b = <span class="number">0.5</span>, .c = <span class="string">&#x27;z&#x27;</span>&#125;;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d, %.1f, %c\n&quot;</span>, block.a, block.b, block.c);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上述代码的输出结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1, 0.0, x</span><br><span class="line">0, 0.5, z</span><br></pre></td></tr></table></figure>
+<hr />
+<h3 id="未命名与匿名结构体"><a class="markdownIt-Anchor" href="#未命名与匿名结构体"></a> 未命名与匿名结构体</h3>
+<p>事实上，尽管未命名结构体和匿名结构体是两个完全不同的东西，但是它们的名称经常被混用（就连 GCC 编译器也会在编译信息中混用，甚至不是交换名称而是每一个都拥有这两个名称，简直毫无章法），因此读者在查阅相关资料时还请注意细心确认究竟是在谈论哪一种。本文为它们分别指定予的名称也不代表正确的名称，只是我所见到的最常见的用法。</p>
+<h4 id="未命名结构体"><a class="markdownIt-Anchor" href="#未命名结构体"></a> 未命名结构体</h4>
+<p>有时，你会见到类似如下代码的写法，初次见到时你可能会感到非常困惑：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> a;</span><br><span class="line">	<span class="keyword">char</span> b;</span><br><span class="line">&#125; block;</span><br></pre></td></tr></table></figure>
+<p>事实上，上述代码不是定义了一个名为 <code>struct block</code> 的结构体类型，而是定义了一个未命名的结构体类型，该类型有唯一的实例 <code>block</code> 。这种语法被称为 <strong>未命名结构体 (unnamed structure)</strong> ，类似地有未命名联合体。</p>
+<p>除定义类型时以外，在程序中的任何位置无法在语法层次上获取未命名结构体类型的标识符（在 C++ 语言中可以），但可以正常获取未命名结构体类型的实例的所有成员的标识符。因此，在定义未命名类型的同时至少要定义一个实例（称为 <strong>tagged</strong> ），否则该未命名类型将失去意义：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> a;</span><br><span class="line">	<span class="keyword">char</span> b;</span><br><span class="line">&#125;; </span><br></pre></td></tr></table></figure>
+<p>上述代码会报如下编译错误：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">|4| error: unnamed struct&#x2F;union that defines no instances</span><br></pre></td></tr></table></figure>
+<p>与一般的结构体类型类似，即便成员相同，未命名结构体类型与其它结构体类型也是互不兼容的：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> a;</span><br><span class="line">	<span class="keyword">char</span> b;</span><br><span class="line">&#125; k1;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> a;</span><br><span class="line">	<span class="keyword">char</span> b;</span><br><span class="line">&#125; k2;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">named</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> a;</span><br><span class="line">	<span class="keyword">char</span> b;</span><br><span class="line">&#125; k3;</span><br><span class="line">k1 = k2; <span class="comment">// compile error</span></span><br><span class="line">k1 = k3; <span class="comment">// compile error</span></span><br></pre></td></tr></table></figure>
+<p>尽管我们无法在其它地方创建未命名结构体类型的实例（因为在其它地方无法表示其类型标识符），但是我们可以正常地、随意地读写它们的内容：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> a;</span><br><span class="line">	<span class="keyword">char</span> b;</span><br><span class="line">&#125; block;</span><br><span class="line">block.a = <span class="number">1</span>;</span><br><span class="line">block.b = <span class="string">&#x27;c&#x27;</span>;</span><br><span class="line"><span class="keyword">int</span> aa = block.a;</span><br><span class="line"><span class="keyword">char</span> bb = block.b;</span><br></pre></td></tr></table></figure>
+<p>未命名结构体通常用于在程序中需要限制实例创建的类型，使用未命名结构体通常是为了针对开发团队的代码规范作出限制，没什么别的作用。</p>
+<h4 id="匿名结构体"><a class="markdownIt-Anchor" href="#匿名结构体"></a> 匿名结构体</h4>
+<p>在结构体（或联合体）类型中，如果定义了某个未命名结构体（或联合体）类型且没有定义任何实例，则该类型被称为 <strong>匿名结构体 (anonymous structure)</strong> 或匿名联合体。匿名结构体是 C11 引入的新特性，但在 C99 的 GNU 扩展中也有支持。</p>
+<p>匿名结构体（或联合体）的所有成员将被视为其所属结构体（或联合体）的成员，例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">circle</span> &#123;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">        <span class="keyword">int</span> centerX;</span><br><span class="line">        <span class="keyword">int</span> centerY;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">int</span> radius;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">circle</span> <span class="title">c</span>;</span></span><br><span class="line">c.centerX = <span class="number">1</span>;</span><br><span class="line">c.centerY = <span class="number">-1</span>;</span><br><span class="line">c.radius = <span class="number">2</span>;</span><br></pre></td></tr></table></figure>
+<p>匿名结构体（或联合体）允许多层嵌套。</p>
+<p>C11 标准中的相关原文如下：</p>
+<blockquote>
+<p>6.7.2.1 Structure and union specifiers<br />
+13<br />
+An unnamed member whose type specifier is a structure specifier with no tag is called an <em>anonymous structure</em>; an unnamed member whose type specifier is a union specifier with no tag is called an <em>anonymous union</em>.<br />
+The members of an anonymous structure or union are considered to be members of the containing structure or union. This applies recursively if the containing structure or union is also anonymous.</p>
+</blockquote>
+<p>匿名结构体的实际应用可参考下面的链接，通常只在混用结构体和联合体的情况下有用，例如结构体内含匿名联合体成员，或是联合体内含匿名结构体成员。</p>
+<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/13376494/what-are-the-benefits-of-unnamed-structs-unions-in-c">https://stackoverflow.com/questions/13376494/what-are-the-benefits-of-unnamed-structs-unions-in-c</a></p>
+<hr />
+<h3 id="内部内存布局"><a class="markdownIt-Anchor" href="#内部内存布局"></a> 内部内存布局</h3>
+<h4 id="基本规则"><a class="markdownIt-Anchor" href="#基本规则"></a> 基本规则</h4>
+<p>根据 C 语言标准，结构体内的成员变量之间的相对位置总是与程序中声明这些成员的顺序相同（位域除外，关于位域的知识详见后文），且结构体变量本身的地址值与其首个成员变量的地址值相同。</p>
+<p>例如对于下面的代码，编译器总是会保证 <code>&amp;t</code> <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>=</mo></mrow><annotation encoding="application/x-tex">=</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">=</span></span></span></span> <code>&amp;t.a</code> <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>&lt;</mo></mrow><annotation encoding="application/x-tex">&lt;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mrel">&lt;</span></span></span></span> <code>&amp;t.b</code> <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>&lt;</mo></mrow><annotation encoding="application/x-tex">&lt;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mrel">&lt;</span></span></span></span> <code>&amp;t.c</code> ，无论 <code>a, b, c</code> 的类型是什么。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">block</span> &#123;</span></span><br><span class="line">	T1 a;</span><br><span class="line">	T2 b;</span><br><span class="line">	T3 c;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">block</span> <span class="title">t</span>;</span></span><br></pre></td></tr></table></figure>
+<p>我们可以直接将成员变量的地址与结构体本身的地址相减，来获取成员在 struct 或 union 类型内部的相对地址，也可以通过宏 <code>offsetof</code> 来获取。</p>
+<p>在头文件 <code>stddef.h</code> 中定义了宏 <code>offsetof(type, member)</code> ，返回成员在结构体内部的相对地址，返回结果为 <code>size_t</code> 类型。其用法示例代码及输出结果如下所示。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stddef.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">block</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> a;</span><br><span class="line">	<span class="keyword">short</span> b;</span><br><span class="line">	<span class="keyword">char</span> c;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> oa = offsetof(struct block, a);</span><br><span class="line">	<span class="keyword">int</span> ob = offsetof(struct block, b);</span><br><span class="line">	<span class="keyword">int</span> oc = offsetof(struct block, c);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d %d %d\n&quot;</span>, oa, ob, oc);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0 4 6</span><br></pre></td></tr></table></figure>
+<p>需要注意的是，标准并不保证成员在结构体内部的内存位置是相邻的。成员变量之间以及结构体的末尾可能有空余的内存区域，这是由內存对齐机制导致的（详见下文）。标准仅保证结构体的首部一定不存在空余。对应于前文所述的例子，即保证 <code>&amp;t</code> <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>=</mo></mrow><annotation encoding="application/x-tex">=</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">=</span></span></span></span> <code>&amp;t.a</code> ，而不保证 <code>&amp;t.a + sizeof(t.a)</code> <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>=</mo></mrow><annotation encoding="application/x-tex">=</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">=</span></span></span></span> <code>&amp;t.b</code> 和 <code>&amp;t.c + sizeof(t.c)</code> <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>=</mo></mrow><annotation encoding="application/x-tex">=</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">=</span></span></span></span> <code>&amp;t + sizeof(t)</code> 。</p>
+<h4 id="內存对齐与填充"><a class="markdownIt-Anchor" href="#內存对齐与填充"></a> 內存对齐与填充</h4>
+<p>我把这部分内容放在内存模型与布局的文章中具体介绍，详见 <em>C</em> 语言的 <em>05 - Memory Model and Layout</em> 文档。</p>
+<ul>
+<li><a href="/Programming%20Languages/C/C%2005%20-%20Memory%20Model%20and%20Layout/">C 05 - Memory Model and Layout</a></li>
+</ul>
+<p>本文的后续内容依赖于此部分知识，请确保将其掌握后再继续阅读。</p>
+<hr />
+<h3 id="flexible-array-member"><a class="markdownIt-Anchor" href="#flexible-array-member"></a> Flexible Array Member</h3>
+<h4 id="基本概念"><a class="markdownIt-Anchor" href="#基本概念"></a> 基本概念</h4>
+<p>我们知道，结构体中不能含有未完成类型的成员：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">block</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> a1[];          <span class="comment">// compile error</span></span><br><span class="line">	<span class="keyword">int</span> a2[<span class="number">5</span>];         <span class="comment">// ok</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">block</span> <span class="title">b</span>;</span>    <span class="comment">// compile error</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">block</span> * <span class="title">pb</span>;</span> <span class="comment">// ok</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>但是当结构体中含有至少一个完成类型的成员时，结构体的最后一个成员可以是一个大小未知的数组类型，该成员被称为 <strong>Flexible Array Member, FAM</strong> 。 FAM 是 C99 标准引入的新特性。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">block</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> a;</span><br><span class="line">	<span class="keyword">int</span> b[]; <span class="comment">// ok in C99</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><em>注：由于我没有找到一个看起来比较像是公认且靠谱的翻译（“柔性数组成员”听起来也太奇怪了），可能“弹性数组成员”这个翻译听起来还可以，不过鉴于我不能百分百地确定，本文中我还是暂且仅以英文缩写 FAM 来表示此概念。</em></p>
+<p>含有 FAM 的结构体类型不能成为其它结构体类型的成员，也不能构成数组。</p>
+<p>结构体的大小不会将 FAM 计算在内，但是结构体的内存对齐会被 FAM 的类型所影响，例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">block1</span> &#123;</span></span><br><span class="line">	<span class="keyword">char</span> c;</span><br><span class="line">	<span class="keyword">char</span> b[];</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">block2</span> &#123;</span></span><br><span class="line">	<span class="keyword">char</span> c;</span><br><span class="line">	<span class="keyword">int</span> b[];</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d %d\n&quot;</span>, <span class="keyword">sizeof</span>(struct block1), <span class="keyword">sizeof</span>(struct block2));</span><br></pre></td></tr></table></figure>
+<p>上述代码的输出结果如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span> <span class="number">4</span></span><br></pre></td></tr></table></figure>
+<p>含有 FAM 的结构体通常以指针和动态内存分配的形式来使用，例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">block</span> &#123;</span></span><br><span class="line">	<span class="keyword">char</span> a;</span><br><span class="line">	<span class="keyword">int</span> b[];</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;n);</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">block</span> * <span class="title">p</span> =</span> <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(struct block) + n * <span class="keyword">sizeof</span>(<span class="keyword">int</span>));</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i ++) &#123;</span><br><span class="line">	p-&gt;b[i] = i * i;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中分配内存的代码也可以写成下面的形式：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">block</span> * <span class="title">p</span> =</span> <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(*p) + n * <span class="keyword">sizeof</span>(p-&gt;b[<span class="number">0</span>]));</span><br></pre></td></tr></table></figure>
+<p>但是注意不能写成 <code>sizeof(char) + n * sizeof(int)</code> ，因为结构体的内存对齐会被 FAM 的类型所影响。</p>
+<p>静态地使用结构体的 FAM 很容易产生越界错误，除非你清楚地知道你在做什么，否则请不要这么做：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">block</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> a;</span><br><span class="line">	<span class="keyword">int</span> b[];</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">block</span> <span class="title">t</span>;</span></span><br><span class="line">t.b[<span class="number">0</span>] = <span class="number">5</span>; <span class="comment">// might be undefined behaviour</span></span><br></pre></td></tr></table></figure>
+<p>注意，直接赋值时不会拷贝 FAM 中的任何内容，只会拷贝那些完全类型的成员。下面的代码将会输出随机乱数，因为是已分配而未初始化的内存：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">block</span> &#123;</span></span><br><span class="line">	<span class="keyword">char</span> a;</span><br><span class="line">	<span class="keyword">int</span> b[];</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;n);</span><br><span class="line"><span class="keyword">size_t</span> sz = <span class="keyword">sizeof</span>(struct block) + n * <span class="keyword">sizeof</span>(<span class="keyword">int</span>);</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">block</span> * <span class="title">p1</span> =</span> <span class="built_in">malloc</span>(sz);</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">block</span> * <span class="title">p2</span> =</span> <span class="built_in">malloc</span>(sz);</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i ++) &#123;</span><br><span class="line">	p1-&gt;b[i] = i * i;</span><br><span class="line">&#125;</span><br><span class="line">*p2 = *p1;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i ++) &#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, *(p2-&gt;b + i));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>正确的方法是使用 <code>memcpy</code> 拷贝指定大小的内存区域：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">memcpy</span>(p2, p1, sz);</span><br></pre></td></tr></table></figure>
+<p>最后，一些编译器支持如下的等价语法，但这不符合 C 标准，程序可能会有可移植性的问题：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">block</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> a;</span><br><span class="line">	<span class="keyword">int</span> b[<span class="number">0</span>];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h4 id="实用价值"><a class="markdownIt-Anchor" href="#实用价值"></a> 实用价值</h4>
+<p>事实上，可以认为 FAM 就是基于人们对动态结构体的需求而产生的。我们知道结构体中不能含有变长数组成员，例如下面的代码是不能编译通过的：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> n = <span class="number">5</span>;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">block</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> a[n];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>所以在 C99 以前，如果希望结构体中有运行时决定大小的数据，那我们只能利用指针来实现，例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">block</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> a;</span><br><span class="line">	<span class="keyword">int</span> * p;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">block</span> <span class="title">t</span>;</span></span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;n);</span><br><span class="line">t.p = <span class="built_in">malloc</span>(n * <span class="keyword">sizeof</span>(<span class="keyword">int</span>));</span><br></pre></td></tr></table></figure>
+<p>而 FAM 的出现则完美地解决了这一问题。当然，用指针确实也能解决问题，但是与 FAM 相比可以说是只有缺点没有优点。</p>
+<ul>
+<li>
+<p>FAM 降低了内存消耗，指针成员会额外占用空间（通常是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>4</mn></mrow><annotation encoding="application/x-tex">4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">4</span></span></span></span> 或 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>8</mn></mrow><annotation encoding="application/x-tex">8</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">8</span></span></span></span> 字节）。</p>
+</li>
+<li>
+<p>FAM 提高了执行效率，因为 FAM 的数据就放在结构体的末尾，可直接访问，而通过指针访问动态区域则需要一次额外的解引用。</p>
+</li>
+<li>
+<p>FAM 不需要深拷贝和深释放，通过直接分配和释放结构体即可分配和释放 FAM ，且可通过 <code>memcpy</code> 直接复制 FAM ，而使用指针则需要额外考虑这些问题。</p>
+</li>
+<li>
+<p>FAM 降低了代码复杂度，用指针时的深层 <code>malloc</code> 可能需要更多的分配失败检查，以及在并发情形下需要更谨慎地编写代码。</p>
+</li>
+</ul>
+<p>当然，一些小的代码技巧可以使二者之间的差距降到最小，但是仍然有所区别，且仍然不如 FAM 更好（仍然额外占用空间且访问需要额外解引用）：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">block</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> a;</span><br><span class="line">	<span class="keyword">int</span> * b;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;n);</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">block</span> * <span class="title">p</span> =</span> <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(struct block) + n * <span class="keyword">sizeof</span>(<span class="keyword">int</span>));</span><br><span class="line">p-&gt;b = (<span class="keyword">int</span> *)(p + <span class="number">1</span>);</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i ++) &#123;</span><br><span class="line">	p-&gt;b[i] = i * i;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>不过，在需要多个动态数组成员时（这种情况极其罕见），这种技巧可以解决问题，而 FAM 则不行。</p>
+<hr />
+<h3 id="位域"><a class="markdownIt-Anchor" href="#位域"></a> 位域</h3>
+<p>本节内容需要二进制数和位运算的基础知识，请读者注意。相关知识的博客我目前还没有写，目前还请读者通过其它途径自行学会。</p>
+<h4 id="基本概念-2"><a class="markdownIt-Anchor" href="#基本概念-2"></a> 基本概念</h4>
+<p><strong>位域 (bit-field)</strong> 是一种特殊的结构体成员类型，是可自定义长度（单位为比特位数）的整数类型，通常用于节约空间消耗和优化代码可读性。</p>
+<p>位域的使用要求程序员对二进制数的表示非常熟悉，且因为位域的许多规则与体系结构息息相关，通常用于更靠近底层的代码中。如果读者对底层的 C 不感兴趣，那么位域基本上没什么用，读者可以直接跳过位域这一整节。</p>
+<p>声明一个位域成员的语法格式如下所示：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">struct ... &#123;</span><br><span class="line">	...</span><br><span class="line">	type [name] : width;</span><br><span class="line">	...</span><br><span class="line">&#125; ... ;</span><br></pre></td></tr></table></figure>
+<p>类型 <code>type</code> 必须是整数类型，而具体支持哪些整数类型则是实现定义的，标准仅保证支持 <code>_Bool</code> ， <code>signed int</code> 和 <code>unsigned int</code> 三种类型。 <em>注：根据 GCC 官方文档， GCC 编译器允许将位域定义为任意的整数类型（即便是在要求严格符合 C 标准的编译选项下）。</em></p>
+<p>类型为 <code>int</code> 的位域会被解读为 <code>signed int</code> 还是 <code>unsigned int</code> 也是实现定义的，因此在实际工程中最好避免使用 <code>int</code> ，而是使用 <code>signed int</code> 和 <code>unsigned int</code> ，除非你没有过多的移植需求。</p>
+<p>类型可以用 <code>const</code> 修饰。</p>
+<p>长度 <code>width</code> 必须是非负整数的字面常量，且不可超过类型 <code>type</code> 的长度。</p>
+<p>特殊情况下名称 <code>name</code> 是可省略的，且宽度 <code>width</code> 可以为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span> 。</p>
+<p>如果声明中没有名称，则称其为 <strong>匿名位域 (unnamed bit-field)</strong> 。当且仅当位域成员为匿名位域时，其长度 <code>width</code> 可以为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span> 。匿名位域仅用于调整结构体内部的内存布局，其具体作用详见下文。</p>
+<p>下面的代码中包含一个简单的实例，结构体 <code>Date</code> 中包含一个长为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>5</mn></mrow><annotation encoding="application/x-tex">5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">5</span></span></span></span> 比特的位域 <code>day</code> 和一个长为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>4</mn></mrow><annotation encoding="application/x-tex">4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">4</span></span></span></span> 比特的位域 <code>month</code> ：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Date</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> day : <span class="number">5</span>;</span><br><span class="line">	<span class="keyword">int</span> month : <span class="number">4</span>;</span><br><span class="line">	<span class="keyword">int</span> year;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Date</span> <span class="title">date</span> =</span> &#123;<span class="number">31</span>, <span class="number">12</span>, <span class="number">2020</span>&#125;;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d.%02d.%02d\n&quot;</span>, date.year, date.month, date.day);</span><br></pre></td></tr></table></figure>
+<p>因为一年最多有 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>12</mn></mrow><annotation encoding="application/x-tex">12</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">2</span></span></span></span> 月，一月最多有 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>31</mn></mrow><annotation encoding="application/x-tex">31</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span><span class="mord">1</span></span></span></span> 天，所以 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>4</mn></mrow><annotation encoding="application/x-tex">4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">4</span></span></span></span> 位和 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>5</mn></mrow><annotation encoding="application/x-tex">5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">5</span></span></span></span> 位二进制数事实上足以存储日期中的月份和天数，因为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 位二进制数最大可以表示 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mn>2</mn><mi>x</mi></msup><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">2^x - 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.747722em;vertical-align:-0.08333em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">x</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> 。</p>
+<p>然而不幸的是，上述代码会发生溢出，其输出结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2020.-4.-1</span><br></pre></td></tr></table></figure>
+<p>原因是在当前环境中 <code>int</code> 被解析为有符号整型，最高位将被用作符号位。粗暴的解决方案是将其长度加到 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>6</mn></mrow><annotation encoding="application/x-tex">6</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">6</span></span></span></span> 位和 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>5</mn></mrow><annotation encoding="application/x-tex">5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">5</span></span></span></span> 位，但是由于月份和天数不可能为负，我们只需将其声明为 <code>unsigned</code> 类型即可：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Date</span> &#123;</span></span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> day : <span class="number">5</span>;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> month : <span class="number">4</span>;</span><br><span class="line">	<span class="keyword">int</span> year;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Date</span> <span class="title">date</span> =</span> &#123;<span class="number">31</span>, <span class="number">12</span>, <span class="number">2020</span>&#125;;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d.%02d.%02d\n&quot;</span>, date.year, date.month, date.day);</span><br></pre></td></tr></table></figure>
+<p>由于几比特长度的无符号整型的表示范围尚在有符号 <code>int</code> 类型的表示范围之内，我们也无需在 <code>printf</code> 时使用 <code>%u</code> 来识别，仍然用 <code>%d</code> 并让其隐式转换为 <code>int</code> 类型即可（虽然用了更严谨，但是在这里确实没有意义）。此时的输出结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2020.12.31</span><br></pre></td></tr></table></figure>
+<p>注意，不能获取位域成员的地址，不能使用指针指向位域成员，也不能用宏 <code>offsetof</code> 来获取位域成员的相对地址。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">unsigned</span> <span class="keyword">int</span> * p = &amp;date.day;            <span class="comment">// compile error</span></span><br><span class="line"><span class="keyword">int</span> off = offsetof(struct Date, day);    <span class="comment">// undefined behaviour</span></span><br></pre></td></tr></table></figure>
+<p>另外，将超出范围的值分配给位字段成员，其结果是实现定义的。</p>
+<h4 id="内存分配规则"><a class="markdownIt-Anchor" href="#内存分配规则"></a> 内存分配规则</h4>
+<p>使用位域的一大原因就是节约内存，所以了解位域的内存分配规则至关重要。</p>
+<p>位域的内存分配规则中有很大一部分都是实现定义的，因此在试图利用位域之前，通常都需要查询运行环境和编译器相关的文档，或是通过一些宏定义来判断当前环境中的一些实现定义的确切情况。</p>
+<p>在前文的例子中，位域成员 <code>day</code> 和 <code>month</code> 会被分配到一块等同于 <code>int</code> 类型所占大小的内存中。我们将这样的一块内存称为 <strong>可寻址存储单元 (addressable storage unit)</strong> 。一般的基本类型的变量都是一个变量占据一块存储单元，但是位域不受此限制，经常会有多个位域共享同一块存储单元的情况发生。</p>
+<p>为若干个位域分配的存储单元的大小的实现定义的。对于前文的例子，编译器完全有可能为 <code>day</code> 和 <code>month</code> 分配一块 <code>short</code> 大小的内存，因为已经足够装下。</p>
+<p>在依次将各个位域成员分配到内存中时，若当前存储单元的剩余内存足以存下这个位域，那么这个位域一定会被分配到这个存储单元中。若剩余内存不足，那么该位域的分配是实现定义的，可能是横跨两个存储单元，也可能是跳过当前存储单元中剩余的内存并分配到下一个新的存储单元中。</p>
+<p>在同一个存储单元中的多个位域成员，其在内存中排布的相对顺序是实现定义的。不过标准规定，具体的顺序要么是从低位到高位，要么是从高位到低位，而不可能乱序。</p>
+<p>在同一个存储单元中的多个位域成员，其间的内存对齐与填充规则是未指定的。例如对于下面的代码，注释中给出了其中一种可能的情况，但是编译器也有可能不做任何对齐与填充，而直接把 <code>a</code> , <code>b</code> , <code>c</code> 按顺序紧贴在一起排布，亦或是其它此处未提及的排布方式。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">block</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> a : <span class="number">1</span>; <span class="comment">/* 1 bit */</span></span><br><span class="line">	<span class="keyword">int</span> b : <span class="number">4</span>; <span class="comment">/* 4 bits padded up to boundary of 8 bits. Thus 3 extra bits are padded */</span></span><br><span class="line">	<span class="keyword">int</span> c : <span class="number">7</span>; <span class="comment">/* 7 Bits septet, padded up to boundary of 32 bits. */</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>最后，在前文我们提到过：</p>
+<p><em>根据 C 语言标准，结构体内的成员变量之间的相对位置总是与程序中声明这些成员的顺序相同（位域除外，关于位域的知识详见后文），且结构体变量本身的地址值与其首个成员变量的地址值相同。</em></p>
+<p>事实上，若干个位域会以其所处的存储单元为单位被视为一个整体，此整体将符合前文所述的按声明顺序排序。例如对于下面的代码，编译器总是会保证 <code>&amp;t</code> <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>=</mo></mrow><annotation encoding="application/x-tex">=</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">=</span></span></span></span> <code>&amp;t.a</code> <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>&lt;</mo></mrow><annotation encoding="application/x-tex">&lt;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mrel">&lt;</span></span></span></span> <code>&amp;t.b</code> <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>&lt;</mo></mrow><annotation encoding="application/x-tex">&lt;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mrel">&lt;</span></span></span></span> <code>&amp;t.bf1, &amp;t.bf2, &amp;t.bf3</code> <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>&lt;</mo></mrow><annotation encoding="application/x-tex">&lt;</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mrel">&lt;</span></span></span></span> <code>&amp;t.c</code> ，但是对于 <code>bf1, bf2, bf3</code> ，其间的相对顺序、是否有由内存对齐产生的匿名内存填充、被分配到了几个多大的存储单元中，都是随环境而变的。注意这里 <code>&amp;t.bfi</code> 的写法只是一个意会，对位域成员取地址是不合法的语法。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">block</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> a;</span><br><span class="line">	<span class="keyword">float</span> b;</span><br><span class="line">	<span class="keyword">int</span> bf1 : <span class="number">3</span>;</span><br><span class="line">	<span class="keyword">int</span> bf2 : <span class="number">4</span>;</span><br><span class="line">	<span class="keyword">int</span> bf3 : <span class="number">6</span>;</span><br><span class="line">	<span class="keyword">short</span> c;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">block</span> <span class="title">t</span>;</span></span><br></pre></td></tr></table></figure>
+<p>类似地，如果结构体的首个成员是位域成员，那么只能保证结构体本身的地址值等于该位域所处的存储单元的地址值，而不能保证通过该地址等于此位域成员的地址。</p>
+<p>C99 标准中的相关原文如下：</p>
+<blockquote>
+<p>6.7.2.1 Structure and union specifiers<br />
+10<br />
+An implementation may allocate any addressable storage unit large enough to hold a bitfield. If enough space remains, a bit-field that immediately follows another bit-field in a structure shall be packed into adjacent bits of the same unit. If insufficient space remains, whether a bit-field that does not fit is put into the next unit or overlaps adjacent units is implementation-defined.<br />
+The order of allocation of bit-fields within a unit (high-order to low-order or low-order to high-order) is implementation-defined.<br />
+The alignment of the addressable storage unit is unspecified.<br />
+…<br />
+13<br />
+Within a structure object, the non-bit-field members and the units in which bit-fields reside have addresses that increase in the order in which they are declared. …</p>
+</blockquote>
+<p>根据 GCC 官方文档，在 GCC 编译器中，上述的实现定义的规则均取决于 ABI ，即取决于计算机底层的体系结构。</p>
+<p>GCC 官方文档中的相关原文如下：</p>
+<blockquote>
+<p>4.9 Structures, Unions, Enumerations, and Bit-Fields</p>
+<ul>
+<li>Allowable bit-field types other than _Bool, signed int, and unsigned int (C99 and C11 6.7.2.1).<br />
+Other integer types, such as long int, and enumerated types are permitted even in strictly conforming mode.<br />
+…</li>
+<li>Whether a bit-field can straddle a storage-unit boundary (C90 6.5.2.1, C99 and C11 6.7.2.1).<br />
+Determined by ABI.</li>
+<li>The order of allocation of bit-fields within a unit (C90 6.5.2.1, C99 and C11 6.7.2.1).<br />
+Determined by ABI.</li>
+<li>The alignment of non-bit-field members of structures (C90 6.5.2.1, C99 and C11 6.7.2.1).<br />
+Determined by ABI.</li>
+</ul>
+</blockquote>
+<h4 id="应用场合"><a class="markdownIt-Anchor" href="#应用场合"></a> 应用场合</h4>
+<p>位域主要有两个作用，其一是有节约空间消耗，其二是优化代码可读性。第一点已经在前文中写得很明白了，根据体系结构的规则合理排布位域成员，在许多情况下都可以节约相当的空间。而在此基础上，位域还能优化代码的可读性。</p>
+<p>例如，在需要节约空间的代码中，我们经常会看到一种处理标志位字段的方法，就是将其每一个比特位拆开来用。因为哪怕是 <code>_Bool</code> 类型也有一个字节长，而用一个整数类型拆分成每个比特当作布尔类型来用，轻轻松松就节约了 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>8</mn></mrow><annotation encoding="application/x-tex">8</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">8</span></span></span></span> 倍的内存。例如要维护一块内存的读写权限，可能会有类似如下代码的实现：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// definition</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> IS_READABLE   (1 &lt;&lt; 0)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> IS_WRITABLE   (1 &lt;&lt; 1)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> IS_EXECUTABLE (1 &lt;&lt; 2)</span></span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">char</span> memflags;</span><br><span class="line"><span class="comment">// code to set</span></span><br><span class="line">memflags |= IS_READABLE;</span><br><span class="line"><span class="comment">// code to check</span></span><br><span class="line"><span class="keyword">if</span> (memflags &amp; IS_WRITABLE) &#123;</span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这显然比下面的代码节约了两个字节的内存，而我们通常需要为大量的内存块维护这样的标志位，因此这一点点的改进可能就节约了至少几百万字节的内存。但是从软件系统的角度来看，下面的代码显然更优美、更安全、且更不容易在编程时出错。不过嘛，如果你已经习惯了上面那种常见的写法，可能会觉得二者没什么区别。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// definition</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">	<span class="built_in">_Bool</span> is_readable;</span><br><span class="line">	<span class="built_in">_Bool</span> is_writable;</span><br><span class="line">	<span class="built_in">_Bool</span> is_executable;</span><br><span class="line">&#125; memflags;</span><br><span class="line"><span class="comment">// code to set</span></span><br><span class="line">memflags.is_readable = <span class="literal">true</span>;</span><br><span class="line"><span class="comment">// code to check</span></span><br><span class="line"><span class="keyword">if</span> (memflags.is_writable) &#123;</span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>而现在，我们可以在位域的帮助下优雅地解决这个问题：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// definition</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> is_readable   : <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> is_writable   : <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> is_executable : <span class="number">1</span>;</span><br><span class="line">&#125; memflags;</span><br><span class="line"><span class="comment">// code to set</span></span><br><span class="line">memflags.is_readable = <span class="literal">true</span>;</span><br><span class="line"><span class="comment">// code to check</span></span><br><span class="line"><span class="keyword">if</span> (memflags.is_writable) &#123;</span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>标志位只是其中一个例子，还有其它情况可以优化代码的可读性，这里就不再赘述了。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://blog.jm233333.com/Algorithms%20and%20Data%20Structures/Basic%20Knowledge/Basic%20Knowledge%2001%20-%20Common%20Sense%20of%20Coding/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -515,143 +801,6 @@ a^b \% p &amp;= (a \% p)^b \% p \\
 <p>在使用sort、reverse……之类的函数时，建议把algorithm头文件带上。</p>
 <p>在使用greater、less……之类的内置类型时，建议把functional头文件带上。</p>
 <p>在使用pair、tuple……之类的内置类型时，建议把utility头文件带上。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://blog.jm233333.com/Algorithms%20and%20Data%20Structures/Basic%20Knowledge/Basic%20Knowledge%2001%20-%20Common%20Sense%20of%20Training/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="JM233333">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="JM233333's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/Algorithms%20and%20Data%20Structures/Basic%20Knowledge/Basic%20Knowledge%2001%20-%20Common%20Sense%20of%20Training/" class="post-title-link" itemprop="url">Basic Knowledge 01 - Common Sense of Training</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-09-01 00:00:00" itemprop="dateCreated datePublished" datetime="2019-09-01T00:00:00+08:00">2019-09-01</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Algorithms-and-Data-Structures/" itemprop="url" rel="index"><span itemprop="name">Algorithms and Data Structures</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Algorithms-and-Data-Structures/Basic-Knowledge/" itemprop="url" rel="index"><span itemprop="name">Basic Knowledge</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-
-        <div class="post-authorization">
-          <p>本文为 JM233333 原创所著，遵循 BY-NC-SA 4.0 许可协议，转载请注明出处。如果您认为文中有谬误或对文中内容有疑问，欢迎理性指出，大家共同探讨和进步。</p>
-        </div>
-
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <hr />
-<h3 id="关于推荐的常用oj"><a class="markdownIt-Anchor" href="#关于推荐的常用oj"></a> 关于推荐的常用OJ</h3>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">OJ</th>
-<th style="text-align:left">地址</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">HDU</td>
-<td style="text-align:left"><a target="_blank" rel="noopener" href="http://acm.hdu.edu.cn/">http://acm.hdu.edu.cn/</a></td>
-</tr>
-<tr>
-<td style="text-align:left">POJ</td>
-<td style="text-align:left"><a target="_blank" rel="noopener" href="http://poj.org/">http://poj.org/</a></td>
-</tr>
-<tr>
-<td style="text-align:left">CodeForces</td>
-<td style="text-align:left"><a target="_blank" rel="noopener" href="https://codeforces.com/">https://codeforces.com/</a></td>
-</tr>
-<tr>
-<td style="text-align:left">洛谷</td>
-<td style="text-align:left"><a target="_blank" rel="noopener" href="https://www.luogu.org/">https://www.luogu.org/</a></td>
-</tr>
-<tr>
-<td style="text-align:left">Virtual Judge</td>
-<td style="text-align:left"><a target="_blank" rel="noopener" href="https://vjudge.net/">https://vjudge.net/</a></td>
-</tr>
-<tr>
-<td style="text-align:left">ZOJ</td>
-<td style="text-align:left"><a target="_blank" rel="noopener" href="http://acm.zju.edu.cn/onlinejudge/">http://acm.zju.edu.cn/onlinejudge/</a></td>
-</tr>
-<tr>
-<td style="text-align:left">SPOJ</td>
-<td style="text-align:left"><a target="_blank" rel="noopener" href="https://www.spoj.com/">https://www.spoj.com/</a></td>
-</tr>
-<tr>
-<td style="text-align:left">BZOJ</td>
-<td style="text-align:left"><a target="_blank" rel="noopener" href="https://www.lydsy.com/JudgeOnline/">https://www.lydsy.com/JudgeOnline/</a></td>
-</tr>
-<tr>
-<td style="text-align:left">ZZU</td>
-<td style="text-align:left"><a target="_blank" rel="noopener" href="http://acm.zzuli.edu.cn/">http://acm.zzuli.edu.cn/</a></td>
-</tr>
-<tr>
-<td style="text-align:left">计蒜客</td>
-<td style="text-align:left"><a target="_blank" rel="noopener" href="https://nanti.jisuanke.com/">https://nanti.jisuanke.com/</a></td>
-</tr>
-<tr>
-<td style="text-align:left">LeetCode</td>
-<td style="text-align:left"><a target="_blank" rel="noopener" href="https://leetcode.com/">https://leetcode.com/</a></td>
-</tr>
-</tbody>
-</table>
-<hr />
-<h3 id="关于推荐的常用ide"><a class="markdownIt-Anchor" href="#关于推荐的常用ide"></a> 关于推荐的常用IDE</h3>
-<p>除了VC6和VS以外的任何IDE，比如CodeBlocks，或者命令行编译也可以。</p>
-<p>拒绝VC6的原因：这玩意太古董了，很多早该被支持的语言特性他都不支持，而且用的还是微软的语言标准，与主流不合。</p>
-<p>拒绝VS的原因：并不是说VS不好，而是他大块头，不适合拿来做算法题，只适合去写工程。</p>
-<p>这里只提到了C++的，因为我不会Java【笑</p>
 
       
     </div>
