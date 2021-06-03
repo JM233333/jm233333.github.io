@@ -188,334 +188,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://blog.jm233333.com/Programming%20Languages/C/C%2001%20-%20Summary%20of%20Common%20Mistakes%20for%20Beginners/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="JM233333">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="JM233333's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/Programming%20Languages/C/C%2001%20-%20Summary%20of%20Common%20Mistakes%20for%20Beginners/" class="post-title-link" itemprop="url">C 01 - Summary of Common Mistakes for Beginners</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2020-01-01T00:00:00+08:00">2020-01-01</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Programming-Languages/" itemprop="url" rel="index"><span itemprop="name">Programming Languages</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Programming-Languages/C/" itemprop="url" rel="index"><span itemprop="name">C</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-
-        <div class="post-authorization">
-          <p>本文为 JM233333 原创所著，遵循 BY-NC-SA 4.0 许可协议，转载请注明出处。如果您认为文中有谬误或对文中内容有疑问，欢迎理性指出，大家共同探讨和进步。</p>
-        </div>
-
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <hr />
-<h3 id="前置知识"><a class="markdownIt-Anchor" href="#前置知识"></a> 前置知识</h3>
-<p>在阅读本文档前，请先阅读 C 语言的整体介绍文档，详见 <em>C</em> 语言的 <em>00 - Introduction</em> 文档。</p>
-<ul>
-<li><a href="/Programming%20Languages/C/C%2000%20-%20Introduction/">C 00 - Introduction</a></li>
-</ul>
-<hr />
-<h3 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h3>
-<p>因为我曾帮助过相当多的 C 语言初学者，在大量的答疑和帮调试之后，我对大多数的初学者常见错误都了如指掌，对于初学者经常会做哪些“蠢事”比较清楚，所以我相信这篇文章能够在一定程度上帮到读者。</p>
-<p>但是一个人的记忆力终究是有极限的，恐怕难免会有所疏漏，还需要其他人为我提供思路，帮我补全常见错误。感谢 Lingzhi Pan 和 Zicheng Zhang 两位同学的帮助。</p>
-<p>本文中记载的主要是最简单的那些常见错误，对于那些可能需要经过 DEBUG 才能发现的错误，我将其放在另一篇文章中介绍，详见 <em>C</em> 语言的 <em>01 - Summary of Basic Debugging Skills</em> 文档。</p>
-<hr />
-<h3 id="代码无关错误汇总"><a class="markdownIt-Anchor" href="#代码无关错误汇总"></a> 代码无关错误汇总</h3>
-<h4 id="修改代码后未重新编译"><a class="markdownIt-Anchor" href="#修改代码后未重新编译"></a> 修改代码后未重新编译</h4>
-<p>有时因为粗心或是 DEBUG 时着急，初学者会在修改程序后，在 IDE 中直接点击“运行”而不是“编译运行”，此时运行的是你修改前的程序，因为新的程序没有被编译，而旧的程序编译出来的可执行文件还存在。因此，请确保自己总是在运行最新的程序。</p>
-<p>另外一种情况是，修改后的程序编译失败，而如果初学者运行程序的方式是分别按下 IDE 中的“编译”按钮和“运行”按钮，那么因为编译失败，新的程序没有被编译，运行的仍然是旧的程序，且还误以为自己已经编译了最新的程序。因此，我建议总是使用“编译运行”按钮一键完成编译和运行，因为几乎所有 IDE 的一键编译运行都是一旦编译失败就会阻止程序运行的，可以完全避免此类粗心问题。</p>
-<p>还有一种极端情况是，虽然使用的是“编译运行”按钮，但是初学者可能无意间在 IDE 中启用了“如果编译不通过就运行旧的可运行的程序”的设置（部分 IDE 有这个功能），那就糟糕了，建议将其关闭以免不小心被坑。</p>
-<hr />
-<h3 id="粗心错误汇总"><a class="markdownIt-Anchor" href="#粗心错误汇总"></a> 粗心错误汇总</h3>
-<h4 id="main-拼写错误"><a class="markdownIt-Anchor" href="#main-拼写错误"></a> main 拼写错误</h4>
-<p>把 main 写成 mian ，例如：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">mian</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>程序会报告编译错误，但是有些初学者读不懂这个报错。上述代码在我本机的编译错误如下，不同运行环境中的结果可能有所不同，例如有时可能会是 <code>Exit 1 status</code> 之类的，但都是表示 main 函数未定义。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">| | undefined reference to &#96;WinMain@16&#39;</span><br></pre></td></tr></table></figure>
-<h4 id="漏打表达式末尾的分号"><a class="markdownIt-Anchor" href="#漏打表达式末尾的分号"></a> 漏打表达式末尾的分号</h4>
-<p>漏打表达式末尾的分号，例如：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> x = <span class="number">1</span></span><br><span class="line">	<span class="keyword">short</span> y = <span class="number">2</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上述代码的编译错误如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">| | In function &#39;main&#39;:</span><br><span class="line">|3| error: expected &#39;,&#39; or &#39;;&#39; before &#39;short&#39;</span><br></pre></td></tr></table></figure>
-<p>取决于出错语句的下文，通常会在出错语句的下一个词法单元处报错。</p>
-<h4 id="scanf-取地址错误"><a class="markdownIt-Anchor" href="#scanf-取地址错误"></a> scanf 取地址错误</h4>
-<p>忘记对变量取地址，例如：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> x;</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, x);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;x = %d\n&quot;</span>, x);</span><br></pre></td></tr></table></figure>
-<p>这将触发未定义行为（非法内存访问）， scanf 会以 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 中此时的值作为地址，并试图向该地址传输数据。此时程序很有可能会崩溃，也可能不会，并将数值读入到一个随机的地方。</p>
-<h4 id="scanf-类型错误"><a class="markdownIt-Anchor" href="#scanf-类型错误"></a> scanf 类型错误</h4>
-<p>没有使用和变量类型正确对应的格式化字符，例如：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> ch;</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;ch);</span><br></pre></td></tr></table></figure>
-<p>这将触发未定义行为，不同运行环境会出现不同的结果，可能会导致程序直接崩溃，可能会正确读入该变量、但是下一个变量的读入出现古怪的错误，可能会读入一个奇怪的值（零或随机乱数），可能会维持 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 被读入之前的值不变。</p>
-<h4 id="scanf-格式错误"><a class="markdownIt-Anchor" href="#scanf-格式错误"></a> scanf 格式错误</h4>
-<p>没有按照自己 scanf 中所写的格式进行输入。在默认情况下 scanf 使用空格和换行作为分隔符，但如果希望使用逗号或其它符号作为分隔符，则需要特殊指定。</p>
-<p>对于如下代码：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a, b, c;</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%d,%d,%d&quot;</span>, &amp;a, &amp;b, &amp;c);</span><br></pre></td></tr></table></figure>
-<p>正确的输入格式为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1,2,3</span><br></pre></td></tr></table></figure>
-<p>对于如下代码：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a, b, c;</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%d %d %d&quot;</span>, &amp;a, &amp;b, &amp;c);</span><br></pre></td></tr></table></figure>
-<p>正确的输入格式为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1 2 3</span><br></pre></td></tr></table></figure>
-<p>或：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td></tr></table></figure>
-<p>或：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1 2</span><br><span class="line">3</span><br></pre></td></tr></table></figure>
-<p>对于如下代码：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a, b, c;</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%d%d%d&quot;</span>, &amp;a, &amp;b, &amp;c);</span><br></pre></td></tr></table></figure>
-<p>正确的输入格式同第二份代码。</p>
-<h4 id="使用变量前未初始化"><a class="markdownIt-Anchor" href="#使用变量前未初始化"></a> 使用变量前未初始化</h4>
-<p>使用变量前未初始化，例如：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> x;</span><br><span class="line"><span class="keyword">int</span> y = x + <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
-<p>这将触发未定义行为，局部变量 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 未经初始化，不同运行环境会出现不同的结果，可能其初始值为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span> ，可能其初始值是一个随机乱数，甚至可能会导致程序直接崩溃。</p>
-<p>有时在本地编译无法暴露出此问题，例如：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> x = <span class="number">1</span>, y = <span class="number">2</span>, z = <span class="number">3</span>;</span><br><span class="line"><span class="keyword">int</span> sum;</span><br><span class="line">sum += x;</span><br><span class="line">sum += y;</span><br><span class="line">sum += z;</span><br></pre></td></tr></table></figure>
-<p>局部变量 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>u</mi><mi>m</mi></mrow><annotation encoding="application/x-tex">sum</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">u</span><span class="mord mathdefault">m</span></span></span></span> 的初始值有时会是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span> ，这导致本地运行结果显得十分正常，但是在其它人的电脑上或是在线上评测机就会产生错误，对初学者来说是最常见的难排查的问题之一。</p>
-<p>但是下面的代码是没有问题的：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> x;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> y = x + <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>因为此时 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 是全局变量，它将被默认初始化为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span> ，因此 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span> 的值为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> 。</p>
-<h4 id="相等比较运算符少打一个等号"><a class="markdownIt-Anchor" href="#相等比较运算符少打一个等号"></a> 相等比较运算符少打一个等号</h4>
-<p>在使用相等比较运算符时少打一个等号，例如：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">1</span>, b = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">int</span> c = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">if</span> (a = <span class="number">0</span> &amp;&amp; b == <span class="number">0</span>) &#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;true1\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (c = <span class="number">1</span>) &#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;true2\n&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;a = %d, b = %d, c = %d\n&quot;</span>, a, b, c);</span><br></pre></td></tr></table></figure>
-<p>此时赋值运算符会先对变量进行赋值，然后根据变量值是否为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span> 作为布尔表达式真假的判定标准。</p>
-<p>上述代码的运行结果如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">true2</span><br><span class="line">a &#x3D; 0, b &#x3D; 0, c &#x3D; 1</span><br></pre></td></tr></table></figure>
-<h4 id="在条件或循环语句末尾误加分号"><a class="markdownIt-Anchor" href="#在条件或循环语句末尾误加分号"></a> 在条件或循环语句末尾误加分号</h4>
-<p>在 if/for/while 等语句末尾不小心多加一个分号，例如：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (a == <span class="number">1</span>);</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;a = 1\n&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>此时大括号中的内容与 if 语句无关，由于分号的存在，使得第 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> 行代码自成一体。</p>
-<p>有时这种错误还会导致死循环，因此需要格外小心，例如：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">while</span> (i &lt; <span class="number">5</span>);</span><br><span class="line">&#123;</span><br><span class="line">	i ++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>通常只有习惯于大括号换行的同学才会犯下该错误，因为如果大括号不换行，该错误是比较容易发现的：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (a == <span class="number">1</span>); &#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;a = 1\n&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="把多层-ifelse-结构看错"><a class="markdownIt-Anchor" href="#把多层-ifelse-结构看错"></a> 把多层 if/else 结构看错</h4>
-<p>由于未加大括号且缩进混乱，导致把多层 if/else 结构看错，例如：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a, b;</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%d %d&quot;</span>, &amp;a, &amp;b);</span><br><span class="line"><span class="keyword">if</span> (a == <span class="number">1</span>)</span><br><span class="line">	<span class="keyword">if</span> (b == <span class="number">2</span>)</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;a = 1 and b = 2\n&quot;</span>);</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;a != 1\n&quot;</span>);</span><br></pre></td></tr></table></figure>
-<p>如果输入 <code>1 2</code> ，则输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a &#x3D; 1 and b &#x3D; 2</span><br></pre></td></tr></table></figure>
-<p>如果输入 <code>1 3</code> ，则输出结果为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a !&#x3D; 1</span><br></pre></td></tr></table></figure>
-<p>如果输入 <code>2 2</code> ，则程序不会输出任何内容。</p>
-<p>在不使用大括号的情况下， else 默认与最近的 if 结合，与你如何缩进没有任何关系。要想达成我们所需的效果，至少应当写成：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (a == <span class="number">1</span>) &#123;</span><br><span class="line">	<span class="keyword">if</span> (b == <span class="number">2</span>)</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;a = 1 and b = 2\n&quot;</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;a != 1\n&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>为避免引起混淆，建议初学者在任何情况下都为 if/for/while 等语句加上大括号：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (a == <span class="number">1</span>) &#123;</span><br><span class="line">	<span class="keyword">if</span> (b == <span class="number">2</span>) &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;a = 1 and b = 2\n&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;a != 1\n&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="在-for-循环中误用逗号"><a class="markdownIt-Anchor" href="#在-for-循环中误用逗号"></a> 在 for 循环中误用逗号</h4>
-<p>在 for 循环中误用逗号而不是分号，例如：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a[<span class="number">5</span>];</span><br><span class="line"><span class="keyword">int</span> n = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">int</span> i;</span><br><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>, i &lt; n, i ++) &#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, a[i]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上述代码的编译错误如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">| | In function &#39;main&#39;:</span><br><span class="line">|4| error: expected &#39;;&#39; before &#39;)&#39; token</span><br><span class="line">|4| error: expected expression before &#39;)&#39; token</span><br></pre></td></tr></table></figure>
-<p>如果是在 C99 标准下，可以在 for 循环内部定义局部变量 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> ，例如：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a[<span class="number">5</span>];</span><br><span class="line"><span class="keyword">int</span> n = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>, i &lt; n, i ++) &#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, a[i]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上述代码的编译错误如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">| | In function &#39;main&#39;:</span><br><span class="line">|3| error: expected &#39;&#x3D;&#39;, &#39;,&#39;, &#39;;&#39;, &#39;asm&#39; or &#39;__attribute__&#39; before &#39;&lt;&#39; token</span><br><span class="line">|6| error: expected expression before &#39;&#125;&#39; token</span><br><span class="line">|6| error: expected expression before &#39;&#125;&#39; token</span><br></pre></td></tr></table></figure>
-<h4 id="在-switch-中忘记使用-break-语句"><a class="markdownIt-Anchor" href="#在-switch-中忘记使用-break-语句"></a> 在 switch 中忘记使用 break 语句</h4>
-<p>在 switch 中忘记使用 break 语句，例如：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> grade;</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%c&quot;</span>, &amp;grade);</span><br><span class="line"><span class="keyword">switch</span> (grade) &#123;</span><br><span class="line"><span class="keyword">case</span> <span class="string">&#x27;A&#x27;</span>:</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;Excellent!\n&quot;</span>);</span><br><span class="line"><span class="keyword">case</span> <span class="string">&#x27;B&#x27;</span>:</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;Good!\n&quot;</span>);</span><br><span class="line"><span class="keyword">case</span> <span class="string">&#x27;C&#x27;</span>:</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;Bad!\n&quot;</span>);</span><br><span class="line"><span class="keyword">default</span>:</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;Illegal input!\n&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>当你输入 <code>B</code> 时，上述代码的运行结果如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Good!</span><br><span class="line">Bad!</span><br><span class="line">Illegal input!</span><br></pre></td></tr></table></figure>
-<p>如果不使用 break 语句，结果并不是你臆想中的只执行第一个满足条件的 case 分支中的内容。事实上，从第一个满足条件的 case 分支开始，后面的代码会一直继续执行，直到全部执行完毕或是遇到一个 break 语句为止。</p>
-<h4 id="使用全角字符"><a class="markdownIt-Anchor" href="#使用全角字符"></a> 使用全角字符</h4>
-<p>在程序中使用全角字符，例如：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> x, y;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d %d&quot;</span>, &amp;x, &amp;y);</span><br><span class="line">	<span class="keyword">if</span> （x == y） &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;x = y\n&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上述代码在我本机的编译错误如下，不同运行环境中的结果可能有所不同：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">| | In function &#39;main&#39;:</span><br><span class="line">|6| error: stray &#39;\243&#39; in program</span><br><span class="line">|6| error: stray &#39;\250&#39; in program</span><br><span class="line">|6| error: expected &#39;(&#39; before &#39;x&#39;</span><br><span class="line">|6| error: stray &#39;\243&#39; in program</span><br><span class="line">|6| error: stray &#39;\251&#39; in program</span><br></pre></td></tr></table></figure>
-<p>一般看到类似这种莫名其妙的报错，多半是因为不小心使用了全角字符，下面给出易混淆的几个字符的对照表，供初学者加以区分：</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">半角字符</th>
-<th style="text-align:left">全角字符</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">(</td>
-<td style="text-align:left">（</td>
-</tr>
-<tr>
-<td style="text-align:left">)</td>
-<td style="text-align:left">）</td>
-</tr>
-<tr>
-<td style="text-align:left">;</td>
-<td style="text-align:left">；</td>
-</tr>
-<tr>
-<td style="text-align:left">:</td>
-<td style="text-align:left">：</td>
-</tr>
-<tr>
-<td style="text-align:left">!</td>
-<td style="text-align:left">！</td>
-</tr>
-<tr>
-<td style="text-align:left">,</td>
-<td style="text-align:left">，</td>
-</tr>
-</tbody>
-</table>
-<p>除了这些以外，最麻烦的就是全角空格，因为从外观上完全看不出来差异。一般使用 tab 缩进的人不太会被这个坑到，但如果习惯用空格缩进则有可能会踩坑。请看下面这段代码：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> x;</span><br><span class="line">    <span class="keyword">short</span> y;</span><br><span class="line">　　<span class="keyword">char</span> ch;</span><br><span class="line">　　x = <span class="number">1</span>;</span><br><span class="line">　  y = <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上述代码在我本机的编译错误如下，不同运行环境中的结果可能有所不同：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">| | In function &#39;main&#39;:</span><br><span class="line">|4| error: stray &#39;\241&#39; in program</span><br><span class="line">|4| error: stray &#39;\241&#39; in program</span><br><span class="line">|4| error: stray &#39;\241&#39; in program</span><br><span class="line">|4| error: stray &#39;\241&#39; in program</span><br><span class="line">|5| error: stray &#39;\241&#39; in program</span><br><span class="line">|5| error: stray &#39;\241&#39; in program</span><br><span class="line">|5| error: stray &#39;\241&#39; in program</span><br><span class="line">|5| error: stray &#39;\241&#39; in program</span><br><span class="line">|6| error: stray &#39;\241&#39; in program</span><br><span class="line">|6| error: stray &#39;\241&#39; in program</span><br></pre></td></tr></table></figure>
-<p>请读者试着从上述代码中找到所有的全角空格，共有 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>5</mn></mrow><annotation encoding="application/x-tex">5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">5</span></span></span></span> 个。</p>
-<p>处理这种令人头疼的问题有两个比较好的办法，一是全文查找全角空格字符“　”，二是利用 IDE 的解缩进快捷键（例如 CodeBlocks 是 Shift + Tab 键）对全文解缩进，看哪些行无法解除，则说明存在全角空格。</p>
-<p>另外有时也会因为在输入时误用了全角字符，导致输入错误，例如：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a, b;</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%d,%d&quot;</span>, &amp;a, &amp;b);</span><br></pre></td></tr></table></figure>
-<p>如果输入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1，2</span><br></pre></td></tr></table></figure>
-<p>则会触发未定义行为，输入的结果将是不确定的错误结果。</p>
-<p>误用全角字符多半是因为在编程时不经意间切换到了中文输入法，因此请读者小心注意自己的输入法。当然，一劳永逸的方法还是记住半角字符和全角字符在外表上的区别。</p>
-<h4 id="字符串未初始化"><a class="markdownIt-Anchor" href="#字符串未初始化"></a> 字符串未初始化</h4>
-<p>字符串未初始化，例如：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> s[<span class="number">10</span>];</span><br><span class="line">s[<span class="number">0</span>] = <span class="string">&#x27;a&#x27;</span>;</span><br><span class="line">s[<span class="number">1</span>] = <span class="string">&#x27;b&#x27;</span>;</span><br><span class="line">s[<span class="number">2</span>] = <span class="string">&#x27;c&#x27;</span>;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>, s);</span><br></pre></td></tr></table></figure>
-<p>上述代码是非常危险的，这将触发未定义行为，在一些编译环境中，你或许就能看到臭名昭著的“烫烫烫的锟斤拷”了。</p>
-<p>因为我们没有初始化 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi></mrow><annotation encoding="application/x-tex">s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">s</span></span></span></span> ，即便你手动设置了 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mo stretchy="false">[</mo><mn>0</mn><mo stretchy="false">]</mo><mo separator="true">,</mo><mtext> </mtext><mi>s</mi><mo stretchy="false">[</mo><mn>1</mn><mo stretchy="false">]</mo><mo separator="true">,</mo><mtext> </mtext><mi>s</mi><mo stretchy="false">[</mo><mn>2</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">s[0],\ s[1],\ s[2]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">s</span><span class="mopen">[</span><span class="mord">0</span><span class="mclose">]</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord mathdefault">s</span><span class="mopen">[</span><span class="mord">1</span><span class="mclose">]</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord mathdefault">s</span><span class="mopen">[</span><span class="mord">2</span><span class="mclose">]</span></span></span></span> 的值，由于 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mo stretchy="false">[</mo><mn>3</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">s[3]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">s</span><span class="mopen">[</span><span class="mord">3</span><span class="mclose">]</span></span></span></span> 未初始化，它不一定是 <code>\0</code> 字符，此时 printf 函数就不能准确识别字符串的末尾，它很可能会输出大量的随机混乱结果，也可能会导致程序崩溃。</p>
-<p>但如果 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi></mrow><annotation encoding="application/x-tex">s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">s</span></span></span></span> 是由输入得到的，因为 scanf 函数在输入字符串时会自动在结尾追加 <code>\0</code> 字符，只要输入的字符串长度不超过范围就不会出问题。</p>
-<h4 id="函数未设置返回值"><a class="markdownIt-Anchor" href="#函数未设置返回值"></a> 函数未设置返回值</h4>
-<p>在返回类型不是 void 的函数中，未给函数设置返回值，或是没有保证任何情况下函数总是有返回值，例如：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">example1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> x = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">int</span> y;</span><br><span class="line">	y = <span class="number">2</span> * x + <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">example2</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> y = x * x + <span class="number">2</span> * x + <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">if</span> (y != <span class="number">1</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">5</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这属于未定义行为，可能会导致不可预料的结果。可能会返回一个 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span> ，但也可能返回一个乱数，或是程序崩溃，或是直接编译错误。</p>
-<hr />
-<h3 id="理解错误汇总"><a class="markdownIt-Anchor" href="#理解错误汇总"></a> 理解错误汇总</h3>
-<h4 id="混淆-cc-语言"><a class="markdownIt-Anchor" href="#混淆-cc-语言"></a> 混淆 C/C++ 语言</h4>
-<p>注意， C 和 C++ 是完全不同的语言，即便它们的语法极其相似，甚至它们的大部分语法特性都是相同的，但并非总是如此。</p>
-<p>萌新在写代码的时候注意自己新建的文件的后缀是 .c 还是 .cpp ，你用的编程软件一般会根据你的后缀决定把你的代码视为 C 还是 C++ 。</p>
-<p>如果你是在学习 C 语言，就不要在后缀为 .cpp 的文件中写代码，那样会导致一些本来在 C 语言中不正确的语法被编译通过，也会导致一些在 C 和 C++ 语法规则不同的代码产生不符合 C 语言规范的运行结果。一定要确保使用 .c 文件。</p>
-<h4 id="分不清数字和数字字符"><a class="markdownIt-Anchor" href="#分不清数字和数字字符"></a> 分不清数字和数字字符</h4>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> x = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">char</span> ch = <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>, (<span class="keyword">int</span>)ch);</span><br></pre></td></tr></table></figure>
-<h4 id="试图级联比较运算符"><a class="markdownIt-Anchor" href="#试图级联比较运算符"></a> 试图级联比较运算符</h4>
-<p>误以为 C 语言的比较运算和数学的比较运算一样，例如：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">2</span>, b = <span class="number">1</span>, c = <span class="number">3</span>;</span><br><span class="line"><span class="keyword">if</span> (a &lt; b &lt; c) &#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;a &lt; b &lt; c&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>事实上 C 语言并不支持级联比较运算符，上述代码并不会像你想象中那样执行。因为 <code>&lt;</code> 是自左向右结合的，所以上述代码事实上等价于：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">2</span>, b = <span class="number">1</span>, c = <span class="number">3</span>;</span><br><span class="line"><span class="keyword">if</span> ((a &lt; b) &lt; c) &#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;a &lt; b &lt; c&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>先求出 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mo>&lt;</mo><mi>b</mi></mrow><annotation encoding="application/x-tex">a &lt; b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mord mathdefault">a</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span></span></span></span> 的结果为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span> 或 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> ，再将该值与 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>c</mi></mrow><annotation encoding="application/x-tex">c</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">c</span></span></span></span> 相比较，因此相当于求 <code>0 &lt; 3</code> ，结果为真。</p>
-<h4 id="混淆数组的定义和使用"><a class="markdownIt-Anchor" href="#混淆数组的定义和使用"></a> 混淆数组的定义和使用</h4>
-<p>在传递数组首地址时误用为数组访问，例如：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">f</span><span class="params">(<span class="keyword">int</span> arr[])</span> </span>&#123;</span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> a[<span class="number">5</span>] = &#123;<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">2</span>&#125;;</span><br><span class="line"><span class="keyword">int</span> x = max(a[<span class="number">5</span>]);</span><br></pre></td></tr></table></figure>
-<h4 id="字符串未给-0-字符预留空间"><a class="markdownIt-Anchor" href="#字符串未给-0-字符预留空间"></a> 字符串未给 \0 字符预留空间</h4>
-<p>误以为字符串的实际存储长度等同于你输入的字符个数，例如：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> s[<span class="number">5</span>] = <span class="string">&quot;abcde&quot;</span>;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>, s);</span><br></pre></td></tr></table></figure>
-<p>由于未给 <code>\0</code> 字符留出位置，下面调用 printf 函数时会触发未定义行为。应当将 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi></mrow><annotation encoding="application/x-tex">s</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">s</span></span></span></span> 的长度设为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>6</mn></mrow><annotation encoding="application/x-tex">6</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">6</span></span></span></span> 或更大。</p>
-<h4 id="类型转换相关问题"><a class="markdownIt-Anchor" href="#类型转换相关问题"></a> 类型转换相关问题</h4>
-<p>对隐式类型转换的规则不了解，例如：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> x = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">double</span> y = x / <span class="number">2</span>;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%.1f\n&quot;</span>, y);</span><br></pre></td></tr></table></figure>
-<p>上述代码的运行结果如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0.0</span><br></pre></td></tr></table></figure>
-<p>根据 C 语言的规则，上述代码第 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn></mrow><annotation encoding="application/x-tex">2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span> 行会先计算 <code>x / 2</code> 的结果，然后再将结果赋给变量 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span> 。由于变量 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 和字面量 <code>2</code> 都是整数类型，运算结果将向下取整得到 <code>0</code> 。</p>
-<p>若想得到 <code>0.5</code> 的结果，应当使用下列表达式之一：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> y = (<span class="keyword">double</span>)x / <span class="number">2</span>;</span><br><span class="line"><span class="keyword">double</span> y = x / <span class="number">2.0</span>;</span><br><span class="line"><span class="keyword">double</span> y = <span class="number">1.0</span> * x / <span class="number">2</span>;</span><br></pre></td></tr></table></figure>
-<p>注意下面的代码是不行的，因为 <code>x / 2</code> 仍然会先被计算：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> y = (<span class="keyword">double</span>)(x / <span class="number">2</span>);</span><br></pre></td></tr></table></figure>
-<p>关于类型转换的更多细节，详见 <em>C</em> 语言的 <em>04 - Type Conversion</em> 文档。</p>
-<ul>
-<li><a href="/Programming%20Languages/C/C%2004%20-%20Type%20Conversion/">C 04 - Type Conversion</a></li>
-</ul>
-<h4 id="输入输出相关问题"><a class="markdownIt-Anchor" href="#输入输出相关问题"></a> 输入输出相关问题</h4>
-<p>详见 <em>C</em> 语言的 <em>03 - Input and Output Streams</em> 文档。</p>
-<ul>
-<li><a href="/Programming%20Languages/C/C%2003%20-%20Input%20and%20Output%20Streams/">C 03 - Input and Output Streams</a></li>
-</ul>
-<h4 id="指针相关问题"><a class="markdownIt-Anchor" href="#指针相关问题"></a> 指针相关问题</h4>
-<p>详见 <em>C</em> 语言的 <em>02 - Pointer</em> 文档。</p>
-<ul>
-<li><a href="/Programming%20Languages/C/C%2002%20-%20Pointer/">C 02 - Pointer</a></li>
-</ul>
-<h4 id="表达式未定义行为相关问题"><a class="markdownIt-Anchor" href="#表达式未定义行为相关问题"></a> 表达式未定义行为相关问题</h4>
-<p>一些初学者可能会无意间写出如下看起来很正常的代码：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (i &lt; n) &#123;</span><br><span class="line">	a[i] = i++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>事实上，代码第 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn></mrow><annotation encoding="application/x-tex">2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span> 行会触发未定义行为，这触及了 C 语言的黑暗面。这对于初学者来说可能有些难以理解，因此你只需要记住：</p>
-<ul>
-<li>
-<p>不要在一个表达式中修改一个变量两次及以上；</p>
-</li>
-<li>
-<p>不要在一个表达式中修改一个变量，并在表达式内的别处读取该变量的值。</p>
-</li>
-</ul>
-<p>诸如此类的奇奇怪怪的表达式都是违法的：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">int</span> a = i++ + ++i;</span><br><span class="line"><span class="keyword">int</span> b = i++ + i++;</span><br><span class="line"><span class="keyword">int</span> c = i + i++;</span><br><span class="line"><span class="keyword">int</span> d = i + ++i;</span><br><span class="line"><span class="keyword">int</span> arr[<span class="number">10</span>];</span><br><span class="line">arr[i] = i++;</span><br></pre></td></tr></table></figure>
-<p>你可能见过一些垃圾教学者夸夸其谈地分析此类代码的运行结果，并且看起来十分有道理。如果是这样的话，那么很不幸，你被坑了。事实上，这些代码的执行结果是不确定的。</p>
-<p>对于相同的代码，在不同的编译环境下，甚至是不同的代码上下文中，你都可能会得到不同的运行结果。在 C 语言标准中明确规定了这些代码都是“错误的”。</p>
-<p>关于未定义行为的更多知识，详见 <em>C</em> 语言的 <em>03 - Undefined Behavior and Unspecified Behavior</em> 文档。</p>
-<ul>
-<li><a href="/Programming%20Languages/C/C%2003%20-%20Undefined%20Behavior%20and%20Unspecified%20Behavior/">C 03 - Undefined Behavior and Unspecified Behavior</a></li>
-</ul>
-<hr />
-<h3 id="更新记录"><a class="markdownIt-Anchor" href="#更新记录"></a> 更新记录</h3>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">更新时间</th>
-<th style="text-align:left">更新内容</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">2020.3.1</td>
-<td style="text-align:left">追加新的常见错误条目</td>
-</tr>
-<tr>
-<td style="text-align:left">2020.7.15</td>
-<td style="text-align:left">追加新的常见错误条目</td>
-</tr>
-</tbody>
-</table>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://blog.jm233333.com/Programming%20Languages/C/C%2001%20-%20Develop%20Good%20Coding%20Style%20and%20Programming%20Habits/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1943,6 +1615,217 @@
 </tr>
 </tbody>
 </table>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.jm233333.com/Programming%20Languages/C/C%2003%20-%20Input%20and%20Output/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="JM233333">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JM233333's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/Programming%20Languages/C/C%2003%20-%20Input%20and%20Output/" class="post-title-link" itemprop="url">C 03 - Input and Output</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-06-01 00:00:00" itemprop="dateCreated datePublished" datetime="2020-06-01T00:00:00+08:00">2020-06-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming-Languages/" itemprop="url" rel="index"><span itemprop="name">Programming Languages</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming-Languages/C/" itemprop="url" rel="index"><span itemprop="name">C</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+
+        <div class="post-authorization">
+          <p>本文为 JM233333 原创所著，遵循 BY-NC-SA 4.0 许可协议，转载请注明出处。如果您认为文中有谬误或对文中内容有疑问，欢迎理性指出，大家共同探讨和进步。</p>
+        </div>
+
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <hr />
+<h3 id="前置知识"><a class="markdownIt-Anchor" href="#前置知识"></a> 前置知识</h3>
+<p>在阅读本文档前，请确保你已经掌握指针的基础知识，详见 <em>C</em> 语言的 <em>02 - Pointer</em> 文档。</p>
+<ul>
+<li><a href="/Programming%20Languages/C/C%2002%20-%20Pointer/">C 02 - Pointer</a></li>
+</ul>
+<hr />
+<h3 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h3>
+<p><strong>输入 (input)</strong> 意味着将一些数据从文件或命令行载入到程序中，<strong>输出 (output)</strong> 则意味着将一些数据从程序传出到文件或设备中存储或显示，二者并称为 <strong>输入输出 (input and output, IO, or I/O)</strong> 。大多数程序都需要 IO 的帮助，可以说 IO 是计算机理论中不可或缺的重要部分，和编程语言无关。</p>
+<p>C 语言提供了一组内置函数来方便用户编写程序执行 IO 操作，例如 <code>scanf</code> / <code>printf</code> 等。然而这些函数虽然方便，却也囊括了大量的初学者常见错误。</p>
+<p>不知读者是否曾想过，当我们使用 <code>scanf</code> / <code>printf</code> 或其它内置 IO 函数执行输入输出操作时，其过程中究竟发生了什么？几乎所有的初学者在 IO 方面都踩过无数的坑（尤其是涉及到字符类型的 IO 时），尤其是在最初的时期，被各种问题折磨得痛不欲生，这都是由对 C/C++ 语言和命令行的输入机制的不了解所致。因为对 IO 仅有极度浅显的理解，不深入了解相关原理，别说是初学者了，很多人写了几年的程序也没完全搞清楚为什么他输入 <code>%c</code> 的时候经常会出问题。本文将对相关内容进行详细的介绍。</p>
+<p>顺带一提，计算机的 IO 操作不仅是在黑框里 <code>scanf</code> / <code>printf</code> 那么简单，还可以对文件执行 IO ，或是对缓存或字符串执行 IO ，等等。虽然初学者很少接触，但你应当知道它们的存在——除了 <code>scanf</code> / <code>printf</code> 、 <code>gets</code> / <code>puts</code> 、 <code>getchar</code> / <code>putchar</code> 等以外， C 语言还有数十种不同的内置 IO 函数。如果深入学习 C/C++ 语言，你总会接触到它们，本文只对其中最通用和常见的几个进行简要介绍。</p>
+<hr />
+<h3 id="缓冲输入"><a class="markdownIt-Anchor" href="#缓冲输入"></a> 缓冲输入</h3>
+<h4 id="引言"><a class="markdownIt-Anchor" href="#引言"></a> 引言</h4>
+<p>我们从一个简单却被许多初学者忽略的现象开始说起。考虑如下代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> x, y;</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;x);</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;y);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;x = %d, y = %d\n&quot;</span>, x, y);</span><br></pre></td></tr></table></figure>
+<p>当我们在命令行中输入如下内容时：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1 2</span><br></pre></td></tr></table></figure>
+<p>除非你按下回车，否则程序并不会输出任何内容（实际上也没有将两个整数读入到程序中）。你甚至可以胡乱输入而不会导致什么后果，只要你在敲下回车之前把它们删掉：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">23333 gogogo reoreoreoreoreo...</span><br></pre></td></tr></table></figure>
+<p>而当我们在命令行中输入如下内容时：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1 2 3</span><br></pre></td></tr></table></figure>
+<p>虽然我们多输入了一个 <code>3</code> ，但这似乎并没有引起任何问题。如果程序运行了几分钟后又遇到一个 <code>scanf</code> ，这个 <code>3</code> 仍然会被正常地读入。</p>
+<p>其实这些都是因为命令行和 C 语言的缓冲输入机制。</p>
+<h4 id="直接输入和缓冲输入"><a class="markdownIt-Anchor" href="#直接输入和缓冲输入"></a> 直接输入和缓冲输入</h4>
+<p>输入方式大体上可以分为直接输入（无缓冲输入）和缓冲输入两大类。如果是 <strong>直接输入</strong> ，那么你每输入一个字符，程序就会读入一个字符，并可立即使用该字符。如果是 <strong>缓冲输入</strong> ，那么你输入的内容并不会立刻传入到程序中，而是暂存在一类被称为 <strong>输入缓冲区</strong> 的特殊内存区域中。当满足某种条件后，这些输入才会生效。</p>
+<p>直接输入的弊端是很明显的。一方面，该方式的容错性为零，一旦用户输入时出现打错字等意外错误，将没有任何更正的机会，只能由读入程序设法处理；另一方面，在一些情况下，把若干个字符作为一个块来传输比逐个发送单个字符的效率更高，具体原因涉及计算机组成原理相关知识，故本文不再赘述。因此，虽然缓冲输入的方式比直接输入复杂，却是非常常见的，不仅限于命令行交互输入。</p>
+<p>缓冲输入根据条件的不同分为不同的类别，而在命令行输入的方式属于 <strong>行缓冲输入</strong> ，即以“行”为缓冲单位，当你敲下 Enter 键确认一行的内容之后，这行内容才会被程序读入。还有以指定字符个数为分隔单位等其它缓冲输入方式，但这些不是本文讨论的重点。</p>
+<p>但是，即便你敲下 Enter 键，这一行输入的内容被程序读入，也未必会立刻“生效”。命令行的输入缓冲区和 C 语言的输入缓冲区并不是同一个东西。</p>
+<p>考虑如下代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> x, y;</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%d %d&quot;</span>, &amp;x, &amp;y);</span><br></pre></td></tr></table></figure>
+<p>如果你在命令行中输入如下内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1 2 3</span><br></pre></td></tr></table></figure>
+<p>敲下 Enter 键后，命令行的输入缓冲区中的内容 <code>1 2 3</code> 被程序读入，其中前面的 <code>1 2</code> 会立即被程序调用的 <code>scanf</code> 函数读取，并分别赋值给变量 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 和 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span> ，而后面的 <code>3</code> 则被留在程序的输入缓冲区中。</p>
+<p>还需等到程序执行各类输入指令（在 C 语言中如 scanf/gets/getchar 等输入函数）才会从输入缓冲区中依次取出字符进行输入，此前这些字符依旧存储于输入缓冲区中。</p>
+<p>现在我们可以解释引言中的第一个现象——只要你没有敲下 Enter 键，你的输入始终是在命令行的输入缓冲区中增加和删减字符，并不会对程序的运行带来任何影响。</p>
+<h4 id="输入缓冲区的陷阱"><a class="markdownIt-Anchor" href="#输入缓冲区的陷阱"></a> 输入缓冲区的陷阱</h4>
+<p>现在你已经了解了基本输入机制、 <code>scanf</code> 的常识和缓冲输入的原理，已经可以理解 C 语言输入缓冲区的陷阱了。</p>
+<p>这是一个几乎每一个初学者都要踩一遍的坑。考虑如下代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> x;</span><br><span class="line"><span class="keyword">char</span> ch;</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;x);</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%c&quot;</span>, &amp;ch);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;x = %d, ch = %c.\n&quot;</span>, x, ch);</span><br></pre></td></tr></table></figure>
+<p>当我们试图在命令行中输入如下内容时：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1</span><br><span class="line">a</span><br></pre></td></tr></table></figure>
+<p>你会发现，在你输入 <code>a</code> 之前，屏幕上就已经出现了输出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x &#x3D; 1, ch &#x3D; </span><br><span class="line">.</span><br></pre></td></tr></table></figure>
+<p>这就是所谓“输入缓冲区的陷阱”的最简单的存在形式（该现象不是一个专有名词，我瞎叫的，不要误会）。</p>
+<p>前文中已经提到，换行只是特殊的字符 <code>\n</code> ，因此上述输入内容实际上可以视为字符串 <code>1\na\n</code> 。而 C 语言的 <code>scanf</code> 函数在读入 <code>%c</code> 类型时会将换行符也视为字符，这是 C 语言读入字符类型的特殊之处，诸如 <code>getchar</code> 和 <code>gets</code> 等函数也有类似的问题。</p>
+<p>所以对于读入的字符串 <code>1\na\n</code> ，首先 <code>1</code> 会被 <code>scanf</code> <code>%d</code> 取走并为 <code>x</code> 赋值，而对于接下来的 <code>scanf</code> <code>%c</code> ，换行符将被取走，相当于令 <code>ch = \n</code> ，所以最终会看到 <code>.</code> 出现在输出的第二行。</p>
+<p>因此在读入 <code>%c</code> 类型时我们需要手动地将空白字符取出，例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;x);</span><br><span class="line">getchar();</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%c&quot;</span>, &amp;ch);</span><br></pre></td></tr></table></figure>
+<p>或者：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%d %c&quot;</span>, &amp;x, &amp;ch);</span><br></pre></td></tr></table></figure>
+<hr />
+<h3 id="常见误区"><a class="markdownIt-Anchor" href="#常见误区"></a> 常见误区</h3>
+<p>为便于后文的描述，我们先介绍一些关于 IO 的常见误区，以免读者在一些无关紧要的细节中陷入困惑。</p>
+<h4 id="其实都是字符"><a class="markdownIt-Anchor" href="#其实都是字符"></a> 其实都是字符</h4>
+<p>理解了缓冲输入，现在读者不妨思考一个问题：当我们在命令行上输入一个整数（比如 <code>233</code> ）时，存在输入缓冲区的真的是数值为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>233</mn></mrow><annotation encoding="application/x-tex">233</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mord">3</span><span class="mord">3</span></span></span></span> 的整数吗？</p>
+<p>显然这是不合理的，因为在程序读入数据之前，不可能知道你输入的 <code>233</code> 是一个整数还是一个长度为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span></span></span></span> 的字符串，只不过字符串里的字符恰好都是数字。事实上，你在命令行中输入的一切内容都是“字符”（类同 C 语言中的 <code>char</code> 类型），在 C 程序读入之后得到的是三个整数值（对应于 ASCII 码分别为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>50</mn><mo separator="true">,</mo><mn>51</mn><mo separator="true">,</mo><mn>51</mn></mrow><annotation encoding="application/x-tex">50, 51, 51</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="mord">5</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">5</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">5</span><span class="mord">1</span></span></span></span> ）而不是一个整数值 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>233</mn></mrow><annotation encoding="application/x-tex">233</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mord">3</span><span class="mord">3</span></span></span></span> 。</p>
+<p>至于在输入时这几个字符是如何以数值 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>233</mn></mrow><annotation encoding="application/x-tex">233</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mord">3</span><span class="mord">3</span></span></span></span> 被赋值给一个整型变量的，则与 <code>scanf</code> 函数的内部实现有关，其处理 <code>%d</code> 具体过程的核心逻辑就像是把字符串转换为整数的过程：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">stoi</span><span class="params">(<span class="keyword">char</span> str[])</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> x = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; str[i] != <span class="string">&#x27;\0&#x27;</span>; i ++) &#123;</span><br><span class="line">		x *= <span class="number">10</span>;</span><br><span class="line">		x += (str[i] - <span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> x;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当然库函数中 <code>scanf</code> 的实际实现要比这个复杂得多，因为需要支持很多额外的功能和机制，但是核心逻辑是一致的。</p>
+<p>总之，无论 <code>scanf</code> 配上 <code>%d</code> 还是 <code>%c</code> ，亦或是 <code>getchar</code> ，在数据从命令行（或文件等其他来源）输入到程序中时，都是以字符类型被读入的。例如，当你使用 <code>scanf</code> 函数输入整型或其它类型时，只是该函数在背后为你执行了从字符到其他类型的转换过程，并非是计算机智能地将你在命令行上输入的内容直接视为整数读入了。</p>
+<h4 id="特殊字符"><a class="markdownIt-Anchor" href="#特殊字符"></a> 特殊字符</h4>
+<p>这是一个虽然很基础但仍可能有人不清楚的问题。在字符类型中，空格和换行都只是被赋予了特殊含义的整数值，例如空格字符和 <code>\n</code> 字符对应于 ASCII 码分别为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>32</mn></mrow><annotation encoding="application/x-tex">32</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span><span class="mord">2</span></span></span></span> 和 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>10</mn></mrow><annotation encoding="application/x-tex">10</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">0</span></span></span></span> 。除此以外还有其它类似的特殊字符，其中有些是不可见字符，例如文件结束符 <code>EOF</code> 等。这方面的具体细节不是本文的重点。</p>
+<h4 id="输入和输出的隔离性"><a class="markdownIt-Anchor" href="#输入和输出的隔离性"></a> 输入和输出的隔离性</h4>
+<p>由于对输入输出流一无所知（详见下一节），一些初学者会在初次遇到那些要求处理多个测试点的编程题目时陷入误区，结果把 IO 写得很复杂。例如对于下面的 IO 要求：</p>
+<blockquote>
+<p>输入<br />
+首先输入一个正整数 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi></mrow><annotation encoding="application/x-tex">T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span></span></span></span> 表示数据组数。<br />
+对于每组数据，首先输入两个正整数 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> 和 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi></mrow><annotation encoding="application/x-tex">m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">m</span></span></span></span> ，接下来输入 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> 行，每行输入 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi></mrow><annotation encoding="application/x-tex">m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">m</span></span></span></span> 个正整数，表示 xxx 。<br />
+输出<br />
+对于每组数据，输出一行 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> 个正整数，表示题目所求的 xxx 。<br />
+样例输入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">2</span><br><span class="line">3 4</span><br><span class="line">1 3 2 4</span><br><span class="line">2 2 6 1</span><br><span class="line">5 9 8 1</span><br><span class="line">2 2</span><br><span class="line">7 6</span><br><span class="line">2 4</span><br></pre></td></tr></table></figure>
+<p>样例输出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2 3 5</span><br><span class="line">8 6</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>为了“让黑框里的输出看起来和样例输出一致”，一些初学者会写出类似如下的代码来处理 IO ：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> input[MAX_T][MAX_N][MAX_M];</span><br><span class="line"><span class="keyword">int</span> result[MAX_N];</span><br><span class="line"><span class="keyword">int</span> output[MAX_T][MAX_N];</span><br><span class="line"><span class="comment">// input and solve</span></span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;T);</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; T; i ++) &#123;</span><br><span class="line">	<span class="comment">// input</span></span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d %d&quot;</span>, &amp;n, &amp;m);</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; n; j ++) &#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; m; k ++) &#123;</span><br><span class="line">			<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;input[i][j][k]);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// solve the problem</span></span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">	<span class="comment">// save the result</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; n; j ++) &#123;</span><br><span class="line">		output[i][j] = result[j];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// output</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; T; i ++) &#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; n; j ++) &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%d%c&quot;</span>, output[i][j], (j == n - <span class="number">1</span> ? <span class="string">&#x27;\n&#x27;</span> : <span class="string">&#x27; &#x27;</span>));</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样的程序的运行结果在黑框里看起来是这样，和样例“完全一致”：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">2</span><br><span class="line">3 4</span><br><span class="line">1 3 2 4</span><br><span class="line">2 2 6 1</span><br><span class="line">5 9 8 1</span><br><span class="line">2 2</span><br><span class="line">7 6</span><br><span class="line">2 4</span><br><span class="line">2 3 5   &#x2F;&#x2F; output for test case 1</span><br><span class="line">8 6     &#x2F;&#x2F; output for test case 2</span><br></pre></td></tr></table></figure>
+<p>尽管这没有错，但是这是完全没有必要的，因为黑框里显示的东西并不代表程序的输出，程序的输入和输出在屏幕上的显示顺序及方式丝毫不会影响程序的输出。如果不考虑程序内的演算过程的影响，我们可以认为 <strong>输入和输出是相互独立且隔离的两个概念</strong> ，尽管输出由输入和程序的算法决定。</p>
+<p>下面的代码完全不会导致 OJ 将你的程序判错，或者说，他和上面的代码事实上是等价的：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> input[MAX_N][MAX_M];</span><br><span class="line"><span class="keyword">int</span> result[MAX_N];</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;T);</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; T; i ++) &#123;</span><br><span class="line">	<span class="comment">// input</span></span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%d %d&quot;</span>, &amp;n, &amp;m);</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; n; j ++) &#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; m; k ++) &#123;</span><br><span class="line">			<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, &amp;input[j][k]);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">// solve the problem</span></span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">	<span class="comment">// output</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; n; j ++) &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;%d%c&quot;</span>, result[j], (j == n - <span class="number">1</span> ? <span class="string">&#x27;\n&#x27;</span> : <span class="string">&#x27; &#x27;</span>));</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>尽管它的输出和输入交织在一起，在黑框里看起来是这样，但这和输出结果毫无关系：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">2</span><br><span class="line">3 4     &#x2F;&#x2F; input for test case 1 : start</span><br><span class="line">1 3 2 4</span><br><span class="line">2 2 6 1</span><br><span class="line">5 9 8 1 &#x2F;&#x2F; input for test case 1 : end</span><br><span class="line">2 3 5   &#x2F;&#x2F; output for test case 1</span><br><span class="line">2 2     &#x2F;&#x2F; input for test case 2 : start</span><br><span class="line">7 6</span><br><span class="line">2 4     &#x2F;&#x2F; input for test case 2 : end</span><br><span class="line">8 6     &#x2F;&#x2F; output for test case 2</span><br></pre></td></tr></table></figure>
+<p>当你了解了输入输出流，以及这类编程题目判别程序是否正确的方式，你就会完全理解这其中的原因，这并不是什么复杂的事情。</p>
+<hr />
+<h3 id="输入输出流"><a class="markdownIt-Anchor" href="#输入输出流"></a> 输入输出流</h3>
+<p>（unfinished）</p>
+<h4 id="基本概念"><a class="markdownIt-Anchor" href="#基本概念"></a> 基本概念</h4>
+<p><strong>流 (stream)</strong> 是一个相当抽象的高层概念，代表文件、设备或进程的通信通道，它向用户屏蔽了输入输出的底层实现，在许多高级语言中都有输入输出流或其它类似的概念。对于初学者而言，无需过度深究 IO 的底层实现，只需先理清输入输出流的概念，便足以应对几乎所有你会遇到的输入输出问题了。</p>
+<p>由于历史原因，在 C 语言中表示流的数据结构的类型称为 <code>FILE</code> 而不是 stream 。由于大多数库函数都处理 <code>FILE *</code> 类型的对象，因此在 C 语言中“文件指针”一词有时也用于指代流。</p>
+<p>C 语言将所有设备视为“文件”，诸如显示器和键盘之类的设备将以与文件相同的方式进行寻址。当程序执行以提供对显示器和键盘的访问时，会自动打开stdin、stdout和stderr三个文件。</p>
+<hr />
+<h3 id="scanf-函数总结"><a class="markdownIt-Anchor" href="#scanf-函数总结"></a> scanf 函数总结</h3>
+<h4 id="基本概念-2"><a class="markdownIt-Anchor" href="#基本概念-2"></a> 基本概念</h4>
+<p><code>scanf</code> 函数无疑是最常用的输入函数之一，然而很多初学者虽然每天都在使用 <code>scanf</code> 函数，但是对其最基本的机制都毫不了解，只是单凭经验在使用它。本节将对除 <code>%c</code> 读入的陷阱（前文已经介绍过）以外的相关内容进行简单的介绍。</p>
+<p>首先需要理解的是， <code>scanf</code> 函数是一种 <strong>格式化输入函数</strong> ，它会以函数调用者提供的字符串为格式依据对输入串进行格式化处理，类似于正则表达式的匹配过程。</p>
+<p>这意味着在用户进行输入时，需要严格符合函数调用所用的格式串，否则将引起不可预料的结果，甚至触发未定义行为。这方面的问题随后会详细介绍。</p>
+<h4 id="空白字符"><a class="markdownIt-Anchor" href="#空白字符"></a> 空白字符</h4>
+<p>空白字符包括空格字符、换行符 <code>\n</code> 和 Tab 制表符 <code>\t</code> 。</p>
+<p><code>scanf</code> 格式化输入时的分隔符默认为任意空白字符。例如对于如下代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a, b, c;</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%d%d%d&quot;</span>, &amp;a, &amp;b, &amp;c);</span><br></pre></td></tr></table></figure>
+<p>下列几种输入方式都是合法的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1 2 3</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1 2</span><br><span class="line">3</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1   2  3</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1	2</span><br><span class="line"></span><br><span class="line"> 3</span><br></pre></td></tr></table></figure>
+<p>并且在 <code>scanf</code> 函数调用中所用的格式串中，当你显式地使用空白字符时，不同种类、任意个数的空白字符都是等价的，例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%d %d %d&quot;</span>, &amp;a, &amp;b, &amp;c);</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%d  %d   %d&quot;</span>, &amp;a, &amp;b, &amp;c);</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%d\n%d\t%d&quot;</span>, &amp;a, &amp;b, &amp;c);</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%d	%d\n\n%d&quot;</span>, &amp;a, &amp;b, &amp;c);</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%d\n\t \n%d \n %d&quot;</span>, &amp;a, &amp;b, &amp;c);</span><br></pre></td></tr></table></figure>
+<p>这些写法实质上是等价的，都可以按照上述的几种方式输入。</p>
+<p>（unfinished : about %c）</p>
+<h4 id="规范格式输入"><a class="markdownIt-Anchor" href="#规范格式输入"></a> 规范格式输入</h4>
+<p>我们先不考虑使用正则表达式匹配的情形。当你使用除说明符（如 <code>%d</code> 等）和空白符以外的普通字符时，需严格按照输入字符串的格式进行输入。例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%d,%d,%d&quot;</span>, &amp;a, &amp;b, &amp;c);</span><br></pre></td></tr></table></figure>
+<p>应当严格地按照格式进行输入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1,2,3</span><br></pre></td></tr></table></figure>
+<p>此时不宜使用空白符或其它字符对输入的整数进行分隔，极易引起错误或触发未定义行为。此外，初学者尤其需要注意，不要在输入时误用中文输入法的全角逗号，和半角逗号是不一样的。</p>
+<p>我们知道在格式串中使用的空白符可以表示任意的空白符，那么：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%d , %d , %d&quot;</span>, &amp;a, &amp;b, &amp;c);</span><br></pre></td></tr></table></figure>
+<p>就支持了下列输入格式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1 ,2  , 3</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1,  2</span><br><span class="line"> ,3</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1,</span><br><span class="line">2,</span><br><span class="line">3</span><br></pre></td></tr></table></figure>
+<p>实际上，在实际使用中，我们不建议在非必要的场合使用非空白字符（例如逗号）作为输入的分隔符，因为没有必要且容易产生问题。</p>
+<p>但在有必要时，我们也可以善用格式输入的规则来简化输入的代码实现。例如当我们需要输入一个时钟时刻的时候，可能会选择先读入一个字符串，然后用额外的代码去处理：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 声明</span></span><br><span class="line"><span class="keyword">int</span> hh, mm, ss;</span><br><span class="line"><span class="keyword">char</span> str[<span class="number">100</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line"><span class="keyword">int</span> tmp[<span class="number">3</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line"><span class="keyword">int</span> i, idx;</span><br><span class="line"><span class="comment">// 输入</span></span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>, str);</span><br><span class="line"><span class="comment">// 处理输入</span></span><br><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>, idx = <span class="number">0</span>; str[i] != <span class="string">&#x27;\0&#x27;</span>; i ++) &#123;</span><br><span class="line">	<span class="keyword">if</span> (str[i] == <span class="string">&#x27;:&#x27;</span>) &#123;</span><br><span class="line">		idx ++;</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		tmp[idx] *= <span class="number">10</span>;</span><br><span class="line">		tmp[idx] += (str[i] - <span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">hh = tmp[<span class="number">0</span>];</span><br><span class="line">mm = tmp[<span class="number">1</span>];</span><br><span class="line">ss = tmp[<span class="number">2</span>];</span><br></pre></td></tr></table></figure>
+<p>但我们可以将时钟的分隔符 <code>:</code> 作为 <code>scanf</code> 格式化输入的分隔符，代码实现将变得非常简洁：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> hh, mm, ss;</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%d:%d:%d&quot;</span>, &amp;hh, &amp;mm, &amp;ss);</span><br></pre></td></tr></table></figure>
+<p>类似的有格式规范的分隔符的输入都可以用该技巧解决。但是需要注意的是，初学者最好不要用该技巧处理 <code>%s</code> 的输入，因为这与 <code>%d</code> 、 <code>%c</code> 等稍微有些不同，如果使用同样的代码，运行结果可能并不会像你想象的那样：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> a[<span class="number">10</span>], b[<span class="number">10</span>];</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%s-%s&quot;</span>, a, b);</span><br></pre></td></tr></table></figure>
+<h4 id="正则匹配初探"><a class="markdownIt-Anchor" href="#正则匹配初探"></a> 正则匹配初探</h4>
+<p>这部分内容超出了初学者的范畴，因而我只进行一些非常简单的介绍，有兴趣的读者可以自学正则表达式及其在 <code>scanf</code> 函数中的应用。</p>
+<p>（unfinished）</p>
 
       
     </div>
