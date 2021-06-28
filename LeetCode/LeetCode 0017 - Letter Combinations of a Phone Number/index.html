@@ -28,7 +28,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://blog.jm233333.com/images/LeetCode/LeetCode_0017.png">
 <meta property="article:published_time" content="2019-11-08T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-04-14T15:35:03.748Z">
+<meta property="article:modified_time" content="2021-06-08T04:46:57.168Z">
 <meta property="article:author" content="JM233333">
 <meta property="article:tag" content="LeetCode">
 <meta property="article:tag" content="LeetCode Medium">
@@ -135,7 +135,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">88</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">91</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -284,7 +284,7 @@
 <p>给定一个数字字符串，每种数字可以映射为若干种字母之一，映射规则见题干，求该字符串可以映射为哪些字母字符串。</p>
 <hr />
 <h3 id="题解"><a class="markdownIt-Anchor" href="#题解"></a> 题解</h3>
-<p>暴力DFS遍历答案即可，时间复杂度为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><msup><mn>3</mn><mi>a</mi></msup><mo>+</mo><msup><mn>4</mn><mi>b</mi></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(3^a + 4^b)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord">3</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">a</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.099108em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord">4</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.849108em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">b</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span> ，其中 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span> 为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn><mo separator="true">,</mo><mtext> </mtext><mn>3</mn><mo separator="true">,</mo><mtext> </mtext><mn>4</mn><mo separator="true">,</mo><mtext> </mtext><mn>5</mn><mo separator="true">,</mo><mtext> </mtext><mn>6</mn><mo separator="true">,</mo><mtext> </mtext><mn>8</mn></mrow><annotation encoding="application/x-tex">2,\ 3,\ 4,\ 5,\ 6,\ 8</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord">3</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord">4</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord">5</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord">6</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord">8</span></span></span></span> 的出现次数， <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span></span></span></span> 为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>7</mn><mo separator="true">,</mo><mtext> </mtext><mn>9</mn></mrow><annotation encoding="application/x-tex">7,\ 9</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="mord">7</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord">9</span></span></span></span> 的出现次数。</p>
+<p>暴力DFS遍历答案即可，时间复杂度为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><msup><mn>3</mn><mi>a</mi></msup><mo>+</mo><msup><mn>4</mn><mi>b</mi></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(3^a + 4^b)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord">3</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">a</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.099108em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord">4</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.849108em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">b</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span> ，其中 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span> 为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn><mo separator="true">,</mo><mtext> </mtext><mn>3</mn><mo separator="true">,</mo><mtext> </mtext><mn>4</mn><mo separator="true">,</mo><mtext> </mtext><mn>5</mn><mo separator="true">,</mo><mtext> </mtext><mn>6</mn><mo separator="true">,</mo><mtext> </mtext><mn>8</mn></mrow><annotation encoding="application/x-tex">2,\ 3,\ 4,\ 5,\ 6,\ 8</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord">3</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord">4</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord">5</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord">6</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord">8</span></span></span></span> 的出现次数，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span></span></span></span> 为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>7</mn><mo separator="true">,</mo><mtext> </mtext><mn>9</mn></mrow><annotation encoding="application/x-tex">7,\ 9</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="mord">7</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord">9</span></span></span></span> 的出现次数。</p>
 <p>细节问题：</p>
 <ol>
 <li>注意特判空串。</li>
@@ -329,12 +329,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/LeetCode/LeetCode%200015%20-%203Sum/" rel="prev" title="LeetCode 0015 - 3Sum">
-      <i class="fa fa-chevron-left"></i> LeetCode 0015 - 3Sum
+    <a href="/LeetCode/LeetCode%200018%20-%204Sum/" rel="prev" title="LeetCode 0018 - 4Sum">
+      <i class="fa fa-chevron-left"></i> LeetCode 0018 - 4Sum
     </a></div>
       <div class="post-nav-item">
-    <a href="/LeetCode/LeetCode%200018%20-%204Sum/" rel="next" title="LeetCode 0018 - 4Sum">
-      LeetCode 0018 - 4Sum <i class="fa fa-chevron-right"></i>
+    <a href="/LeetCode/LeetCode%200020%20-%20Valid%20Parentheses/" rel="next" title="LeetCode 0020 - Valid Parentheses">
+      LeetCode 0020 - Valid Parentheses <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -409,7 +409,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">260</span>
+          <span class="site-state-item-count">263</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -422,7 +422,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">88</span>
+        <span class="site-state-item-count">91</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

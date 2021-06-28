@@ -27,7 +27,7 @@
 <meta property="og:description" content="前置知识 在阅读本文档前，请确保你已掌握用桶计数的算法思想，详见 Fundamental Algorithms 知识板块中的 01 - Counting with Bucket 文档。  Fundamental Algorithms 01 - Counting with Bucket    基本概念 离散化 (Discretization) 是一种基础的算法思想，通常是对一组数据构建一个映射，">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-08-31T16:00:00.000Z">
-<meta property="article:modified_time" content="2021-03-26T10:10:24.181Z">
+<meta property="article:modified_time" content="2021-06-08T04:46:57.170Z">
 <meta property="article:author" content="JM233333">
 <meta property="article:tag" content="基础教程">
 <meta property="article:tag" content="离散化">
@@ -131,7 +131,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">88</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">91</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -271,7 +271,7 @@
 <p>离散化的思想很简单，关键在于如何高效地构建上文所述的映射 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi></mrow><annotation encoding="application/x-tex">f</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span></span></span></span> 。只要能构建出这个映射，离散化也就基本上完成了。</p>
 <p>在 C++ 中，用 std::map 可以很轻松地解决上面的问题。是的，的确可以，因为 map 本身就能实现离散化。问题在于 map 并不是最好的选择。</p>
 <p>首先 map 的效率并不尽人意，时间常数大得离谱。其次用 map 离散化必须在线操作，每次确定一个元素离散化后的值都必须从 map 中现取，这就影响了时间效率，在一些算法题目中甚至会导致 TLE 。总之，用 map 离散化虽然简单，但是效率低下，未必总是可行，因此掌握手动离散化的方法是有必要的。</p>
-<p>离散化的代码实现非常精巧。设 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>a</mi><mi>p</mi><mi>p</mi><mi>i</mi><mi>n</mi><mi>g</mi></mrow><annotation encoding="application/x-tex">mapping</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">p</span><span class="mord mathdefault">p</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span></span></span></span> 为离散化用数组， <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> 为原始的数据总数， <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi></mrow><annotation encoding="application/x-tex">m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">m</span></span></span></span> 为去重后的数据总数。</p>
+<p>离散化的代码实现非常精巧。设 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>a</mi><mi>p</mi><mi>p</mi><mi>i</mi><mi>n</mi><mi>g</mi></mrow><annotation encoding="application/x-tex">mapping</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">p</span><span class="mord mathdefault">p</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span></span></span></span> 为离散化用数组，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> 为原始的数据总数，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi></mrow><annotation encoding="application/x-tex">m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">m</span></span></span></span> 为去重后的数据总数。</p>
 <p>为便于描述，设数组下标和离散化后的数据均从 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> 起，如果希望从 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span> 起可自行类比修改。</p>
 <p>首先，我们将所有需要参与离散化的元素放入 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>a</mi><mi>p</mi><mi>p</mi><mi>i</mi><mi>n</mi><mi>g</mi></mrow><annotation encoding="application/x-tex">mapping</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">p</span><span class="mord mathdefault">p</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span></span></span></span> 中，例如一个数组 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span> 中的所有元素（但有时我们需要离散化的东西是以其他形式存储的，但这不重要，总之把需要离散化的东西全部放进去），然后将 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>a</mi><mi>p</mi><mi>p</mi><mi>i</mi><mi>n</mi><mi>g</mi></mrow><annotation encoding="application/x-tex">mapping</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">p</span><span class="mord mathdefault">p</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span></span></span></span> 数组排序。</p>
 <p>然后，利用 std::unique 对 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>a</mi><mi>p</mi><mi>p</mi><mi>i</mi><mi>n</mi><mi>g</mi></mrow><annotation encoding="application/x-tex">mapping</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">p</span><span class="mord mathdefault">p</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span></span></span></span> 进行去重，保证不存在重复元素。你也可以自己手写代码进行去重，对有序数组进行去重并不困难。</p>
@@ -316,12 +316,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/Algorithms%20and%20Data%20Structures/Fundamental%20Algorithms/Fundamental%20Algorithms%2002%20-%20Fast%20Power/" rel="prev" title="Fundamental Algorithms 02 - Fast Power">
-      <i class="fa fa-chevron-left"></i> Fundamental Algorithms 02 - Fast Power
+    <a href="/Algorithms%20and%20Data%20Structures/Fundamental%20Algorithms/Fundamental%20Algorithms%2002%20-%20Bitmask%20State%20Compression/" rel="prev" title="Fundamental Algorithms 02 - Bitmask State Compression">
+      <i class="fa fa-chevron-left"></i> Fundamental Algorithms 02 - Bitmask State Compression
     </a></div>
       <div class="post-nav-item">
-    <a href="/Algorithms%20and%20Data%20Structures/Fundamental%20Algorithms/Fundamental%20Algorithms%2002%20-%20Bitmask%20State%20Compression/" rel="next" title="Fundamental Algorithms 02 - Bitmask State Compression">
-      Fundamental Algorithms 02 - Bitmask State Compression <i class="fa fa-chevron-right"></i>
+    <a href="/Algorithms%20and%20Data%20Structures/Fundamental%20Algorithms/Fundamental%20Algorithms%2001%20-%20Counting%20with%20Bucket/" rel="next" title="Fundamental Algorithms 01 - Counting with Bucket">
+      Fundamental Algorithms 01 - Counting with Bucket <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -396,7 +396,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">260</span>
+          <span class="site-state-item-count">263</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -409,7 +409,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">88</span>
+        <span class="site-state-item-count">91</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

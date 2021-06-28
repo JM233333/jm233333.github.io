@@ -19,15 +19,15 @@
     var CONFIG = {"hostname":"blog.jm233333.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"changyan","storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="逆序对 + （归并排序 || 树状数组）     Time Limit Memory Limit Source     1000 MS 524288 K 2019小学期    题目描述 jwp的数学是跟谁学的？jwp的数学当然是跟体育老师学的！一年一度的运动会表演又要到来了， nnn 个同学站成了一排，如果有两个人A和B，A站在B前面，但是比B个子要高，那这就是不和谐的，则不和谐度 +1+1+1">
+  <meta name="description" content="逆序对 + （归并排序 || 树状数组）     Time Limit Memory Limit Source     1000 MS 524288 K 2019小学期    题目描述 jwp的数学是跟谁学的？jwp的数学当然是跟体育老师学的！一年一度的运动会表演又要到来了，nnn 个同学站成了一排，如果有两个人A和B，A站在B前面，但是比B个子要高，那这就是不和谐的，则不和谐度 +1+1+1">
 <meta property="og:type" content="article">
 <meta property="og:title" content="XJTUOJ 1027 - 1-03B. jwp的数学是跟谁学的">
 <meta property="og:url" content="https://blog.jm233333.com/ACM/XJTUOJ/XJTUOJ%201027%20-%201-03B.%20jwp%E7%9A%84%E6%95%B0%E5%AD%A6%E6%98%AF%E8%B7%9F%E8%B0%81%E5%AD%A6%E7%9A%84/index.html">
 <meta property="og:site_name" content="JM233333&#39;s Blog">
-<meta property="og:description" content="逆序对 + （归并排序 || 树状数组）     Time Limit Memory Limit Source     1000 MS 524288 K 2019小学期    题目描述 jwp的数学是跟谁学的？jwp的数学当然是跟体育老师学的！一年一度的运动会表演又要到来了， nnn 个同学站成了一排，如果有两个人A和B，A站在B前面，但是比B个子要高，那这就是不和谐的，则不和谐度 +1+1+1">
+<meta property="og:description" content="逆序对 + （归并排序 || 树状数组）     Time Limit Memory Limit Source     1000 MS 524288 K 2019小学期    题目描述 jwp的数学是跟谁学的？jwp的数学当然是跟体育老师学的！一年一度的运动会表演又要到来了，nnn 个同学站成了一排，如果有两个人A和B，A站在B前面，但是比B个子要高，那这就是不和谐的，则不和谐度 +1+1+1">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-07-22T16:00:00.000Z">
-<meta property="article:modified_time" content="2019-08-01T10:42:15.529Z">
+<meta property="article:modified_time" content="2021-06-08T04:46:57.170Z">
 <meta property="article:author" content="JM233333">
 <meta property="article:tag" content="ACM">
 <meta property="article:tag" content="XJTUOJ">
@@ -134,7 +134,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">88</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">91</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -272,7 +272,7 @@
 </tbody>
 </table>
 <p><strong>题目描述</strong></p>
-<p>jwp的数学是跟谁学的？jwp的数学当然是跟体育老师学的！一年一度的运动会表演又要到来了， <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> 个同学站成了一排，如果有两个人A和B，A站在B前面，但是比B个子要高，那这就是不和谐的，则不和谐度 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">+</span><span class="mord">1</span></span></span></span> 。体育老师要jwp帮忙计算一下当前队列的总不和谐度，你能帮帮他吗？</p>
+<p>jwp的数学是跟谁学的？jwp的数学当然是跟体育老师学的！一年一度的运动会表演又要到来了，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> 个同学站成了一排，如果有两个人A和B，A站在B前面，但是比B个子要高，那这就是不和谐的，则不和谐度 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">+</span><span class="mord">1</span></span></span></span> 。体育老师要jwp帮忙计算一下当前队列的总不和谐度，你能帮帮他吗？</p>
 <p><strong>输入格式</strong></p>
 <p>第一行一个正整数 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> 。</p>
 <p>接下来一行 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> 个正整数，分别表示从前往后每个人的身高 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>H</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">H_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.08125em;">H</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.08125em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 。</p>
@@ -417,7 +417,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">260</span>
+          <span class="site-state-item-count">263</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -430,7 +430,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">88</span>
+        <span class="site-state-item-count">91</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
