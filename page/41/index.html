@@ -188,7 +188,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://blog.jm233333.com/Programming%20Languages/C/C%2003%20-%20Types/">
+    <link itemprop="mainEntityOfPage" href="https://blog.jm233333.com/Programming%20Languages/C/C%2006%20-%20Macro/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -202,678 +202,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/Programming%20Languages/C/C%2003%20-%20Types/" class="post-title-link" itemprop="url">C 03 - Types</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2020-01-01T00:00:00+08:00">2020-01-01</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Programming-Languages/" itemprop="url" rel="index"><span itemprop="name">Programming Languages</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Programming-Languages/C/" itemprop="url" rel="index"><span itemprop="name">C</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-
-        <div class="post-authorization">
-          <p>本文为 JM233333 原创所著，遵循 BY-NC-SA 4.0 许可协议，转载请注明出处。如果您认为文中有谬误或对文中内容有疑问，欢迎理性指出，大家共同探讨和进步。</p>
-        </div>
-
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <hr />
-<h3 id="前置知识"><a class="markdownIt-Anchor" href="#前置知识"></a> 前置知识</h3>
-<p>在阅读本文档前，请确保你已经掌握指针的基础知识，详见 <em>C</em> 语言的 <em>02 - Pointer</em> 文档。</p>
-<ul>
-<li><a href="/Programming%20Languages/C/C%2002%20-%20Pointer/">C 02 - Pointer</a></li>
-</ul>
-<hr />
-<h3 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h3>
-<p>本文将对 C 语言的类型系统进行详细的介绍。这似乎是人尽皆知的事情，但是我仍然决定单独用一篇文章来介绍。一方面，确实有些初学者对一些有意义的细节问题的认识有误，例如有些人可能并不知道 char 类型也属于整数类型；另一方面，初学者很难了解到类型系统中较为复杂深入的一面，本文也将对此进行介绍，但不会介绍对于初学者而言没有必要去了解的部分。</p>
-<p>C 语言的 <strong>类型 (types)</strong> 总体上可以分为：</p>
-<ul>
-<li>
-<p>对象类型；</p>
-</li>
-<li>
-<p>函数类型；</p>
-</li>
-<li>
-<p>不完全类型。</p>
-</li>
-</ul>
-<p>对于初学者而言，对象类型是需要被重点关注的，但函数类型和不完全类型也是 C 语言的必备知识。本文会对上述三种类型依次进行介绍，其中对象类型的介绍最为详细。</p>
-<p>本文中的部分内容涉及到一些条条框框的定义，对初学者而言可能有些晦涩，读者可以选择直接跳过，挑选其中你认为现阶段需要的部分来阅读。但是这些条条框框的定义仍然是重要的，虽然它们看起来似乎缺乏实用价值，但是很多英文资料中会使用这些定义，如果你对这些定义不了解，将会在阅读时受到阻碍。</p>
-<hr />
-<h3 id="对象类型"><a class="markdownIt-Anchor" href="#对象类型"></a> 对象类型</h3>
-<p><strong>对象类型 (object types)</strong> 指的是完整描述对象的类型。</p>
-<p>对象类型和不完全类型是相对的，在学习了不完全类型的概念以后，你才能理解对象类型的概念性描述的含义。因而我不会在此处对上面的概念性描述进行解释。</p>
-<p>事实上，初学者平时见到的类型声明多数属于对象类型，例如 <code>int x</code> , <code>char ch</code> , <code>int * p</code> 中的类型说明符都属于对象类型。除了函数类型和不完全类型以外的所有类型都是对象类型。</p>
-<hr />
-<h3 id="深入理解类型"><a class="markdownIt-Anchor" href="#深入理解类型"></a> 深入理解类型</h3>
-<h4 id="引言"><a class="markdownIt-Anchor" href="#引言"></a> 引言</h4>
-<p>不知道读者是否曾经思考过这一问题：类型存在的意义是什么？为什么 C 语言（以及其它很多语言）都规定了各种各样的基本数据类型，并对其运算规则加以限制？这经常会带来一些麻烦，例如：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> x = <span class="number">1</span> / <span class="number">2</span>;</span><br></pre></td></tr></table></figure>
-<p>上述代码中 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 的值是 <code>0</code> 而不是 <code>0.5</code> 即便 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 是 double 类型，因为参与运算的 <code>1</code> 和 <code>2</code> 都是整型，整型的除法运算结果会被向下取整，然后这个结果才被赋值给 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 。我们必须使用浮点类型参与运算，或是其中一个操作数的类型为浮点类型以便于触发隐式类型转换，或是使用强制类型转换：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> x = <span class="number">1.0</span> / <span class="number">2.0</span>;</span><br><span class="line"><span class="keyword">double</span> y = <span class="number">1.0</span> / <span class="number">2</span>;</span><br><span class="line"><span class="keyword">double</span> z = (<span class="keyword">double</span>)<span class="number">1</span> / <span class="number">2</span>;</span><br></pre></td></tr></table></figure>
-<p>为什么我们不能用一个统一的 number 类型来囊括所有的实数运算？这样写起程序来岂不是非常方便？</p>
-<h4 id="类型的意义"><a class="markdownIt-Anchor" href="#类型的意义"></a> 类型的意义</h4>
-<p>正如 C 语言标准原文所述：存储在对象中的值的含义取决于用于访问它的表达式的类型。</p>
-<blockquote>
-<p>6.2.5 Types<br />
-1<br />
-The meaning of a value stored in an object or returned by a function is determined by the type of the expression used to access it. …</p>
-</blockquote>
-<p>类型存在的意义一方面是让计算机明白应该如何处理内存中的数据，另一方面是为计算机合理地节约空间消耗。</p>
-<p>我们知道，计算机中的数据都是以二进制位 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn><mi mathvariant="normal">/</mi><mn>1</mn></mrow><annotation encoding="application/x-tex">0/1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">0</span><span class="mord">/</span><span class="mord">1</span></span></span></span> 串的形式存储的，将若干个位组合在一起视为一个二进制数，就可以用来表示一个整数值。越多的二进制位就可以表示越大的数据范围，例如一个字节 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>8</mn></mrow><annotation encoding="application/x-tex">8</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">8</span></span></span></span> 位至多能表示不超过 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mn>2</mn><mn>8</mn></msup><mo>=</mo><mn>256</mn></mrow><annotation encoding="application/x-tex">2^8 = 256</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">8</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mord">5</span><span class="mord">6</span></span></span></span> 种不同的值，一般是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo stretchy="false">[</mo><mo>−</mo><msup><mn>2</mn><mn>7</mn></msup><mo separator="true">,</mo><mtext> </mtext><msup><mn>2</mn><mn>7</mn></msup><mo>−</mo><mn>1</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[-2^7,\ 2^7 - 1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">−</span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">7</span></span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">7</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span></span></span></span> 或 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo stretchy="false">[</mo><mn>0</mn><mo separator="true">,</mo><mtext> </mtext><msup><mn>2</mn><mn>8</mn></msup><mo>−</mo><mn>1</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[0,\ 2^8 - 1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">8</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span></span></span></span> 。</p>
-<p>一方面，浮点数值的表示并没有整数值这么简单。如果没有学习过计算机组成原理的相关知识，你很可能完全无法想象出人们是如何用二进制位来处理浮点类型的，要知道 double 类型的长度仅为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>8</mn></mrow><annotation encoding="application/x-tex">8</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">8</span></span></span></span> 个字节 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>64</mn></mrow><annotation encoding="application/x-tex">64</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">6</span><span class="mord">4</span></span></span></span> 位，却能表示高达 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><msup><mn>0</mn><mn>308</mn></msup></mrow><annotation encoding="application/x-tex">10^{308}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">3</span><span class="mord mtight">0</span><span class="mord mtight">8</span></span></span></span></span></span></span></span></span></span></span></span> 这个数量级的数值，远远超过了 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mn>2</mn><mn>64</mn></msup></mrow><annotation encoding="application/x-tex">2^{64}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">6</span><span class="mord mtight">4</span></span></span></span></span></span></span></span></span></span></span></span> ——虽然事实上数值越大其表示精度就越低，它仍然只能表示不超过 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mn>2</mn><mn>64</mn></msup></mrow><annotation encoding="application/x-tex">2^{64}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">6</span><span class="mord mtight">4</span></span></span></span></span></span></span></span></span></span></span></span> 种不同的浮点数值，中间有许多数值是无法被 double 类型所精确表示的。</p>
-<p>本文不会对浮点数的表示原理进行介绍，但是读者肯定已经明白，计算机对整数值和浮点数值的解析方法肯定有很大的不同，即便它们都是用二进制位来表示的。这也就是数据类型的作用——告诉计算机应该如何解析并处理数据。同样是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span> 位二进制数，将其当作整型或是浮点类型看待，亦或是当作某种结构体类型看待，其结果都是截然不同的。</p>
-<p>另一方面，越多的二进制位就可以表示越大的数据范围，例如对于整型而言，一个字节 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>8</mn></mrow><annotation encoding="application/x-tex">8</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">8</span></span></span></span> 位至多能表示不超过 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mn>2</mn><mn>8</mn></msup><mo>=</mo><mn>256</mn></mrow><annotation encoding="application/x-tex">2^8 = 256</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">8</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mord">5</span><span class="mord">6</span></span></span></span> 种不同的值，而 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>16</mn></mrow><annotation encoding="application/x-tex">16</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">6</span></span></span></span> 位就能表示 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mn>2</mn><mn>16</mn></msup><mo>=</mo><mn>65536</mn></mrow><annotation encoding="application/x-tex">2^{16} = 65536</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mord mtight">6</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">6</span><span class="mord">5</span><span class="mord">5</span><span class="mord">3</span><span class="mord">6</span></span></span></span> 种不同的值，数据范围足足翻了 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>256</mn></mrow><annotation encoding="application/x-tex">256</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mord">5</span><span class="mord">6</span></span></span></span> 倍，但相应地，空间消耗也翻了一倍。</p>
-<p>那么问题来了：如果我们要用一个统一的 number 类型来囊括所有的实数运算，那么我们应该为每个 number 类型的对象分配多少内存呢？</p>
-<p>如果出手阔绰（例如，一个 number 类型占据 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>128</mn></mrow><annotation encoding="application/x-tex">128</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">2</span><span class="mord">8</span></span></span></span> 位），在进行小数据的运算时显然是对空间的极大浪费，我们根本不需要占用那么多的空间。即便是在计算机硬盘空间动辄几千 G 甚至几百 T 的今天，在存放海量数据的大型程序或数据库中，这种浪费根本是无法容忍的。不止于此，这还会影响到程序的运行速度，处理 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>32</mn></mrow><annotation encoding="application/x-tex">32</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span><span class="mord">2</span></span></span></span> 个二进制位显然比处理 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>128</mn></mrow><annotation encoding="application/x-tex">128</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">2</span><span class="mord">8</span></span></span></span> 个要快得多。</p>
-<p>这也就是为什么 C 语言把整型划分成了 char , short int , int , long int 等多个类型的原因——在上个世纪，计算机的容量远远没有如今这么大，甚至一块硬盘可能只有 16M 的空间，因此节约空间就显得更加重要。显而易见，用不同长度的数据类型来处理不同的计算需求，可以在很大程度上减少空间消耗。即便是如今，在确定只需要进行小数值的运算时，使用 short int 代替 int 也可以略微提高程序的运行速度。</p>
-<hr />
-<h3 id="标准类型与非标准类型"><a class="markdownIt-Anchor" href="#标准类型与非标准类型"></a> 标准类型与非标准类型</h3>
-<p>C 语言标准所规定的基本类型被称为 <strong>标准类型 (standard types)</strong> 。但是在各个编译环境中往往存在一些实现定义的基本类型，它们被称为 <strong>扩展类型 (extended types)</strong> 。</p>
-<p>在本文中我们只会讨论标准类型。为便于描述，下文中将省略“标准”描述。例如标准整数类型会被简写为整数类型。而事实上，整数类型包括标准整数类型和扩展整数类型，其它类型类同。</p>
-<hr />
-<h3 id="基础类型"><a class="markdownIt-Anchor" href="#基础类型"></a> 基础类型</h3>
-<h4 id="基本类型"><a class="markdownIt-Anchor" href="#基本类型"></a> 基本类型</h4>
-<p><strong>基本类型 (basic types)</strong> 包括且仅包括：</p>
-<ul>
-<li>
-<p>有符号整数类型；</p>
-</li>
-<li>
-<p>无符号整数类型；</p>
-</li>
-<li>
-<p><code>char</code> 类型；</p>
-</li>
-<li>
-<p>浮点类型。</p>
-</li>
-</ul>
-<h4 id="整数类型"><a class="markdownIt-Anchor" href="#整数类型"></a> 整数类型</h4>
-<p><strong>整数类型 (integer types)</strong> 包括且仅包括：</p>
-<ul>
-<li>
-<p>有符号整数类型；</p>
-</li>
-<li>
-<p>无符号整数类型；</p>
-</li>
-<li>
-<p><code>char</code> 类型；</p>
-</li>
-<li>
-<p>枚举类型。</p>
-</li>
-</ul>
-<p><strong>有符号整数类型 (signed integer types)</strong> 包括且仅包括 <code>signed char</code> 类型、 <code>short int</code> 类型、 <code>int</code> 类型、 <code>long int</code> 类型和 <code>long long int</code> 类型，其中：</p>
-<ul>
-<li>
-<p><code>int</code> 类型的长度在不同编译环境中可能不同，要想了解你所在编译环境的情况，可以查看头文件 <code>&lt;limits.h&gt;</code> 中的宏定义 <code>INT_MIN</code> 和 <code>INT_MAX</code> ；</p>
-</li>
-<li>
-<p><code>long long int</code> 类型在 C99 标准中首次引入。</p>
-</li>
-</ul>
-<p>对于每一种有符号整数类型，都有一种对应的 <strong>无符号整数类型 (unsigned integer types)</strong> ，占用相同的长度，并用 <code>unsigned</code> 关键字来标识。</p>
-<p>除此以外，在 C99 标准中首次引入的 <code>_Bool</code> 类型也属于无符号整数类型，人们将其俗称为 <strong>布尔类型 (boolean type)</strong> 。 <code>_Bool</code> 类型的长度在不同编译环境中可能不同（大多数情况下是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> 个字节），且 <code>_Bool</code> 类型的表达式的值只能是 <code>0</code> 或 <code>1</code> 。</p>
-<p>关于 <code>char</code> 类型的细节详见后文。</p>
-<p><strong>枚举类型 (enumerated type)</strong> 指的是由关键字 <code>enum</code> 定义的类型，注意枚举类型属于整数类型，但是不属于基本类型。</p>
-<h4 id="字符类型"><a class="markdownIt-Anchor" href="#字符类型"></a> 字符类型</h4>
-<p><strong>字符类型 (character types)</strong> 包括且仅包括 <code>char</code> 类型、 <code>signed char</code> 类型和 <code>unsigned char</code> 类型，其中后两者同时也分别属于有符号整数类型和无符号整数类型，而 <code>char</code> 类型则有些特殊。</p>
-<p><code>char</code> 类型的定义在不同编译环境中可能不同，但是标准规定 <code>char</code> 类型的特征（包括数据范围、表示形式、行为等）必须和 <code>signed char</code> 类型与 <code>unsigned char</code> 类型的其中之一等价。但是即便如此， <code>char</code> 类型都是一个不同的、独立的类型。</p>
-<p>标准规定三种字符类型的长度相同。</p>
-<p>字符类型和整数类型的定义是重叠的，而非互相独立的。所有的字符类型都是某种整数类型，很多初学者对此并不清楚。</p>
-<p>节选 C99 标准对 <code>char</code> 类型的定义的部分原文如下：</p>
-<blockquote>
-<p>6.2.5 Types<br />
-3<br />
-An object declared as type <strong>char</strong> is large enough to store any member of the basic execution character set. If a member of the basic execution character set is stored in a <strong>char</strong> object, its value is guaranteed to be nonnegative. If any other character is stored in a <strong>char</strong> object, the resulting value is implementation-defined but shall be within the range of values that can be represented in that type.<br />
-…<br />
-16<br />
-The three types <strong>char</strong> , <strong>signed char</strong> , and <strong>unsigned char</strong> are collectively called the character types. The implementation shall define <strong>char</strong> to have the same range, representation, and behavior as either <strong>signed char</strong> or <strong>unsigned char</strong> .</p>
-</blockquote>
-<h4 id="浮点类型"><a class="markdownIt-Anchor" href="#浮点类型"></a> 浮点类型</h4>
-<p><strong>浮点类型 (floating types)</strong> 包括且仅包括：</p>
-<ul>
-<li>
-<p>实浮点类型；</p>
-</li>
-<li>
-<p>复数类型。</p>
-</li>
-</ul>
-<p><strong>实浮点类型 (real floating types)</strong> 包括且仅包括 <code>float</code> 类型、 <code>double</code> 类型和 <code>long double</code> 类型，其中 <code>long double</code> 类型在 C99 标准中首次引入。</p>
-<p>标准规定三种实浮点类型的表示范围是依次为子集的，即 <code>float</code> 类型的表示范围是 <code>double</code> 类型的子集，且 <code>double</code> 类型的表示范围是 <code>long double</code> 类型的子集。</p>
-<p><strong>复数类型 (complex types)</strong> 包括且仅包括 <code>float _Complex</code> 类型、 <code>double _Complex</code> 类型和 <code>long double _Complex</code> 类型。</p>
-<h4 id="实数类型"><a class="markdownIt-Anchor" href="#实数类型"></a> 实数类型</h4>
-<p><strong>实数类型 (real types)</strong> 包括且仅包括：</p>
-<ul>
-<li>
-<p>整数类型；</p>
-</li>
-<li>
-<p>实浮点类型。</p>
-</li>
-</ul>
-<h4 id="算术类型和类型域"><a class="markdownIt-Anchor" href="#算术类型和类型域"></a> 算术类型和类型域</h4>
-<p><strong>算术类型 (arithmetic types)</strong> 包括且仅包括：</p>
-<ul>
-<li>
-<p>整数类型；</p>
-</li>
-<li>
-<p>浮点类型。</p>
-</li>
-</ul>
-<p>每个算术类型都属于一个 <strong>类型域 (type domain)</strong> ：<strong>实型域 (real type domain)</strong> 包含实数类型， <strong>复型域 (complex type domain)</strong> 包含复数类型。</p>
-<hr />
-<h3 id="函数类型"><a class="markdownIt-Anchor" href="#函数类型"></a> 函数类型</h3>
-<p><strong>函数类型 (function types)</strong> 指的是专门用于描述函数的类型。</p>
-<p>我把这部分内容放在函数的文章中具体介绍，详见 <em>C</em> 语言的 <em>03 - Function</em> 文档。</p>
-<ul>
-<li><a href="/Programming%20Languages/C/C%2003%20-%20Function/">C 03 - Function</a></li>
-</ul>
-<hr />
-<h3 id="不完全类型"><a class="markdownIt-Anchor" href="#不完全类型"></a> 不完全类型</h3>
-<p><strong>不完全类型 (incomplete types)</strong> 指的是描述对象但缺乏足以确定其占用空间大小的信息的类型，包括且仅包括：</p>
-<ul>
-<li>
-<p><code>void</code> 类型；</p>
-</li>
-<li>
-<p>大小未知的数组类型；</p>
-</li>
-<li>
-<p>内容未知的结构体或联合体类型。</p>
-</li>
-</ul>
-<p><code>void</code> 类型用于表示空值，它是永远无法被完成的不完全类型。除 <code>void</code> 类型以外的不完全类型都可以在程序的其它翻译单元中被完成。</p>
-<p>大小未知的数组类型常见于 <code>extern</code> 声明，例如：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extern</span> <span class="keyword">int</span> a[]; <span class="comment">// 不完全</span></span><br><span class="line"><span class="keyword">int</span> a[<span class="number">10</span>];      <span class="comment">// 完全</span></span><br></pre></td></tr></table></figure>
-<p>不能使用不完全类型来声明或定义普通变量、数组、结构体等等，但可以用来声明或定义指针，因为指针的大小只和编译环境的地址空间规则有关，和被指向类型的大小无关。例如：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Test1</span> &#123;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">Test1</span> <span class="title">t</span>;</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Test2</span> &#123;</span></span><br><span class="line">	<span class="class"><span class="keyword">struct</span> <span class="title">Test2</span> * <span class="title">t</span>;</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>对 <code>Test1</code> 的定义是不合法的，因为在第 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span></span></span></span> 行之前的 <code>Test1</code> 的内容还未完全已知，所以 <code>Test1</code> 暂为不完全类型，第 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn></mrow><annotation encoding="application/x-tex">2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span> 行的成员定义是不合法的。而对 <code>Test2</code> 的定义就是合法的，因为我们只是定义了一个指向不完全类型的指针。</p>
-<hr />
-<h3 id="派生类型"><a class="markdownIt-Anchor" href="#派生类型"></a> 派生类型</h3>
-<p>可以根据对象类型、函数类型和不完全类型构造任意数量的 <strong>派生类型 (derived types)</strong> ，包括且仅包括：</p>
-<ul>
-<li>
-<p><strong>数组类型 (array type)</strong> ；</p>
-</li>
-<li>
-<p><strong>结构体类型 (structure type)</strong> ；</p>
-</li>
-<li>
-<p><strong>共用体类型 (union type)</strong> ；</p>
-</li>
-<li>
-<p><strong>函数类型 (function type)</strong> ；</p>
-</li>
-<li>
-<p><strong>指针类型 (pointer type)</strong> 。</p>
-</li>
-</ul>
-<p>数组类型和结构体类型统称为 <strong>聚合类型 (aggregate types)</strong> ，算术类型和指针类型统称为 <strong>标量类型 (scalar types)</strong> 。</p>
-<hr />
-<h3 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h3>
-<p>C99 标准中规定的 C 语言标准类型可以汇总为：</p>
-<ul>
-<li>
-<p>基本类型</p>
-<ul>
-<li>
-<p>有符号整数类型</p>
-<ul>
-<li><code>signed char</code> 类型， <code>short int</code> 类型， <code>int</code> 类型， <code>long int</code> 类型， <code>long long int</code> 类型</li>
-</ul>
-</li>
-<li>
-<p>无符号整数类型</p>
-<ul>
-<li>
-<p><code>unsigned char</code> 类型， <code>unsigned short int</code> 类型， <code>unsigned int</code> 类型， <code>unsigned long int</code> 类型， <code>unsigned long long int</code> 类型</p>
-</li>
-<li>
-<p>布尔类型，即 <code>_Bool</code> 类型</p>
-</li>
-</ul>
-</li>
-<li>
-<p><code>char</code> 类型</p>
-</li>
-<li>
-<p>浮点类型</p>
-<ul>
-<li>
-<p>实浮点类型</p>
-<ul>
-<li><code>float</code> 类型， <code>double</code> 类型， <code>long double</code> 类型</li>
-</ul>
-</li>
-<li>
-<p>复数类型</p>
-<ul>
-<li><code>float _Complex</code> 类型， <code>double _Complex</code> 类型， <code>long double _Complex</code> 类型</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>
-<p>枚举类型</p>
-</li>
-<li>
-<p><code>void</code> 类型</p>
-</li>
-<li>
-<p>派生类型</p>
-<ul>
-<li>
-<p>数组类型</p>
-</li>
-<li>
-<p>结构体类型</p>
-</li>
-<li>
-<p>共用体类型</p>
-</li>
-<li>
-<p>函数类型</p>
-</li>
-<li>
-<p>指针类型</p>
-</li>
-</ul>
-</li>
-</ul>
-<p>其它存在重叠的类型分类可以汇总为：</p>
-<ul>
-<li>
-<p>对象类型</p>
-<ul>
-<li>除了函数类型和不完全类型以外的所有类型</li>
-</ul>
-</li>
-<li>
-<p>整数类型</p>
-<ul>
-<li>有符号整数类型，无符号整数类型， <code>char</code> 类型，枚举类型</li>
-</ul>
-</li>
-<li>
-<p>字符类型</p>
-<ul>
-<li><code>char</code> 类型， <code>signed char</code> 类型， <code>unsigned char</code> 类型</li>
-</ul>
-</li>
-<li>
-<p>实数类型</p>
-<ul>
-<li>整数类型，实浮点类型</li>
-</ul>
-</li>
-<li>
-<p>算术类型</p>
-<ul>
-<li>整数类型，浮点类型</li>
-</ul>
-</li>
-<li>
-<p>标量类型</p>
-<ul>
-<li>算术类型，指针类型</li>
-</ul>
-</li>
-<li>
-<p>聚合类型</p>
-<ul>
-<li>数组类型，结构体类型</li>
-</ul>
-</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://blog.jm233333.com/Programming%20Languages/C/C%2004%20-%20Declaration%20and%20Definition/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="JM233333">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="JM233333's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/Programming%20Languages/C/C%2004%20-%20Declaration%20and%20Definition/" class="post-title-link" itemprop="url">C 04 - Declaration and Definition</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-07-01 00:00:00" itemprop="dateCreated datePublished" datetime="2020-07-01T00:00:00+08:00">2020-07-01</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Programming-Languages/" itemprop="url" rel="index"><span itemprop="name">Programming Languages</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Programming-Languages/C/" itemprop="url" rel="index"><span itemprop="name">C</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-
-        <div class="post-authorization">
-          <p>本文为 JM233333 原创所著，遵循 BY-NC-SA 4.0 许可协议，转载请注明出处。如果您认为文中有谬误或对文中内容有疑问，欢迎理性指出，大家共同探讨和进步。</p>
-        </div>
-
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <hr />
-<h3 id="前置知识"><a class="markdownIt-Anchor" href="#前置知识"></a> 前置知识</h3>
-<p>在阅读本文档前，请确保你已经掌握函数的基础知识，详见 <em>C</em> 语言的 <em>03 - Function</em> 文档。</p>
-<ul>
-<li><a href="/Programming%20Languages/C/C%2003%20-%20Function/">C 03 - Function</a></li>
-</ul>
-<p>在阅读本文档前，请确保你已经掌握类型的基础知识，详见 <em>C</em> 语言的 <em>03 - Types</em> 文档。</p>
-<ul>
-<li><a href="/Programming%20Languages/C/C%2003%20-%20Types/">C 03 - Types</a></li>
-</ul>
-<hr />
-<h3 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h3>
-<p>在 C 语言中，一个标识符（例如变量或函数）的声明和定义是不同的，很多初学者不清楚这其中的区别。这不是一个复杂的问题，但却也不好归类，因此就出现了这篇极为简短的文章。</p>
-<hr />
-<h3 id="基本概念"><a class="markdownIt-Anchor" href="#基本概念"></a> 基本概念</h3>
-<p>通俗地讲，一个标识符的 <strong>声明 (declaration)</strong> 的作用是告诉编译器在程序的某个位置定义了一个如声明所述的变量或函数，而 <strong>定义 (definition)</strong> 则为变量或函数确立了实体，会为其保留相应的内存空间。</p>
-<p>声明和定义之间的区别是非常明确的：声明不会为标识符所描述的对象分配内存。在只有声明没有定义的情况下，这个变量或函数实际上可能是“不存在的”，或者说，至少不存在于此处。在程序后续的编译过程中，编译器会通过某种途径在整个程序（可能横跨多个源文件）中查找其实际定义，如果查找失败则会触发编译错误。</p>
-<p>另外，定义本身就包含了声明。当你定义了一个变量或函数的时候，本身也同时声明了该变量或函数。事实上，根据 C 语言标准，定义就是一种满足特殊条件的声明。</p>
-<p>标准指出，一个标识符的定义，是满足下列条件的、对该标识符的声明：</p>
-<ul>
-<li>
-<p>对于一个对象（例如变量），为该对象保留了内存空间；</p>
-</li>
-<li>
-<p>对于一个函数，描述了其函数主体（即其代码）；</p>
-</li>
-<li>
-<p>对于枚举常量或 typedef 名称，是标识符的（唯一）声明。</p>
-</li>
-</ul>
-<hr />
-<h3 id="变量的声明和定义"><a class="markdownIt-Anchor" href="#变量的声明和定义"></a> 变量的声明和定义</h3>
-<p>变量的声明和定义通常是一体的，但并非总是如此。当我们用最简单的语句定义一个变量时，实际上已经为该变量保留了相应的内存空间：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> x;     <span class="comment">// definition, or equally called &quot;declaration and definition&quot;</span></span><br><span class="line">	<span class="keyword">int</span> y = <span class="number">0</span>; <span class="comment">// definition with initialization</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>但如果使用了 extern 关键字，则该语句仅声明了变量，而没有将其定义，因为 extern 关键字告诉编译器该变量是由外部定义的，编译器不会为其分配相应的内存空间，而会从其它位置（通常是联合编译的其它源文件中）寻找其定义：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extern</span> <span class="keyword">int</span> n;  <span class="comment">// only declaration</span></span><br></pre></td></tr></table></figure>
-<p>不过其实这样也是合法的，只是没什么意义：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extern</span> <span class="keyword">int</span> x;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">	x = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">int</span> x;</span><br></pre></td></tr></table></figure>
-<p>但如果你在使用 extern 关键字的同时对变量进行初始化，则该语句会被认为是定义：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extern</span> <span class="keyword">int</span> x = <span class="number">2</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">	x = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>并且你会收到编译器发出的警告：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">|1| warning: &#39;x&#39; initialized and declared &#39;extern&#39;</span><br></pre></td></tr></table></figure>
-<hr />
-<h3 id="函数的声明和定义"><a class="markdownIt-Anchor" href="#函数的声明和定义"></a> 函数的声明和定义</h3>
-<p>读者对函数的声明和定义应该是比较熟悉的。下面的代码不能通过编译，因为在编译到 main 函数时，编译器在之前未能扫描到任何有关标识符 f 的定义：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">	f(<span class="number">1</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;call f(%d)\n&quot;</span>, x);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>需要先声明：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">(<span class="keyword">int</span> x)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">	f(<span class="number">1</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;call f(%d)\n&quot;</span>, x);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>或是将定义移至 main 函数前（实质上是移至该函数的所有调用之前），前文已经提到，定义本身就有声明的含义：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;call f(%d)\n&quot;</span>, x);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">	f(<span class="number">1</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<hr />
-<h3 id="结构体相关的声明和定义"><a class="markdownIt-Anchor" href="#结构体相关的声明和定义"></a> 结构体相关的声明和定义</h3>
-<p>当我们“定义”一个结构体类型时，实际上根据 C 标准这是一个声明而不是定义，只是有些人习惯于说成“定义一个结构体”，不过这不重要：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Foo</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> a;</span><br><span class="line">	<span class="keyword">double</span> b;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>当然，这就是在声明 Foo 类型的同时定义了一个 Foo 类型的变量了：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Foo</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> a;</span><br><span class="line">	<span class="keyword">double</span> b;</span><br><span class="line">&#125; obj;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://blog.jm233333.com/Programming%20Languages/C/C%2004%20-%20Lvalue%20and%20Rvalue/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="JM233333">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="JM233333's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/Programming%20Languages/C/C%2004%20-%20Lvalue%20and%20Rvalue/" class="post-title-link" itemprop="url">C 04 - Lvalue and Rvalue</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-07-01 00:00:00" itemprop="dateCreated datePublished" datetime="2020-07-01T00:00:00+08:00">2020-07-01</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Programming-Languages/" itemprop="url" rel="index"><span itemprop="name">Programming Languages</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Programming-Languages/C/" itemprop="url" rel="index"><span itemprop="name">C</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-
-        <div class="post-authorization">
-          <p>本文为 JM233333 原创所著，遵循 BY-NC-SA 4.0 许可协议，转载请注明出处。如果您认为文中有谬误或对文中内容有疑问，欢迎理性指出，大家共同探讨和进步。</p>
-        </div>
-
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <hr />
-<h3 id="前置知识"><a class="markdownIt-Anchor" href="#前置知识"></a> 前置知识</h3>
-<p>在阅读本文档前，请确保你已经掌握类型的基础知识，详见 <em>C</em> 语言的 <em>03 - Types</em> 文档。</p>
-<ul>
-<li><a href="/Programming%20Languages/C/C%2003%20-%20Types/">C 03 - Types</a></li>
-</ul>
-<hr />
-<h3 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h3>
-<p>左值和右值的概念是 C 语言标准中有明确规定的，它们为语法中的一些常见的、基础的、易于解释的简单现象或结论提供了理论上的规范和解释。不知道是什么原因，国内的课程或教材极少会介绍左值和右值的相关概念，它们的概念并不复杂，却有着较为重要的意义，完全没有将其省略的必要。</p>
-<p>对于 C 语言开发者而言，左值和右值的概念其实不是必要的，哪怕你对此一无所知，也并不影响平时的编程，但是对于帮助理解编译信息和深入学习 C 语言来说，了解这些概念是很有意义的。</p>
-<p>（不过，在 C++ 语言中，左值和右值的概念对于学习 C<ins>11 及以上的一部分新特性（例如右值引用）来说是必要的前置知识。另外，左值和右值的概念在 C 语言和 C</ins> 语言中有微妙的差异，还请注意。）</p>
-<hr />
-<h3 id="左值"><a class="markdownIt-Anchor" href="#左值"></a> 左值</h3>
-<h4 id="基本概念"><a class="markdownIt-Anchor" href="#基本概念"></a> 基本概念</h4>
-<p><strong>左值 (l-value, left value)</strong> 是指标识了对象的内存位置的表达式，它有时也被称为 <strong>locator value</strong> 。左值可以出现在赋值运算符 <code>=</code> 的左侧或右侧，通常表示为标识符。</p>
-<p>左值所表示的内容一定是在内存中具有确切可识别的地址的，例如你通常定义的各类变量的名称几乎都是左值，而例如一些字面量整数值就不是左值。</p>
-<p>如果左值所标识的内存位置是可修改的，则称其为 <strong>可修改的左值 (modifiable l-value)</strong> 。例如数组类型和被 <code>const</code> 修饰的类型就不是可修改的左值，因为你不能直接修改一个数组，也不能直接修改一个 <code>const</code> 变量的值。</p>
-<p>“左值”这一名称最初来自赋值表达式，例如对于 <code>a = b</code> ，其中 <code>a</code> 必须是一个（可修改的）左值。</p>
-<p>基于左值的概念，我们可以规范地解释大量的基础语法规则。例如：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a, b;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> c = <span class="number">0</span>;</span><br><span class="line">a = <span class="number">1</span>;</span><br><span class="line">a = b;</span><br><span class="line"><span class="number">3</span> = a;</span><br><span class="line">a + <span class="number">1</span> = b;</span><br><span class="line">c = b;</span><br></pre></td></tr></table></figure>
-<p>第 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn><mo separator="true">,</mo><mtext> </mtext><mn>4</mn></mrow><annotation encoding="application/x-tex">3,\ 4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="mord">3</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord">4</span></span></span></span> 行的代码是合法的；第 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>5</mn><mo separator="true">,</mo><mtext> </mtext><mn>6</mn></mrow><annotation encoding="application/x-tex">5,\ 6</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="mord">5</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord">6</span></span></span></span> 行的代码会编译错误，因为 <code>3</code> 和 <code>a + 1</code> 都不是一个左值；第 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>7</mn></mrow><annotation encoding="application/x-tex">7</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">7</span></span></span></span> 行的代码也会编译错误，因为 <code>c</code> 不是一个可修改的左值。</p>
-<p>如果一个标识符引用一个内存位置并且其类型是算术、结构、联合或指针，则它是可修改的左值。例如对于指向了某个内存区域的指针 <code>p</code> 而言， <code>*p</code> 是可修改的左值，用于指定 <code>p</code> 所指向的内存。例如：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a[<span class="number">5</span>];</span><br><span class="line"><span class="keyword">int</span> * p = &amp;a[<span class="number">0</span>];</span><br><span class="line"><span class="keyword">int</span> * q;</span><br><span class="line">*p = <span class="number">1</span>;</span><br><span class="line">q = p + <span class="number">2</span>;</span><br><span class="line">*(p + <span class="number">1</span>) = <span class="number">3</span>;</span><br><span class="line">p + <span class="number">1</span> = q;</span><br></pre></td></tr></table></figure>
-<p>类似地，第 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>7</mn></mrow><annotation encoding="application/x-tex">7</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">7</span></span></span></span> 行的代码会编译错误，因为 <code>p + 1</code> 都不是一个左值；而第 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>6</mn></mrow><annotation encoding="application/x-tex">6</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">6</span></span></span></span> 行则是正确的，因为 <code>*(p + 1)</code> 是合法的左值。</p>
-<h4 id="详细定义"><a class="markdownIt-Anchor" href="#详细定义"></a> 详细定义</h4>
-<p>在 C 语言中，左值必须是下列表达式之一：</p>
-<ul>
-<li>
-<p>任何类型的变量的名称，例如整型、指针类型、结构体类型的标识符。</p>
-</li>
-<li>
-<p>下标表达式 <code>[]</code> 的结果，如果结果不是数组类型。</p>
-</li>
-<li>
-<p>对指针解引用的结果，如果结果不引用数组类型或函数类型。</p>
-</li>
-<li>
-<p>括号 <code>()</code> 中的左值。</p>
-</li>
-<li>
-<p>由 <code>const</code> 修饰的表达式。</p>
-</li>
-<li>
-<p>通过 <code>.</code> 或 <code>-&gt;</code> 访问结构体或共用体类型的成员的结果。</p>
-</li>
-</ul>
-<p>除了括号的规则以外应该都很好理解，就不再列举代码示例了。</p>
-<p>现在轻松一下——下面这段看起来很奇怪的代码其实是合法的，因为括号不会改变左值的性质：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a;</span><br><span class="line">(a) = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
-<p>下面是 C99 标准中对左值的原文定义：</p>
-<blockquote>
-<p>6.3.2.1 Lvalues, arrays, and function designators<br />
-1<br />
-An lvalue is an expression with an object type or an incomplete type other than void;<br />
-if an lvalue does not designate an object when it is evaluated, the behavior is undefined.<br />
-When an object is said to have a particular type, the type is specified by the lvalue used to designate the object.<br />
-A modifiable lvalue is an lvalue that does not have array type, does not have an incomplete type, does not have a const-qualified type, and if it is a structure or union, does not have any member (including, recursively, any member or element of all contained aggregates or unions) with a const-qualified type.</p>
-</blockquote>
-<hr />
-<h3 id="右值"><a class="markdownIt-Anchor" href="#右值"></a> 右值</h3>
-<p><strong>右值 (r-value, right value)</strong> 通常是指存储在内存中某个地址的数据值，是无法为其分配值的表达式，它有时也被称为 <strong>value of the expression</strong> 。右值只能出现在赋值运算符 <code>=</code> 的右侧。</p>
-<p>从概念上讲，右值只是一个数据值，在 C 语言中右值不像左值那样引用某个对象（但在 C++ 中右值并非一定不能引用对象）。</p>
-<p>右值的描述看起来和左值很像，但实际上完全不同。左值强调的是标识出指定对象的内存位置，而右值所标识的内存地址通常是匿名的或临时的，所指的通常是表达式计算的中间结果，例如：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">int</span> b = a + <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
-<p>在 C 程序被转换为汇编语言后，第 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn></mrow><annotation encoding="application/x-tex">2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span> 行的代码会被分解为若干个步骤，其中 <code>a + 1</code> 会在过程中被存储在临时的位置（例如可能在寄存器中），这也就是右值的定义中所述的“存储在内存中某个地址”。但这个地址通常是无法由上层程序直接访问的，你不能去修改 <code>a + 1</code> 的值，例如令 <code>a + 1 = 2</code> 。</p>
-<p>在 C 语言中右值的概念不太重要，事实上 C 标准甚至没有给出“右值”这一概念的明确定义，只将右值简单地称为 value of the expression 。所以在 C 语言中我们一般只需重点关注左值的相关问题。</p>
-<hr />
-<h3 id="实践作用"><a class="markdownIt-Anchor" href="#实践作用"></a> 实践作用</h3>
-<p>许多 C/C++ 编译器的编译信息中都引用了左值和右值的概念，了解左值和右值有利于我们阅读理解这些信息。例如：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">1</span>, b = <span class="number">2</span>;</span><br><span class="line">a + <span class="number">1</span> = b;</span><br></pre></td></tr></table></figure>
-<p>上述代码会报告如下编译错误：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">|2| error: lvalue required as left operand of assignment</span><br></pre></td></tr></table></figure>
-<p>其字面意思为“需要左值作为赋值的左操作数”。如果你不理解左值是什么，看到这个报错很可能会一头雾水。而现在事情就简单多了，显然编译错误是因为你在赋值运算符的左侧误用了一个右值表达式 <code>a + 1</code> 。</p>
-<p>当然，这种简单的问题不需要看懂报错也能解决，但在复杂的程序中，如果你理解左值和右值的概念，就可以非常高效地判明错误的来源，否则看到 lvalue 啥的你可能就要陷入迷惑了。</p>
-<p>此外，因为 C/C++ 标准中事实上大量引用了左值和右值的概念，所以了解左值和右值有利于我们阅读相关文献和资料。一些复杂的问题可能很难用通俗的语言去描述，但是用左值和右值的理论就很容易描述清楚。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://blog.jm233333.com/Programming%20Languages/C/C%2005%20-%20Improve%20Your%20Code%20with%20[typedef]/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="JM233333">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="JM233333's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/Programming%20Languages/C/C%2005%20-%20Improve%20Your%20Code%20with%20%5Btypedef%5D/" class="post-title-link" itemprop="url">C 05 - Improve Your Code with [typedef]</a>
+            <a href="/Programming%20Languages/C/C%2006%20-%20Macro/" class="post-title-link" itemprop="url">C 06 - Macro</a>
         </h2>
 
         <div class="post-meta">
@@ -917,10 +246,7 @@ A modifiable lvalue is an lvalue that does not have array type, does not have an
       
           <hr />
 <h3 id="前置知识"><a class="markdownIt-Anchor" href="#前置知识"></a> 前置知识</h3>
-<p>在阅读本文档前，请确保你已经掌握类型的基础知识，详见 <em>C</em> 语言的 <em>03 - Types</em> 文档。</p>
-<ul>
-<li><a href="/Programming%20Languages/C/C%2003%20-%20Types/">C 03 - Types</a></li>
-</ul>
+<p>本文内容相对较为深入，在阅读本文档前，建议你先阅读我的其它所有非进阶文档，详见 <em>C</em> 语言栏目。</p>
 <p><em>请注意：本文是面向进阶读者的，在阅读本文档前，请确保你已经具备了较为完整的 C 语言基础。</em></p>
 <hr />
 <h3 id="xxx"><a class="markdownIt-Anchor" href="#xxx"></a> xxx</h3>
@@ -944,7 +270,7 @@ A modifiable lvalue is an lvalue that does not have array type, does not have an
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://blog.jm233333.com/Programming%20Languages/C/C%2005%20-%20Array%20Name%20is%20NOT%20a%20Pointer/">
+    <link itemprop="mainEntityOfPage" href="https://blog.jm233333.com/Programming%20Languages/C/C%2006%20-%20Do%20not%20Abuse%20Side%20Effects%20in%20Subexpressions/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -958,7 +284,7 @@ A modifiable lvalue is an lvalue that does not have array type, does not have an
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/Programming%20Languages/C/C%2005%20-%20Array%20Name%20is%20NOT%20a%20Pointer/" class="post-title-link" itemprop="url">C 05 - Array Name is NOT a Pointer</a>
+            <a href="/Programming%20Languages/C/C%2006%20-%20Do%20not%20Abuse%20Side%20Effects%20in%20Subexpressions/" class="post-title-link" itemprop="url">C 06 - Do not Abuse Side Effects in Subexpressions</a>
         </h2>
 
         <div class="post-meta">
@@ -1002,205 +328,691 @@ A modifiable lvalue is an lvalue that does not have array type, does not have an
       
           <hr />
 <h3 id="前置知识"><a class="markdownIt-Anchor" href="#前置知识"></a> 前置知识</h3>
-<p>在阅读本文档前，建议你先掌握左值和右值的基本概念，详见 <em>C</em> 语言的 <em>04 - Lvalue and Rvalue</em> 文档。</p>
+<p>在阅读本文档前，请确保你已经知晓未定义行为的基本概念，详见 <em>C</em> 语言的 <em>03 - Undefined Behavior and Unspecified Behavior</em> 文档。只需看过概述部分知道什么是未定义行为即可，无需知晓各种具体的未定义行为。</p>
 <ul>
-<li><a href="/Programming%20Languages/C/C%2004%20-%20Lvalue%20and%20Rvalue/">C 04 - Lvalue and Rvalue</a></li>
+<li><a href="/Programming%20Languages/C/C%2003%20-%20Undefined%20Behavior%20and%20Unspecified%20Behavior/">C 03 - Undefined Behavior and Unspecified Behavior</a></li>
 </ul>
-<p><em>请注意：本文是面向进阶读者的，在阅读本文档前，请确保你已经具备了较为完整的 C 语言基础。</em></p>
+<p><em>请注意：本文是面向进阶读者的，在阅读本文档前，请确保你已经具备了完整的 C 语言基础。</em></p>
 <hr />
-<h3 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h3>
-<p>在我介绍指针的文章中已经提到过这一可能令人震惊的事实： <strong>数组名和指针是不同的。</strong> 没人会认为数组等同于指针，但是有很多人认为数组名等同于指针，这是错误的。</p>
-<p>本文将会全方位地介绍数组名和指针之间的区别。</p>
+<h3 id="令人刷新三观的真相"><a class="markdownIt-Anchor" href="#令人刷新三观的真相"></a> 令人刷新三观的真相</h3>
+<p>如果你学过 C 语言的基本语法，你可能会觉得类似下面的代码并没有什么问题，只是有些晦涩难懂、并且代码风格糟糕。例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">int</span> x = i++ + i++;</span><br></pre></td></tr></table></figure>
+<p>你或许会认为：既然后缀自增运算符是在主表达式计算之后被计算的，那么结果似乎就应当是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi><mo>=</mo><mn>2</mn><mo separator="true">,</mo><mtext> </mtext><mi>i</mi><mo>=</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">x = 2,\ i = 3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span></span></span></span> 。然而事实却并非如此。例如在我的编译环境中，结果竟然是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi><mo>=</mo><mn>3</mn><mo separator="true">,</mo><mtext> </mtext><mi>i</mi><mo>=</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">x = 3,\ i = 3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord">3</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span></span></span></span> 。</p>
+<p>你可能见过一些垃圾教学者夸夸其谈地分析其运行结果，并且看起来十分有道理。如果是这样的话，那么很不幸，你被坑了。事实上，这段看起来似乎“很正常只是代码风格很糟糕”的代码属于未定义行为。</p>
+<p>我们知道，花费精力去研究未定义行为在不同编译环境下的运行结果是没有意义的。但如果想要深入学习 C/C++ 语言，你有必要去探究此类未定义行为的内在原因。</p>
+<p>在 <em>C</em> 语言的 <em>99 - Undefined Behavior and Unspecified Behavior</em> 文档中，我仅对此类未定义行为作了一个表层的介绍，并且没有涉及其内在原因。本文将对此进行详细的介绍。阅读本文需要具备一定的 C 语言基础，且具备一定的汇编语言基础。</p>
 <hr />
-<h3 id="错误的理解"><a class="markdownIt-Anchor" href="#错误的理解"></a> 错误的理解</h3>
-<p>有很多人认为数组名等同于指针，通常是基于如下几点事实：</p>
-<p>其一，当我们把一个指针指向数组首地址后，指针和数组的地址值相等。例如：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a[<span class="number">5</span>];</span><br><span class="line"><span class="keyword">int</span> * p = &amp;a[<span class="number">0</span>];</span><br><span class="line"><span class="keyword">int</span> * q = a;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;p(%u), q(%u)\n&quot;</span>, p, q);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;(p == q) = %d\n&quot;</span>, (p == q));</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;(p == a) = %d\n&quot;</span>, (p == a));</span><br></pre></td></tr></table></figure>
-<p>上述代码在我本机上的某次运行结果如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">p(6356708), q(6356708)</span><br><span class="line">(p &#x3D;&#x3D; q) &#x3D; 1</span><br><span class="line">(p &#x3D;&#x3D; a) &#x3D; 1</span><br></pre></td></tr></table></figure>
-<p>其二，指针和数组的语法几乎可以互换，我们似乎总是可以将指针和数组名进行互换而不改变程序运行的结果，例如下面的代码中，第 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>3</mn></mrow><annotation encoding="application/x-tex">3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span></span></span></span> 行对 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>w</mi><mo separator="true">,</mo><mtext> </mtext><mi>x</mi></mrow><annotation encoding="application/x-tex">w,\ x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord mathdefault">x</span></span></span></span> 的初始化语句是等价的，第 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>4</mn></mrow><annotation encoding="application/x-tex">4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">4</span></span></span></span> 行对 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi><mo separator="true">,</mo><mtext> </mtext><mi>z</mi></mrow><annotation encoding="application/x-tex">y,\ z</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord mathdefault" style="margin-right:0.04398em;">z</span></span></span></span> 的初始化语句也是等价的：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a[<span class="number">5</span>] = &#123;<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>&#125;;</span><br><span class="line"><span class="keyword">int</span> * p = a;</span><br><span class="line"><span class="keyword">int</span> w = *(p + <span class="number">3</span>), x = *(a + <span class="number">3</span>);</span><br><span class="line"><span class="keyword">int</span> y = a[<span class="number">1</span>], z = p[<span class="number">1</span>];</span><br></pre></td></tr></table></figure>
-<p>其三，在函数传参时，数组和指针作为参数时的语法是等价的，例如下面两种函数声明是等价的，而且在函数体中我们既可以使用数组的语法也可以使用指针的语法：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f1</span><span class="params">(<span class="keyword">int</span> a[], <span class="keyword">int</span> n)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f2</span><span class="params">(<span class="keyword">int</span> * a, <span class="keyword">int</span> n)</span></span>;</span><br></pre></td></tr></table></figure>
-<p>然而事情并不是表面上看起来这么简单。</p>
-<hr />
-<h3 id="简单的区别"><a class="markdownIt-Anchor" href="#简单的区别"></a> 简单的区别</h3>
-<p>为了先向读者证明数组名不是指针，我们先举出两个最简单的区别，虽然这并不涉及问题背后的本质原因。</p>
-<h4 id="数组名中的长度信息"><a class="markdownIt-Anchor" href="#数组名中的长度信息"></a> 数组名中的长度信息</h4>
-<p>事实上数组名包括了两个信息：其一是数组的首地址，其二是数组的长度。我们看下面的代码：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a[<span class="number">5</span>] = &#123;<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>&#125;;</span><br><span class="line"><span class="keyword">int</span> * p = a;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d %d\n&quot;</span>, <span class="keyword">sizeof</span>(a), <span class="keyword">sizeof</span>(p));</span><br></pre></td></tr></table></figure>
-<p>你认为输出的结果会是什么？事实上二者并不相同：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">20 4</span><br></pre></td></tr></table></figure>
-<p>这是二者之间最简单的区别，但是已经足以说明数组名不等同于指针了。</p>
-<h4 id="数组名的不可修改性"><a class="markdownIt-Anchor" href="#数组名的不可修改性"></a> 数组名的不可修改性</h4>
-<p>我们无法像修改指针的指向那样修改数组名的“指向”，例如：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a[<span class="number">5</span>];</span><br><span class="line"><span class="keyword">int</span> b[<span class="number">5</span>];</span><br><span class="line"><span class="keyword">int</span> * p = a;</span><br><span class="line">a = b;     <span class="comment">// compile error</span></span><br><span class="line">p = b;     <span class="comment">// ok</span></span><br><span class="line">a = &amp;a[<span class="number">2</span>]; <span class="comment">// compile error</span></span><br><span class="line">p = &amp;a[<span class="number">2</span>]; <span class="comment">// ok</span></span><br></pre></td></tr></table></figure>
-<hr />
-<h3 id="数组的退化"><a class="markdownIt-Anchor" href="#数组的退化"></a> 数组的退化</h3>
-<p>读者肯定会感到困惑，既然数组名和指针并不相同，那么为什么下面的代码中的逻辑表达式的结果为真：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a[<span class="number">5</span>];</span><br><span class="line"><span class="keyword">int</span> * p = a;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;(p == a) = %d\n&quot;</span>, (p == a));</span><br></pre></td></tr></table></figure>
-<p>事实上，当你令 <code>p = a</code> 时，首先数组名 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span> 被转换为指针类型，然后赋值表达式才被执行。这个过程被称为数组的 <strong>退化 (decay)</strong> 。</p>
-<p>数组的退化类似于隐式类型转换（但并不同），就像下面的代码中，浮点字面量 <code>0.5</code> 会被隐式转换为整型，然后再赋值给 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> ：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> x = <span class="number">0.5</span>;</span><br></pre></td></tr></table></figure>
-<p>现在考虑 <code>p == a</code> 的判断式，事实上 <code>a</code> 会退化成指针，然后再与 <code>p</code> 进行比较。因为数组名中的地址信息是数组首地址 <code>&amp;a[0]</code> ，所以比较的结果为真。</p>
-<p>现在我们解释前文所述的最后一个现象。在函数传参时，无论你使用下列哪种语法，此时的 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span> 都不再是一个数组名，而是一个指针。下面两种函数声明是等价的：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f1</span><span class="params">(<span class="keyword">int</span> a[], <span class="keyword">int</span> n)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f2</span><span class="params">(<span class="keyword">int</span> * a, <span class="keyword">int</span> n)</span></span>;</span><br></pre></td></tr></table></figure>
-<p>这个事实很容易被验证，例如：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f1</span><span class="params">(<span class="keyword">int</span> a[])</span> </span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;f1: %d\n&quot;</span>, <span class="keyword">sizeof</span>(a));</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f2</span><span class="params">(<span class="keyword">int</span> * a)</span> </span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;f2: %d\n&quot;</span>, <span class="keyword">sizeof</span>(a));</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a[<span class="number">5</span>];</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;main: %d\n&quot;</span>, <span class="keyword">sizeof</span>(a));</span><br><span class="line">	f1(a);</span><br><span class="line">	f2(a);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>上述代码的运行结果如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">main: <span class="number">20</span></span><br><span class="line">f1: <span class="number">4</span></span><br><span class="line">f2: <span class="number">4</span></span><br></pre></td></tr></table></figure>
-<p>当我们将数组作为参数传递时，事实上发生了数组的退化，数组的长度信息已经丢失，只有地址信息会被保留并成为指针。</p>
-<p>因此，虽然在函数体中我们既可以使用数组的语法也可以使用指针的语法，但是实际上我们都是在对一个指针进行操作。这也是当我们将数组作为参数传递时，需要另外传递一个整数参数来记录数组长度，而不能利用 <code>sizeof</code> 来获取数组长度的原因：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f1</span><span class="params">(<span class="keyword">int</span> a[], <span class="keyword">int</span> n)</span> </span>&#123;            <span class="comment">// correct</span></span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f2</span><span class="params">(<span class="keyword">int</span> a[])</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n = <span class="keyword">sizeof</span>(a) / <span class="keyword">sizeof</span>(<span class="keyword">int</span>); <span class="comment">// wrong</span></span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>至于将二维数组作为参数传递时，事实上是退化成了数组指针，下面两种函数声明是等价的：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f1</span><span class="params">(<span class="keyword">int</span> a[][<span class="number">10</span>], <span class="keyword">int</span> n)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f2</span><span class="params">(<span class="keyword">int</span> (*a)[<span class="number">10</span>], <span class="keyword">int</span> n)</span></span>;</span><br></pre></td></tr></table></figure>
-<p>至于更高维的数组则会退化为对应的高维的数组指针，读者可以自行推演。</p>
-<p>指针的退化是一个隐式的过程，因而导致许多人误以为数组名等同于指针，堪称是问题的“元凶”。</p>
-<p>事实上，指针的退化无处不在。根据 C 语言标准的规定，除以下表达式外，在表达式（不包括声明语句）中出现的任何数组名，都会退化为指针类型。退化得到的指针指向数组的首地址，且不是一个左值：</p>
+<h3 id="副作用与序列点"><a class="markdownIt-Anchor" href="#副作用与序列点"></a> 副作用与序列点</h3>
+<p>为了弄清此类未定义行为的内在原因，我们需要先掌握两个语言层面的基本概念，包括副作用和序列点。</p>
+<h4 id="副作用"><a class="markdownIt-Anchor" href="#副作用"></a> 副作用</h4>
+<p>C 语言规定，一个表达式（或是子表达式）被执行时产生的以下结果均属于 <strong>副作用 (side effect)</strong> ：</p>
 <ul>
 <li>
-<p><code>sizeof</code> 运算符；</p>
+<p>修改一个对象的值；</p>
 </li>
 <li>
-<p>单元 <code>&amp;</code> 取地址运算符；</p>
+<p>修改一个文件；</p>
 </li>
 <li>
-<p>用字符串常量初始化数组。</p>
+<p>访问一个 volatile 对象；</p>
+</li>
+<li>
+<p>调用一个会产生以上结果之一的函数。</p>
 </li>
 </ul>
-<p>下面是 C99 标准中关于此项规定的原文解释：</p>
+<p>也就是说，副作用会改变程序的运行时刻环境。</p>
+<p>下面是 C99 标准中对副作用的原文定义：</p>
 <blockquote>
-<p>6.3.2.1 Lvalues, arrays, and function designators<br />
-3<br />
-Except when it is the operand of the sizeof operator or the unary &amp; operator, or is a string literal used to initialize an array, an expression that has type “array of type” is converted to an expression with type “pointer to type” that points to the initial element of the array object and is not an lvalue.</p>
+<p>5.1.2.3 Program execution<br />
+2<br />
+Accessing a volatile object, modifying an object, modifying a file, or calling a function that does any of those operations are all side effects, which are changes in the state of the execution environment. Evaluation of an expression may produce side effects.</p>
+</blockquote>
+<h4 id="序列点"><a class="markdownIt-Anchor" href="#序列点"></a> 序列点</h4>
+<p>C 语言规定，在执行序列中某些特定的点上，此前触发的所有副作用都应被执行完毕，并且此后的所有副作用都不应被触发，这些特定的点被称为 <strong>序列点 (sequence point)</strong> 。</p>
+<p>常见的序列点包括：</p>
+<ul>
+<li>
+<p>函数调用 <code>()</code> 。也就是说，对于任意一个函数调用，在真正调用这个函数之前，其所有参数必须被执行完毕；</p>
+</li>
+<li>
+<p>逻辑运算符 <code>&amp;&amp;</code> 和 <code>||</code> 、三元运算符 <code>? :</code> 、逗号运算符 <code>,</code> 。也就是说，对于上述运算符，在逻辑运算和第二个操作数被执行之前，第一个操作数必须被执行完毕；</p>
+</li>
+<li>
+<p>一个完整表达式的结束点。完整的表达式也包括初始化语句、逻辑控制结构、循环控制结构、返回语句等。</p>
+</li>
+<li>
+<p>与每个格式化的输入/输出功能转换说明符关联的动作之后。</p>
+</li>
+</ul>
+<p>下面是 C99 标准中对序列点的原文定义：</p>
+<blockquote>
+<p>5.1.2.3 Program execution<br />
+2<br />
+At certain specified points in the execution sequence called sequence points, all side effects of previous evaluations shall be complete and no side effects of subsequent evaluations shall have taken place.<br />
+(A summary of the sequence points is given in annex C.)</p>
 </blockquote>
 <hr />
-<h3 id="当你混用语法时究竟发生了什么"><a class="markdownIt-Anchor" href="#当你混用语法时究竟发生了什么"></a> 当你混用语法时究竟发生了什么</h3>
-<p>在前文中以及我介绍指针的文章中已经提到过，指针和数组的语法几乎可以互换，例如：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a[<span class="number">5</span>];</span><br><span class="line"><span class="keyword">int</span> p = a;</span><br></pre></td></tr></table></figure>
-<p>对于 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span> 和 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> ，使用 <code>p[i]</code> ， <code>*(p + i)</code> ， <code>a[i]</code> ， <code>*(a + i)</code> 的运行结果都是相同的。然而，这并不意味着这些语法是等价的。</p>
-<p>使用 <code>a[i]</code> 的形式访问数组元素的代码，总是会被编译器解释为使用 <code>*(a + i)</code> 的形式，二者完全等价。类似地， <code>p[i]</code> 与 <code>*(p + i)</code> 完全等价。但是 <code>a[i]</code> 与 <code>p[i]</code> 是不同的。</p>
-<p>当你试图直接访问数组 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span> 中的元素 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mo stretchy="false">[</mo><mi>i</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">a[i]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">a</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span></span></span></span> 时，可以看作是经历了如下过程：</p>
-<ol>
-<li>
-<p>取 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 的值，将 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 与 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span> 的地址值相加，记为 <code>X = a + i</code> ；</p>
-</li>
-<li>
-<p>访问内存地址 <code>X</code> 并获取其内容。</p>
-</li>
-</ol>
-<p>当你试图通过指向 <code>&amp;a[0]</code> 的指针 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> 访问数组元素 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mo stretchy="false">[</mo><mi>i</mi><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">a[i]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">a</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span></span></span></span> 时，可以看作是经历了如下过程：</p>
-<ol>
-<li>
-<p>访问 <code>p</code> 的内存地址并获取其内容，记为 <code>X</code> ；</p>
-</li>
-<li>
-<p>取 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 的值，将 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 与 <code>X</code> 相加，记为 <code>Y = X + i</code> ；</p>
-</li>
-<li>
-<p>访问内存地址 <code>Y</code> 并获取其内容。</p>
-</li>
-</ol>
-<p>因为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span> 和 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> 都是变量，所以 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span> 和 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> 的地址值将在编译期（全局变量）或运行期早些时候（局部变量）被确定。注意，是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> 这个指针变量本身的地址（即 <code>&amp;p</code> ）被确定，这也是区别之所在。</p>
-<p>对于数组名 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span> ，我们可以直接访问内存地址 <code>&amp;a[0]</code> ；而对于指针 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> ，我们要先获取 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>p</mi></mrow><annotation encoding="application/x-tex">p</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span></span></span></span> 中的内容 <code>v</code> ，然后再访问地址 <code>v</code> 。</p>
-<p>我们可以由汇编结果来验证这一定论。考虑如下代码：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> a[<span class="number">5</span>] = &#123;<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>&#125;;</span><br><span class="line">	<span class="keyword">int</span> * p = a;</span><br><span class="line">	<span class="keyword">int</span> w = a[<span class="number">0</span>];</span><br><span class="line">	<span class="keyword">int</span> x = *(a + <span class="number">1</span>);</span><br><span class="line">	<span class="keyword">int</span> y = p[<span class="number">2</span>];</span><br><span class="line">	<span class="keyword">int</span> z = *(p + <span class="number">3</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>其汇编代码可能如下所示（在不同编译环境下可能会有不同的汇编语句，但主体逻辑是一致的），省略了开头和结尾的一些无关的汇编代码：</p>
-<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># test.c:1: int main(void) &#123;</span></span><br><span class="line"><span class="symbol">call</span>	___main	 #</span><br><span class="line"><span class="comment"># test.c:2: 	int a[5] = &#123;0, 1, 2, 3, 4&#125;;</span></span><br><span class="line"><span class="symbol">movl</span>	<span class="number">$0</span>, <span class="number">8</span>(%esp) 	 #, a</span><br><span class="line"><span class="symbol">movl</span>	<span class="number">$1</span>, <span class="number">12</span>(%esp)	 #, a</span><br><span class="line"><span class="symbol">movl</span>	<span class="number">$2</span>, <span class="number">16</span>(%esp)	 #, a</span><br><span class="line"><span class="symbol">movl</span>	<span class="number">$3</span>, <span class="number">20</span>(%esp)	 #, a</span><br><span class="line"><span class="symbol">movl</span>	<span class="number">$4</span>, <span class="number">24</span>(%esp)	 #, a</span><br><span class="line"><span class="comment"># test.c:3: 	int * p = a;</span></span><br><span class="line"><span class="symbol">leal</span>	<span class="number">8</span>(%esp), %eax	 #, tmp89</span><br><span class="line"><span class="symbol">movl</span>	%eax, <span class="number">44</span>(%esp)	 # tmp89, p</span><br><span class="line"><span class="comment"># test.c:4: 	int w = a[0];</span></span><br><span class="line"><span class="symbol">movl</span>	<span class="number">8</span>(%esp), %eax	 # a, tmp90</span><br><span class="line"><span class="symbol">movl</span>	%eax, <span class="number">40</span>(%esp)	 # tmp90, w</span><br><span class="line"><span class="comment"># test.c:5: 	int x = *(a + 1);</span></span><br><span class="line"><span class="symbol">movl</span>	<span class="number">12</span>(%esp), %eax	 # MEM[(int *)&amp;a + <span class="number">4</span>B], tmp91</span><br><span class="line"><span class="symbol">movl</span>	%eax, <span class="number">36</span>(%esp)	 # tmp91, x</span><br><span class="line"><span class="comment"># test.c:6: 	int y = p[2];</span></span><br><span class="line"><span class="symbol">movl</span>	<span class="number">44</span>(%esp), %eax	 # p, tmp92</span><br><span class="line"><span class="symbol">movl</span>	<span class="number">8</span>(%eax), %eax	 # MEM[(int *)p_7 + <span class="number">8</span>B], tmp93</span><br><span class="line"><span class="symbol">movl</span>	%eax, <span class="number">32</span>(%esp)	 # tmp93, y</span><br><span class="line"><span class="comment"># test.c:7: 	int z = *(p + 3);</span></span><br><span class="line"><span class="symbol">movl</span>	<span class="number">44</span>(%esp), %eax	 # p, tmp94</span><br><span class="line"><span class="symbol">movl</span>	<span class="number">12</span>(%eax), %eax	 # MEM[(int *)p_7 + <span class="number">12</span>B], tmp95</span><br><span class="line"><span class="symbol">movl</span>	%eax, <span class="number">28</span>(%esp)	 # tmp95, z</span><br><span class="line"><span class="comment"># test.c:8: 	return 0;</span></span><br><span class="line"><span class="symbol">movl</span>	<span class="number">$0</span>, %eax    	 #, _12</span><br><span class="line"><span class="comment"># test.c:9: &#125;</span></span><br><span class="line">	leave	</span><br></pre></td></tr></table></figure>
-<p>由此可见，虽然二者语法相同，运行结果也相同，但是运行过程却是不同的。通过指针进行的是间接访问，比直接访问要多出一个步骤，运行效率更低。这也彻底推翻了数组名等同于指针的论断。</p>
+<h3 id="序列点的陷阱"><a class="markdownIt-Anchor" href="#序列点的陷阱"></a> 序列点的陷阱</h3>
+<p>我们知道，对于程序执行过程中的各个序列点，此前触发的所有副作用都应被执行完毕，并且此后的所有副作用都不应被触发。这里面就隐藏了一个黑暗的秘密：反过来说，只要没有遇到序列点，副作用的执行顺序就是不确定的。</p>
+<p><strong>在两个序列点之间，如果有多个副作用，则它们的执行顺序事实上是不确定的！</strong></p>
+<p>这意味着 C 标准把这个执行顺序的决定权交给了编译器，也就是说，编译器可以自由地调整编译后得到的汇编指令的顺序，以便得到最优的执行效率。这对 C 语言的执行速度有一个不小的提高，但也因此埋下了一个陷阱。</p>
+<p>到此你可能仍然不明白问题出在哪，因为弄清根源还必须深入到汇编的层次。接下来你将触及到 C 语言的黑暗角落。</p>
+<p>我们先从最简单的自增表达式说起。考虑如下代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">int</span> x = i++;</span><br></pre></td></tr></table></figure>
+<p>其汇编代码可能如下所示（在不同编译环境下可能会有不同的汇编语句，但主体逻辑是一致的）：</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># int i = 1;</span></span><br><span class="line"><span class="symbol">movl</span>	<span class="number">$1</span>, <span class="number">12</span>(%esp)	 # 将立即数 <span class="number">1</span> 存入变量 i 中</span><br><span class="line"><span class="comment"># int x = i++;</span></span><br><span class="line"><span class="symbol">movl</span>	<span class="number">12</span>(%esp), %eax	 # 将变量 i 的值存入寄存器 eax 中</span><br><span class="line"><span class="symbol">incl</span>	<span class="number">12</span>(%esp)	 # 将变量 i 的值 +<span class="number">1</span></span><br><span class="line"><span class="symbol">movl</span>	%eax, <span class="number">8</span>(%esp)	 # 将寄存器 eax 的值存入变量 x 中</span><br></pre></td></tr></table></figure>
+<p>由于 C 语言标准并未规定复制运算符 <code>=</code> 在将等号右侧的运算结果赋给等号左侧的地址之前存在序列点，因此汇编代码也可能如下所示：</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># int i = 1;</span></span><br><span class="line"><span class="symbol">movl</span>	<span class="number">$1</span>, <span class="number">12</span>(%esp)	 # 将立即数 <span class="number">1</span> 存入变量 i 中</span><br><span class="line"><span class="comment"># int x = i++;</span></span><br><span class="line"><span class="symbol">movl</span>	<span class="number">12</span>(%esp), %eax	 # 将变量 i 的值存入寄存器 eax 中</span><br><span class="line"><span class="symbol">movl</span>	%eax, <span class="number">8</span>(%esp)	 # 将寄存器 eax 的值存入变量 x 中</span><br><span class="line"><span class="symbol">incl</span>	<span class="number">12</span>(%esp)	 # 将变量 i 的值 +<span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>根据常识可知，在转换成汇编代码后，单个语句 <code>x = i ++</code> 会被转换为一系列汇编语句，分别执行了读写的操作，而这个简单的事实正是陷阱之所在。请读者思考，当表达式中有多个自增表达式的时候会发生什么？例如：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">int</span> x = i++ + i++;</span><br></pre></td></tr></table></figure>
+<p>其汇编代码可能如下所示：</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># int i = 1;</span></span><br><span class="line">	movl	<span class="number">$1</span>, <span class="number">12</span>(%esp)	 # 将立即数 <span class="number">1</span> 存入变量 i 中</span><br><span class="line"><span class="comment"># int x = i++ + i++;</span></span><br><span class="line">	movl	<span class="number">12</span>(%esp), %eax	 # 将变量 i 的值存入寄存器 eax 中</span><br><span class="line">	movl	%eax, <span class="number">8</span>(%esp)	 # 将寄存器 eax 的值存入变量 x 中</span><br><span class="line">	incl	<span class="number">12</span>(%esp)	 # 将变量 i 的值 +<span class="number">1</span></span><br><span class="line">	movl	<span class="number">12</span>(%esp), %edx	 # 将变量 i 的值存入寄存器 edx 中</span><br><span class="line">	movl	%edx, <span class="number">8</span>(%esp)	 # 将寄存器 edx 的值存入变量 x 中</span><br><span class="line">	incl	<span class="number">12</span>(%esp)	 # 将变量 i 的值 +<span class="number">1</span></span><br><span class="line">	addl	%edx, %eax	 # 对寄存器 edx 的值和寄存器 eax 的值求和并将结果存入寄存器 eax 中</span><br><span class="line">	movl	%eax, <span class="number">8</span>(%esp)	 # 将寄存器 eax 的值存入变量 x 中</span><br></pre></td></tr></table></figure>
+<p>由于 C 语言标准并未明确规定子表达式的执行顺序，其汇编代码也可能如下所示：</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># int i = 1;</span></span><br><span class="line">	movl	<span class="number">$1</span>, <span class="number">12</span>(%esp)	 # 将立即数 <span class="number">1</span> 存入变量 i 中</span><br><span class="line"><span class="comment"># int x = i++ + i++;</span></span><br><span class="line">	movl	<span class="number">12</span>(%esp), %eax	 # 将变量 i 的值存入寄存器 eax 中</span><br><span class="line">	movl	<span class="number">12</span>(%esp), %edx	 # 将变量 i 的值存入寄存器 edx 中</span><br><span class="line">	movl	%eax, <span class="number">8</span>(%esp)	 # 将寄存器 eax 的值存入变量 x 中</span><br><span class="line">	movl	%edx, <span class="number">8</span>(%esp)	 # 将寄存器 edx 的值存入变量 x 中</span><br><span class="line">	incl	<span class="number">12</span>(%esp)	 # 将变量 i 的值 +<span class="number">1</span></span><br><span class="line">	incl	<span class="number">12</span>(%esp)	 # 将变量 i 的值 +<span class="number">1</span></span><br><span class="line">	addl	%edx, %eax	 # 对寄存器 edx 的值和寄存器 eax 的值求和并将结果存入寄存器 eax 中</span><br><span class="line">	movl	%eax, <span class="number">8</span>(%esp)	 # 将寄存器 eax 的值存入变量 x 中</span><br></pre></td></tr></table></figure>
+<p>而这两份汇编代码的运行结果显然是不同的，前者 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi><mo>=</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">x = 3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span></span></span></span> ，后者 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">x = 2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span> 。显然，问题出在对同一变量 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 的读写冲突上。</p>
+<p>正因为如此，此类表达式被认为是未定义行为，因为不仅是不同的编译环境，哪怕是对于不同的程序上下文，编译器都可能会选择不同的执行顺序。极端地讲，可能你在上面插入了一个和 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi><mo separator="true">,</mo><mtext> </mtext><mi>i</mi></mrow><annotation encoding="application/x-tex">x,\ i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">x</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mspace"> </span><span class="mord mathdefault">i</span></span></span></span> 完全无关的函数调用，也会导致此表达式的结果发生变化，这样的危险代码无疑是不可接受的。</p>
+<p>当然，下面的代码是没有问题的：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">int</span> j = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">int</span> x = i++ + ++j;</span><br><span class="line"><span class="keyword">int</span> y = i++ + j++;</span><br></pre></td></tr></table></figure>
+<p>不过，考虑到代码风格和可读性的问题，即便没有错误，仍然强烈建议读者尽量不要在一个表达式内混用自增自减运算符。</p>
+<p>特别补充一点，研究未定义行为的运行结果是没有意义的，本节中仅是为了让读者明白该行为产生的原因，才对其进行举例分析。请读者不要为了除学习以外的目的去研究未定义行为在不同情况下的运行结果，更不要试图去利用这些结果做些什么，那是非常愚蠢的。</p>
 <hr />
-<h3 id="数组的地址和首地址"><a class="markdownIt-Anchor" href="#数组的地址和首地址"></a> 数组的地址和首地址</h3>
-<p>这里还另外提一点：数组的地址和数组的首地址是不同的。</p>
-<p>有些人会认为 <code>a</code> , <code>&amp;a[0]</code> , <code>&amp;a</code> 在作为指针使用时是等价的，然而事实并非如此。例如：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a[<span class="number">5</span>];</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;size:  %d %d %d\n&quot;</span>, <span class="keyword">sizeof</span>(a), <span class="keyword">sizeof</span>(&amp;a[<span class="number">0</span>]), <span class="keyword">sizeof</span>(&amp;a));</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;addr:  %u %u %u\n&quot;</span>, a, &amp;a[<span class="number">0</span>], &amp;a);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;addr+: %u %u %u\n&quot;</span>, a + <span class="number">1</span>, &amp;a[<span class="number">0</span>] + <span class="number">1</span>, &amp;a + <span class="number">1</span>);</span><br></pre></td></tr></table></figure>
-<p>上述代码在我本机上的某次运行结果如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">size:  20 4 4</span><br><span class="line">addr:  6356716 6356716 6356716</span><br><span class="line">addr+: 6356720 6356720 6356736</span><br></pre></td></tr></table></figure>
-<p>由此我们可以发现：</p>
+<h3 id="避免掉入陷阱"><a class="markdownIt-Anchor" href="#避免掉入陷阱"></a> 避免掉入陷阱</h3>
+<h4 id="定义"><a class="markdownIt-Anchor" href="#定义"></a> 定义</h4>
+<p>了解了序列点的陷阱之后，我们当然更要知道如何避免掉入这个陷阱。</p>
+<p>下面是 C99 标准中对此类未定义行为的原文定义：</p>
+<blockquote>
+<p>Between two sequence points, an object is modified more than once, or is modified and the prior value is read other than to determine the value to be stored (6.5)</p>
+</blockquote>
+<p>意思是说，在两个序列点之间，下列行为均属于未定义行为：</p>
 <ul>
 <li>
-<p>根据 <code>sizeof</code> 的结果可知，数组名 <code>a</code> 代表数组本身，包含长度信息，而 <code>&amp;a[0]</code> , <code>&amp;a</code> 都是指针类型；</p>
+<p>修改任何一个对象超过一次；</p>
 </li>
 <li>
-<p>根据其地址值可知，三者的地址值都是数组的首地址；</p>
-</li>
-<li>
-<p>根据其地址值 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">+</span><span class="mord">1</span></span></span></span> 可知， <code>a</code> 会退化为指向整型的指针， <code>&amp;a[0]</code> 是指向整型的指针，而 <code>&amp;a</code> 则是指向长为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>5</mn></mrow><annotation encoding="application/x-tex">5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">5</span></span></span></span> 的整型数组的指针。</p>
+<p>修改任何一个对象的同时在别处读取该对象的值。</p>
 </li>
 </ul>
-<p>前两条很好懂，重点是第三条。我们注意到对三者的地址值 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">+</span><span class="mord">1</span></span></span></span> 的结果不同，对 <code>&amp;a</code> <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">+</span><span class="mord">1</span></span></span></span> 相当于对其数值加上了 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>4</mn><mo>∗</mo><mn>5</mn><mo>=</mo><mn>20</mn></mrow><annotation encoding="application/x-tex">4 * 5 = 20</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">4</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">5</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mord">0</span></span></span></span> 字节，恰好是整整一个数组的长度。这意味着 <code>&amp;a</code> 是一个数组指针，它代表着数组本身的地址。</p>
-<p>不过，由于三者的地址值相同，因此下面的代码事实上是合法的，只不过看起来有些愚蠢：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a[<span class="number">5</span>];</span><br><span class="line"><span class="keyword">int</span> * p = (<span class="keyword">int</span> *)&amp;a;</span><br><span class="line"><span class="keyword">int</span> (*q)[<span class="number">5</span>] = (<span class="keyword">int</span> (*)[<span class="number">5</span>])a;</span><br></pre></td></tr></table></figure>
-<p>总之，虽然单论地址值而言三者是相同的，但是 <code>&amp;a</code> 的指针类型和另外两者不同。数组的地址和数组的首地址是不同的。</p>
+<p>也就是说，我们只要避免上述行为即可。</p>
+<h4 id="修改超过一次的例子"><a class="markdownIt-Anchor" href="#修改超过一次的例子"></a> 修改超过一次的例子</h4>
+<p>例1：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">int</span> x = i++ + ++i;</span><br><span class="line"><span class="keyword">int</span> y = i++ + i++;</span><br></pre></td></tr></table></figure>
+<p>例2：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">(<span class="keyword">int</span> * p)</span> </span>&#123;</span><br><span class="line">	*p ++;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">int</span> i = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">int</span> x = f(&amp;i) + f(&amp;i);</span><br></pre></td></tr></table></figure>
+<h4 id="修改并在别处读取的例子"><a class="markdownIt-Anchor" href="#修改并在别处读取的例子"></a> 修改并在别处读取的例子</h4>
+<p>例1：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">1</span>;</span><br><span class="line">i = i++ + <span class="number">1</span>;</span><br><span class="line"><span class="keyword">int</span> x = i + i++;</span><br></pre></td></tr></table></figure>
+<p>例2：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a[<span class="number">10</span>];</span><br><span class="line">a[i++] = i;</span><br><span class="line">a[i] = i++;</span><br></pre></td></tr></table></figure>
+<h4 id="其实没问题的例子"><a class="markdownIt-Anchor" href="#其实没问题的例子"></a> 其实没问题的例子</h4>
+<p>轻松一下，下面这个例子看起来很像是触发了未定义行为：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">0</span>, b = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">int</span> c = (a = b) || (a ++ &amp;&amp; ++ b);</span><br></pre></td></tr></table></figure>
+<p>但是实际上没有，上述代码是完全合法的，因为 <code>||</code> 运算符是有序列点的，左表达式 <code>a = b</code> 和右表达式 <code>a ++ &amp;&amp; ++ b</code> 被分离，各自并不存在任何读写冲突。</p>
+<p>不过即便如此，我们仍然强烈建议读者不要写出这种代码，这真的很无聊。</p>
 <hr />
-<h3 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h3>
-<p>数组名和指针的主要区别如下：</p>
+<h3 id="分析与总结"><a class="markdownIt-Anchor" href="#分析与总结"></a> 分析与总结</h3>
+<p>这个缺陷并非是不可接受的，虽然这给语言的使用者带来了麻烦，但这是为提高执行效率所付出的代价。而且这个陷阱也并不是什么秘密，在 C 语言标准中专门花费了不小的篇幅去阐明这个问题，按理说任何 C 语言课程都应该教授这个问题才对。</p>
+<p>问题在于，许多国内的教学内容根本不提及此事，因而导致许多初学者深陷其中。老一辈所犯下的错误才是祸乱的根源， C 语言表示不背这个黑锅。早些年甚至在各大高校的 C 语言考试中出现了这些表达式，在考试中考察未定义行为的执行结果，这简直是可笑到了极点。</p>
+<p>特别说明，我也并非是对国内的老一辈计算机学者不尊重，在那个年代，我们能做到这一步已经实属不易，先辈的付出与取得的成就无疑是令人尊敬的。但是时代已经变了，如今我们已经不再面临学习资源和人才匮乏的局面，实在不应当再保留着这些错误。有历史遗留错误并不可怕，可怕的是明知有错误而不改正，还要继续误导一代代的学生。</p>
+<p>值得高兴的是，近年来的情况已经在逐步改善，误人子弟的事情已经少了不少。希望未来我们国内能和国外的顶尖高校一样，在 C 语言基础的教学大纲中就有关于这些知识的科学完整的教学吧。</p>
+<hr />
+<h3 id="更新记录"><a class="markdownIt-Anchor" href="#更新记录"></a> 更新记录</h3>
 <table>
 <thead>
 <tr>
-<th style="text-align:left"></th>
-<th style="text-align:left">数组名</th>
-<th style="text-align:left">指针（已指向数组首地址的）</th>
+<th style="text-align:left">更新时间</th>
+<th style="text-align:left">更新内容</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left">内容</td>
-<td style="text-align:left">数组的地址信息和长度信息</td>
-<td style="text-align:left">仅数组的地址信息</td>
-</tr>
-<tr>
-<td style="text-align:left">可修改性</td>
-<td style="text-align:left">不可修改指向</td>
-<td style="text-align:left">可以修改指向</td>
-</tr>
-<tr>
-<td style="text-align:left">参与执行表达式时</td>
-<td style="text-align:left">有时会先退化成指针再参与</td>
-<td style="text-align:left">直接参与</td>
-</tr>
-<tr>
-<td style="text-align:left">函数传参时</td>
-<td style="text-align:left">退化成指针再传递</td>
-<td style="text-align:left">直接传递</td>
-</tr>
-<tr>
-<td style="text-align:left">访问数组元素时</td>
-<td style="text-align:left">直接访问</td>
-<td style="text-align:left">间接访问</td>
+<td style="text-align:left">2020.3.1</td>
+<td style="text-align:left">为章节【避免掉入陷阱】追加小节【其实没问题的例子】</td>
 </tr>
 </tbody>
 </table>
-<p>对于 <code>int a[5]</code> ，数组的几个易混淆语法如下：</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.jm233333.com/Programming%20Languages/C/C%2099%20-%20xxx/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="JM233333">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JM233333's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/Programming%20Languages/C/C%2099%20-%20xxx/" class="post-title-link" itemprop="url">C 99 - xxx</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-01-01 00:00:00" itemprop="dateCreated datePublished" datetime="2020-01-01T00:00:00+08:00">2020-01-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming-Languages/" itemprop="url" rel="index"><span itemprop="name">Programming Languages</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Programming-Languages/C/" itemprop="url" rel="index"><span itemprop="name">C</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+
+        <div class="post-authorization">
+          <p>本文为 JM233333 原创所著，遵循 BY-NC-SA 4.0 许可协议，转载请注明出处。如果您认为文中有谬误或对文中内容有疑问，欢迎理性指出，大家共同探讨和进步。</p>
+        </div>
+
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="xxx"><a class="markdownIt-Anchor" href="#xxx"></a> xxx</h3>
+<p>a xxx</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.jm233333.com/Algorithms%20and%20Data%20Structures/Basic%20Knowledge/Basic%20Knowledge%2000%20-%20Introduction/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="JM233333">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JM233333's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/Algorithms%20and%20Data%20Structures/Basic%20Knowledge/Basic%20Knowledge%2000%20-%20Introduction/" class="post-title-link" itemprop="url">Basic Knowledge 00 - Introduction</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-09-01 00:00:00" itemprop="dateCreated datePublished" datetime="2019-09-01T00:00:00+08:00">2019-09-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Algorithms-and-Data-Structures/" itemprop="url" rel="index"><span itemprop="name">Algorithms and Data Structures</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Algorithms-and-Data-Structures/Basic-Knowledge/" itemprop="url" rel="index"><span itemprop="name">Basic Knowledge</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+
+        <div class="post-authorization">
+          <p>本文为 JM233333 原创所著，遵循 BY-NC-SA 4.0 许可协议，转载请注明出处。如果您认为文中有谬误或对文中内容有疑问，欢迎理性指出，大家共同探讨和进步。</p>
+        </div>
+
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <hr />
+<h3 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h3>
+<p>这里是关于我的文档内容的一些规范和解释。</p>
+<p>我的所有文档均使用C++语言。</p>
+<p>我的文档被划分为若干个大的知识板块，在每个知识板块内，每篇文档会有一个标号，这个标号表示了该文档大致的在当前知识板块内的相对级别，建议按标号从小到大阅读，标号相同的则无所谓。</p>
+<p>有些文档会具有相同的标号，这是按层划分的，可能会让您感到有些困惑，您可以参阅本文底部的阅读指引图来获得确切的阅读顺序。</p>
+<p>一些文档的开头会给出前置知识声明，如果你没有掌握这些知识，建议进行递归学习。这些前置声明和阅读指引图提供的顺序是相同的。</p>
+<p>每篇文档的开头均包含版权声明和对本文适用人群的声明，分为“面向初学者”和“面向进阶读者”两大类。</p>
+<p>面向初学者：</p>
+<ol>
+<li>
+<p>适合对当前的大的知识板块掌握尚浅的读者。注意，是相对于当前知识板块，而不是相对于所有知识。</p>
+</li>
+<li>
+<p>默认读者没有接触过任何相关知识，会对所有涉及到的、读者可能不知道的知识进行解释。</p>
+</li>
+<li>
+<p>通常会以大量的篇幅对简单的基础知识进行解释，用语言引导读者举一反三深入思考。</p>
+</li>
+<li>
+<p>会使用精简代码并分段提取出来讲解，用大量的简单示例图来帮助学习，完整的代码实现也会附于文末。</p>
+</li>
+<li>
+<p>因为是面向初学者的，哪怕是非常简单的内容，文中也会花费大量篇幅进行解释，因而通常不适合基础较好的读者，请自行避雷。</p>
+</li>
+</ol>
+<p>面向进阶读者：</p>
+<ol>
+<li>
+<p>适合对当前的大的知识板块已经有所了解，希望学习该板块中更高级的内容的读者。</p>
+</li>
+<li>
+<p>默认读者的基础较为良好，不会花费大量篇幅解释一些我认为过于简单的内容。</p>
+</li>
+<li>
+<p>通常会深入解释知识的内在原理，甚至给出正确性证明等，帮助读者完全掌握知识，而非浮于表面。</p>
+</li>
+<li>
+<p>会提供更多课本上没有的扩展知识，并且通常只给出完整的代码实现，除非是一些重要或较难的关键代码会分段提取出来讲解。</p>
+</li>
+<li>
+<p>有些是专门针对ACM选手的文章，知识难度大且实用价值没有那么高，此类情况会特别标注在文章的开头，不打算参加算法竞赛的同学可以自行避过。</p>
+</li>
+</ol>
+<p>特别声明，我的文章并不能帮助你通过学校的书面考试，但能帮助你真正地掌握这些知识，能让你学会如何用代码实现这些基础算法与数据结构。如果只是为了应付考试，那么我的文章并不适合你。</p>
+<hr />
+<h3 id="推荐网站"><a class="markdownIt-Anchor" href="#推荐网站"></a> 推荐网站</h3>
+<p>这两个网站提供了一些算法和数据结构的动态可视化预览界面，读者能够非常方便地观看算法和数据结构的整个动态的运行过程，初学者可以借助这些可视化界面进行更加全面的理解和学习。</p>
+<ul>
+<li>
+<p><a target="_blank" rel="noopener" href="https://visualgo.net/en">https://visualgo.net/en</a></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="https://www.cs.usfca.edu/~galles/visualization/Algorithms.html">https://www.cs.usfca.edu/~galles/visualization/Algorithms.html</a></p>
+</li>
+</ul>
+<hr />
+<h3 id="阅读指引图"><a class="markdownIt-Anchor" href="#阅读指引图"></a> 阅读指引图</h3>
+<p>下面将分别给出每个知识板块对应的阅读指引图，其中：</p>
+<ul>
+<li>
+<p>淡黄色方块表示面向初学者的文章。</p>
+</li>
+<li>
+<p>小麦色方块表示面向进阶读者的文章。</p>
+</li>
+<li>
+<p>箭头表示一组前置知识的关系。在阅读一篇文章前，推荐您先阅读其所有前置文章。</p>
+</li>
+<li>
+<p>空心大箭头表示你将进入到进阶区域。</p>
+</li>
+<li>
+<p>淡粉色方块表示来自其他知识板块的文章，因为它们是本板块内某些文章的前置知识，所以被专门标示出来。此时会用虚线箭头表示前置关系。</p>
+</li>
+</ul>
+<img src='https://g.gravizo.com/svg?'/>
+<h4 id="basic-knowledge"><a class="markdownIt-Anchor" href="#basic-knowledge"></a> Basic Knowledge</h4>
+<p><img src="/images/Algorithms-and-Data-Structures/Guideline/Guideline-Basic-Knowledge.png" alt="" /></p>
+<p>@startuml<br />
+hide members<br />
+hide circle</p>
+<p>class &quot; Introduction &quot; as BC0000 &lt;<Basic Knowledge>&gt;<br />
+class &quot; Common Sense of Coding &quot; as BC0100 &lt;<Basic Knowledge>&gt;<br />
+class &quot; Common Sense of Training &quot; as BC0101 &lt;<Basic Knowledge>&gt;</p>
+<p>&quot; start &quot; --&gt; BC0000</p>
+<p>BC0000 --&gt; BC0100<br />
+BC0000 --&gt; BC0101</p>
+<p>@enduml</p>
+<h4 id="data-structure"><a class="markdownIt-Anchor" href="#data-structure"></a> Data Structure</h4>
+<p><img src="/images/Algorithms-and-Data-Structures/Guideline/Guideline-Data-Structure.png" alt="" /></p>
+<p>@startuml<br />
+hide members<br />
+hide circle</p>
+<p>class &quot; Basic Concept &quot; as DS0000 &lt;<Data Structure>&gt;<br />
+class &quot; Linear List &quot; as DS0100 &lt;<Data Structure>&gt;<br />
+class &quot; Restricted Linear List &quot; as DS0200 &lt;<Data Structure>&gt;<br />
+class &quot; Tree &quot; as DS0300 &lt;<Data Structure>&gt;<br />
+class &quot; Binary Tree &quot; as DS0400 &lt;<Data Structure>&gt;<br />
+class &quot; Binary Search Tree &quot; as DS0500 &lt;<Data Structure>&gt;<br />
+class &quot; Heap &quot; as DS0501 &lt;<Data Structure>&gt;<br />
+class &quot; Self-Balancing \n Binary Search Tree &quot; as DS0600 &lt;<Data Structure>&gt;<br />
+class &quot; Binary Heap &quot; as DS0601 &lt;<Data Structure>&gt;<br />
+class &quot; AVL Tree &quot; as DS0700 &lt;<Data Structure>&gt;<br />
+class &quot; Disjoint-Set Union &quot; as DS0701 &lt;<Data Structure>&gt;</p>
+<p>class &quot; Summation Sequence and Difference Sequence &quot; as DS1000 &lt;<Data Structure>&gt; #wheat<br />
+class &quot; Binomial Heap &quot; as DS1100 &lt;<Data Structure>&gt; #wheat</p>
+<p>DS0000 --&gt; DS0100<br />
+DS0100 --&gt; DS0200<br />
+DS0200 --&gt; DS0300<br />
+DS0300 --&gt; DS0400<br />
+DS0400 --&gt; DS0500<br />
+DS0400 --&gt; DS0501<br />
+DS0500 --&gt; DS0600<br />
+DS0501 --&gt; DS0601<br />
+DS0600 --&gt; DS0700<br />
+DS0600 --&gt; DS0701</p>
+<p>DS0100 -right-|&gt; DS1000<br />
+DS0501 -right-|&gt; DS1100<br />
+DS1100 -right-|&gt; DS1200</p>
+<p>DS0500 -right[hidden]-&gt; DS0501</p>
+<p>class &quot; Introduction &quot; as BC0000 &lt;<Basic Knowledge>&gt; #FFEEFF</p>
+<p>BC0000 …&gt; DS0000</p>
+<p>@enduml</p>
+<h4 id="fundamental-algorithms"><a class="markdownIt-Anchor" href="#fundamental-algorithms"></a> Fundamental Algorithms</h4>
+<p><img src="/images/Algorithms-and-Data-Structures/Guideline/Guideline-Fundamental-Algorithms.png" alt="" /></p>
+<p>@startuml<br />
+hide members<br />
+hide circle<br />
+hide _BLOCK_01</p>
+<p>class &quot; Introduction &quot; as FA0000 &lt;<Fundamental Algorithms>&gt;<br />
+class &quot; Greedy Strategy &quot; as FA0100 &lt;<Fundamental Algorithms>&gt;<br />
+class &quot; Dynamic Programming &quot; as FA0101 &lt;<Fundamental Algorithms>&gt;<br />
+class &quot; Divide and Conquer &quot; as FA0102 &lt;<Fundamental Algorithms>&gt;<br />
+class &quot; Searching &quot; as FA0103 &lt;<Fundamental Algorithms>&gt;<br />
+class &quot; Binary Search &quot; as FA0104 &lt;<Fundamental Algorithms>&gt;<br />
+class &quot; Two Pointers &quot; as FA0105 &lt;<Fundamental Algorithms>&gt;<br />
+class &quot; Counting with Bucket &quot; as FA0106 &lt;<Fundamental Algorithms>&gt;</p>
+<p>class &quot; Difference between \n Basic Algorithm Strategies &quot; as FA0200 &lt;<Fundamental Algorithms>&gt;<br />
+class &quot; Fast Power &quot; as FA0201 &lt;<Fundamental Algorithms>&gt;<br />
+class &quot; Huffman Code &quot; as FA0202 &lt;<Fundamental Algorithms>&gt;<br />
+class &quot; Closest Pair of Points Problem &quot; as FA0203 &lt;<Fundamental Algorithms>&gt;<br />
+class &quot; Discretization &quot; as FA0204 &lt;<Fundamental Algorithms>&gt;<br />
+class &quot; Bitmask State Compression &quot; as FA0205 &lt;<Fundamental Algorithms>&gt;</p>
+<p>class &quot; Fast Power of Matrix &quot; as FA0300 &lt;<Fundamental Algorithms>&gt; #wheat<br />
+class &quot; Meet in the Middle &quot; as FA0301 &lt;<Fundamental Algorithms>&gt; #wheat<br />
+class &quot; Maximization of Minimum Value &quot; as FA0302 &lt;<Fundamental Algorithms>&gt; #wheat<br />
+class &quot; Ternary Search &quot; as FA0303 &lt;<Fundamental Algorithms>&gt; #wheat</p>
+<p>FA0000 -left-&gt; FA0100<br />
+FA0100 -left-&gt; FA0101<br />
+FA0000 —&gt; FA0102<br />
+FA0000 -right-&gt; FA0103<br />
+FA0000 —&gt; FA0104<br />
+FA0000 —&gt; FA0105<br />
+FA0000 —&gt; FA0106</p>
+<p>FA0100 --&gt; FA0200<br />
+FA0101 --&gt; FA0200<br />
+FA0102 -left-&gt; FA0200<br />
+FA0102 --&gt; FA0201<br />
+FA0100 --&gt; FA0202<br />
+FA0102 --&gt; FA0203<br />
+FA0106 --&gt; FA0204<br />
+FA0000 —&gt; FA0205</p>
+<p>FA0201 --|&gt; FA0300<br />
+FA0103 -right-|&gt; FA0301<br />
+FA0104 —|&gt; FA0302<br />
+FA0104 —|&gt; FA0303</p>
+<p>FA0202 -down[hidden]-&gt; FA0102</p>
+<p>class &quot; Introduction &quot; as BC0000 &lt;<Basic Knowledge>&gt; #FFEEFF<br />
+class &quot; Graph Searching &quot; as GT0100 &lt;<Graph Theory>&gt; #FFEEFF</p>
+<p>BC0000 …&gt; FA0000<br />
+GT0100 …&gt; FA0103</p>
+<p>@enduml</p>
+<h4 id="graph-theory"><a class="markdownIt-Anchor" href="#graph-theory"></a> Graph Theory</h4>
+<p><img src="/images/Algorithms-and-Data-Structures/Guideline/Guideline-Graph-Theory.png" alt="" /></p>
+<p>@startuml<br />
+hide members<br />
+hide circle<br />
+hide _BLOCK_01<br />
+hide _BLOCK_02</p>
+<p>class &quot; Basic Concept &quot; as GT0000 &lt;<Graph Theory>&gt;<br />
+class &quot; Graph Searching &quot; as GT0100 &lt;<Graph Theory>&gt;<br />
+class &quot; Dijkstra Algorithm &quot; as GT0200 &lt;<Graph Theory>&gt;<br />
+class &quot; Floyd Algorithm &quot; as GT0201 &lt;<Graph Theory>&gt;<br />
+class &quot; Kruskal Algorithm &quot; as GT0202 &lt;<Graph Theory>&gt;<br />
+class &quot; Prim Algorithm &quot; as GT0203 &lt;<Graph Theory>&gt;<br />
+class &quot; Topological Sort &quot; as GT0204 &lt;<Graph Theory>&gt;<br />
+class &quot; Bellman-Ford Algorithm &quot; as GT0300 &lt;<Graph Theory>&gt;<br />
+class &quot; Shortest Path Faster Algorithm &quot; as GT0400 &lt;<Graph Theory>&gt;</p>
+<p>class &quot; System of Difference Constraints &quot; as GT0500 &lt;<Graph Theory>&gt; #wheat<br />
+class &quot; Hungarian Algorithm &quot; as GT0501 &lt;<Graph Theory>&gt; #wheat<br />
+class &quot; Kuhn-Munkres Algorithm &quot; as GT0601 &lt;<Graph Theory>&gt; #wheat<br />
+class &quot; Tarjan Algorithm &quot; as GT0502 &lt;<Graph Theory>&gt; #wheat<br />
+class &quot; Network Flow &quot; as GT0503 &lt;<Graph Theory>&gt; #wheat</p>
+<p>GT0000 --&gt; GT0100<br />
+GT0000 --&gt; GT0200<br />
+GT0000 --&gt; GT0201<br />
+GT0000 --&gt; GT0202<br />
+GT0000 --&gt; GT0203<br />
+GT0100 --&gt; GT0204<br />
+GT0100 —|&gt; GT0501<br />
+GT0100 —|&gt; GT0502<br />
+GT0100 —|&gt; GT0503<br />
+GT0200 --&gt; GT0300<br />
+GT0300 --&gt; GT0400<br />
+GT0400 --|&gt; GT0500<br />
+GT0501 --|&gt; GT0601</p>
+<p>GT0000 -down[hidden]-&gt; _BLOCK_01<br />
+GT0201 -right[hidden]-&gt; _BLOCK_01<br />
+GT0100 -left[hidden]-&gt; GT0200<br />
+GT0200 -left[hidden]-&gt; GT0203<br />
+GT0203 -left[hidden]-&gt; GT0202<br />
+GT0100 -right[hidden]-&gt; GT0201</p>
+<p>GT0204 -down[hidden]-&gt; _BLOCK_02<br />
+GT0501 -left[hidden]-&gt; _BLOCK_02<br />
+GT0400 -right[hidden]-&gt; _BLOCK_02<br />
+GT0204 -right[hidden]-&gt; GT0501<br />
+GT0501 -right[hidden]-&gt; GT0502<br />
+GT0502 -right[hidden]-&gt; GT0503</p>
+<p>class &quot; Introduction &quot; as BC0000 &lt;<Basic Knowledge>&gt; #FFEEFF<br />
+class &quot; Heap &quot; as DS0501 &lt;<Data Structure>&gt; #FFEEFF<br />
+class &quot; Disjoint-Set Union &quot; as DS0701 &lt;<Data Structure>&gt; #FFEEFF<br />
+class &quot; Greedy Strategy &quot; as FA0100 &lt;<Fundamental Algorithms>&gt; #FFEEFF<br />
+class &quot; Dynamic Programming &quot; as FA0777 &lt;<Fundamental Algorithms>&gt; #FFEEFF<br />
+class &quot; Dynamic Programming &quot; as FA0777_2 &lt;<Fundamental Algorithms>&gt; #FFEEFF</p>
+<p>BC0000 …&gt; GT0000<br />
+DS0501 …&gt; GT0200<br />
+DS0701 …&gt; GT0202<br />
+FA0100 …&gt; GT0200<br />
+FA0100 …&gt; GT0202<br />
+FA0100 …&gt; GT0203<br />
+FA0777 …&gt; GT0201<br />
+FA0777_2 .right.&gt; GT0300</p>
+<p>@enduml</p>
+<h4 id="string-theory"><a class="markdownIt-Anchor" href="#string-theory"></a> String Theory</h4>
+<p><img src="/images/Algorithms-and-Data-Structures/Guideline/Guideline-String-Theory.png" alt="" /></p>
+<p>@startuml<br />
+hide members<br />
+hide circle</p>
+<p>class &quot; Basic Concept &quot; as ST0000 &lt;<String Theory>&gt;<br />
+class &quot; Knuth-Morris-Pratt Algorithm &quot; as ST0100 &lt;<String Theory>&gt;<br />
+class &quot; Trie &quot; as ST0101 &lt;<String Theory>&gt;<br />
+class &quot; Manacher Algorithm &quot; as ST0102 &lt;<String Theory>&gt;<br />
+class &quot; Aho-Corasick Automaton &quot; as ST0200 &lt;<String Theory>&gt;</p>
+<p>ST0000 --&gt; ST0100<br />
+ST0000 --&gt; ST0101<br />
+ST0000 --&gt; ST0102<br />
+ST0100 --&gt; ST0200<br />
+ST0101 --&gt; ST0200</p>
+<p>class &quot; Introduction &quot; as BC0000 &lt;<Basic Knowledge>&gt; #FFEEFF<br />
+class &quot; Tree &quot; as DS0300 &lt;<Data Structure>&gt; #FFEEFF</p>
+<p>BC0000 …&gt; ST0000<br />
+DS0300 …&gt; ST0101</p>
+<p>@enduml</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://blog.jm233333.com/Algorithms%20and%20Data%20Structures/Basic%20Knowledge/Basic%20Knowledge%2001%20-%20Common%20Sense%20of%20Training/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="JM233333">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JM233333's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/Algorithms%20and%20Data%20Structures/Basic%20Knowledge/Basic%20Knowledge%2001%20-%20Common%20Sense%20of%20Training/" class="post-title-link" itemprop="url">Basic Knowledge 01 - Common Sense of Training</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-09-01 00:00:00" itemprop="dateCreated datePublished" datetime="2019-09-01T00:00:00+08:00">2019-09-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Algorithms-and-Data-Structures/" itemprop="url" rel="index"><span itemprop="name">Algorithms and Data Structures</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Algorithms-and-Data-Structures/Basic-Knowledge/" itemprop="url" rel="index"><span itemprop="name">Basic Knowledge</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+
+        <div class="post-authorization">
+          <p>本文为 JM233333 原创所著，遵循 BY-NC-SA 4.0 许可协议，转载请注明出处。如果您认为文中有谬误或对文中内容有疑问，欢迎理性指出，大家共同探讨和进步。</p>
+        </div>
+
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <hr />
+<h3 id="关于推荐的常用oj"><a class="markdownIt-Anchor" href="#关于推荐的常用oj"></a> 关于推荐的常用OJ</h3>
 <table>
 <thead>
 <tr>
-<th style="text-align:left">语法</th>
-<th style="text-align:left">含义</th>
-<th style="text-align:left">类型</th>
-<th style="text-align:left">类型说明符</th>
+<th style="text-align:left">OJ</th>
+<th style="text-align:left">地址</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><code>a</code></td>
-<td style="text-align:left">数组本身</td>
-<td style="text-align:left">数组</td>
-<td style="text-align:left">–</td>
+<td style="text-align:left">HDU</td>
+<td style="text-align:left"><a target="_blank" rel="noopener" href="http://acm.hdu.edu.cn/">http://acm.hdu.edu.cn/</a></td>
 </tr>
 <tr>
-<td style="text-align:left"><code>&amp;a[0]</code></td>
-<td style="text-align:left">数组的首地址</td>
-<td style="text-align:left">整型指针</td>
-<td style="text-align:left"><code>int *</code></td>
+<td style="text-align:left">POJ</td>
+<td style="text-align:left"><a target="_blank" rel="noopener" href="http://poj.org/">http://poj.org/</a></td>
 </tr>
 <tr>
-<td style="text-align:left"><code>&amp;a</code></td>
-<td style="text-align:left">数组的地址</td>
-<td style="text-align:left">长为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>5</mn></mrow><annotation encoding="application/x-tex">5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">5</span></span></span></span> 的整型数组指针</td>
-<td style="text-align:left"><code>int (*)[5]</code></td>
+<td style="text-align:left">CodeForces</td>
+<td style="text-align:left"><a target="_blank" rel="noopener" href="https://codeforces.com/">https://codeforces.com/</a></td>
+</tr>
+<tr>
+<td style="text-align:left">洛谷</td>
+<td style="text-align:left"><a target="_blank" rel="noopener" href="https://www.luogu.org/">https://www.luogu.org/</a></td>
+</tr>
+<tr>
+<td style="text-align:left">Virtual Judge</td>
+<td style="text-align:left"><a target="_blank" rel="noopener" href="https://vjudge.net/">https://vjudge.net/</a></td>
+</tr>
+<tr>
+<td style="text-align:left">ZOJ</td>
+<td style="text-align:left"><a target="_blank" rel="noopener" href="http://acm.zju.edu.cn/onlinejudge/">http://acm.zju.edu.cn/onlinejudge/</a></td>
+</tr>
+<tr>
+<td style="text-align:left">SPOJ</td>
+<td style="text-align:left"><a target="_blank" rel="noopener" href="https://www.spoj.com/">https://www.spoj.com/</a></td>
+</tr>
+<tr>
+<td style="text-align:left">BZOJ</td>
+<td style="text-align:left"><a target="_blank" rel="noopener" href="https://www.lydsy.com/JudgeOnline/">https://www.lydsy.com/JudgeOnline/</a></td>
+</tr>
+<tr>
+<td style="text-align:left">ZZU</td>
+<td style="text-align:left"><a target="_blank" rel="noopener" href="http://acm.zzuli.edu.cn/">http://acm.zzuli.edu.cn/</a></td>
+</tr>
+<tr>
+<td style="text-align:left">计蒜客</td>
+<td style="text-align:left"><a target="_blank" rel="noopener" href="https://nanti.jisuanke.com/">https://nanti.jisuanke.com/</a></td>
+</tr>
+<tr>
+<td style="text-align:left">LeetCode</td>
+<td style="text-align:left"><a target="_blank" rel="noopener" href="https://leetcode.com/">https://leetcode.com/</a></td>
 </tr>
 </tbody>
 </table>
+<hr />
+<h3 id="关于推荐的常用ide"><a class="markdownIt-Anchor" href="#关于推荐的常用ide"></a> 关于推荐的常用IDE</h3>
+<p>除了VC6和VS以外的任何IDE，比如CodeBlocks，或者命令行编译也可以。</p>
+<p>拒绝VC6的原因：这玩意太古董了，很多早该被支持的语言特性他都不支持，而且用的还是微软的语言标准，与主流不合。</p>
+<p>拒绝VS的原因：并不是说VS不好，而是他大块头，不适合拿来做算法题，只适合去写工程。</p>
+<p>这里只提到了C++的，因为我不会Java【笑</p>
 
       
     </div>
