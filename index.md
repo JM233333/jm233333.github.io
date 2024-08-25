@@ -64,13 +64,13 @@ Hanzhi Liu, Yanyan Jiang, Chang Xu. Understanding Linux Kernel, Visually. In Pro
 
 - **2023.3 - 2023.8 : Teaching assistant,** Operating Systems: Design and Implementation 2023 (taught by Yanyan Jiang), Department of Computer Science and Technology, Nanjing University.
 
-- **2022.9 - 2023.2 : Teaching assistant,** Introduction of Computer System 2022, PA Part (taught by Huiyan Wang), Department of Computer Science and Technology, Nanjing University.
+- **2022.9 - 2023.2 : Teaching assistant,** Introduction of Computer System 2022 (taught by Huiyan Wang), Department of Computer Science and Technology, Nanjing University.
 
 - **2022.3 - 2022.8 : Teaching assistant,** Operating Systems: Design and Implementation 2022 (taught by Yanyan Jiang), Department of Computer Science and Technology, Nanjing University.
 
 - **2016.9 - 2020.6 : Informal teaching assistant,** The C Programming Language (taught by Assoc. Prof. Haiping Zhu), Department of Computer Science and Technology, Xi'an Jiaotong University.
 
-- **2019.1 - 2019.6 :** Acting chairman of ACM team, Department of Computer Science and Technology, Xi'an Jiaotong University.
+- **2019.1 - 2019.6 :** Acting chairman of ICPC team, Department of Computer Science and Technology, Xi'an Jiaotong University.
 
 ---
 

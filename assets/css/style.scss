@@ -3,6 +3,6 @@
 
 @import "{{ site.theme }}";
 
-h1 {
-    font-size: 48px
+h1.title {
+    font-size: 48px !important
 }

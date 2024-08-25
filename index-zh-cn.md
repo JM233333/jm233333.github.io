@@ -70,6 +70,8 @@ Hanzhi Liu, Yanyan Jiang, Chang Xu. Understanding Linux Kernel, Visually. In Pro
 
 - 2016.9 - 2020.6：C 语言程序设计课程非正式助教（由朱海萍副教授授课），西安交通大学计算机科学与技术系。
 
+- 2019.1 - 2019.6：西安交通大学 ACM 校队队长代理，西安交通大学计算机科学与技术系。
+
 ---
 
 ## 项目
