@@ -28,6 +28,8 @@
 
 ## 论文发表
 
+Hanzhi Liu, Yanyan Jiang, Chang Xu. Understanding Linux Kernel, Visually. In Proceedings of the 20th European Conference on Computer Systems (EuroSys 2025). Accepted, Forthcoming. [doi] [pdf]
+
 ---
 
 ## 荣誉和奖项
