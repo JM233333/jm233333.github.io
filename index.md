@@ -4,9 +4,7 @@ English | [简体中文](index-zh-cn.md)
 
 ---
 
-I'm a Ph.D. candidate in [SPAR](http://ics.nju.edu.cn/spar/) Group of Institute of Computer Software, Nanjing University. I'm advised by Assoc. Prof. [Yanyan Jiang](https://ics.nju.edu.cn/~jyy/) and Prof. [Chang Xu](https://cs.nju.edu.cn/changxu/).
-
-Currnetly my research focuses on understanding and debugging operating system kernels and other system softwares. I'm also Interested in testing and verification of OS kernels, as well as designing systems that can solve critical real-world problems.
+I'm a Ph.D. candidate in [SPAR](http://ics.nju.edu.cn/spar/) Group of Institute of Computer Software, Nanjing University. I'm advised by Prof. [Yanyan Jiang](https://ics.nju.edu.cn/~jyy/) and Prof. [Chang Xu](https://cs.nju.edu.cn/changxu/). Currnetly my research focuses on understanding and debugging operating system kernels and other system softwares. I'm also Interested in testing and verification of OS kernels, as well as designing systems that can solve critical real-world problems.
 
 E-mail: jm233333@outlook.com *(No response for 72h → Failed to receive (or accidentally omitted) your email, you can try to resend it)*
 
@@ -14,9 +12,9 @@ E-mail: jm233333@outlook.com *(No response for 72h → Failed to receive (or acc
 
 ## Education & Work Experience
 
-- 2022.9 - present : Ph.D., Institute of Computer Software, Department of Computer Science and Technology, Nanjing University, supervised by Assoc. Prof. [Yanyan Jiang](https://cs.nju.edu.cn/ics/people/yanyanjiang/index.html) and Prof. [Chang Xu](https://cs.nju.edu.cn/changxu/).
+- 2022.9 - present : Ph.D., Institute of Computer Software, Department of Computer Science and Technology, Nanjing University, supervised by Prof. [Yanyan Jiang](https://ics.nju.edu.cn/~jyy/) and Prof. [Chang Xu](https://cs.nju.edu.cn/changxu/).
 
-- 2020.9 - 2022.8 : M.Sc., Institute of Computer Software, Department of Computer Science and Technology, Nanjing University, supervised by Assoc. Prof. Yanyan Jiang and Prof. Chang Xu.
+- 2020.9 - 2022.8 : M.Sc., Institute of Computer Software, Department of Computer Science and Technology, Nanjing University, supervised by Prof. Yanyan Jiang and Prof. Chang Xu.
 
 - 2016.9 - 2020.6 : B.Eng., Department of Computer Science and Technology, Xi'an Jiaotong University.
 
@@ -68,7 +66,7 @@ Hanzhi Liu, Yanyan Jiang, Chang Xu. Understanding Linux Kernel, Visually. In Pro
 
 - **2022.3 - 2022.8 : Teaching assistant,** Operating Systems: Design and Implementation 2022 (taught by Yanyan Jiang), Department of Computer Science and Technology, Nanjing University.
 
-- **2016.9 - 2020.6 : Informal teaching assistant,** The C Programming Language (taught by Assoc. Prof. Haiping Zhu), Department of Computer Science and Technology, Xi'an Jiaotong University.
+- **2016.9 - 2020.6 : Informal teaching assistant,** The C Programming Language (taught by Haiping Zhu), Department of Computer Science and Technology, Xi'an Jiaotong University.
 
 - **2019.1 - 2019.6 :** Acting chairman of ICPC team, Department of Computer Science and Technology, Xi'an Jiaotong University.
 
