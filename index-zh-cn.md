@@ -74,7 +74,7 @@ Hanzhi Liu, Yanyan Jiang, Chang Xu. Understanding Linux Kernel, Visually. In Pro
 
 ---
 
-## 项目
+## 项目经验节选
 
 ### 研究工作
 

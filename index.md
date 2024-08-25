@@ -74,7 +74,7 @@ Hanzhi Liu, Yanyan Jiang, Chang Xu. Understanding Linux Kernel, Visually. In Pro
 
 ---
 
-## Projects
+## Selected Projects
 
 ### Research Works
 
@@ -84,15 +84,15 @@ TBD
 
 **[JM233333's Blog](https://blog.jm233333.com)** (rebuilding; temporarily unavailable) : Nearly **one million words** in total, including a large number of independently-written original articles.
 
-<p><details><summary>Details</summary>
+<p><details><summary>Details</summary><ul>
 
-- Basic tutorials of computer science knowledge, incluing programming languages (C/C++), algorithms and data structures, and graph theory.
+<li> Basic tutorials of computer science knowledge, incluing programming languages (C/C++), algorithms and data structures, and graph theory. </li>
 
-- Detailed solutions of programming problems, including LeetCode and challenging ICPC problems.
+<li> Detailed solutions of programming problems, including LeetCode and challenging ICPC problems. </li>
 
-- Other computer science knowledge sharing articles.
+<li> Other computer science knowledge sharing articles. </li>
 
-</details></p>
+</ul></details></p>
 
 ### Closed Projects
 
