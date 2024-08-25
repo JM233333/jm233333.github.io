@@ -96,61 +96,61 @@ TBD
 
 ### Closed Projects
 
+**New Mystery MagicTower: Evolution (2016/2024)** : Large-scale 2D magictower-type role-playing game, which has been downloaded more than 50k times in total. An evolution version of this game has been re-released in 2024, aiming to recreate some of the childhood fun for the fan players who have grown up.
+
+<p><details><summary>Details</summary><ul>
+
+<li> The game is far from excellent, but it was made in my spare time when I was still in high school. </li>
+
+<li> Built on RGSS, a game engine that has been abandoned by the times. </li>
+
+<li> Abundant and well-designed game content, but with naiive arts and stories (restricted by amateur level and my age at that time). </li>
+
+<li> Its art design may be too outdated, but the game levels are challenging for players of all ages, taking dozens of hours to clear. </li>
+
+<li> This game is no longer maintained, but the final version artifact can still be downloaded. </li>
+
+</ul></details></p>
+
 **xv6 ported to AM (2021; not yet public)** : Porting [xv6](https://github.com/mit-pdos/xv6-public) OS to [AbstractMachine](https://github.com/NJU-ProjectN/abstract-machine).
 
-<p><details><summary>Details</summary>
+<p><details><summary>Details</summary><ul>
 
-- This project is supervised by Dr. [Yanyan Jiang](https://ics.nju.edu.cn/~jyy/).
+<li> This project is supervised by Dr. [Yanyan Jiang](https://ics.nju.edu.cn/~jyy/). </li>
 
-- Based on [AbstractMachine](https://github.com/NJU-ProjectN/abstract-machine), a minimal, modularized, and machine-independent hardware abstraction layer.
+<li> Based on [AbstractMachine](https://github.com/NJU-ProjectN/abstract-machine), a minimal, modularized, and machine-independent hardware abstraction layer. </li>
 
-</details></p>
+</ul></details></p>
 
 **[Data Structure Visualizer (2019)](https://github.com/JM233333/data-structure-visualizer)** : PC desktop application implemented with JavaFX, which provides visualization and interaction of algorithms and data structures as well as high customizability.
 
-<p><details><summary>Details</summary>
+<p><details><summary>Details</summary><ul>
 
-- Designed as a auxiliary tool for teaching. Both students and teachers can use and benefit from it.
+<li> Designed as a auxiliary tool for teaching. Both students and teachers can use and benefit from it. </li>
 
-- Provides graphical representation, step-by-step animation demonstration and a synchronous code tracking.
+<li> Provides graphical representation, step-by-step animation demonstration and a synchronous code tracking. </li>
 
-- Provides convenient support for user extensions. Programmers can customize only with a basic understanding of Java syntax and the compliance with some preset rules.
+<li> Provides convenient support for user extensions. Programmers can customize only with a basic understanding of Java syntax and the compliance with some preset rules. </li>
 
-- Supports batch processing of operations on the visualized structure.
+<li> Supports batch processing of operations on the visualized structure. </li>
 
-</details></p>
+</ul></details></p>
 
 **Basic Implementation of Skeletal Animation Retargeting (2019)** : The work I participated in during my internship at Tencent. The project is owned by Tencent.
 
-<p><details><summary>Details</summary>
+<p><details><summary>Details</summary><ul>
 
-- The implementation is based on [three.js](https://github.com/mrdoob/three.js/) , a well-known open source 3D engine.
+<li> The implementation is based on [three.js](https://github.com/mrdoob/three.js/) , a well-known open source 3D engine. </li>
 
-- Requires basic knowledge of computer graphics, 3D mathematics, skeletal animation, etc.
+<li> Requires basic knowledge of computer graphics, 3D mathematics, skeletal animation, etc. </li>
 
-- The principle of this technology is not difficult, but practical implementation faces many challenges. There are mature commercial implementations in the community, but it is not suitable for projects within the group, so a re-implementation is necessary.
+<li> The principle of this technology is not difficult, but practical implementation faces many challenges. There are mature commercial implementations in the community, but it is not suitable for projects within the group, so a re-implementation is necessary. </li>
 
-- Its significance includes but is not limited to: reducing the workload of art staff, facilitating update and maintenance of animation data, saving space resources of upper-level applications, etc.
+<li> Its significance includes but is not limited to: reducing the workload of art staff, facilitating update and maintenance of animation data, saving space resources of upper-level applications, etc. </li>
 
-- This project has been handed over to Tencent.
+<li> This project has been handed over to Tencent. </li>
 
-</details></p>
-
-**New Mystery MagicTower (2016)** : Large-scale 2D magictower-type role-playing game, which has been downloaded more than 50k times in total. An evolution version of this game has been re-published in 2024.
-
-<p><details><summary>Details</summary>
-
-- The game is far from excellent, but it was made in my spare time when I was still in high school.
-
-- Built on RGSS, a game engine that has been abandoned by the times.
-
-- Abundant and well-designed game content, but with naiive arts and stories (restricted by amateur level and my age at that time).
-
-- Its art design may be too outdated, but the game levels are challenging for players of all ages, taking dozens of hours to clear.
-
-- This project is no longer maintained, but the final version game artifact can still be downloaded.
-
-</details></p>
+</ul></details></p>
 
 ---
 
