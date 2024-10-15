@@ -26,8 +26,14 @@
 
 ## 论文发表
 
-<ul class="publications">
+- **Understanding the Linux Kernel, Visually** <br/>
+**Hanzhi Liu**, Yanyan Jiang, Chang Xu <br/>
+Proceedings of the 20th European Conference on Computer Systems (EuroSys 2025) <br/>
+[doi (Forthcoming)]
+[[pdf]](assets/papers/visualinux-eurosys25.pdf){:target="_blank"}
+[[tool]](https://icsnju.github.io/visualinux/){:target="_blank"}
 
+<!-- <ul class="publications">
 <li>
 <b>Understanding the Linux Kernel, Visually</b><br/>
 <b>Hanzhi Liu</b>, Yanyan Jiang, Chang Xu <br/>
@@ -36,8 +42,7 @@ Proceedings of the 20th European Conference on Computer Systems (EuroSys 2025) <
 <a href="assets/papers/visualinux-eurosys25.pdf" target="_blank">[pdf]</a>
 <a href="https://icsnju.github.io/visualinux/" target="_blank">[tool]</a>
 </li>
-
-</ul>
+</ul> -->
 
 ---
 
