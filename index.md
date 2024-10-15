@@ -26,9 +26,17 @@ E-mail: jm233333@outlook.com *(No response for 72h → Failed to receive (or acc
 
 ## Publications
 
+- **Understanding the Linux Kernel, Visually** <br/>
+**Hanzhi Liu**, Yanyan Jiang, Chang Xu <br/>
+Proceedings of the 20th European Conference on Computer Systems (EuroSys 2025) <br/>
+(Forthcoming) [doi] [pdf] [tool]
+
 - **Understanding the Linux Kernel, Visually**
+
 **Hanzhi Liu**, Yanyan Jiang, Chang Xu
+
 Proceedings of the 20th European Conference on Computer Systems (EuroSys 2025)
+
 (Forthcoming) [doi] [pdf] [tool]
 
 ---
