@@ -4,9 +4,9 @@ English | [简体中文](index-zh-cn.md)
 
 ---
 
-I'm a Ph.D. candidate in [SPAR](http://ics.nju.edu.cn/spar/) Group of Institute of Computer Software, Nanjing University. I'm advised by Prof. [Yanyan Jiang](https://ics.nju.edu.cn/~jyy/) and Prof. [Chang Xu](https://cs.nju.edu.cn/changxu/). Currnetly my research focuses on understanding and debugging operating system kernels and other system softwares. I'm also Interested in testing and verification of OS kernels, as well as designing systems that can solve critical real-world problems.
+I'm a Ph.D. candidate in [SPAR](http://ics.nju.edu.cn/spar/) Group of Institute of Computer Software, Nanjing University. I'm advised by Prof. [Yanyan Jiang](https://ics.nju.edu.cn/~jyy/) and Prof. [Chang Xu](https://cs.nju.edu.cn/changxu/). Currently my research focuses on understanding and debugging operating system kernels and other system softwares. I'm also Interested in testing and verification of OS kernels, as well as designing systems that can solve critical real-world problems.
 
-E-mail: jm233333@outlook.com *(No response for 72h → Failed to receive (or accidentally omitted) your email, you can try to resend it)*
+E-mail: jm233333@outlook.com *(No response for 72h → Failed to receive or accidentally omit your email, you can try to resend it)*
 
 ---
 
