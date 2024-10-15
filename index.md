@@ -26,7 +26,10 @@ E-mail: jm233333@outlook.com *(No response for 72h → Failed to receive (or acc
 
 ## Publications
 
-Hanzhi Liu, Yanyan Jiang, Chang Xu. Understanding Linux Kernel, Visually. In Proceedings of the 20th European Conference on Computer Systems (EuroSys 2025). Accepted, Forthcoming. [doi] [pdf]
+- **Understanding the Linux Kernel, Visually**
+**Hanzhi Liu**, Yanyan Jiang, Chang Xu
+Proceedings of the 20th European Conference on Computer Systems (EuroSys 2025)
+(Forthcoming) [doi] [pdf] [tool]
 
 ---
 
