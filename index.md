@@ -29,15 +29,9 @@ E-mail: jm233333@outlook.com *(No response for 72h → Failed to receive (or acc
 - **Understanding the Linux Kernel, Visually** <br/>
 **Hanzhi Liu**, Yanyan Jiang, Chang Xu <br/>
 Proceedings of the 20th European Conference on Computer Systems (EuroSys 2025) <br/>
-(Forthcoming) [doi] [pdf] [tool]
-
-- **Understanding the Linux Kernel, Visually**
-
-**Hanzhi Liu**, Yanyan Jiang, Chang Xu
-
-Proceedings of the 20th European Conference on Computer Systems (EuroSys 2025)
-
-(Forthcoming) [doi] [pdf] [tool]
+(Forthcoming) [[doi]]()
+[[pdf]](assets/papers/visualinux-eurosys25.pdf)
+[[tool]](https://github.com/icsnju/visualinux)
 
 ---
 
@@ -69,15 +63,13 @@ Proceedings of the 20th European Conference on Computer Systems (EuroSys 2025)
 
 ---
 
-## TA Experiences
+## Teaching Experiences
 
-- **2023.3 - 2023.8 : Teaching assistant,** Operating Systems: Design and Implementation 2023 (taught by Yanyan Jiang), Department of Computer Science and Technology, Nanjing University.
+- **2022 - 2023 : TA,** Introduction of Computer System (2022 Autumn, 2023 Autumn), taught by Huiyan Wang, Department of Computer Science and Technology, Nanjing University.
 
-- **2022.9 - 2023.2 : Teaching assistant,** Introduction of Computer System 2022 (taught by Huiyan Wang), Department of Computer Science and Technology, Nanjing University.
+- **2022 - 2023 : TA,** Operating Systems: Design and Implementation (2022 Spring, 2023 Spring), taught by Yanyan Jiang, Department of Computer Science and Technology, Nanjing University.
 
-- **2022.3 - 2022.8 : Teaching assistant,** Operating Systems: Design and Implementation 2022 (taught by Yanyan Jiang), Department of Computer Science and Technology, Nanjing University.
-
-- **2016.9 - 2020.6 : Informal teaching assistant,** The C Programming Language (taught by Haiping Zhu), Department of Computer Science and Technology, Xi'an Jiaotong University.
+- **2016.9 - 2020.6 : Informal teaching assistant,** The C Programming Language, taught by Haiping Zhu, Department of Computer Science and Technology, Xi'an Jiaotong University.
 
 - **2019.1 - 2019.6 :** Acting chairman of ICPC team, Department of Computer Science and Technology, Xi'an Jiaotong University.
 
@@ -87,11 +79,15 @@ Proceedings of the 20th European Conference on Computer Systems (EuroSys 2025)
 
 ### Research Works
 
-TBD
+- **[Visualinux](https://icsnju.github.io/visualinux/) (2023 - 2024):** A visualized debugging framework to aid in understanding the Linux kernel. This work has been accepted by EuroSys 2025 (doi forthcoming).
 
 ### Amateur Projects
 
-**[JM233333's Blog](https://blog.jm233333.com)** (rebuilding; temporarily unavailable) : Nearly **one million words** in total, including a large number of independently-written original articles.
+- **[JM233333's Blog](https://blog.jm233333.com)** (rebuilding; temporarily unavailable): Nearly **one million words** in total, including a large number of independently-written original articles.
+
+  - Basic tutorials of computer science knowledge, incluing programming languages (C/C++), algorithms and data structures, graph theory, etc.
+
+  - Other computer science knowledge sharing articles.
 
 <p><details><summary>Details</summary><ul>
 
@@ -105,7 +101,7 @@ TBD
 
 ### Closed Projects
 
-**New Mystery MagicTower: Evolution (2016/2024)** : Large-scale 2D magictower-type role-playing game, which has been downloaded more than 50k times in total. An evolution version of this game has been re-released in 2024, aiming to recreate some of the childhood fun for the fan players who have grown up.
+**New Mystery MagicTower: Evolution (2016/2024):** Large-scale 2D magictower-type role-playing game, which has been downloaded more than 50k times in total. An evolution version of this game has been re-released in 2024, aiming to recreate some of the childhood fun for the fan players who have grown up.
 
 <p><details><summary>Details</summary><ul>
 
@@ -121,7 +117,7 @@ TBD
 
 </ul></details></p>
 
-**xv6 ported to AM (2021; not yet public)** : Porting [xv6](https://github.com/mit-pdos/xv6-public) OS to [AbstractMachine](https://github.com/NJU-ProjectN/abstract-machine).
+**xv6 ported to AM (2021; not yet public):** Porting [xv6](https://github.com/mit-pdos/xv6-public) OS to [AbstractMachine](https://github.com/NJU-ProjectN/abstract-machine).
 
 <p><details><summary>Details</summary><ul>
 
@@ -131,7 +127,7 @@ TBD
 
 </ul></details></p>
 
-**[Data Structure Visualizer (2019)](https://github.com/JM233333/data-structure-visualizer)** : PC desktop application implemented with JavaFX, which provides visualization and interaction of algorithms and data structures as well as high customizability.
+**[Data Structure Visualizer (2019)](https://github.com/JM233333/data-structure-visualizer):** PC desktop application implemented with JavaFX, which provides visualization and interaction of algorithms and data structures as well as high customizability.
 
 <p><details><summary>Details</summary><ul>
 
@@ -145,7 +141,7 @@ TBD
 
 </ul></details></p>
 
-**Basic Implementation of Skeletal Animation Retargeting (2019)** : The work I participated in during my internship at Tencent. The project is owned by Tencent.
+**Basic Implementation of Skeletal Animation Retargeting (2019):** The work I participated in during my internship at Tencent. The project is owned by Tencent.
 
 <p><details><summary>Details</summary><ul>
 

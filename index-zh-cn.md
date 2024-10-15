@@ -26,7 +26,12 @@
 
 ## 论文发表
 
-Hanzhi Liu, Yanyan Jiang, Chang Xu. Understanding Linux Kernel, Visually. In Proceedings of the 20th European Conference on Computer Systems (EuroSys 2025). Accepted, Forthcoming. [doi] [pdf]
+- **Understanding the Linux Kernel, Visually** <br/>
+**Hanzhi Liu**, Yanyan Jiang, Chang Xu <br/>
+Proceedings of the 20th European Conference on Computer Systems (EuroSys 2025) <br/>
+(Forthcoming) [[doi]]()
+[[pdf]](assets/papers/visualinux-eurosys25.pdf)
+[[tool]](https://github.com/icsnju/visualinux)
 
 ---
 
@@ -60,13 +65,11 @@ Hanzhi Liu, Yanyan Jiang, Chang Xu. Understanding Linux Kernel, Visually. In Pro
 
 ## 助教经历
 
-- 2023.3 - 2023.8：操作系统：设计与实现 2023 课程助教（由蒋炎岩老师授课），南京大学计算机科学与技术系。
+- 2022 - 2023：计算机系统基础（2022 秋，2023 秋），实验助教（由王慧妍老师授课），南京大学计算机科学与技术系。
 
-- 2022.9 - 2023.2：计算机系统基础 2022 ，PA 实验助教（由王慧妍老师授课），南京大学计算机科学与技术系。
+- 2022 - 2023：操作系统：设计与实现（2022 春，2023 春），助教（由蒋炎岩老师授课），南京大学计算机科学与技术系。
 
-- 2022.3 - 2022.8：操作系统：设计与实现 2022 课程助教（由蒋炎岩老师授课），南京大学计算机科学与技术系。
-
-- 2016.9 - 2020.6：C 语言程序设计课程非正式助教（由朱海萍老师授课），西安交通大学计算机科学与技术系。
+- 2016 - 2020：C 语言程序设计课程，非正式助教（由朱海萍老师授课），西安交通大学计算机科学与技术系。
 
 - 2019.1 - 2019.6：西安交通大学 ACM 校队队长代理，西安交通大学计算机科学与技术系。
 
@@ -76,7 +79,7 @@ Hanzhi Liu, Yanyan Jiang, Chang Xu. Understanding Linux Kernel, Visually. In Pro
 
 ### 研究工作
 
-TBD
+**[Visualinux](https://icsnju.github.io/visualinux/) (2023 - 2024):** 一个致力于帮助开发者理解 Linux 内核的可视化调试框架。这份工作已经被 CCF-A 类会议 EuroSys 2025 接收（doi forthcoming）。
 
 ### 业余项目
 
@@ -94,7 +97,7 @@ TBD
 
 ### 停止维护的项目
 
-**新玄机奇塔：Evolution (2016/2024)** ：一个具有一定规模的 2D 魔塔类 RPG 游戏，累计下载超过 5 万次。该游戏的重置版已经在 2024 年重新发布，旨在为已经长大的粉丝玩家们带回一些童年的乐趣。
+**新玄机奇塔：Evolution (2016/2024):** 一个具有一定规模的 2D 魔塔类 RPG 游戏，累计下载超过 5 万次。该游戏的重置版已经在 2024 年重新发布，旨在为已经长大的粉丝玩家们带回一些童年的乐趣。
 
 <p><details><summary>查看细节</summary><ul>
 
@@ -110,7 +113,7 @@ TBD
 
 </ul></details></p>
 
-**移植到 AM 上的 xv6 操作系统 (2020；未公开)** : 将 [xv6](https://github.com/mit-pdos/xv6-public) 操作系统移植到硬件抽象层 [AbstractMachine](https://github.com/NJU-ProjectN/abstract-machine) 上。
+**移植到 AM 上的 xv6 操作系统 (2020；未公开):** 将 [xv6](https://github.com/mit-pdos/xv6-public) 操作系统移植到硬件抽象层 [AbstractMachine](https://github.com/NJU-ProjectN/abstract-machine) 上。
 
 <p><details><summary>查看细节</summary><ul>
 
@@ -120,7 +123,7 @@ TBD
 
 </ul></details></p>
 
-**[Data Structure Visualizer (2019)](https://github.com/JM233333/data-structure-visualizer)** ：一个用 JavaFX 实现的 PC 桌面应用程序，提供算法和数据结构的可视化、交互控制，以及强大的可定制特性。
+**[Data Structure Visualizer (2019)](https://github.com/JM233333/data-structure-visualizer):** 一个用 JavaFX 实现的 PC 桌面应用程序，提供算法和数据结构的可视化、交互控制，以及强大的可定制特性。
 
 <p><details><summary>查看细节</summary><ul>
 
@@ -134,7 +137,7 @@ TBD
 
 </ul></details></p>
 
-**骨骼动画重定向技术的基本实现 (2019)** ：腾讯实习期间参与完成的工作。该项目归腾讯所有。
+**骨骼动画重定向技术的基本实现 (2019):** 腾讯实习期间参与完成的工作。该项目归腾讯所有。
 
 <p><details><summary>查看细节</summary><ul>
 
