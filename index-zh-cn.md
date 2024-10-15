@@ -31,7 +31,7 @@
 Proceedings of the 20th European Conference on Computer Systems (EuroSys 2025) <br/>
 (Forthcoming) [[doi]]()
 [[pdf]](assets/papers/visualinux-eurosys25.pdf)
-[[tool]](https://github.com/icsnju/visualinux)
+[[tool]](https://icsnju.github.io/visualinux/)
 
 ---
 

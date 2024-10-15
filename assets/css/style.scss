@@ -7,8 +7,12 @@ h1.title {
     font-size: 48px !important
 }
 
+summary {
+    display: revert !important;
+}
+
 ul {
-    padding-left: 0;
+    padding-left: 0 !important;
 }
 ul li {
     list-style-type: none;

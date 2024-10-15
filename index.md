@@ -31,7 +31,7 @@ E-mail: jm233333@outlook.com *(No response for 72h → Failed to receive (or acc
 Proceedings of the 20th European Conference on Computer Systems (EuroSys 2025) <br/>
 (Forthcoming) [[doi]]()
 [[pdf]](assets/papers/visualinux-eurosys25.pdf)
-[[tool]](https://github.com/icsnju/visualinux)
+[[tool]](https://icsnju.github.io/visualinux/)
 
 ---
 
@@ -69,9 +69,9 @@ Proceedings of the 20th European Conference on Computer Systems (EuroSys 2025) <
 
 - **2022 - 2023 : TA,** Operating Systems: Design and Implementation (2022 Spring, 2023 Spring), taught by Yanyan Jiang, Department of Computer Science and Technology, Nanjing University.
 
-- **2016.9 - 2020.6 : Informal teaching assistant,** The C Programming Language, taught by Haiping Zhu, Department of Computer Science and Technology, Xi'an Jiaotong University.
+- **2016.9 - 2020.6 : Informal TA,** The C Programming Language, taught by Haiping Zhu, Department of Computer Science and Technology, Xi'an Jiaotong University.
 
-- **2019.1 - 2019.6 :** Acting chairman of ICPC team, Department of Computer Science and Technology, Xi'an Jiaotong University.
+- **2019.1 - 2019.6 : Acting chairman of ICPC team,** Department of Computer Science and Technology, Xi'an Jiaotong University.
 
 ---
 
@@ -84,10 +84,6 @@ Proceedings of the 20th European Conference on Computer Systems (EuroSys 2025) <
 ### Amateur Projects
 
 - **[JM233333's Blog](https://blog.jm233333.com)** (rebuilding; temporarily unavailable): Nearly **one million words** in total, including a large number of independently-written original articles.
-
-  - Basic tutorials of computer science knowledge, incluing programming languages (C/C++), algorithms and data structures, graph theory, etc.
-
-  - Other computer science knowledge sharing articles.
 
 <p><details><summary>Details</summary><ul>
 
