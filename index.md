@@ -29,7 +29,7 @@ E-mail: jm233333@outlook.com *(No response for 72h → Failed to receive (or acc
 - **Understanding the Linux Kernel, Visually** <br/>
 **Hanzhi Liu**, Yanyan Jiang, Chang Xu <br/>
 Proceedings of the 20th European Conference on Computer Systems (EuroSys 2025) <br/>
-(Forthcoming) [[doi]]()
+[doi (Forthcoming)]
 [[pdf]](assets/papers/visualinux-eurosys25.pdf)
 [[tool]](https://icsnju.github.io/visualinux/)
 
