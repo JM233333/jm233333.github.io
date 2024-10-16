@@ -12,15 +12,15 @@ E-mail: jm233333@outlook.com *(No response for 72h → Failed to receive or acci
 
 ## Education & Work Experience
 
-- 2022.9 - present : Ph.D., Institute of Computer Software, Department of Computer Science and Technology, Nanjing University, supervised by Prof. [Yanyan Jiang](https://ics.nju.edu.cn/~jyy/) and Prof. [Chang Xu](https://cs.nju.edu.cn/changxu/).
+- **2022.9 - present : Ph.D.,** Institute of Computer Software, Department of Computer Science and Technology, Nanjing University, supervised by Prof. [Yanyan Jiang](https://ics.nju.edu.cn/~jyy/) and Prof. [Chang Xu](https://cs.nju.edu.cn/changxu/).
 
-- 2020.9 - 2022.8 : M.Sc., Institute of Computer Software, Department of Computer Science and Technology, Nanjing University, supervised by Prof. Yanyan Jiang and Prof. Chang Xu.
+- **2020.9 - 2022.8 : M.Sc.,** Institute of Computer Software, Department of Computer Science and Technology, Nanjing University, supervised by Prof. Yanyan Jiang and Prof. Chang Xu.
 
-- 2016.9 - 2020.6 : B.Eng., Department of Computer Science and Technology, Xi'an Jiaotong University.
+- **2016.9 - 2020.6 : B.Eng.,** Department of Computer Science and Technology, Xi'an Jiaotong University.
 
-  - 2019.6 - 2019.8 : Client-side Developer Intern, the Platform and Content Group (PCG), Tencent.
+  - **2019.6 - 2019.8 : Client-side Developer Intern,** the Platform and Content Group (PCG), Tencent.
 
-- 2013.9 - 2016.6 : High School Education, Senior High Department of Shenzhen Experimental School.
+- **2013.9 - 2016.6 : High School Education,** Senior High Department of Shenzhen Experimental School.
 
 ---
 
@@ -69,7 +69,7 @@ Proceedings of the 20th European Conference on Computer Systems (EuroSys 2025) <
 
 - **2022 - 2023 : TA,** Operating Systems: Design and Implementation (2022 Spring, 2023 Spring), taught by Yanyan Jiang, Department of Computer Science and Technology, Nanjing University.
 
-- **2016.9 - 2020.6 : Informal TA,** The C Programming Language, taught by Haiping Zhu, Department of Computer Science and Technology, Xi'an Jiaotong University.
+- **2016 - 2020 : Informal TA,** The C Programming Language (Autumn), taught by Haiping Zhu, Department of Computer Science and Technology, Xi'an Jiaotong University.
 
 - **2019.1 - 2019.6 : Acting chairman of ICPC team,** Department of Computer Science and Technology, Xi'an Jiaotong University.
 
