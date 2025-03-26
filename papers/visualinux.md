@@ -2,13 +2,13 @@
 
 Extended Abstract (Webpage Version)
 
-- **Hanzhi Liu**, Yanyan Jiang, Chang Xu <br/>
+**Hanzhi Liu**, Yanyan Jiang, Chang Xu <br/>
 Proceedings of the 20th European Conference on Computer Systems (Eurosys'25). <br/>
 [doi (Forthcoming)]
-[[pdf]](assets/papers/visualinux-eurosys25.pdf){:target="_blank"}
+[[pdf]](/assets/papers/visualinux-eurosys25.pdf){:target="_blank"}
 [[tool]](https://icsnju.github.io/visualinux/){:target="_blank"}
 
-English | 简体中文 | [[Back to Mainpage]](/index.md)
+English | 简体中文 | [[Back to Mainpage]](/)
 
 ---
 
@@ -35,6 +35,13 @@ Simply "printing" these objects as text produces an overwhelming amount of infor
 
 - *What kind of mechanism can help developers effectively and efficiently customize a view of the kernel object graph for the purpose of understanding kernel states?*
 
+Existing kernel debugging techniques either do not focus on program state understanding or lack appropriate abstractions for high-level data structures.
+Moreover, most of existing tools are textual and are unable to produce readable results for high-dimensional information.
+
+Past research has confirmed that program visualization can effectively help developers understand program states.
+However, none of traditional visualized debuggers can handle the excessively large and complex program state of the Linux kernel.
+The lack of suitable abstractions in existing tools forces developers to work with complete diagrams of entire massive objects and handle long and deep pointer chains.
+
 ---
 
 ### Approach
@@ -54,6 +61,8 @@ The simplicity of ViewQL also enables large language models to customize plots b
 Based on the approach we propose Visualinux, the first debugging framework that enables developers to programmatically simplify the program state of the Linux kernel to a level that can be visually understood.
 This is beyond the capability of existing debugging abstractions.
 Visualinux also offers developers a user-friendly, push-button interface to manage multiple plots and customize their displayed views, as the following figure illustrates.
+
+![screenshot](/assets/images/visualinux/screenshot.png)
 
 Visualinux is capable of visualizing data structures at various levels of customizations.
 For instance, only a few lines of ViewCL code can yield a plot of the CFS Scheduler Run Queue, which is visualized as a binary search tree managing the Completely Fair Scheduler (CFS) run queue:
@@ -81,16 +90,30 @@ sched_tree = RBTree(@root).forEach |node| {
 plot @sched_tree
 ```
 
+![intro-rbtree](/assets/images/visualinux/intro-rbtree.png)
+
 ---
 
 ### Implementation
 
 We implement Visualinux prototype for interactive kernel debugging.
 It comprises two main components: the GDB extension, which is integrated into the GDB host to support ViewCL, and a visualizer front-end that supports ViewQL.
-The tool is publicly available at [github](https://icsnju.github.io/visualinux).
+The tool is publicly available at:
+
+-  [https://icsnju.github.io/visualinux](https://icsnju.github.io/visualinux)
 
 ---
 
 ### Evaluation
+
+To evaluate the ability of Visualinux, we evolve some representative figures of the well-known (though now obsolete) textbook, *Understanding the Linux Kernel*, to the latest Linux 6.
+Results show that Visualinux can handle various data structures and mechanisms in the Linux kernel.
+We also observe that a significant proportion of core kernel mechanism implementations have changed significantly since Linux 2.6.11.
+All generated plots are available in the public site, including the maple tree mentioned in *Motivation*.
+
+Visualinux can also assist in diagnosing real-world kernel bugs that require an understanding of the kernel state.
+We demonstrate its effectiveness through case studies involving the diagnosis of real-world kernel vulnerabilities (CVE-2023-3269 and CVE-2022-0847).
+
+Finally, we evaluate Visualinux in two representative debugging scenarios and the results show that the performance overhead of Visualinux is generally acceptable.
 
 ---
