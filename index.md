@@ -4,7 +4,7 @@ English | [简体中文](index-zh-cn.md)
 
 ---
 
-I'm a Ph.D. candidate in [SPAR](http://ics.nju.edu.cn/spar/) Group of Institute of Computer Software, Nanjing University. I'm advised by Prof. [Yanyan Jiang](https://ics.nju.edu.cn/~jyy/) and Prof. [Chang Xu](https://cs.nju.edu.cn/changxu/). Currently my research focuses on understanding and debugging operating system kernels and other system softwares. I'm also Interested in testing and verification of OS kernels, as well as designing systems that can solve critical real-world problems.
+I'm a Ph.D. student in [SPAR](http://ics.nju.edu.cn/spar/) Group of Institute of Computer Software, Nanjing University. I'm advised by Prof. [Yanyan Jiang](https://ics.nju.edu.cn/~jyy/) and Prof. [Chang Xu](https://cs.nju.edu.cn/changxu/). Currently my research focuses on understanding and debugging operating system kernels and other system softwares. I'm also Interested in testing and verification of OS kernels, as well as designing systems that can solve critical real-world problems.
 
 E-mail: jm233333@outlook.com *(No response for 72h → Failed to receive or accidentally omit your email, you can try to resend it)*
 
@@ -26,10 +26,12 @@ E-mail: jm233333@outlook.com *(No response for 72h → Failed to receive or acci
 
 ## Publications
 
-- **Understanding the Linux Kernel, Visually** <br/>
+- **[EuroSys'25]** **Understanding the Linux Kernel, Visually** <br/>
 **Hanzhi Liu**, Yanyan Jiang, Chang Xu <br/>
-Proceedings of the 20th European Conference on Computer Systems (Eurosys'25). <br/>
-[doi (Forthcoming)]
+Proceedings of the 20th European Conference on Computer Systems. Accepted (rate: 12.2%, 85/696). <br/>
+<span style="color:red">[Best Student Paper Award] 🏆</span> <br/>
+[CCF-A]
+[[doi]](https://doi.org/10.1145/3689031.3696095){:target="_blank"}
 [[pdf]](/assets/papers/visualinux-eurosys25.pdf){:target="_blank"}
 [[tool]](https://icsnju.github.io/visualinux/){:target="_blank"}
 [[extabst]](/papers/visualinux.md)
