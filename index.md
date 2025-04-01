@@ -26,15 +26,13 @@ E-mail: jm233333@outlook.com *(No response for 72h → Failed to receive or acci
 
 ## Publications
 
-- **[EuroSys'25]** **Understanding the Linux Kernel, Visually** <br/>
+- [**Understanding the Linux Kernel, Visually**](/papers/visualinux.md) <br/>
 **Hanzhi Liu**, Yanyan Jiang, Chang Xu <br/>
-Proceedings of the 20th European Conference on Computer Systems. Accepted (rate: 12.2%, 85/696). <br/>
+Proceedings of the 20th European Conference on Computer Systems (EuroSys'25, CCF-A). Accepted (rate: 12.2%, 85/696). <br/>
 <span style="color:red">[Best Student Paper Award] 🏆</span> <br/>
-[CCF-A]
 [[doi]](https://doi.org/10.1145/3689031.3696095){:target="_blank"}
 [[pdf]](/assets/papers/visualinux-eurosys25.pdf){:target="_blank"}
 [[tool]](https://icsnju.github.io/visualinux/){:target="_blank"}
-[[extabst]](/papers/visualinux.md)
 
 ---
 
