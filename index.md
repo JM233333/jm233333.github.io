@@ -90,7 +90,7 @@ Accepted as oral (accrate: 32.4%, 34/105 of top conference papers) <br/>
 
 ### Research Works
 
-- **[Visualinux](https://icsnju.github.io/visualinux/) (2023 - 2024):** A visualized debugging framework to aid in understanding the Linux kernel. This work has been accepted by EuroSys 2025 (doi forthcoming).
+- **[Visualinux](https://icsnju.github.io/visualinux/) (2023 - 2024):** A visualized debugging framework to aid in understanding the Linux kernel. This work has been accepted by EuroSys 2025 and received the Best Student Paper Award.
 
 ### Amateur Projects
 

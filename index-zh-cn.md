@@ -90,7 +90,7 @@ Accepted as oral (accrate: 32.4%, 34/105 of top conference papers) <br/>
 
 ### 研究工作
 
-**[Visualinux](https://icsnju.github.io/visualinux/) (2023 - 2024):** 一个致力于帮助开发者理解 Linux 内核的可视化调试框架。这份工作已经被 CCF-A 类会议 EuroSys 2025 接收（doi forthcoming）。
+**[Visualinux](https://icsnju.github.io/visualinux/) (2023 - 2024):** 一个致力于帮助开发者理解 Linux 内核的可视化调试框架。这份工作已经被 CCF-A 类会议 EuroSys 2025 接收，并获得会议最佳学生论文奖。
 
 ### 业余项目
 
