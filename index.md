@@ -4,17 +4,20 @@ English | [简体中文](index-zh-cn.md)
 
 ---
 
-I'm a Ph.D. student in [SPAR](http://ics.nju.edu.cn/spar/) Group of Institute of Computer Software, Nanjing University. I'm advised by Prof. [Yanyan Jiang](https://ics.nju.edu.cn/~jyy/) and Prof. [Chang Xu](https://cs.nju.edu.cn/changxu/). Currently my research focuses on understanding and debugging operating system kernels and other system softwares. I'm also Interested in testing and verification of OS kernels, as well as designing systems that can solve critical real-world problems.
+I'm a Ph.D. student in [SPAR](http://ics.nju.edu.cn/spar/) Group of Institute of Computer Software, Nanjing University. I'm advised by Assoc. Prof. [Yanyan Jiang](https://ics.nju.edu.cn/~jyy/) and Prof. [Chang Xu](https://cs.nju.edu.cn/changxu/). Currently my research focuses on understanding and debugging operating system kernels and other system softwares. I'm also Interested in testing and verification of OS kernels, as well as designing systems that can solve critical real-world problems.
 
 E-mail: jm233333@outlook.com *(No response for 72h → Failed to receive or accidentally omit your email, you can try to resend it)*
+
+[[Google Scholar]](https://scholar.google.com/citations?user=tiRdjOEAAAAJ){:target="_blank"}
+[[ORCID]](https://orcid.org/0009-0005-2732-3971){:target="_blank"}
 
 ---
 
 ## Education & Work Experience
 
-- **2022.9 - present : Ph.D.,** Institute of Computer Software, Department of Computer Science and Technology, Nanjing University, supervised by Prof. [Yanyan Jiang](https://ics.nju.edu.cn/~jyy/) and Prof. [Chang Xu](https://cs.nju.edu.cn/changxu/).
+- **2022.9 - present : Ph.D.,** Institute of Computer Software, Department of Computer Science and Technology, Nanjing University, supervised by [Yanyan Jiang](https://ics.nju.edu.cn/~jyy/) and [Chang Xu](https://cs.nju.edu.cn/changxu/).
 
-- **2020.9 - 2022.8 : M.Sc.,** Institute of Computer Software, Department of Computer Science and Technology, Nanjing University, supervised by Prof. Yanyan Jiang and Prof. Chang Xu.
+- **2020.9 - 2022.8 : M.Sc.,** Institute of Computer Software, Department of Computer Science and Technology, Nanjing University, supervised by Yanyan Jiang and Chang Xu.
 
 - **2016.9 - 2020.6 : B.Eng.,** Department of Computer Science and Technology, Xi'an Jiaotong University.
 
@@ -24,22 +27,24 @@ E-mail: jm233333@outlook.com *(No response for 72h → Failed to receive or acci
 
 ---
 
-## Publications
+## Selected Publications
 
-- **[EuroSys'25] Understanding the Linux Kernel, Visually** <br/>
+- **[[EuroSys'25]](https://2025.eurosys.org/index.html) Understanding the Linux Kernel, Visually** <br/>
 **Hanzhi Liu**, Yanyan Jiang, Chang Xu <br/>
 Proceedings of the 20th European Conference on Computer Systems <br/>
-[CCF-A] [accrate: 12.2%, 85/696] <span style="color:red">[Best Student Paper Award] 🏆</span> <br/>
+<span style="color:red">🏆 [Best Student Paper Award]</span> [CCF-A] [accrate: 12.2%, 85/696] <br/>
 [[doi]](https://doi.org/10.1145/3689031.3696095){:target="_blank"}
 [[pdf]](/assets/papers/visualinux-eurosys25.pdf){:target="_blank"}
 [[tool]](https://icsnju.github.io/visualinux/){:target="_blank"}
-[[extabst]](/papers/visualinux.md)
+[[extabst]](/extabsts/visualinux.md)
+
+Check my full publications [here](/publications.md).
 
 ---
 
 ## Workshops
 
-- **[ChinaSys'24 Fall] Understanding the Linux Kernel, Visually** <br/>
+- **[[ChinaSys'24 Fall]](https://cnsys-2024fall.cn/) Understanding the Linux Kernel, Visually** <br/>
 **Hanzhi Liu**, Yanyan Jiang, Chang Xu <br/>
 The 27th ChinaSys Workshop <br/>
 Accepted as oral (accrate: 32.4%, 34/105 of top conference papers) <br/>
@@ -48,23 +53,27 @@ Accepted as oral (accrate: 32.4%, 34/105 of top conference papers) <br/>
 
 ## Honors and Awards
 
+### Research
+
+- EuroSys'25 Best Student Paper Award
+
 ### Programming Contest Awards
 
-- Gold Medal, ACM-ICPC Asia Regional Contest (Jiaozuo Site), Nov 25, 2018.
+- Gold Medal, ACM-ICPC Asia Regional Contest (Jiaozuo Site), Nov 25, 2018
 
-- Silver Medal, ACM-ICPC Asia-East Continent Final (Xi'an Site), Dec 16, 2018.
+- Silver Medal, ACM-ICPC Asia-East Continent Final (Xi'an Site), Dec 16, 2018
 
-- Silver Medal, ACM-ICPC Asia Regional Contest (Nanjing Site), Oct 14, 2018.
+- Silver Medal, ACM-ICPC Asia Regional Contest (Nanjing Site), Oct 14, 2018
 
-- Silver Medal, China Collegiate Programming Contest (Jilin Site), Sep 22, 2018.
+- Silver Medal, China Collegiate Programming Contest (Jilin Site), Sep 22, 2018
 
-- Bronze Medal, ACM-ICPC Asia Regional Contest (Xi'an Site), Oct 29, 2017.
+- Bronze Medal, ACM-ICPC Asia Regional Contest (Xi'an Site), Oct 29, 2017
 
 ### Personal Honors
 
-- The Outstanding Graduates Awards of Nanyang Shuyuan, Xi'an Jiaotong University, 2020.
+- The Outstanding Graduates Awards of Nanyang Shuyuan, Xi'an Jiaotong University, 2020
 
-- The CCF Elite Collegiate Award, China Computer Federation, 2019.
+- The CCF Elite Collegiate Award, China Computer Federation, 2019
 
 ### Scholarship
 

@@ -4,7 +4,7 @@
 
 ---
 
-我是南京大学计算机软件研究所 [SPAR](http://ics.nju.edu.cn/spar/) 小组的在读博士生，导师是 [蒋炎岩教授](https://ics.nju.edu.cn/~jyy/) 和 [许畅教授](https://cs.nju.edu.cn/changxu/) 。目前我的主要研究方向是理解和调试操作系统内核和其他系统软件；我还有志于操作系统内核的测试和验证、以及设计能够解决现实世界的重大问题的系统。
+我是南京大学计算机软件研究所 [SPAR](http://ics.nju.edu.cn/spar/) 小组的在读博士生，导师是 [蒋炎岩副教授](https://ics.nju.edu.cn/~jyy/) 和 [许畅教授](https://cs.nju.edu.cn/changxu/) 。目前我的主要研究方向是理解和调试操作系统内核和其他系统软件；我还有志于操作系统内核的测试和验证、以及设计能够解决现实世界的重大问题的系统。
 
 电邮：jm233333@outlook.com (*超过 72 小时未回复 → 我可能未收到或不慎遗漏邮件，您可尝试重发*)
 
@@ -12,9 +12,9 @@
 
 ## 教育和工作经历
 
-- **2022.9 至今：博士生在读，**南京大学计算机科学与技术系，计算机软件研究所，导师是 [蒋炎岩教授](https://ics.nju.edu.cn/~jyy/) 和 [许畅教授](https://cs.nju.edu.cn/changxu/) 。
+- **2022.9 至今：博士生在读，**南京大学计算机科学与技术系，计算机软件研究所，导师是 [蒋炎岩](https://ics.nju.edu.cn/~jyy/) 和 [许畅](https://cs.nju.edu.cn/changxu/) 。
 
-- **2020.9 - 2022.8：硕士研究生，**南京大学计算机科学与技术系，计算机软件研究所，导师是蒋炎岩教授和许畅教授。
+- **2020.9 - 2022.8：硕士研究生，**南京大学计算机科学与技术系，计算机软件研究所，导师是蒋炎岩和许畅。
 
 - **2016.9 - 2020.6：工学学士学位，**西安交通大学计算机科学与技术系。
 
@@ -26,20 +26,22 @@
 
 ## 论文发表
 
-- **[EuroSys'25] Understanding the Linux Kernel, Visually** <br/>
+- **[[EuroSys'25]](https://2025.eurosys.org/index.html) Understanding the Linux Kernel, Visually** <br/>
 **Hanzhi Liu**, Yanyan Jiang, Chang Xu <br/>
 Proceedings of the 20th European Conference on Computer Systems <br/>
-[CCF-A] [accrate: 12.2%, 85/696] <span style="color:red">[Best Student Paper Award] 🏆</span> <br/>
+<span style="color:red">🏆 [Best Student Paper Award]</span> [CCF-A] [accrate: 12.2%, 85/696] <br/>
 [[doi]](https://doi.org/10.1145/3689031.3696095){:target="_blank"}
 [[pdf]](/assets/papers/visualinux-eurosys25.pdf){:target="_blank"}
 [[tool]](https://icsnju.github.io/visualinux/){:target="_blank"}
-[[extabst]](/papers/visualinux.md)
+[[extabst]](/extabsts/visualinux.md)
+
+查看我的[全部论文发表](/publications.md)。
 
 ---
 
 ## 研讨会报告
 
-- **[ChinaSys'24 Fall] Understanding the Linux Kernel, Visually** <br/>
+- **[[ChinaSys'24 Fall]](https://cnsys-2024fall.cn/) Understanding the Linux Kernel, Visually** <br/>
 **Hanzhi Liu**, Yanyan Jiang, Chang Xu <br/>
 The 27th ChinaSys Workshop <br/>
 Accepted as oral (accrate: 32.4%, 34/105 of top conference papers) <br/>
@@ -47,6 +49,10 @@ Accepted as oral (accrate: 32.4%, 34/105 of top conference papers) <br/>
 ---
 
 ## 荣誉和奖项
+
+### 学术荣誉
+
+- EuroSys'25 最佳学生论文奖
 
 ### 程序设计竞赛奖项
 
