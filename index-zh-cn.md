@@ -29,11 +29,12 @@
 - **[[EuroSys'25]](https://2025.eurosys.org/index.html) Understanding the Linux Kernel, Visually** <br/>
 **Hanzhi Liu**, Yanyan Jiang, Chang Xu <br/>
 Proceedings of the 20th European Conference on Computer Systems <br/>
-[CCF-A] [accrate: 12.2%, 85/696] <span style="color:red">[Best Student Paper Award] 🏆</span> <br/>
+<span style="color:red">[Best Student Paper Award] 🏆</span> <br/>
 [[doi]](https://doi.org/10.1145/3689031.3696095){:target="_blank"}
 [[pdf]](/assets/papers/visualinux-eurosys25.pdf){:target="_blank"}
 [[tool]](https://icsnju.github.io/visualinux/){:target="_blank"}
 [[extabst]](/extabsts/visualinux.md)
+[accrate: 12.2%, 85/696]
 
 查看我的[全部论文发表](/publications.md)。
 
@@ -44,8 +45,9 @@ Proceedings of the 20th European Conference on Computer Systems <br/>
 - **[[ChinaSys'24 Fall]](https://cnsys-2024fall.cn/) Understanding the Linux Kernel, Visually** <br/>
 **Hanzhi Liu**, Yanyan Jiang, Chang Xu <br/>
 The 27th ChinaSys Workshop <br/>
-[Accepted as oral] [accrate: 32.4%, 34/105 of top conference papers] <br/>
+[Accepted as oral]
 [[pdf]](/assets/papers/workshops/visualinux-chinasys24-fall.pdf){:target="_blank"}
+[accrate: 32.4%, 34/105 of top conference papers] <br/>
 
 ---
 
