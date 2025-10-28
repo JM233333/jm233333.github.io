@@ -13,7 +13,6 @@ Proceedings of the 20th European Conference on Computer Systems <br/>
 [[doi]](https://doi.org/10.1145/3689031.3696095){:target="_blank"}
 [[pdf]](/assets/papers/visualinux-eurosys25.pdf){:target="_blank"}
 [[tool]](https://icsnju.github.io/visualinux/){:target="_blank"}
-[[extabst]](/extabsts/visualinux.md)
 [accrate: 12.2%, 85/696]
 
 ---
