@@ -4,9 +4,12 @@
 
 ---
 
-我是南京大学计算机软件研究所 [SPAR](http://ics.nju.edu.cn/spar/) 小组的在读博士生，导师是 [蒋炎岩副教授](https://ics.nju.edu.cn/~jyy/) 和 [许畅教授](https://cs.nju.edu.cn/changxu/) 。目前我的主要研究方向是理解和调试操作系统内核和其他系统软件；我还有志于操作系统内核的测试和验证、以及设计能够解决现实世界的重大问题的系统。
+我是南京大学计算机软件研究所 [SPAR](http://ics.nju.edu.cn/spar/) 小组的四年级博士生，导师是 [蒋炎岩副教授](https://ics.nju.edu.cn/~jyy/) 和 [许畅教授](https://cs.nju.edu.cn/changxu/) 。目前我的主要研究方向是理解和调试操作系统内核和其他系统软件；我还有志于操作系统内核的测试和验证、以及设计能够解决现实世界的重大问题的系统。
 
 电邮：jm233333@outlook.com (*超过 72 小时未回复 → 我可能未收到或不慎遗漏邮件，您可尝试重发*)
+
+[[Google Scholar]](https://scholar.google.com/citations?user=tiRdjOEAAAAJ){:target="_blank"}
+[[ORCID]](https://orcid.org/0009-0005-2732-3971){:target="_blank"}
 
 ---
 
@@ -94,11 +97,11 @@ The 27th ChinaSys Workshop <br/>
 
 ---
 
-## 项目经验节选
+## 工程项目
 
 ### 研究工作
 
-**[Visualinux](https://icsnju.github.io/visualinux/) (2023 - 2024):** 一个致力于帮助开发者理解 Linux 内核的可视化调试框架。这份工作已经被 CCF-A 类会议 EuroSys 2025 接收，并获得会议最佳学生论文奖。
+**[Visualinux](https://icsnju.github.io/visualinux/) (2023 - 2025):** 一个实用的 Linux 内核可视化调试框架。这份工作已经被 CCF-A 类会议 EuroSys 2025 接收，并获最佳学生论文奖。
 
 ### 业余项目
 

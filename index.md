@@ -4,7 +4,7 @@ English | [简体中文](index-zh-cn.md)
 
 ---
 
-I'm a Ph.D. student in [SPAR](http://ics.nju.edu.cn/spar/) Group of Institute of Computer Software, Nanjing University, supervised by Assoc. Prof. [Yanyan Jiang](https://ics.nju.edu.cn/~jyy/) and Prof. [Chang Xu](https://cs.nju.edu.cn/changxu/). Currently my research focuses on understanding and debugging operating system kernels and other system softwares. I'm also Interested in testing and verification of OS kernels, as well as designing systems that can solve critical real-world problems.
+I'm a forth-year Ph.D. candidate in [SPAR](http://ics.nju.edu.cn/spar/) Group of Institute of Computer Software, Nanjing University, supervised by Assoc. Prof. [Yanyan Jiang](https://ics.nju.edu.cn/~jyy/) and Prof. [Chang Xu](https://cs.nju.edu.cn/changxu/). Currently my research focuses on understanding and debugging operating system kernels and other system softwares. I'm also interested in testing and verification of OS kernels, as well as designing systems that can solve critical real-world problems.
 
 E-mail: jm233333@outlook.com *(No response for 72h → Failed to receive or accidentally omit your email, you can try to resend it)*
 
@@ -99,13 +99,13 @@ The 27th ChinaSys Workshop <br/>
 
 ## Selected Projects
 
-### Research Works
+### Research Projects
 
-- **[Visualinux](https://icsnju.github.io/visualinux/) (2023 - 2024):** A visualized debugging framework to aid in understanding the Linux kernel. This work has been accepted by EuroSys 2025 and received the Best Student Paper Award.
+**[Visualinux](https://icsnju.github.io/visualinux/) (2023 - 2025):** A debugging framework that enables practical visual debugging for the Linux kernel. This work has been accepted by EuroSys 2025 and received the Best Student Paper Award.
 
 ### Amateur Projects
 
-- **[JM233333's Blog](https://blog.jm233333.com)** (rebuilding; temporarily unavailable): Nearly **one million words** in total, including a large number of independently-written original articles.
+**[JM233333's Blog](https://blog.jm233333.com)** (rebuilding; temporarily unavailable): Nearly **one million words** in total, including a large number of independently-written original articles.
 
 <p><details><summary>Details</summary><ul>
 
