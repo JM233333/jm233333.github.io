@@ -29,7 +29,7 @@ Science China Information Sciences, 55(3), 2025 <br/>
 
 ### Workshops
 
-**[[WUOS'25]](https://ipads.se.sjtu.edu.cn/wuos/) Software-Defined Ubiquitous Operating System: A New Paradigm for Human–Cyber–Physical Systems** <br/>
+**[[WUOS'25]](https://ipads.se.sjtu.edu.cn/wuos/) Software-Defined Ubiquitous Operating System: A New Paradigm for Human-Cyber-Physical Systems** <br/>
 Yunfan Cao, Chaoyi Zhao, **Hanzhi Liu**, Jiayi Wang, Deyu Kong, Huiyan Wang, Ping Yu, Chun Cao, Chang Xu, Xiaoxing Ma, Yanyan Jiang <br/>
 The 1st Workshop on Ubiquitous Operating Systems (co-located with SOSP'25) <br/>
 [[pdf]](/assets/papers/workshops/uos-wuos25.pdf){:target="_blank"}

@@ -4,7 +4,7 @@
 
 ---
 
-我是南京大学计算机软件研究所 [SPAR](http://ics.nju.edu.cn/spar/) 小组的四年级博士生，导师是 [蒋炎岩副教授](https://ics.nju.edu.cn/~jyy/) 和 [许畅教授](https://cs.nju.edu.cn/changxu/) 。目前我的主要研究方向是理解和调试操作系统内核和其他系统软件；我还有志于操作系统内核的测试和验证、以及设计能够解决现实世界的重大问题的系统。
+我是南京大学计算机软件研究所 [SPAR](http://ics.nju.edu.cn/spar/) 小组的四年级博士生，导师是 [蒋炎岩副教授](https://ics.nju.edu.cn/~jyy/) 和 [许畅教授](https://cs.nju.edu.cn/changxu/) 。目前我的主要研究方向是理解和调试操作系统内核和其他系统软件；我还有志于系统软件的可靠性与可观测性，以及设计能够解决现实世界的重大问题的系统。
 
 电邮：jm233333@outlook.com (*超过 72 小时未回复 → 我可能未收到或不慎遗漏邮件，您可尝试重发*)
 
@@ -16,20 +16,16 @@
 ## 教育和工作经历
 
 - **2022.9 至今：博士生在读，**南京大学计算机科学与技术系，计算机软件研究所，导师是 [蒋炎岩](https://ics.nju.edu.cn/~jyy/) 和 [许畅](https://cs.nju.edu.cn/changxu/) 。
-
 - **2020.9 - 2022.8：硕士研究生，**南京大学计算机科学与技术系，计算机软件研究所，导师是蒋炎岩和许畅。
-
 - **2016.9 - 2020.6：工学学士学位，**西安交通大学计算机科学与技术系。
-
   - **2019.6 - 2019.8：客户端开发实习生，**腾讯，平台与内容事业群，社交娱乐产品部。
-
 - **2013.9 - 2016.6：高中，**深圳实验学校高中部。
 
 ---
 
 ## 论文发表
 
-- **[[EuroSys'25]](https://2025.eurosys.org/index.html) Understanding the Linux Kernel, Visually** <br/>
+**[[EuroSys'25]](https://2025.eurosys.org/index.html) Understanding the Linux Kernel, Visually** <br/>
 **Hanzhi Liu**, Yanyan Jiang, Chang Xu <br/>
 Proceedings of the 20th European Conference on Computer Systems <br/>
 <span style="color:red">[Best Student Paper Award] 🏆</span> <br/>
@@ -44,7 +40,7 @@ Proceedings of the 20th European Conference on Computer Systems <br/>
 
 ## 研讨会报告
 
-- **[[ChinaSys'24 Fall]](https://cnsys-2024fall.cn/) Understanding the Linux Kernel, Visually** <br/>
+**[[ChinaSys'24 Fall]](https://cnsys-2024fall.cn/) Understanding the Linux Kernel, Visually** <br/>
 **Hanzhi Liu**, Yanyan Jiang, Chang Xu <br/>
 The 27th ChinaSys Workshop <br/>
 [Accepted as oral] <br/>
@@ -62,25 +58,19 @@ The 27th ChinaSys Workshop <br/>
 ### 程序设计竞赛奖项
 
 - 2018 年 ACM-ICPC 亚洲区域赛焦作站金奖
-
 - 2018 年 ACM-ICPC 亚洲区域赛西安站 EC-Final 银奖
-
 - 2018 年 ACM-ICPC 亚洲区域赛南京站银奖
-
 - 2018 年 CCPC 中国大学生程序设计竞赛吉林站银奖
-
 - 2017 年 ACM-ICPC 亚洲区域赛西安站铜奖
 
 ### 个人荣誉
 
 - 2020 届西安交通大学南洋书院优秀毕业生
-
 - 2019 年度 CCF 优秀大学生奖
 
 ### 奖学金
 
 - 2019 年西安交通大学陆诗娣一等奖学金
-
 - 2018 年西安交通大学陆诗娣二等奖学金
 
 ---
@@ -88,11 +78,8 @@ The 27th ChinaSys Workshop <br/>
 ## 助教经历
 
 - 2022 - 2023：计算机系统基础（2022 秋，2023 秋），实验助教（由王慧妍老师授课），南京大学计算机科学与技术系。
-
 - 2022 - 2023：操作系统：设计与实现（2022 春，2023 春），助教（由蒋炎岩老师授课），南京大学计算机科学与技术系。
-
 - 2016 - 2020：C 语言程序设计课程（秋），非正式助教（由朱海萍老师授课），西安交通大学计算机科学与技术系。
-
 - 2019.1 - 2019.6：西安交通大学 ACM 校队队长代理，西安交通大学计算机科学与技术系。
 
 ---

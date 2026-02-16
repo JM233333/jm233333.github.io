@@ -4,7 +4,7 @@ English | [简体中文](index-zh-cn.md)
 
 ---
 
-I'm a forth-year Ph.D. candidate in [SPAR](http://ics.nju.edu.cn/spar/) Group of Institute of Computer Software, Nanjing University, supervised by Assoc. Prof. [Yanyan Jiang](https://ics.nju.edu.cn/~jyy/) and Prof. [Chang Xu](https://cs.nju.edu.cn/changxu/). Currently my research focuses on understanding and debugging operating system kernels and other system softwares. I'm also interested in testing and verification of OS kernels, as well as designing systems that can solve critical real-world problems.
+I'm a forth-year Ph.D. candidate in [SPAR](http://ics.nju.edu.cn/spar/) Group of Institute of Computer Software, Nanjing University, supervised by Assoc. Prof. [Yanyan Jiang](https://ics.nju.edu.cn/~jyy/) and Prof. [Chang Xu](https://cs.nju.edu.cn/changxu/). Currently my research focuses on understanding and debugging operating system kernels and other system software. I'm also interested in system reliability and observability, as well as designing systems that can solve critical real-world problems.
 
 E-mail: jm233333@outlook.com *(No response for 72h → Failed to receive or accidentally omit your email, you can try to resend it)*
 
@@ -16,20 +16,16 @@ E-mail: jm233333@outlook.com *(No response for 72h → Failed to receive or acci
 ## Education & Work Experience
 
 - **2022.9 - present : Ph.D.,** Institute of Computer Software, Department of Computer Science and Technology, Nanjing University, supervised by [Yanyan Jiang](https://ics.nju.edu.cn/~jyy/) and [Chang Xu](https://cs.nju.edu.cn/changxu/).
-
 - **2020.9 - 2022.8 : M.Sc.,** Institute of Computer Software, Department of Computer Science and Technology, Nanjing University, supervised by Yanyan Jiang and Chang Xu.
-
 - **2016.9 - 2020.6 : B.Eng.,** Department of Computer Science and Technology, Xi'an Jiaotong University.
-
   - **2019.6 - 2019.8 : Client-side Developer Intern,** the Platform and Content Group (PCG), Tencent.
-
 - **2013.9 - 2016.6 : High School Education,** Senior High Department of Shenzhen Experimental School.
 
 ---
 
 ## Selected Publications
 
-- **[[EuroSys'25]](https://2025.eurosys.org/index.html) Understanding the Linux Kernel, Visually** <br/>
+**[[EuroSys'25]](https://2025.eurosys.org/index.html) Understanding the Linux Kernel, Visually** <br/>
 **Hanzhi Liu**, Yanyan Jiang, Chang Xu <br/>
 Proceedings of the 20th European Conference on Computer Systems <br/>
 <span style="color:red">[Best Student Paper Award] 🏆</span> <br/>
@@ -44,7 +40,7 @@ Check my full publications [here](/publications.md).
 
 ## Workshops
 
-- **[[ChinaSys'24 Fall]](https://cnsys-2024fall.cn/) Understanding the Linux Kernel, Visually** <br/>
+**[[ChinaSys'24 Fall]](https://cnsys-2024fall.cn/) Understanding the Linux Kernel, Visually** <br/>
 **Hanzhi Liu**, Yanyan Jiang, Chang Xu <br/>
 The 27th ChinaSys Workshop <br/>
 [Accepted as oral] <br/>
@@ -62,25 +58,19 @@ The 27th ChinaSys Workshop <br/>
 ### Programming Contest Awards
 
 - Gold Medal, ACM-ICPC Asia Regional Contest (Jiaozuo Site), Nov 25, 2018
-
 - Silver Medal, ACM-ICPC Asia-East Continent Final (Xi'an Site), Dec 16, 2018
-
 - Silver Medal, ACM-ICPC Asia Regional Contest (Nanjing Site), Oct 14, 2018
-
 - Silver Medal, China Collegiate Programming Contest (Jilin Site), Sep 22, 2018
-
 - Bronze Medal, ACM-ICPC Asia Regional Contest (Xi'an Site), Oct 29, 2017
 
 ### Personal Honors
 
 - The Outstanding Graduates Awards of Nanyang Shuyuan, Xi'an Jiaotong University, 2020
-
 - The CCF Elite Collegiate Award, China Computer Federation, 2019
 
 ### Scholarship
 
 - Shidi Lu's First Stage Scholarship, Xi'an Jiaotong University, 2019
-
 - Shidi Lu's Second Stage Scholarship, Xi'an Jiaotong University, 2018
 
 ---
@@ -88,11 +78,8 @@ The 27th ChinaSys Workshop <br/>
 ## Teaching Experiences
 
 - **2022 - 2023 : TA,** Introduction of Computer System (2022 Autumn, 2023 Autumn), taught by Huiyan Wang, Department of Computer Science and Technology, Nanjing University.
-
 - **2022 - 2023 : TA,** Operating Systems: Design and Implementation (2022 Spring, 2023 Spring), taught by Yanyan Jiang, Department of Computer Science and Technology, Nanjing University.
-
 - **2016 - 2020 : Informal TA,** The C Programming Language (Autumn), taught by Haiping Zhu, Department of Computer Science and Technology, Xi'an Jiaotong University.
-
 - **2019.1 - 2019.6 : Acting chairman of ICPC team,** Department of Computer Science and Technology, Xi'an Jiaotong University.
 
 ---
