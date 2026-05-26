@@ -67,7 +67,7 @@
               {{#badges}}<span class="badge {{ tone_class }}">{{ label }}</span>{{/badges}}
             </div>
             <div class="pub-actions">
-              {{#links}}<a class="text-link" href="{{ url }}" target="_blank" rel="noopener">{{ label }}</a>{{/links}}
+              {{#note_links}}<span class="text-note">{{ label }}</span>{{/note_links}}{{#url_links}}<a class="text-link" href="{{ url }}" target="_blank" rel="noopener">{{ label }}</a>{{/url_links}}
             </div>
           </li>
           {{/selected_publications}}
@@ -97,14 +97,21 @@
         <h2 id="talks-title">{{ labels.talks }}</h2>
       </div>
       <div>
-        <ol class="compact-list">
+        <ol class="compact-list talk-topic-list">
           {{#talks}}
-          <li class="item">
-            <span class="date">{{ date }}</span>
-            <span>
-              <span class="item-title">{{{ title_html }}}</span>, {{{ host_html }}}
-              {{#notes_text}} <span class="talk-notes">({{ notes_text }})</span>{{/notes_text}}
-            </span>
+          <li class="talk-topic">
+            <div class="item-title talk-topic-title">{{{ title_html }}}</div>
+            <ol class="compact-list talk-instance-list">
+              {{#items}}
+              <li class="item">
+                <span class="date">{{ date }}</span>
+                <span>
+                  {{{ host_html }}}
+                  {{#notes_text}} <span class="talk-notes">({{ notes_text }})</span>{{/notes_text}}
+                </span>
+              </li>
+              {{/items}}
+            </ol>
           </li>
           {{/talks}}
         </ol>

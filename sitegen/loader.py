@@ -23,17 +23,13 @@ class DataLoader:
             about[key] = self.__load_section_yaml(key)
         return about
 
-    def load_publication_order(self) -> dict[str, list[str]]:
-        """Load the explicit publication display order grouped by kind."""
+    def load_publication_order(self) -> list[str]:
+        """Load the explicit publication display order."""
         data = self.__load_yaml(self.__root / "data" / "publications.yaml")
-        order = data.get("order", {})
-        if not isinstance(order, dict):
-            raise ValueError("data/publications.yaml must contain an order mapping")
-        return {
-            str(kind): [str(key) for key in keys]
-            for kind, keys in order.items()
-            if isinstance(keys, list)
-        }
+        order = data.get("order", [])
+        if not isinstance(order, list):
+            raise ValueError("data/publications.yaml must contain an order list")
+        return [str(key) for key in order]
 
     def load_publications(self) -> dict[str, dict[str, object]]:
         """Load every publication YAML file by key."""

@@ -3,9 +3,6 @@ title: "Understanding the Linux Kernel, Visually"
 authors: Hanzhi Liu, Yanyan Jiang, Chang Xu
 year: 2024
 kind: workshop
-selected: true
-speaker: true
-date: {year: 2024, month: 11}
 status:
   en: Accepted as oral
   zh-cn: 口头报告
@@ -16,7 +13,3 @@ venue:
 
 badges:
   - label: "Acceptance: 32.4%, 34/105 of top conference papers"
-
-links:
-  - label: PDF
-    url: pdfs/workshops/visualinux-chinasys24fall.pdf

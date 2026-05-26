@@ -1,24 +1,32 @@
-﻿talks:
-  - date: {year: 2025, month: 10}
-    title: "Understanding the Linux Kernel, Visually"
-    host:
-      en: "Huawei HarmonyOS DFX Group"
-      zh-cn: "华为鸿蒙内核DFX组"
-    notes:
-      - invited talk
-      - online
-  - date: {year: 2025, month: 5}
-    title: "Understanding the Linux Kernel, Visually"
-    host: "ETH Zurich AST Lab"
-    notes:
-      - invited talk
-      - online
-  - date: {year: 2025, month: 5}
-    title: "Understanding the Linux Kernel, Visually"
-    host:
-      en: "Huawei Poincare Lab"
-      zh-cn: "华为庞家莱实验室"
-    notes:
-      - invited talk
-      - online
-
+talks:
+  - title: "Understanding the Linux Kernel, Visually"
+    items:
+      # - date: {year: 2026, month: 6}
+      #   host: "China Linux System Forum 2026 (CLSF'26)"
+      #   notes:
+      #     - invited talk
+      #     - Chengdu, China
+      - date: {year: 2025, month: 10}
+        host:
+          en: "Huawei HarmonyOS DFX Group"
+          zh-cn: "华为鸿蒙内核 DFX 组"
+        notes:
+          - invited talk
+          - online
+      - date: {year: 2025, month: 5}
+        host: "ETH Zurich AST Lab"
+        notes:
+          - invited talk
+          - online
+      - date: {year: 2025, month: 5}
+        host:
+          en: "Huawei Poincare Lab"
+          zh-cn: "华为庞家莱实验室"
+        notes:
+          - invited talk
+          - online
+      - date: {year: 2024, month: 11}
+        host: "The 27th ChinaSys Workshop (ChinaSys'24 Fall)"
+        notes:
+          - accepted as oral
+          - Tianjin, China

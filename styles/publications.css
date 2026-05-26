@@ -47,6 +47,10 @@
   color: var(--green);
 }
 
+.publication.workshop .venue {
+  color: var(--blue-light);
+}
+
 .pub-title {
   color: var(--ink);
   display: inline;
@@ -109,7 +113,9 @@
 }
 
 .badge.award::after {
-  content: " \1F3C6";
+  content: "\1F3C6";
+  display: inline-block;
+  margin-left: 4px;
 }
 
 .pub-actions {
@@ -117,12 +123,28 @@
   flex-wrap: wrap;
   gap: 6px;
   margin-top: 5px;
+  align-items: baseline;
 }
 
 .text-link {
   color: var(--blue);
   background: rgba(219, 231, 244, 0.28);
   border-color: rgba(23, 63, 111, 0.28);
+}
+
+.text-note {
+  max-width: 100%;
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 2px 8px;
+  border: 1px solid rgba(111, 98, 102, 0.26);
+  border-radius: 5px;
+  background: rgba(255, 253, 248, 0.5);
+  color: var(--quiet);
+  font-size: 12.75px;
+  font-weight: 730;
+  line-height: 1.25;
 }
 
 .text-link:hover {

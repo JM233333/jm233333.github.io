@@ -140,16 +140,11 @@ class SiteBuilder:
             "urls": self.__urls(lang, "index.html"),
             "selected_publications": [
                 self.__localized_publication(publication, lang)
-                for publication in publications["conference"] + publications["journal"]
-                if publication.get("selected")
-            ],
-            "selected_workshops": [
-                self.__localized_publication(publication, lang)
-                for publication in publications["workshop"]
+                for publication in publications["all"]
                 if publication.get("selected")
             ],
             "talks": self.__localized_talks(
-                about_data.get("talks", []), publications["workshop"], lang
+                about_data.get("talks", []), lang
             ),
             "conference_publications": [
                 self.__localized_publication(publication, lang)
@@ -177,30 +172,31 @@ class SiteBuilder:
     def __ordered_publications(
         self,
         entries: dict[str, dict[str, object]],
-        order: dict[str, list[str]],
+        order: list[str],
     ) -> dict[str, list[dict[str, object]]]:
-        """Apply explicit grouped publication ordering and validate coverage."""
+        """Apply explicit publication ordering and split by publication kind."""
         ordered: dict[str, list[dict[str, object]]] = {
+            "all": [],
             "conference": [],
             "journal": [],
             "workshop": [],
         }
         referenced: set[str] = set()
-        for kind, keys in order.items():
-            if kind not in ordered:
-                self.__logger.warning("unknown publication kind in order: %s", kind)
+        for key in order:
+            if key not in entries:
+                raise ValueError(f"Publication order references missing key: {key}")
+            if key in referenced:
+                raise ValueError(f"Publication order contains duplicate key: {key}")
+            publication = entries[key]
+            actual_kind = str(publication.get("kind", ""))
+            if actual_kind not in ordered or actual_kind == "all":
+                self.__logger.warning(
+                    "publication %s has unknown kind: %s", key, actual_kind
+                )
                 continue
-            for key in keys:
-                if key not in entries:
-                    raise ValueError(f"Publication order references missing key: {key}")
-                publication = entries[key]
-                actual_kind = str(publication.get("kind", ""))
-                if actual_kind != kind:
-                    raise ValueError(
-                        f"{key} is ordered as {kind}, but defines kind={actual_kind}"
-                    )
-                ordered[kind].append(publication)
-                referenced.add(key)
+            ordered["all"].append(publication)
+            ordered[actual_kind].append(publication)
+            referenced.add(key)
         missing = sorted(set(entries) - referenced)
         if missing:
             self.__logger.warning(
@@ -243,7 +239,7 @@ class SiteBuilder:
         self, publication: dict[str, object], lang: str
     ) -> dict[str, object]:
         """Localize and normalize a publication entry."""
-        links = self.__localized_links(publication.get("links", []), lang)
+        links = self.__localized_publication_links(publication, lang)
         badges = self.__localized_publication_badges(publication, lang)
         venue = publication.get("venue", {})
         if not isinstance(venue, dict):
@@ -256,9 +252,11 @@ class SiteBuilder:
             "badges": badges,
             "kind": str(publication.get("kind", "")),
             "links": links,
+            "note_links": [link for link in links if not link.get("has_url")],
             "primary_url": self.__primary_url(links, venue),
             "selected": bool(publication.get("selected", False)),
             "title": localize(publication.get("title", ""), lang),
+            "url_links": [link for link in links if link.get("has_url")],
             "venue": {
                 "short": localize(venue.get("short", ""), lang),
                 "title": localize(venue.get("title", ""), lang),
@@ -269,21 +267,36 @@ class SiteBuilder:
     def __localized_talks(
         self,
         talks_value: object,
-        workshops: list[dict[str, object]],
         lang: str,
     ) -> list[dict[str, object]]:
-        """Localize explicit talks and speaker workshops sorted by date."""
-        talks: list[dict[str, object]] = []
+        """Localize manually maintained talk topics sorted by latest date."""
+        topics: list[dict[str, object]] = []
         if isinstance(talks_value, list):
-            for talk in talks_value:
-                if isinstance(talk, dict):
-                    talks.append(self.__localized_regular_talk(talk, lang))
-        for workshop in workshops:
-            if workshop.get("speaker"):
-                talks.append(self.__localized_workshop_talk(workshop, lang))
-        return sorted(talks, key=lambda talk: talk["sort_key"], reverse=True)
+            for topic in talks_value:
+                if isinstance(topic, dict):
+                    localized_topic = self.__localized_regular_talk_topic(topic, lang)
+                    if localized_topic["items"]:
+                        topics.append(localized_topic)
+        return sorted(topics, key=lambda topic: topic["sort_key"], reverse=True)
 
-    def __localized_regular_talk(
+    def __localized_regular_talk_topic(
+        self, topic: dict[object, object], lang: str
+    ) -> dict[str, object]:
+        """Localize one manually configured talk topic."""
+        items: list[dict[str, object]] = []
+        topic_items = topic.get("items", [])
+        if isinstance(topic_items, list):
+            for item in topic_items:
+                if isinstance(item, dict):
+                    items.append(self.__localized_regular_talk_item(item, lang))
+        items.sort(key=lambda item: item["sort_key"], reverse=True)
+        return {
+            "items": items,
+            "sort_key": items[0]["sort_key"] if items else (0, 0, 0),
+            "title_html": inline_html(topic.get("title", ""), lang),
+        }
+
+    def __localized_regular_talk_item(
         self, talk: dict[object, object], lang: str
     ) -> dict[str, object]:
         """Localize one non-workshop talk."""
@@ -293,29 +306,6 @@ class SiteBuilder:
             "host_html": inline_html(talk.get("host", ""), lang),
             "notes_text": self.__notes_text(notes),
             "sort_key": self.__timepoint_sort_key(talk.get("date")),
-            "title_html": inline_html(talk.get("title", ""), lang),
-        }
-
-    def __localized_workshop_talk(
-        self, publication: dict[str, object], lang: str
-    ) -> dict[str, object]:
-        """Render a speaker workshop as a talk item."""
-        venue = publication.get("venue", {})
-        if not isinstance(venue, dict):
-            raise ValueError(f"{publication.get('key')} venue must be a mapping")
-        notes: list[dict[str, str]] = []
-        short = localize(venue.get("short", ""), lang)
-        if short:
-            notes.append({"label": short, "tone_class": ""})
-        status = localize(publication.get("status", ""), lang)
-        if status:
-            notes.append({"label": status, "tone_class": "status"})
-        return {
-            "date": self.__format_timepoint(publication.get("date"), lang),
-            "host_html": inline_html(venue.get("title", ""), lang),
-            "notes_text": self.__notes_text(notes),
-            "sort_key": self.__timepoint_sort_key(publication.get("date")),
-            "title_html": inline_html(publication.get("title", ""), lang),
         }
 
     def __localized_badges(
@@ -351,18 +341,48 @@ class SiteBuilder:
         badges.extend(self.__localized_badges(publication.get("badges", []), lang))
         return badges
 
-    def __localized_links(self, links_value: object, lang: str) -> list[dict[str, str]]:
+    def __localized_publication_links(
+        self, publication: dict[str, object], lang: str
+    ) -> list[dict[str, object]]:
+        """Localize publication links and infer workshop PDFs by key."""
+        links = self.__localized_links(publication.get("links", []), lang)
+        if publication.get("kind") != "workshop":
+            return links
+        if any(link.get("label") == "PDF" for link in links):
+            return links
+        key = publication.get("key")
+        if not isinstance(key, str) or not key:
+            return links
+        pdf_path = Path("pdfs") / "workshops" / f"{key}.pdf"
+        if (self.__root / pdf_path).is_file():
+            links.append(
+                {
+                    "has_url": True,
+                    "label": "PDF",
+                    "url": self.__page_url(pdf_path.as_posix(), lang),
+                }
+            )
+        return links
+
+    def __localized_links(
+        self, links_value: object, lang: str
+    ) -> list[dict[str, object]]:
         """Localize publication action links."""
-        links: list[dict[str, str]] = []
+        links: list[dict[str, object]] = []
         if not isinstance(links_value, list):
             return links
         for link in links_value:
             if not isinstance(link, dict):
                 continue
+            label = localize(link.get("label", ""), lang)
+            if not label:
+                continue
+            url = self.__page_url(str(link.get("url", "")), lang)
             links.append(
                 {
-                    "label": localize(link.get("label", ""), lang),
-                    "url": self.__page_url(str(link.get("url", "")), lang),
+                    "has_url": bool(url),
+                    "label": label,
+                    "url": url,
                 }
             )
         return links
@@ -533,7 +553,7 @@ class SiteBuilder:
         return url if lang == "en" else f"../{url}"
 
     def __primary_url(
-        self, links: list[dict[str, str]], venue: dict[object, object]
+        self, links: list[dict[str, object]], venue: dict[object, object]
     ) -> str:
         """Choose the main publication link from action links and venue URL."""
         for preferred in ("DOI", "PDF", "Tool"):
