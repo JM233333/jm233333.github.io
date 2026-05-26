@@ -1,0 +1,98 @@
+﻿projects:
+  - title:
+      en: Research Projects
+      zh-cn: 研究工作
+    items:
+      - name: Visualinux
+        url: https://icsnju.github.io/visualinux/
+        start: {year: 2023}
+        end: {year: 2025}
+        summary:
+          en: "A debugging framework that enables practical visual debugging for the Linux kernel. This work has been accepted by EuroSys 2025 and received the Best Student Paper Award."
+          zh-cn: "一个实用的 Linux 内核可视化调试框架。这份工作已经被 CCF-A 类会议 EuroSys 2025 接收，并获最佳学生论文奖。"
+  - title:
+      en: Amateur Projects
+      zh-cn: 业余项目
+    items:
+      - name:
+          en: "JM233333's Blog"
+          zh-cn: 个人博客
+        url: https://blog.jm233333.com
+        note:
+          en: "rebuilding; temporarily unavailable"
+          zh-cn: "网站正在重构，暂时不可访问"
+        summary:
+          en: "Nearly **one million words** in total, including a large number of independently-written original articles."
+          zh-cn: "总计有近 **百万字**，其中包括大量独立撰写的原创技术文章。"
+        details:
+          - en: "Basic tutorials of computer science knowledge, including programming languages (C/C++), algorithms and data structures, and graph theory."
+            zh-cn: "计算机基础知识的教程，包括编程语言基础（C/C++），算法和数据结构，图论，等等。"
+          - en: "Detailed solutions of programming problems, including LeetCode and challenging ICPC problems."
+            zh-cn: "程序设计题目的详细题解，包括 LeetCode 和一些 ICPC 的题目。"
+          - en: "Other computer science knowledge sharing articles."
+            zh-cn: "其它计算机技术知识分享的文章。"
+  - title:
+      en: Closed Projects
+      zh-cn: 停止维护的项目
+    items:
+      - name:
+          en: "New Mystery MagicTower: Evolution"
+          zh-cn: "新玄机奇塔：Evolution"
+        start: {year: 2016}
+        end: {year: 2024}
+        separator: "/"
+        summary:
+          en: "Large-scale 2D magictower-type role-playing game, downloaded more than 50k times in total. An evolution version was re-released in 2024."
+          zh-cn: "一个具有一定规模的 2D 魔塔类 RPG 游戏，累计下载超过 5 万次。该游戏的重置版已经在 2024 年重新发布。"
+        details:
+          - en: "The game is far from excellent, but it was made in my spare time when I was still in high school."
+            zh-cn: "此游戏远远称不上优秀，但它毕竟只是我在高中的业余时间制作的。"
+          - en: "Built on RGSS, a game engine that has been abandoned by the times."
+            zh-cn: "基于 RGSS 构建：这是一个已经被时代抛弃的游戏引擎。"
+          - en: "Abundant and well-designed game content, but with naive arts and stories."
+            zh-cn: "游戏内容丰富且经过精心设计，但美术和剧情水平比较朴素。"
+          - en: "This game is no longer maintained, but the final version artifact can still be downloaded."
+            zh-cn: "此游戏已经停止维护，但最终版本的成品仍然可下载。"
+      - name:
+          en: "xv6 ported to AM"
+          zh-cn: "移植到 AM 上的 xv6 操作系统"
+        start: {year: 2021}
+        note:
+          en: "not yet public"
+          zh-cn: "未公开"
+        summary:
+          en: "Porting [xv6](https://github.com/mit-pdos/xv6-public) OS to [AbstractMachine](https://github.com/NJU-ProjectN/abstract-machine)."
+          zh-cn: "将 [xv6](https://github.com/mit-pdos/xv6-public) 操作系统移植到硬件抽象层 [AbstractMachine](https://github.com/NJU-ProjectN/abstract-machine) 上。"
+        details:
+          - en: "This project is supervised by Dr. [Yanyan Jiang](https://ics.nju.edu.cn/~jyy/)."
+            zh-cn: "此项目在 [蒋炎岩教授](https://ics.nju.edu.cn/~jyy/) 的指导下推进。"
+          - en: "Based on [AbstractMachine](https://github.com/NJU-ProjectN/abstract-machine), a minimal, modularized, and machine-independent hardware abstraction layer."
+            zh-cn: "基于 [AbstractMachine](https://github.com/NJU-ProjectN/abstract-machine) 实现：这是一个最小化的、模块化的、独立于机器环境的硬件抽象层。"
+      - name: "Data Structure Visualizer"
+        url: https://github.com/JM233333/data-structure-visualizer
+        start: {year: 2019}
+        summary:
+          en: "PC desktop application implemented with JavaFX, which provides visualization and interaction of algorithms and data structures as well as high customizability."
+          zh-cn: "一个用 JavaFX 实现的 PC 桌面应用程序，提供算法和数据结构的可视化、交互控制，以及强大的可定制特性。"
+        details:
+          - en: "Designed as an auxiliary tool for teaching."
+            zh-cn: "最初被设计作为课堂教学的辅助工具。"
+          - en: "Provides graphical representation, step-by-step animation demonstration, and synchronous code tracking."
+            zh-cn: "提供图形化显示、单步动画演示和与之同步的代码跟踪。"
+          - en: "Supports user extensions and batch processing operations."
+            zh-cn: "支持用户自定义扩展和批处理操作。"
+      - name:
+          en: "Basic Implementation of Skeletal Animation Retargeting"
+          zh-cn: "骨骼动画重定向技术的基本实现"
+        start: {year: 2019}
+        summary:
+          en: "The work I participated in during my internship at Tencent. The project is owned by Tencent."
+          zh-cn: "腾讯实习期间参与完成的工作。该项目归腾讯所有。"
+        details:
+          - en: "The implementation is based on [three.js](https://github.com/mrdoob/three.js/)."
+            zh-cn: "该技术基于开源 3D 引擎 [three.js](https://github.com/mrdoob/three.js/) 实现。"
+          - en: "Requires basic knowledge of computer graphics, 3D mathematics, skeletal animation, etc."
+            zh-cn: "运用计算机图形学、3D 数学、骨骼动画等方面的基础知识。"
+          - en: "This project has been handed over to Tencent."
+            zh-cn: "此项目已经移交给腾讯。"
+

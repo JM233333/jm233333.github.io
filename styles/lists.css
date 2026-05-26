@@ -1,0 +1,42 @@
+.compact-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 8px;
+}
+
+.item {
+  display: grid;
+  grid-template-columns: 118px minmax(0, 1fr);
+  gap: 16px;
+  align-items: baseline;
+}
+
+.item > * {
+  min-width: 0;
+}
+
+.date {
+  color: var(--quiet);
+  font-size: 15.5px;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.item-title {
+  font-weight: 760;
+}
+
+.note {
+  color: var(--muted);
+}
+
+.talk-badges {
+  display: none;
+}
+
+.talk-notes {
+  color: var(--quiet);
+  font-size: 15.5px;
+}

@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="{{ lang }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{{ site.description }}">
+  <title>{{ labels.full_publications }} | {{ site.title }}</title>
+  <link rel="icon" href="{{ asset_prefix }}favicon.ico">
+  <link rel="stylesheet" href="{{ asset_prefix }}style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">{{ labels.skip }}</a>
+  <header class="site-header">
+    <nav class="nav" aria-label="{{ labels.primary_navigation }}">
+      <a class="brand" href="{{ urls.home }}">{{ profile.handle }}</a>
+      <div class="nav-right">
+        <div class="nav-links">
+          <a href="{{ urls.about }}">{{ labels.about }}</a>
+          <a href="{{ urls.publications }}" aria-current="page">{{ labels.publications }}</a>
+        </div>
+        <a class="language-link" href="{{ urls.switch_lang }}">{{ labels.switch_lang }}</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="page-title" aria-labelledby="publications-page-title">
+      <h1 id="publications-page-title">{{ labels.full_publications }}</h1>
+    </section>
+
+    <section id="conference" class="section" aria-labelledby="conference-title">
+      <div class="section-heading">
+        <h2 id="conference-title">{{ labels.conference_publications }}</h2>
+      </div>
+      <div>
+        <ol class="publication-list">
+          {{#conference_publications}}
+          <li class="publication {{ kind }}">
+            <div class="pub-head">
+              <a class="venue" href="{{ venue.url }}" target="_blank" rel="noopener">{{ venue.short }}</a><a class="pub-title" href="{{ primary_url }}" target="_blank" rel="noopener">{{ title }}</a>
+            </div>
+            <p class="authors">{{{ authors_html }}}</p>
+            <p class="pub-meta">{{ venue.title }}</p>
+            <div class="badges">
+              {{#badges}}<span class="badge {{ tone_class }}">{{ label }}</span>{{/badges}}
+            </div>
+            <div class="pub-actions">
+              {{#links}}<a class="text-link" href="{{ url }}" target="_blank" rel="noopener">{{ label }}</a>{{/links}}
+            </div>
+          </li>
+          {{/conference_publications}}
+        </ol>
+      </div>
+    </section>
+
+    <section id="journal" class="section" aria-labelledby="journal-title">
+      <div class="section-heading">
+        <h2 id="journal-title">{{ labels.journal_publications }}</h2>
+      </div>
+      <div>
+        <ol class="publication-list">
+          {{#journal_publications}}
+          <li class="publication {{ kind }}">
+            <div class="pub-head">
+              <a class="venue" href="{{ venue.url }}" target="_blank" rel="noopener">{{ venue.short }}</a><a class="pub-title" href="{{ primary_url }}" target="_blank" rel="noopener">{{ title }}</a>
+            </div>
+            <p class="authors">{{{ authors_html }}}</p>
+            <p class="pub-meta">{{ venue.title }}</p>
+            <div class="badges">
+              {{#badges}}<span class="badge {{ tone_class }}">{{ label }}</span>{{/badges}}
+            </div>
+            <div class="pub-actions">
+              {{#links}}<a class="text-link" href="{{ url }}" target="_blank" rel="noopener">{{ label }}</a>{{/links}}
+            </div>
+          </li>
+          {{/journal_publications}}
+        </ol>
+      </div>
+    </section>
+
+    <section id="workshops" class="section" aria-labelledby="workshops-title">
+      <div class="section-heading">
+        <h2 id="workshops-title">{{ labels.workshops }}</h2>
+      </div>
+      <div>
+        <ol class="publication-list">
+          {{#workshop_publications}}
+          <li class="publication {{ kind }}">
+            <div class="pub-head">
+              <a class="venue" href="{{ venue.url }}" target="_blank" rel="noopener">{{ venue.short }}</a><a class="pub-title" href="{{ primary_url }}" target="_blank" rel="noopener">{{ title }}</a>
+            </div>
+            <p class="authors">{{{ authors_html }}}</p>
+            <p class="pub-meta">{{ venue.title }}</p>
+            <div class="badges">
+              {{#badges}}<span class="badge {{ tone_class }}">{{ label }}</span>{{/badges}}
+            </div>
+            <div class="pub-actions">
+              {{#links}}<a class="text-link" href="{{ url }}" target="_blank" rel="noopener">{{ label }}</a>{{/links}}
+            </div>
+          </li>
+          {{/workshop_publications}}
+        </ol>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    {{ labels.last_updated }}: {{ site.last_updated }}. {{ labels.built_from }}.
+  </footer>
+</body>
+</html>

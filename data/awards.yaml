@@ -1,0 +1,39 @@
+﻿awards:
+  - title:
+      en: Research
+      zh-cn: 学术荣誉
+    featured: true
+    items:
+      - en: "EuroSys'25 Best Student Paper Award"
+        zh-cn: "EuroSys'25 最佳学生论文奖"
+  - title:
+      en: Programming Contest Awards
+      zh-cn: 程序设计竞赛奖项
+    items:
+      - en: "Gold Medal, ACM-ICPC Asia Regional Contest (Jiaozuo Site), Nov 25, 2018"
+        zh-cn: "2018 年 ACM-ICPC 亚洲区域赛焦作站金奖"
+      - en: "Silver Medal, ACM-ICPC Asia-East Continent Final (Xi'an Site), Dec 16, 2018"
+        zh-cn: "2018 年 ACM-ICPC 亚洲区域赛西安站 EC-Final 银奖"
+      - en: "Silver Medal, ACM-ICPC Asia Regional Contest (Nanjing Site), Oct 14, 2018"
+        zh-cn: "2018 年 ACM-ICPC 亚洲区域赛南京站银奖"
+      - en: "Silver Medal, China Collegiate Programming Contest (Jilin Site), Sep 22, 2018"
+        zh-cn: "2018 年 CCPC 中国大学生程序设计竞赛吉林站银奖"
+      - en: "Bronze Medal, ACM-ICPC Asia Regional Contest (Xi'an Site), Oct 29, 2017"
+        zh-cn: "2017 年 ACM-ICPC 亚洲区域赛西安站铜奖"
+  - title:
+      en: Personal Honors
+      zh-cn: 个人荣誉
+    items:
+      - en: "The Outstanding Graduates Awards of Nanyang Shuyuan, Xi'an Jiaotong University, 2020"
+        zh-cn: "2020 届西安交通大学南洋书院优秀毕业生"
+      - en: "The CCF Elite Collegiate Award, China Computer Federation, 2019"
+        zh-cn: "2019 年度 CCF 优秀大学生奖"
+  - title:
+      en: Scholarship
+      zh-cn: 奖学金
+    items:
+      - en: "Shidi Lu's First Stage Scholarship, Xi'an Jiaotong University, 2019"
+        zh-cn: "2019 年西安交通大学陆诗娣一等奖学金"
+      - en: "Shidi Lu's Second Stage Scholarship, Xi'an Jiaotong University, 2018"
+        zh-cn: "2018 年西安交通大学陆诗娣二等奖学金"
+

@@ -1,0 +1,7 @@
+__pycache__/
+.ruff_cache/
+tmp/
+
+/index.html
+/about.html
+/publications.html

@@ -1,0 +1,133 @@
+.publication-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 17px;
+}
+
+.publication {
+  min-width: 0;
+  padding: 0;
+  background: transparent;
+}
+
+.publication::before {
+  content: none;
+}
+
+.pub-head {
+  min-width: 0;
+  display: block;
+  line-height: 1.32;
+}
+
+.venue {
+  color: var(--accent-ink);
+  display: inline;
+  font-size: 17px;
+  font-weight: 840;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.venue::before {
+  content: "[";
+  color: var(--quiet);
+  font-weight: 640;
+}
+
+.venue::after {
+  content: "]";
+  color: var(--quiet);
+  font-weight: 640;
+}
+
+.publication.journal .venue {
+  color: var(--green);
+}
+
+.pub-title {
+  color: var(--ink);
+  display: inline;
+  margin-left: 4px;
+  font-size: 17px;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+  text-decoration: none;
+}
+
+.pub-title:hover {
+  color: var(--accent-ink);
+}
+
+.authors,
+.pub-meta {
+  margin: 5px 0 0;
+  color: var(--ink);
+  font-size: 15.5px;
+  line-height: 1.5;
+}
+
+.pub-meta {
+  margin-top: 0;
+}
+
+.authors strong {
+  color: var(--ink);
+}
+
+.badges {
+  min-width: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 5px;
+}
+
+.badge,
+.text-link {
+  max-width: 100%;
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 2px 8px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: rgba(255, 253, 248, 0.58);
+  color: var(--muted);
+  font-size: 12.75px;
+  font-weight: 730;
+  line-height: 1.25;
+  text-decoration: none;
+}
+
+.badge.award {
+  border-color: #d6ad4b;
+  background: rgba(255, 239, 189, 0.58);
+  color: var(--award);
+}
+
+.badge.award::after {
+  content: " \1F3C6";
+}
+
+.pub-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 5px;
+}
+
+.text-link {
+  color: var(--blue);
+  background: rgba(219, 231, 244, 0.28);
+  border-color: rgba(23, 63, 111, 0.28);
+}
+
+.text-link:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+  text-decoration: none;
+}

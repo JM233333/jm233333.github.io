@@ -1,0 +1,41 @@
+key: uos-scis25
+title: System Support for Ubiquitous Human-Cyber-Physical-Fusion Applications
+authors: Yunfan Cao, Chaoyi Zhao, Hanzhi Liu, Jiayi Wang, Huiyan Wang, Ping Yu, Chun Cao, Chang Xu, Xiaoxing Ma, Yanyan Jiang
+year: 2025
+kind: journal
+status: Accepted
+venue:
+  short:
+    en: SCIS (in Chinese)
+    zh-cn: SCIS (中文)
+  title:
+    en: Scientia Sinica Informationis
+    zh-cn: 中国科学：信息科学
+  rank:
+    en: CCF-A Chinese
+    zh-cn: CCF-A 中文
+  url: https://www.sciengine.com/SSI/home
+
+badges:
+  - label:
+      en: CCF-A Chinese
+      zh-cn: CCF-A 中文
+
+links:
+  - label: DOI
+    url: https://doi.org/10.1360/SSI-2024-0338
+  - label: PDF
+    url: pdfs/uos-scis25.pdf
+
+bibtex: |
+  @article{SSI-2024-0338,
+    author = {Cao, Yunfan and Zhao, Chaoyi and Liu, Hanzhi and Wang, Jiayi and Wang, Huiyan and Yu, Ping and Cao, Chun and Xu, Chang and Ma, Xiaoxing and Jiang, Yanyan},
+    title = {System support for ubiquitous human-cyber-physical fusion applications},
+    journal = {SCIENTIA SINICA Informationis},
+    year = {2025},
+    volume = {55},
+    number = {3},
+    pages = {464--480},
+    url = {https://www.sciengine.com/SSI/doi/10.1360/SSI-2024-0338},
+    doi = {10.1360/SSI-2024-0338}
+  }

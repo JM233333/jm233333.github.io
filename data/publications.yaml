@@ -1,0 +1,9 @@
+order:
+  conference:
+    - visualinux-eurosys25
+  journal:
+    - visualinux-tocs
+    - uos-scis25
+  workshop:
+    - uos-wuos25
+    - visualinux-chinasys24fall

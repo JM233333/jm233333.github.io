@@ -1,0 +1,33 @@
+main {
+  width: 100%;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 30px 28px 48px;
+  overflow-wrap: break-word;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: 28px;
+  align-items: start;
+  padding: 4px 0 23px;
+  border-bottom: 2px solid var(--ink);
+}
+
+.hero > * {
+  min-width: 0;
+}
+
+.page-title {
+  padding: 5px 0 20px;
+  border-bottom: 2px solid var(--ink);
+}
+
+footer {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 28px 30px;
+  color: var(--quiet);
+  font-size: 13px;
+}

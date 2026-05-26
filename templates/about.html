@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="{{ lang }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{{ site.description }}">
+  <title>{{ labels.about }} | {{ site.title }}</title>
+  <link rel="icon" href="{{ asset_prefix }}favicon.ico">
+  <link rel="stylesheet" href="{{ asset_prefix }}style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">{{ labels.skip }}</a>
+  <header class="site-header">
+    <nav class="nav" aria-label="{{ labels.primary_navigation }}">
+      <a class="brand" href="{{ urls.home }}">{{ profile.handle }}</a>
+      <div class="nav-right">
+        <div class="nav-links">
+          <a href="{{ urls.about }}" aria-current="page">{{ labels.about }}</a>
+          <a href="{{ urls.publications }}">{{ labels.publications }}</a>
+        </div>
+        <a class="language-link" href="{{ urls.switch_lang }}">{{ labels.switch_lang }}</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero" aria-labelledby="profile-title">
+      <div>
+        <div class="name-line">
+          <h1 id="profile-title">{{ profile.name }} <span class="native-name">({{ profile.native_name }})</span></h1>
+        </div>
+        <p class="role">{{ profile.role }}</p>
+        <p class="bio">{{{ profile.bio_html }}}</p>
+      </div>
+      <aside class="profile-aside" aria-label="{{ labels.contact_links }}">
+        <div class="contact-card">
+          <p class="contact-line"><strong>{{ labels.email }}</strong><br><a href="mailto:{{ profile.email }}">{{ profile.email }}</a></p>
+          <p class="contact-line">{{ labels.email_note }}</p>
+          <div class="contact-separator" aria-hidden="true"></div>
+          <div class="link-row">
+            {{#profile.links}}
+            <a class="pill-link" href="{{ url }}" target="_blank" rel="noopener">
+              {{#icon_url}}<img class="pill-icon-img" src="{{ icon_url }}" alt="" aria-hidden="true">{{/icon_url}}
+              {{#icon}}<span class="pill-icon" aria-hidden="true">{{ icon }}</span>{{/icon}}
+              <span>{{ label }}</span>
+            </a>
+            {{/profile.links}}
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section id="publications" class="section" aria-labelledby="publications-title">
+      <div class="section-heading">
+        <h2 id="publications-title">{{ labels.selected_publications }}</h2>
+      </div>
+      <div class="stack">
+        <ol class="publication-list">
+          {{#selected_publications}}
+          <li class="publication {{ kind }}">
+            <div class="pub-head">
+              <a class="venue" href="{{ venue.url }}" target="_blank" rel="noopener">{{ venue.short }}</a><a class="pub-title" href="{{ primary_url }}" target="_blank" rel="noopener">{{ title }}</a>
+            </div>
+            <p class="authors">{{{ authors_html }}}</p>
+            <p class="pub-meta">{{ venue.title }}</p>
+            <div class="badges">
+              {{#badges}}<span class="badge {{ tone_class }}">{{ label }}</span>{{/badges}}
+            </div>
+            <div class="pub-actions">
+              {{#links}}<a class="text-link" href="{{ url }}" target="_blank" rel="noopener">{{ label }}</a>{{/links}}
+            </div>
+          </li>
+          {{/selected_publications}}
+        </ol>
+      </div>
+    </section>
+
+    <section id="awards" class="section" aria-labelledby="awards-title">
+      <div class="section-heading">
+        <h2 id="awards-title">{{ labels.awards }}</h2>
+      </div>
+      <div class="stack">
+        {{#awards}}
+        <div class="subsection">
+          <h3>{{ title }}</h3>
+          <ul class="compact-list award-list">
+            {{#items}}<li>{{{ text_html }}}</li>{{/items}}
+          </ul>
+        </div>
+        {{/awards}}
+      </div>
+    </section>
+
+    <section id="talks" class="section" aria-labelledby="talks-title">
+      <div class="section-heading">
+        <h2 id="talks-title">{{ labels.talks }}</h2>
+      </div>
+      <div>
+        <ol class="compact-list">
+          {{#talks}}
+          <li class="item">
+            <span class="date">{{ date }}</span>
+            <span>
+              <span class="item-title">{{{ title_html }}}</span>, {{{ host_html }}}
+              {{#notes_text}} <span class="talk-notes">({{ notes_text }})</span>{{/notes_text}}
+            </span>
+          </li>
+          {{/talks}}
+        </ol>
+      </div>
+    </section>
+
+    <section id="education" class="section" aria-labelledby="education-title">
+      <div class="section-heading">
+        <h2 id="education-title">{{ labels.education }}</h2>
+      </div>
+      <div>
+        <ol class="compact-list">
+          {{#education}}
+          <li class="item">
+            <span class="date">{{ period }}</span>
+            <span>{{{ text_html }}}</span>
+          </li>
+          {{/education}}
+        </ol>
+      </div>
+    </section>
+
+    <section id="teaching" class="section" aria-labelledby="teaching-title">
+      <div class="section-heading">
+        <h2 id="teaching-title">{{ labels.teaching }}</h2>
+      </div>
+      <div>
+        <ol class="compact-list">
+          {{#teaching}}
+          <li class="item">
+            <span class="date">{{ period }}</span>
+            <span>{{{ text_html }}}</span>
+          </li>
+          {{/teaching}}
+        </ol>
+      </div>
+    </section>
+
+    <section id="projects" class="section" aria-labelledby="projects-title">
+      <div class="section-heading">
+        <h2 id="projects-title">{{ labels.projects }}</h2>
+      </div>
+      <div class="stack">
+        {{#projects}}
+        <div class="subsection">
+          <h3>{{ title }}</h3>
+          <ul class="compact-list">
+            {{#items}}
+            <li>
+              <span class="item-title">{{{ name_html }}}</span>{{#period}} <span class="note">({{ period }})</span>{{/period}}{{#note}} <span class="note">({{ note }})</span>{{/note}}: {{{ summary_html }}}
+              {{#has_details}}
+              <details>
+                <summary>{{ labels.details }}</summary>
+                <ul>
+                  {{#details}}<li>{{{ text_html }}}</li>{{/details}}
+                </ul>
+              </details>
+              {{/has_details}}
+            </li>
+            {{/items}}
+          </ul>
+        </div>
+        {{/projects}}
+      </div>
+    </section>
+
+    <section id="hobbies" class="section" aria-labelledby="hobbies-title">
+      <div class="section-heading">
+        <h2 id="hobbies-title">{{ labels.hobbies }}</h2>
+      </div>
+      <div>
+        <ul class="compact-list">
+          {{#hobbies}}<li>{{{ text_html }}}</li>{{/hobbies}}
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    {{ labels.last_updated }}: {{ site.last_updated }}. {{ labels.built_from }}.
+  </footer>
+</body>
+</html>

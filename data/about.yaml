@@ -1,0 +1,93 @@
+﻿profile:
+  handle: JM233333
+  name: Hanzhi Liu
+  native_name: 刘瀚之
+  role:
+    en: "Ph.D. candidate, Nanjing University"
+    zh-cn: "南京大学博士研究生"
+  email: jm233333@outlook.com
+  bio:
+    en: >
+      I'm a fourth-year Ph.D. candidate in [SPAR](http://ics.nju.edu.cn/spar/)
+      Group of Institute of Computer Software, Nanjing University, supervised by
+      Assoc. Prof. [Yanyan Jiang](https://ics.nju.edu.cn/~jyy/) and Prof.
+      [Chang Xu](https://cs.nju.edu.cn/changxu/). Currently my research focuses
+      on understanding and debugging operating system kernels and other system
+      software. I'm also interested in system reliability and observability, as
+      well as designing systems that can solve critical real-world problems.
+    zh-cn: >
+      我是南京大学计算机软件研究所 [SPAR](http://ics.nju.edu.cn/spar/) 小组的四年级博士生，
+      导师是 [蒋炎岩副教授](https://ics.nju.edu.cn/~jyy/) 和 [许畅教授](https://cs.nju.edu.cn/changxu/)。
+      目前我的主要研究方向是操作系统内核和其他系统软件的调试和理解；我还有志于系统软件的可靠性与可观测性，
+      以及设计能够解决现实世界重大问题的系统。
+  links:
+    - label: Google Scholar
+      icon_url: https://cdn.simpleicons.org/googlescholar/4285F4
+      url: https://scholar.google.com/citations?user=tiRdjOEAAAAJ
+    - label: ORCID
+      icon_url: https://cdn.simpleicons.org/orcid/A6CE39
+      url: https://orcid.org/0009-0005-2732-3971
+    - label: GitHub
+      icon_url: https://cdn.simpleicons.org/github/181717
+      url: https://github.com/JM233333
+
+education:
+  - start: {year: 2022, month: 9}
+    end: present
+    text:
+      en: "Ph.D., Institute of Computer Software, Department of Computer Science and Technology, Nanjing University, supervised by [Yanyan Jiang](https://ics.nju.edu.cn/~jyy/) and [Chang Xu](https://cs.nju.edu.cn/changxu/)."
+      zh-cn: "博士生在读，南京大学计算机科学与技术系，计算机软件研究所，导师是 [蒋炎岩](https://ics.nju.edu.cn/~jyy/) 和 [许畅](https://cs.nju.edu.cn/changxu/)。"
+  - start: {year: 2020, month: 9}
+    end: {year: 2022, month: 8}
+    text:
+      en: "M.Sc., Institute of Computer Software, Department of Computer Science and Technology, Nanjing University, supervised by Yanyan Jiang and Chang Xu."
+      zh-cn: "硕士研究生，南京大学计算机科学与技术系，计算机软件研究所，导师是蒋炎岩和许畅。"
+  - start: {year: 2016, month: 9}
+    end: {year: 2020, month: 6}
+    text:
+      en: "B.Eng., Department of Computer Science and Technology, Xi'an Jiaotong University."
+      zh-cn: "工学学士学位，西安交通大学计算机科学与技术系。"
+  - start: {year: 2019, month: 6}
+    end: {year: 2019, month: 8}
+    text:
+      en: "Client-side Developer Intern, Platform and Content Group, Tencent."
+      zh-cn: "客户端开发实习生，腾讯，平台与内容事业群，社交娱乐产品部。"
+  - start: {year: 2013, month: 9}
+    end: {year: 2016, month: 6}
+    text:
+      en: "High School Education, Senior High Department of Shenzhen Experimental School."
+      zh-cn: "高中，深圳实验学校高中部。"
+
+teaching:
+  - start: {year: 2022}
+    end: {year: 2023}
+    text:
+      en: "TA, Introduction of Computer System (2022 Autumn, 2023 Autumn), taught by Huiyan Wang, Department of Computer Science and Technology, Nanjing University."
+      zh-cn: "计算机系统基础（2022 秋，2023 秋），实验助教（由王慧妍老师授课），南京大学计算机科学与技术系。"
+  - start: {year: 2022}
+    end: {year: 2023}
+    text:
+      en: "TA, Operating Systems: Design and Implementation (2022 Spring, 2023 Spring), taught by Yanyan Jiang, Department of Computer Science and Technology, Nanjing University."
+      zh-cn: "操作系统：设计与实现（2022 春，2023 春），助教（由蒋炎岩老师授课），南京大学计算机科学与技术系。"
+  - start: {year: 2016}
+    end: {year: 2020}
+    text:
+      en: "Informal TA, The C Programming Language (Autumn), taught by Haiping Zhu, Department of Computer Science and Technology, Xi'an Jiaotong University."
+      zh-cn: "C 语言程序设计课程（秋），非正式助教（由朱海萍老师授课），西安交通大学计算机科学与技术系。"
+  - start: {year: 2019, month: 1}
+    end: {year: 2019, month: 6}
+    text:
+      en: "Acting chairman of ICPC team, Department of Computer Science and Technology, Xi'an Jiaotong University."
+      zh-cn: "西安交通大学 ACM 校队队长代理，西安交通大学计算机科学与技术系。"
+
+hobbies:
+  - en: "Mini Game Development (Amateur)"
+    zh-cn: "小型游戏开发（业余水准）"
+  - en: "Writing Technical Blogs about Computer Science"
+    zh-cn: "写一些计算机专业的技术博客"
+  - en: "Playing Games (e.g. Arknights)"
+    zh-cn: "电子游戏（包括但不限于：明日方舟）"
+  - en: "Enjoying Music (e.g. Monster Siren Records, Yanni, falcom jdk, etc.)"
+    zh-cn: "享受音乐（包括但不限于：塞壬唱片，falcom jdk）"
+  - en: "Swimming"
+    zh-cn: "游泳"

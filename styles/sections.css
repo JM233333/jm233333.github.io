@@ -1,0 +1,62 @@
+.section {
+  display: grid;
+  grid-template-columns: 258px minmax(0, 1fr);
+  gap: 26px;
+  padding: 23px 0;
+  border-bottom: 1px solid var(--line);
+  scroll-margin-top: 62px;
+}
+
+.section > * {
+  min-width: 0;
+}
+
+.section:last-child {
+  border-bottom: 0;
+}
+
+.section-heading {
+  position: sticky;
+  top: 70px;
+  align-self: start;
+  padding-top: 5px;
+}
+
+.section-heading h2 {
+  display: inline;
+  text-decoration: underline;
+  text-decoration-color: var(--line-strong);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.26em;
+}
+
+.stack {
+  display: grid;
+  gap: 12px;
+}
+
+.subsection {
+  display: grid;
+  gap: 8px;
+}
+
+.subsection h3 {
+  width: fit-content;
+  padding-bottom: 2px;
+  border-bottom: 1px dotted var(--line-strong);
+}
+
+.subsection + .subsection {
+  margin-top: 8px;
+}
+
+.award-list li {
+  position: static;
+  padding-left: 0;
+}
+
+.page-link {
+  margin-top: 6px;
+  color: var(--ink);
+  font-size: 15.5px;
+}

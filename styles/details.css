@@ -1,0 +1,19 @@
+details {
+  margin-top: 8px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(255, 253, 248, 0.72);
+  padding: 9px 11px;
+}
+
+summary {
+  cursor: pointer;
+  color: var(--blue);
+  font-weight: 760;
+}
+
+details ul {
+  margin: 8px 0 0;
+  padding-left: 19px;
+  color: var(--muted);
+}

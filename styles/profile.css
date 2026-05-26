@@ -1,0 +1,115 @@
+.name-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0;
+}
+
+.native-name {
+  color: var(--ink);
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+.role {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 17px;
+}
+
+.bio {
+  max-width: 88ch;
+  margin: 16px 0 0;
+  overflow-wrap: anywhere;
+}
+
+.profile-aside {
+  min-width: 0;
+  padding-top: 2px;
+}
+
+.contact-card {
+  min-width: 0;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  background:
+    linear-gradient(135deg, rgba(255, 253, 248, 0.9), rgba(248, 241, 228, 0.48));
+  box-shadow: 4px 4px 0 rgba(189, 169, 139, 0.28);
+  padding: 11px;
+}
+
+.contact-line {
+  margin: 0 0 8px;
+  color: var(--muted);
+  font-size: 13.5px;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.contact-separator {
+  height: 1px;
+  margin: 10px 0 9px;
+  background: linear-gradient(to right, var(--line), var(--line-strong), var(--line));
+  opacity: 0.72;
+}
+
+.contact-line strong {
+  color: var(--ink);
+  display: inline-block;
+  margin-right: 5px;
+  font-weight: 800;
+}
+
+.contact-line a {
+  overflow-wrap: anywhere;
+  font-size: 13.5px;
+  font-weight: 680;
+}
+
+.link-row {
+  min-width: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.pill-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 27px;
+  padding: 3px 8px;
+  border: 1px solid var(--line-strong);
+  border-radius: 5px;
+  background: var(--paper-strong);
+  color: var(--ink);
+  font-size: 12.5px;
+  font-weight: 720;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.pill-link:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+  text-decoration: none;
+}
+
+.pill-icon {
+  width: 14px;
+  height: 14px;
+  display: inline-grid;
+  place-items: center;
+  color: var(--accent-ink);
+  font-size: 11px;
+  font-weight: 820;
+  line-height: 1;
+}
+
+.pill-icon-img {
+  width: 14px;
+  height: 14px;
+  display: block;
+  object-fit: contain;
+}

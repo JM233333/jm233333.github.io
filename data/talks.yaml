@@ -1,0 +1,24 @@
+﻿talks:
+  - date: {year: 2025, month: 10}
+    title: "Understanding the Linux Kernel, Visually"
+    host:
+      en: "Huawei HarmonyOS DFX Group"
+      zh-cn: "华为鸿蒙内核DFX组"
+    notes:
+      - invited talk
+      - online
+  - date: {year: 2025, month: 5}
+    title: "Understanding the Linux Kernel, Visually"
+    host: "ETH Zurich AST Lab"
+    notes:
+      - invited talk
+      - online
+  - date: {year: 2025, month: 5}
+    title: "Understanding the Linux Kernel, Visually"
+    host:
+      en: "Huawei Poincare Lab"
+      zh-cn: "华为庞家莱实验室"
+    notes:
+      - invited talk
+      - online
+

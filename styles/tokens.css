@@ -1,0 +1,21 @@
+:root {
+  color-scheme: light;
+  --bg: #fbf8f1;
+  --paper: #fffdf8;
+  --paper-strong: #f8f1e4;
+  --ink: #1b1218;
+  --muted: #453b43;
+  --quiet: #6f6266;
+  --line: #dacbb3;
+  --line-strong: #bda98b;
+  --accent: #b83a22;
+  --accent-ink: #8d2719;
+  --accent-soft: #ffe2c7;
+  --blue: #173f6f;
+  --blue-soft: #dbe7f4;
+  --green: #23634a;
+  --award: #7b4b00;
+  --max: 1160px;
+  --radius: 6px;
+  --shadow: 0 1px 0 rgba(32, 21, 28, 0.12);
+}

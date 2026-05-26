@@ -1,0 +1,84 @@
+@media (max-width: 860px) {
+  body {
+    font-size: 15px;
+  }
+
+  .nav {
+    padding: 9px 18px;
+  }
+
+  main {
+    max-width: 100vw;
+    padding: 23px 18px 38px;
+  }
+
+  .bio,
+  .contact-card,
+  .publication,
+  .publication-list,
+  .pub-head,
+  .pub-title,
+  .pub-meta,
+  .authors,
+  .contact-line {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  h1 {
+    font-size: 25px;
+  }
+
+  h2 {
+    white-space: normal;
+  }
+
+  .section {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 21px 0;
+  }
+
+  .section-heading {
+    position: static;
+  }
+
+  .item {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+
+  .date {
+    white-space: normal;
+  }
+
+  footer {
+    padding: 0 18px 26px;
+  }
+}
+
+@media (max-width: 520px) {
+  .nav {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .nav-right {
+    width: 100%;
+  }
+
+  .nav-links {
+    gap: 14px;
+    padding-right: 14px;
+  }
+
+  .venue + .pub-title {
+    margin-left: 3px;
+  }
+}

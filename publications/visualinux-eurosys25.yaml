@@ -1,0 +1,42 @@
+key: visualinux-eurosys25
+title: "Understanding the Linux Kernel, Visually"
+authors: Hanzhi Liu, Yanyan Jiang, Chang Xu
+year: 2025
+kind: conference
+selected: true
+status: Accepted
+award: Best Student Paper Award
+venue:
+  short: EuroSys'25
+  title: Proceedings of the 20th European Conference on Computer Systems
+  rank: CCF-A
+  url: https://2025.eurosys.org/index.html
+
+badges:
+  - label: "Acceptance: 12.2%, 85/696"
+
+links:
+  - label: DOI
+    url: https://doi.org/10.1145/3689031.3696095
+  - label: PDF
+    url: pdfs/visualinux-eurosys25.pdf
+  - label: Tool
+    url: https://icsnju.github.io/visualinux/
+
+bibtex: |
+  @inproceedings{10.1145/3689031.3696095,
+    author = {Liu, Hanzhi and Jiang, Yanyan and Xu, Chang},
+    title = {Understanding the Linux Kernel, Visually},
+    year = {2025},
+    isbn = {9798400711961},
+    publisher = {Association for Computing Machinery},
+    address = {New York, NY, USA},
+    url = {https://doi.org/10.1145/3689031.3696095},
+    doi = {10.1145/3689031.3696095},
+    booktitle = {Proceedings of the Twentieth European Conference on Computer Systems},
+    pages = {1044--1060},
+    numpages = {17},
+    keywords = {Debugging, Linux Kernel, Software Visualization},
+    location = {Rotterdam, Netherlands},
+    series = {EuroSys '25}
+  }
