@@ -17,7 +17,7 @@
       well as designing systems that can solve critical real-world problems.
     zh-cn: >
       我是南京大学计算机软件研究所 [SPAR](http://ics.nju.edu.cn/spar/) 小组的四年级博士生，
-      导师是 [蒋炎岩副教授](https://ics.nju.edu.cn/~jyy/) 和 [许畅教授](https://cs.nju.edu.cn/changxu/)。
+      导师是[蒋炎岩副教授](https://ics.nju.edu.cn/~jyy/)和[许畅教授](https://cs.nju.edu.cn/changxu/)。
       目前我的主要研究方向是操作系统内核和其他系统软件的调试和理解；我还有志于系统软件的可靠性与可观测性，
       以及设计能够解决现实世界重大问题的系统。
   links:
@@ -36,7 +36,7 @@ education:
     end: present
     text:
       en: "Ph.D., Institute of Computer Software, Department of Computer Science and Technology, Nanjing University, supervised by [Yanyan Jiang](https://ics.nju.edu.cn/~jyy/) and [Chang Xu](https://cs.nju.edu.cn/changxu/)."
-      zh-cn: "博士生在读，南京大学计算机科学与技术系，计算机软件研究所，导师是 [蒋炎岩](https://ics.nju.edu.cn/~jyy/) 和 [许畅](https://cs.nju.edu.cn/changxu/)。"
+      zh-cn: "博士生在读，南京大学计算机科学与技术系，计算机软件研究所，导师是[蒋炎岩](https://ics.nju.edu.cn/~jyy/)和[许畅](https://cs.nju.edu.cn/changxu/)。"
   - start: {year: 2020, month: 9}
     end: {year: 2022, month: 8}
     text:

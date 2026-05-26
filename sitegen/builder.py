@@ -14,7 +14,6 @@ LABELS: dict[str, dict[str, str]] = {
     "en": {
         "about": "About",
         "awards": "Honors & Awards",
-        "built_from": "Built from metadata and static HTML templates",
         "conference_publications": "Conference/Symposium Publications",
         "contact_links": "Contact and academic links",
         "details": "Details",
@@ -40,7 +39,6 @@ LABELS: dict[str, dict[str, str]] = {
     "zh-cn": {
         "about": "关于",
         "awards": "荣誉和奖项",
-        "built_from": "由元数据和静态 HTML 模板生成",
         "conference_publications": "会议论文",
         "contact_links": "联系方式和学术链接",
         "details": "查看细节",
@@ -535,13 +533,13 @@ class SiteBuilder:
         if lang == "en":
             return {
                 "about": "about.html",
-                "home": "index.html",
+                "home": ".",
                 "publications": "publications.html",
                 "switch_lang": f"zh-cn/{page}",
             }
         return {
             "about": "about.html",
-            "home": "index.html",
+            "home": ".",
             "publications": "publications.html",
             "switch_lang": f"../{page}",
         }

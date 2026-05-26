@@ -7,15 +7,28 @@ class TemplateRenderer:
     """Render the small Mustache subset used by the HTML templates."""
 
     __section_pattern = re.compile(r"{{#\s*([\w.]+)\s*}}(.*?){{/\s*\1\s*}}", re.DOTALL)
+    __partial_pattern = re.compile(r"{{>\s*([\w./-]+)\s*}}")
     __html_pattern = re.compile(r"{{{\s*([\w.]+)\s*}}}")
     __variable_pattern = re.compile(r"{{\s*([\w.]+)\s*}}")
 
-    def render_file(self, path: Path, context: dict[str, object]) -> str:
+    def render_file(
+        self,
+        path: Path,
+        context: dict[str, object],
+        template_root: Path | None = None,
+    ) -> str:
         """Render a template file with the provided context."""
-        return self.render(path.read_text(encoding="utf-8"), [context])
+        root = template_root or path.parent
+        return self.render(path.read_text(encoding="utf-8"), [context], root)
 
-    def render(self, template: str, stack: list[object]) -> str:
+    def render(
+        self,
+        template: str,
+        stack: list[object],
+        template_root: Path | None = None,
+    ) -> str:
         """Render a template string with a context stack."""
+        template = self.__render_partials(template, stack, template_root)
         template = self.__render_sections(template, stack)
         template = self.__html_pattern.sub(
             lambda match: self.__stringify(self.__resolve(match.group(1), stack)),
@@ -27,6 +40,25 @@ class TemplateRenderer:
             ),
             template,
         )
+
+    def __render_partials(
+        self,
+        template: str,
+        stack: list[object],
+        template_root: Path | None,
+    ) -> str:
+        """Expand template partials relative to the template root."""
+        if template_root is None:
+            return template
+        root = template_root.resolve()
+
+        def replace(match: re.Match[str]) -> str:
+            partial_path = (root / match.group(1)).resolve()
+            if not partial_path.is_relative_to(root):
+                raise ValueError(f"Template partial is outside template root: {partial_path}")
+            return self.render(partial_path.read_text(encoding="utf-8"), stack, root)
+
+        return self.__partial_pattern.sub(replace, template)
 
     def __render_sections(self, template: str, stack: list[object]) -> str:
         """Expand truthy and repeated sections recursively."""
