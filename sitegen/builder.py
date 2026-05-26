@@ -530,18 +530,19 @@ class SiteBuilder:
 
     def __urls(self, lang: str, page: str) -> dict[str, str]:
         """Return localized page URLs for the navigation header."""
+        switch_page = "" if page == "index.html" else page
         if lang == "en":
             return {
                 "about": "about.html",
                 "home": ".",
                 "publications": "publications.html",
-                "switch_lang": f"zh-cn/{page}",
+                "switch_lang": f"zh-cn/{switch_page}",
             }
         return {
             "about": "about.html",
             "home": ".",
             "publications": "publications.html",
-            "switch_lang": f"../{page}",
+            "switch_lang": f"../{switch_page}",
         }
 
     def __page_url(self, url: str, lang: str) -> str:
