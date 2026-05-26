@@ -95,11 +95,10 @@
       <div class="section-heading">
         <h2 id="talks-title">{{ labels.talks }}</h2>
       </div>
-      <div>
-        <ol class="compact-list talk-topic-list">
-          {{#talks}}
-          <li class="talk-topic">
-            <div class="item-title talk-topic-title">{{{ title_html }}}</div>
+      <div class="stack">
+        {{#talks}}
+        <div class="subsection">
+          <h3>{{{ title_html }}}</h3>
             <ol class="compact-list talk-instance-list">
               {{#items}}
               <li class="item">
@@ -111,9 +110,8 @@
               </li>
               {{/items}}
             </ol>
-          </li>
-          {{/talks}}
-        </ol>
+        </div>
+        {{/talks}}
       </div>
     </section>
 

@@ -28,19 +28,6 @@
   font-weight: 760;
 }
 
-.talk-topic-list {
-  gap: 14px;
-}
-
-.talk-topic {
-  display: grid;
-  gap: 7px;
-}
-
-.talk-topic-title {
-  line-height: 1.35;
-}
-
 .talk-instance-list {
   gap: 6px;
 }
