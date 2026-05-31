@@ -58,11 +58,6 @@
   font-size: 17px;
   font-weight: 800;
   overflow-wrap: anywhere;
-  text-decoration: none;
-}
-
-.pub-title:hover {
-  color: var(--accent-ink);
 }
 
 .authors,
