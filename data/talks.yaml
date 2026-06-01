@@ -4,7 +4,7 @@ talks:
       - date: {year: 2026, month: 6}
         host: "China Linux System Forum 2026 (CLSF'26)"
         notes:
-          - invitation-only workshop
+          - invitation-only
           - Chengdu, China
   - title: "Understanding the Linux Kernel, Visually"
     items:
