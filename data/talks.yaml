@@ -1,11 +1,13 @@
 talks:
+  - title: "Visual Debugging for the Linux Kernel"
+    items:
+      - date: {year: 2026, month: 6}
+        host: "China Linux System Forum 2026 (CLSF'26)"
+        notes:
+          - invitation-only workshop
+          - Chengdu, China
   - title: "Understanding the Linux Kernel, Visually"
     items:
-      # - date: {year: 2026, month: 6}
-      #   host: "China Linux System Forum 2026 (CLSF'26)"
-      #   notes:
-      #     - invited talk
-      #     - Chengdu, China
       - date: {year: 2025, month: 10}
         host:
           en: "Huawei HarmonyOS DFX Group"
