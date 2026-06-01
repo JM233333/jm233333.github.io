@@ -59,7 +59,7 @@
           {{#selected_publications}}
           <li class="publication {{ kind }}">
             <div class="pub-head">
-              <a class="venue" href="{{ venue.url }}" target="_blank" rel="noopener">{{ venue.short }}</a><span class="pub-title">{{ title }}</span>
+              {{#venue.has_url}}<a class="venue" href="{{ venue.url }}" target="_blank" rel="noopener">{{ venue.short }}</a>{{/venue.has_url}}{{#venue.no_url}}<span class="venue">{{ venue.short }}</span>{{/venue.no_url}}<span class="pub-title">{{ title }}</span>
             </div>
             <p class="authors">{{{ authors_html }}}</p>
             <p class="pub-meta">{{ venue.title }}</p>

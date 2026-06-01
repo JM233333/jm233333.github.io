@@ -141,9 +141,7 @@ class SiteBuilder:
                 for publication in publications["all"]
                 if publication.get("selected")
             ],
-            "talks": self.__localized_talks(
-                about_data.get("talks", []), lang
-            ),
+            "talks": self.__localized_talks(about_data.get("talks", []), lang),
             "conference_publications": [
                 self.__localized_publication(publication, lang)
                 for publication in publications["conference"]
@@ -245,6 +243,7 @@ class SiteBuilder:
         rank = venue.get("rank")
         if rank and not any(badge["label"] == localize(rank, lang) for badge in badges):
             badges.append({"label": localize(rank, lang), "tone_class": ""})
+        venue_url = str(venue.get("url", ""))
         return {
             "authors_html": self.__authors_html(str(publication.get("authors", ""))),
             "badges": badges,
@@ -258,7 +257,9 @@ class SiteBuilder:
             "venue": {
                 "short": localize(venue.get("short", ""), lang),
                 "title": localize(venue.get("title", ""), lang),
-                "url": str(venue.get("url", "")),
+                "url": venue_url,
+                "has_url": bool(venue_url),
+                "no_url": not venue_url,
             },
         }
 
