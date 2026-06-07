@@ -72,6 +72,14 @@
   margin-top: 0;
 }
 
+.pub-note {
+  margin: 4px 0 0;
+  color: var(--quiet);
+  font-size: 13.5px;
+  font-style: italic;
+  line-height: 1.45;
+}
+
 .authors strong {
   color: var(--ink);
 }

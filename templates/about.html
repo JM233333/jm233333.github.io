@@ -63,6 +63,7 @@
             </div>
             <p class="authors">{{{ authors_html }}}</p>
             <p class="pub-meta">{{ venue.title }}</p>
+            {{#note}}<p class="pub-note">{{ note }}</p>{{/note}}
             <div class="badges">
               {{#badges}}<span class="badge {{ tone_class }}">{{ label }}</span>{{/badges}}
             </div>

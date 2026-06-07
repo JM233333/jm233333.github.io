@@ -244,11 +244,13 @@ class SiteBuilder:
         if rank and not any(badge["label"] == localize(rank, lang) for badge in badges):
             badges.append({"label": localize(rank, lang), "tone_class": ""})
         venue_url = str(venue.get("url", ""))
+        note = localize(publication.get("note", ""), lang).strip()
         return {
             "authors_html": self.__authors_html(str(publication.get("authors", ""))),
             "badges": badges,
             "kind": str(publication.get("kind", "")),
             "links": links,
+            "note": note,
             "note_links": [link for link in links if not link.get("has_url")],
             "primary_url": self.__primary_url(links, venue),
             "selected": bool(publication.get("selected", False)),

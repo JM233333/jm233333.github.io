@@ -19,4 +19,8 @@ links:
   - label: Tool
     url: https://icsnju.github.io/visualinux/
 
+note: >
+  This paper extends the EuroSys'25 version mainly by introducing the state diff mechanism.
+  It also presents additional case studies to better demonstrate the usefulness of Visualinux.
+
 bibtex: null
