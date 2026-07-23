@@ -1,4 +1,4 @@
-key: visualinux-tocs
+key: visualinux-tocs26
 title: "Visualinux: Visual Debugging for the Linux Kernel"
 authors: Hanzhi Liu, Yanyan Jiang, Chang Xu
 year: 2026
@@ -15,6 +15,10 @@ badges:
   - label: Invited Submission
 
 links:
+  - label: DOI
+    url: https://doi.org/10.1145/3820892
+  - label: PDF
+    url: pdfs/visualinux-tocs26.pdf
   - label: Forthcoming
   - label: Tool
     url: https://icsnju.github.io/visualinux/
@@ -23,4 +27,18 @@ note: >
   This paper extends the EuroSys'25 version mainly by introducing the state diff mechanism.
   It also presents additional case studies to better demonstrate the usefulness of Visualinux.
 
-bibtex: null
+bibtex: |
+  @article{10.1145/3820892,
+    author = {Liu, Hanzhi and Jiang, Yanyan and Xu, Chang},
+    title = {Visualinux: Visual Debugging for the Linux Kernel},
+    year = {2026},
+    publisher = {Association for Computing Machinery},
+    address = {New York, NY, USA},
+    issn = {0734-2071},
+    url = {https://doi.org/10.1145/3820892},
+    doi = {10.1145/3820892},
+    note = {Just Accepted},
+    journal = {ACM Transactions on Computer Systems},
+    month = jul,
+    keywords = {Linux Kernel, Software Visualization, Debugging}
+  }
