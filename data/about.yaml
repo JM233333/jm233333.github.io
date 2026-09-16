@@ -59,16 +59,18 @@ education:
       zh-cn: "高中，深圳实验学校高中部。"
 
 teaching:
+  - periods:
+      - start: {year: 2022}
+        end: {year: 2023}
+      - start: {year: 2026}
+    text:
+      en: "TA, Operating Systems: Design and Implementation (Spring), taught by Yanyan Jiang, Department of Computer Science and Technology, Nanjing University."
+      zh-cn: "操作系统：设计与实现（春），助教（由蒋炎岩老师授课），南京大学计算机科学与技术系。"
   - start: {year: 2022}
     end: {year: 2023}
     text:
-      en: "TA, Introduction of Computer System (2022 Autumn, 2023 Autumn), taught by Huiyan Wang, Department of Computer Science and Technology, Nanjing University."
-      zh-cn: "计算机系统基础（2022 秋，2023 秋），实验助教（由王慧妍老师授课），南京大学计算机科学与技术系。"
-  - start: {year: 2022}
-    end: {year: 2023}
-    text:
-      en: "TA, Operating Systems: Design and Implementation (2022 Spring, 2023 Spring), taught by Yanyan Jiang, Department of Computer Science and Technology, Nanjing University."
-      zh-cn: "操作系统：设计与实现（2022 春，2023 春），助教（由蒋炎岩老师授课），南京大学计算机科学与技术系。"
+      en: "TA, Introduction of Computer System (Autumn), taught by Huiyan Wang, Department of Computer Science and Technology, Nanjing University."
+      zh-cn: "计算机系统基础（秋），实验助教（由王慧妍老师授课），南京大学计算机科学与技术系。"
   - start: {year: 2016}
     end: {year: 2020}
     text:

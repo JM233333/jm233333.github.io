@@ -421,7 +421,7 @@ class SiteBuilder:
                 continue
             items.append(
                 {
-                    "period": self.__format_period(item, lang),
+                    "period": self.__format_periods(item, lang),
                     "text_html": inline_html(item.get("text", ""), lang),
                 }
             )
@@ -501,6 +501,18 @@ class SiteBuilder:
         if end_value == "present" and lang == "zh-cn":
             return f"{start} 至今"
         return f"{start}{separator}{end}"
+
+    def __format_periods(self, item: dict[object, object], lang: str) -> str:
+        """Render one or more structured periods for a timeline item."""
+        periods = item.get("periods")
+        if not isinstance(periods, list):
+            return self.__format_period(item, lang)
+        return ", ".join(
+            period
+            for value in periods
+            if isinstance(value, dict)
+            if (period := self.__format_period(value, lang))
+        )
 
     def __format_timepoint(self, value: object, lang: str) -> str:
         """Render one structured timepoint."""
