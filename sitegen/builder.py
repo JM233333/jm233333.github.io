@@ -419,9 +419,11 @@ class SiteBuilder:
         for item in items_value:
             if not isinstance(item, dict):
                 continue
+            period = self.__format_periods(item, lang)
             items.append(
                 {
-                    "period": self.__format_periods(item, lang),
+                    "has_multiple_periods": "\n" in period,
+                    "period": period,
                     "text_html": inline_html(item.get("text", ""), lang),
                 }
             )
@@ -507,7 +509,7 @@ class SiteBuilder:
         periods = item.get("periods")
         if not isinstance(periods, list):
             return self.__format_period(item, lang)
-        return ", ".join(
+        return ",\n".join(
             period
             for value in periods
             if isinstance(value, dict)

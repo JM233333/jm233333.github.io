@@ -124,7 +124,7 @@
         <ol class="compact-list">
           {{#education}}
           <li class="item">
-            <span class="date">{{ period }}</span>
+            <span class="date{{#has_multiple_periods}} multi-period-date{{/has_multiple_periods}}">{{ period }}</span>
             <span>{{{ text_html }}}</span>
           </li>
           {{/education}}
@@ -140,7 +140,7 @@
         <ol class="compact-list">
           {{#teaching}}
           <li class="item">
-            <span class="date">{{ period }}</span>
+            <span class="date{{#has_multiple_periods}} multi-period-date{{/has_multiple_periods}}">{{ period }}</span>
             <span>{{{ text_html }}}</span>
           </li>
           {{/teaching}}

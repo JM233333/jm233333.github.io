@@ -24,6 +24,11 @@
   white-space: nowrap;
 }
 
+.multi-period-date {
+  line-height: 1.25;
+  white-space: pre-line;
+}
+
 .item-title {
   font-weight: 760;
 }
