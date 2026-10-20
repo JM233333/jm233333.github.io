@@ -50,6 +50,22 @@
       </aside>
     </section>
 
+    <section id="education" class="section" aria-labelledby="education-title">
+      <div class="section-heading">
+        <h2 id="education-title">{{ labels.education }}</h2>
+      </div>
+      <div>
+        <ol class="compact-list">
+          {{#education}}
+          <li class="item">
+            <span class="date{{#has_multiple_periods}} multi-period-date{{/has_multiple_periods}}">{{ period }}</span>
+            <span>{{{ text_html }}}</span>
+          </li>
+          {{/education}}
+        </ol>
+      </div>
+    </section>
+
     <section id="publications" class="section" aria-labelledby="publications-title">
       <div class="section-heading">
         <h2 id="publications-title">{{ labels.selected_publications }}</h2>
@@ -92,6 +108,8 @@
       </div>
     </section>
 
+{{> academic-services.html}}
+
     <section id="talks" class="section" aria-labelledby="talks-title">
       <div class="section-heading">
         <h2 id="talks-title">{{ labels.talks }}</h2>
@@ -113,22 +131,6 @@
             </ol>
         </div>
         {{/talks}}
-      </div>
-    </section>
-
-    <section id="education" class="section" aria-labelledby="education-title">
-      <div class="section-heading">
-        <h2 id="education-title">{{ labels.education }}</h2>
-      </div>
-      <div>
-        <ol class="compact-list">
-          {{#education}}
-          <li class="item">
-            <span class="date{{#has_multiple_periods}} multi-period-date{{/has_multiple_periods}}">{{ period }}</span>
-            <span>{{{ text_html }}}</span>
-          </li>
-          {{/education}}
-        </ol>
       </div>
     </section>
 

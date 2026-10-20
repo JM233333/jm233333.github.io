@@ -31,6 +31,9 @@
       icon_url: https://cdn.simpleicons.org/github/181717
       url: https://github.com/JM233333
 
+academic_services:
+  - "Transactions on Software Engineering and Methodology (TOSEM), 2026"
+
 education:
   - start: {year: 2022, month: 9}
     end: present

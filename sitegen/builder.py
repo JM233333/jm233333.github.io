@@ -12,6 +12,7 @@ LANGUAGES = ("en", "zh-cn")
 
 LABELS: dict[str, dict[str, str]] = {
     "en": {
+        "academic_services": "Academic Services",
         "about": "About",
         "awards": "Honors & Awards",
         "conference_publications": "Conference/Symposium Publications",
@@ -29,6 +30,7 @@ LABELS: dict[str, dict[str, str]] = {
         "primary_navigation": "Primary navigation",
         "projects": "Selected Projects",
         "publications": "Publications",
+        "reviewing_journals": "Reviewing journals/magzines:",
         "selected_publications": "Selected Publications",
         "skip": "Skip to content",
         "switch_lang": "简体中文",
@@ -37,6 +39,7 @@ LABELS: dict[str, dict[str, str]] = {
         "workshops": "Workshops",
     },
     "zh-cn": {
+        "academic_services": "学术服务",
         "about": "关于",
         "awards": "荣誉和奖项",
         "conference_publications": "会议论文",
@@ -54,6 +57,7 @@ LABELS: dict[str, dict[str, str]] = {
         "primary_navigation": "主导航",
         "projects": "工程项目",
         "publications": "论文发表",
+        "reviewing_journals": "期刊审稿：",
         "selected_publications": "论文发表",
         "skip": "跳转到正文",
         "switch_lang": "English",
@@ -159,6 +163,9 @@ class SiteBuilder:
             ),
             "education": self.__localized_timeline(
                 about_data.get("education", []), lang
+            ),
+            "academic_services": self.__localized_text_list(
+                about_data.get("academic_services", []), lang
             ),
             "teaching": self.__localized_timeline(about_data.get("teaching", []), lang),
             "projects": self.__localized_projects(about_data.get("projects", []), lang),
